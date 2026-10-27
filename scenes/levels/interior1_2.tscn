@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://duiums0oao68l"]
+[gd_scene load_steps=14 format=3 uid="uid://duiums0oao68l"]
 
 [ext_resource type="Script" uid="uid://6ac0fiq4jtxt" path="res://scripts/location.gd" id="1_sg2cp"]
 [ext_resource type="Texture2D" uid="uid://btewjpsurv3bc" path="res://art/pixel/bricks.png" id="2_y2ifo"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="6_72xct"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="10_1tw8c"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="11_72pcd"]
+[ext_resource type="Texture2D" uid="uid://hud81ykbijrv" path="res://art/light.svg" id="11_laili"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="12_x42x6"]
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="13_8h2eu"]
 
@@ -23,7 +24,7 @@ display_name = "Building / Ground floor"
 camera_bounds = Rect2i(0, 0, 1152, 720)
 
 [node name="AmbientTint" type="CanvasModulate" parent="."]
-color = Color(0.58, 0.55, 0.57, 1)
+color = Color(0, 0, 0, 1)
 
 [node name="Buildings" type="Node2D" parent="."]
 
@@ -57,23 +58,32 @@ texture = ExtResource("3_02nnu")
 region_enabled = true
 region_rect = Rect2(0, 0, 1152, 120)
 
-[node name="Curb" type="Polygon2D" parent="Geometry"]
-scale = Vector2(0.486111, 1)
-color = Color(0.45, 0.44, 0.48, 1)
-polygon = PackedVector2Array(0, 620, 1152, 620, 1152, 626, 0, 626)
-
 [node name="WestBoundary" type="StaticBody2D" parent="Geometry"]
 position = Vector2(-20, 360)
 
 [node name="Shape" type="CollisionShape2D" parent="Geometry/WestBoundary"]
+position = Vector2(7, 0)
 shape = SubResource("wall")
 
 [node name="EastBoundary" type="StaticBody2D" parent="Geometry"]
 position = Vector2(1172, 360)
 
 [node name="Shape" type="CollisionShape2D" parent="Geometry/EastBoundary"]
-position = Vector2(-592, 0)
+position = Vector2(-599, 0)
 shape = SubResource("wall")
+
+[node name="Curb" type="Polygon2D" parent="Geometry"]
+position = Vector2(0, -9403.33)
+scale = Vector2(0.486111, 16.1667)
+color = Color(0.547878, 0.322552, 0.234745, 1)
+polygon = PackedVector2Array(0, 620, 1152, 620, 1152, 626, 0, 626)
+
+[node name="Background" type="Polygon2D" parent="Geometry"]
+z_index = -10
+position = Vector2(-31, -31197)
+scale = Vector2(0.284545, 50.8339)
+color = Color(0.138447, 0.184908, 0.262937, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
 
 [node name="Props" type="Node2D" parent="."]
 
@@ -96,6 +106,10 @@ destination_scene = "uid://i4sef51ugq0j"
 [node name="Player" parent="Actors" instance=ExtResource("10_1tw8c")]
 position = Vector2(511, 587)
 
+[node name="Camera2D" parent="Actors/Player" index="4"]
+visible = false
+enabled = false
+
 [node name="Spawns" type="Node2D" parent="."]
 
 [node name="default" type="Marker2D" parent="Spawns"]
@@ -111,3 +125,20 @@ stream = ExtResource("12_x42x6")
 volume_db = -16.0
 autoplay = true
 script = ExtResource("13_8h2eu")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(280, 495)
+zoom = Vector2(2.1, 2.1)
+
+[node name="Flashlight" type="PointLight2D" parent="."]
+position = Vector2(270, 526.56)
+scale = Vector2(0.655, 0.655)
+color = Color(1, 0.88, 0.65, 1)
+energy = 0.68
+range_z_min = -4096
+shadow_enabled = true
+texture = ExtResource("11_laili")
+texture_scale = 3.36
+height = 55.0
+
+[editable path="Actors/Player"]

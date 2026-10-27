@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://6qrdl5x7rakj"]
+[gd_scene load_steps=12 format=3 uid="uid://6qrdl5x7rakj"]
 
 [ext_resource type="Script" uid="uid://6ac0fiq4jtxt" path="res://scripts/location.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://dfitvfrdt4ym7" path="res://scenes/objects/streetlamp.tscn" id="3_ip0dd"]
 [ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://scenes/objects/building_house.tscn" id="8_n8lao"]
 [ext_resource type="Texture2D" uid="uid://blll32qgmq7p2" path="res://art/fog.svg" id="10"]
@@ -20,7 +21,7 @@ script = ExtResource("1")
 camera_bounds = Rect2i(0, 0, 2200, 720)
 
 [node name="AmbientTint" type="CanvasModulate" parent="."]
-color = Color(0.6, 0.59, 0.66, 1)
+color = Color(0, 0, 0, 1)
 
 [node name="Buildings" type="Node2D" parent="."]
 
@@ -35,14 +36,17 @@ position = Vector2(349, 492)
 [node name="Geometry" type="Node2D" parent="."]
 
 [node name="Street" type="StaticBody2D" parent="Geometry"]
+visible = false
 position = Vector2(1100, 680)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Street"]
 shape = SubResource("floor")
 
 [node name="Curb" type="Polygon2D" parent="Geometry"]
+position = Vector2(0, -13329.9)
+scale = Vector2(1, 22.4998)
 color = Color(0.45, 0.44, 0.48, 1)
-polygon = PackedVector2Array(0, 620, 2200, 620, 2200, 626, 0, 626)
+polygon = PackedVector2Array(0, 620, 2200, 620, 2200, 626, 1100.73, 626, 0, 626)
 
 [node name="WestBoundary" type="StaticBody2D" parent="Geometry"]
 position = Vector2(-20, 360)
@@ -55,6 +59,16 @@ position = Vector2(2220, 360)
 
 [node name="Shape" type="CollisionShape2D" parent="Geometry/EastBoundary"]
 shape = SubResource("wall")
+
+[node name="Background" type="Polygon2D" parent="Geometry"]
+z_index = -10
+position = Vector2(0, -76157.5)
+scale = Vector2(1.17544, 122.833)
+color = Color(0.184572, 0.180707, 0.200034, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 626, 1101, 626, 0, 626)
+
+[node name="Streetlamp" parent="Geometry" instance=ExtResource("3_ip0dd")]
+position = Vector2(119, 620)
 
 [node name="Props" type="Node2D" parent="."]
 
@@ -69,6 +83,9 @@ destination_spawn = "from_street"
 position = Vector2(1240, 556)
 destination_scene = "res://scenes/levels/alley.tscn"
 destination_spawn = "from_street"
+
+[node name="Facade" parent="Interactables/AlleyEntrance" index="0"]
+visible = false
 
 [node name="Actors" type="Node2D" parent="."]
 
@@ -96,31 +113,11 @@ volume_db = -16.0
 autoplay = true
 script = ExtResource("22")
 
-[node name="DistantRoofs" type="Polygon2D" parent="."]
-visible = false
-z_index = -15
-color = Color(0.22, 0.17, 0.23, 1)
-polygon = PackedVector2Array(0, 400, 0, 250, 160, 170, 320, 250, 480, 200, 640, 260, 850, 160, 1080, 260, 1280, 210, 1470, 280, 1690, 190, 1930, 270, 2200, 200, 2200, 620, 0, 620)
-
 [node name="Fog0" type="Sprite2D" parent="."]
 visible = false
 modulate = Color(0.7, 0.85, 0.9, 0.7)
 z_index = 6
 position = Vector2(450, 570)
-texture = ExtResource("10")
-
-[node name="Fog1" type="Sprite2D" parent="."]
-visible = false
-modulate = Color(0.7, 0.85, 0.9, 0.7)
-z_index = 6
-position = Vector2(1400, 570)
-texture = ExtResource("10")
-
-[node name="Fog2" type="Sprite2D" parent="."]
-visible = false
-modulate = Color(0.7, 0.85, 0.9, 0.7)
-z_index = 6
-position = Vector2(2100, 570)
 texture = ExtResource("10")
 
 [editable path="Interactables/AlleyEntrance"]
