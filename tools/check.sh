@@ -8,6 +8,12 @@ export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-/tmp/ignotum-config}"
 godot_bin="${GODOT_BIN:-godot}"
 test_data_root="${IGNOTUM_TEST_DATA_DIR:-/tmp/ignotum-automated-tests}"
 "$godot_bin" --headless --editor --path . --import --quit
-XDG_DATA_HOME="$test_data_root" "$godot_bin" --headless --path . res://tests/smoke.tscn
-XDG_DATA_HOME="$test_data_root" "$godot_bin" --headless --path . res://tests/interface.tscn
-XDG_DATA_HOME="$test_data_root" "$godot_bin" --headless --path . res://tests/assets.tscn
+for suite in smoke interface assets manual_saves grid_inventory; do
+    suite_log="$(mktemp)"
+    XDG_DATA_HOME="$test_data_root/$suite" timeout 120 "$godot_bin" --headless --path . "res://tests/$suite.tscn" 2>&1 | tee "$suite_log"
+    if rg -q 'SCRIPT ERROR:|ERROR:' "$suite_log" || ! rg -q 'checks, 0 failures' "$suite_log"; then
+        rm -f "$suite_log"
+        exit 1
+    fi
+    rm -f "$suite_log"
+done

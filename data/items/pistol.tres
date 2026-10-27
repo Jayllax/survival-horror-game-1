@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="InventoryItemDefinition" format=3 uid="uid://et2nquwup3rj"]
+
+[ext_resource type="Texture2D" uid="uid://dgwce2e1ve8ni" path="res://art/pixel/gun.png" id="art"]
+[ext_resource type="Script" uid="uid://ysok34dxqtu8" path="res://scripts/item_definition.gd" id="script"]
+
+[resource]
+script = ExtResource("script")
+id = "pistol"
+display_name = "Handgun"
+category = "Weapon"
+description = "A six-round handgun. Holds 9mm rounds."
+icon = ExtResource("art")
+grid_size = Vector2i(2, 1)
+is_weapon = true
+weapon_texture = ExtResource("art")

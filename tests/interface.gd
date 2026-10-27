@@ -22,10 +22,7 @@ func press(action: String) -> void:
     await frames(2)
 
 func slot_for(id: String) -> int:
-    for i in 8:
-        if Game.slots[i].get("id", "") == id:
-            return i
-    return -1
+    return Game.inventory.first_uid(id)
 
 func _ready() -> void:
     process_mode = Node.PROCESS_MODE_ALWAYS
@@ -38,11 +35,11 @@ func run() -> void:
     Game.add_item("cloth", 2)
     Game.add_item("antiseptic", 2)
     Game.add_item("bandage", 3)
-    for i in 5:
+    for i in 27:
         Game.add_item("filler" + str(i))
-    var before: Array[Dictionary] = Game.slots.duplicate(true)
-    check(not Game.combine_items("cloth", "antiseptic") and Game.slots == before, "Crafting rolls back both materials when output cannot fit")
-    check(not Game.combine_items("cloth", "cloth") and Game.slots == before, "Invalid recipe consumes nothing")
+    var before := Game.inventory.snapshot()
+    check(not Game.combine_items("cloth", "antiseptic") and Game.inventory.snapshot() == before, "Crafting rolls back both materials when output cannot fit")
+    check(not Game.combine_items("cloth", "cloth") and Game.inventory.snapshot() == before, "Invalid recipe consumes nothing")
     Game.start_game()
     await frames(8)
     var street: Node2D = get_tree().current_scene
@@ -51,7 +48,7 @@ func run() -> void:
     for old in ["TopShade", "BottomShade", "Controls", "Title", "Objective", "Health", "Dodge"]:
         check(not hud.has_node("Root/" + old), "Removed persistent HUD element: " + old)
     check(not hud.get_node("Root/Ammo").visible and not hud.get_node("Root/Crosshair").visible and not hud.get_node("Root/HealthBrief").visible, "Idle exploration has no combat overlay")
-    check(not hud.get_node("Root/Message").visible, "Autosave creates no gameplay text banner")
+    check(not hud.get_node("Root/Message").visible, "Exploration creates no save banner")
     check(not hud.get_node("Root/Prompt").visible, "No interaction prompt out of range")
     Input.action_press("aim")
     Input.action_press("move_right")
@@ -80,35 +77,35 @@ func run() -> void:
     player = room.get_node("Actors/Player")
     var pickup: Area2D = room.get_node("Interactables/SupplyBox")
     check(not pickup.has_node("EditorLabel") and not pickup.has_node("Indicator"), "Pickup is just its artwork: no title or floating marker")
-    player.position = Vector2(770,588)
-    await frames(3)
+    player.global_position = pickup.global_position + Vector2(0,20)
+    await frames(1)
     check(hud.get_node("Root/Prompt").visible and hud.get_node("Root/Prompt").text == "[E]  Take", "Nearby pickup offers a generic action without revealing identity")
     var prompt_position: Vector2 = hud.get_node("Root/Prompt").position
-    check(prompt_position.x > 100 and prompt_position.y > 100, "Prompt follows object's screen position")
+    check(prompt_position.x >= 0 and prompt_position.y >= 0 and prompt_position.x < get_viewport().get_visible_rect().size.x and prompt_position.y < get_viewport().get_visible_rect().size.y, "Prompt stays on screen with the designer's fixed zoom camera")
     await press("interact")
-    check(not room.has_node("Interactables/SupplyBox") and not hud.get_node("Root/Prompt").visible, "Successful pickup removes object and prompt")
+    check(not room.has_node("Interactables/SupplyBox") and not is_instance_valid(pickup), "Successful pickup removes its interactable; nearby items may still offer prompts")
     check(hud.get_node("Root/Message").text.is_empty(), "Pickup does not announce item name on the world HUD")
     hud.open_inventory()
     await frames(2)
     check(get_tree().paused and hud.get_node("Root/InventoryPanel").visible, "Inventory inspection pauses the game")
-    check(hud.get_node("Root/InventoryPanel/Slots").get_child_count() == 8, "Icon inventory retains exactly eight pockets")
-    hud.select_slot(slot_for("ammo"))
+    check(Game.inventory.columns * Game.inventory.rows == 32, "Grid inventory starts with 32 cells")
+    hud.select_item(slot_for("ammo"))
     check(hud.get_node("Root/InventoryPanel/ItemName").text == "9 mm rounds", "Item identity is revealed in inventory")
     check(hud.get_node("Root/InventoryPanel/Portrait").texture == Game.item_icon("ammo") and not hud.get_node("Root/InventoryPanel/Description").text.is_empty(), "Inventory displays item artwork and useful description")
-    check(hud.get_node("Root/InventoryPanel/Slots").get_child(slot_for("ammo")).get_node("Count").text == "24", "Inventory displays ammunition stack count")
+    check(hud.get_node("Root/InventoryPanel/Quantity").text == "QUANTITY  24", "Inventory displays ammunition stack count")
     Game.add_item("bandage")
-    hud.select_slot(slot_for("bandage"))
+    hud.select_item(slot_for("bandage"))
     check(hud.get_node("Root/InventoryPanel/Use").disabled and not Game.use_item("bandage") and Game.count_item("bandage") == 1, "Medical item cannot be wasted at full health")
     Game.health = 60
     Game.changed.emit()
-    hud.select_slot(slot_for("bandage"))
+    hud.select_item(slot_for("bandage"))
     hud.get_node("Root/InventoryPanel/Use").pressed.emit()
     check(Game.health == 90 and Game.count_item("bandage") == 0, "Inventory Use consumes one dressing and heals 30")
     Game.add_item("cloth")
     Game.add_item("antiseptic")
-    hud.select_slot(slot_for("cloth"))
+    hud.select_item(slot_for("cloth"))
     hud.get_node("Root/InventoryPanel/Combine").pressed.emit()
-    hud.get_node("Root/InventoryPanel/Slots").get_child(slot_for("antiseptic")).pressed.emit()
+    hud.select_item(slot_for("antiseptic"))
     check(Game.count_item("cloth") == 0 and Game.count_item("antiseptic") == 0 and Game.count_item("bandage") == 1, "Inventory Combine crafts from the selected pair")
     check(hud.get_node("Root/InventoryPanel/ItemName").text == "Field dressing", "Combination result is selected for immediate inspection")
     hud.close_panels()
@@ -129,9 +126,13 @@ func run() -> void:
     await get_tree().create_timer(0.9).timeout
     check(gate.opened and gate.get_node("Barrier/CollisionShape2D").disabled, "Carried tool opens chained route with E")
     check(Game.count_item("bolt_cutters") == 1, "Route-opening tool is reusable")
-    Game.save_run()
+    var test_bike: Area2D = load("res://scenes/objects/save_bicycle.tscn").instantiate()
+    test_bike.position = Vector2(1200,620)
+    alley.get_node("Interactables").add_child(test_bike)
+    player.position = Vector2(1170,588)
+    check(Game.save_slot(0, test_bike), "Save unlocked route at a placed bicycle")
     Game.item_catalog.erase("bolt_cutters")
-    Game.continue_game()
+    Game.load_slot(0)
     await frames(10)
     alley = get_tree().current_scene
     gate = alley.get_node("Interactables/ToolGate")

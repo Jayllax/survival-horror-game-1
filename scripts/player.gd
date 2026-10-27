@@ -28,6 +28,7 @@ var animation_time := 0.0
 var coyote_remaining := 0.0
 var jump_buffer := 0.0
 var combat_remaining := 0.0
+var weapon_uid := -2
 @export var combat_feedback_seconds: float = 1.8
 @export_range(0.1, 1.0) var aiming_move_multiplier: float = 0.55
 @onready var body_art: Sprite2D = $Body
@@ -37,9 +38,26 @@ var combat_remaining := 0.0
 
 func _ready() -> void:
     add_to_group("player")
+    Game.changed.connect(sync_weapon)
+    sync_weapon()
     Game.magazine = mini(Game.magazine, magazine_size)
     Game.changed.emit()
     flashlight_light.enabled = Game.flashlight_on
+
+func sync_weapon() -> void:
+    var definition := Game.active_weapon()
+    if Game.equipped_uid != weapon_uid:
+        reload_remaining = 0
+        combat_remaining = 0
+        shot_cooldown = 0
+        muzzle.energy = 0
+        weapon_uid = Game.equipped_uid
+    $Aim/Gun.texture = definition.weapon_texture if definition else null
+    if definition:
+        magazine_size = definition.magazine_size
+        bullet_damage = definition.bullet_damage
+        shot_interval = definition.shot_interval
+        reload_seconds = definition.reload_seconds
 
 func _physics_process(delta: float) -> void:
     combat_remaining = maxf(0, combat_remaining - delta)
@@ -59,9 +77,10 @@ func _physics_process(delta: float) -> void:
     if reload_remaining > 0:
         reload_remaining = maxf(0.0, reload_remaining - delta)
         if reload_remaining == 0:
-            var needed: int = mini(magazine_size - Game.magazine, Game.count_item("ammo"))
+            var ammo_id := Game.active_weapon().ammunition_id
+            var needed: int = mini(magazine_size - Game.magazine, Game.count_item(ammo_id))
             if needed > 0:
-                Game.take_item("ammo", needed)
+                Game.take_item(ammo_id, needed)
                 Game.magazine += needed
                 Game.changed.emit()
     $Aim/Gun.position.x = move_toward($Aim/Gun.position.x, 18.0, delta * 40.0)
@@ -89,7 +108,7 @@ func _physics_process(delta: float) -> void:
     if Input.is_action_just_pressed("dodge") and dodge_cooldown <= 0:
         begin_dodge(direction if direction != 0 else facing)
     velocity.x = dodge_direction * dodge_speed if dodge_remaining > 0 else move_toward(velocity.x, direction * move_speed, acceleration * delta)
-    if Input.is_action_pressed("aim") and dodge_remaining <= 0:
+    if Game.has_equipped_weapon() and Input.is_action_pressed("aim") and dodge_remaining <= 0:
         velocity.x = move_toward(velocity.x, direction * move_speed * aiming_move_multiplier, acceleration * delta)
     move_and_slide()
     if Input.is_action_just_pressed("flashlight"):
@@ -112,7 +131,7 @@ func begin_dodge(direction: float) -> void:
     dodge_cooldown = 1.05
 
 func shoot() -> void:
-    if shot_cooldown > 0 or reload_remaining > 0 or dodge_remaining > 0:
+    if not Game.has_equipped_weapon() or shot_cooldown > 0 or reload_remaining > 0 or dodge_remaining > 0:
         return
     shot_cooldown = shot_interval
     if Game.magazine <= 0:
@@ -143,9 +162,9 @@ func shoot() -> void:
     tween.tween_callback(tracer.queue_free)
 
 func reload_weapon() -> void:
-    if reload_remaining > 0 or Game.magazine >= magazine_size:
+    if not Game.has_equipped_weapon() or reload_remaining > 0 or Game.magazine >= magazine_size:
         return
-    if Game.count_item("ammo") == 0:
+    if Game.count_item(Game.active_weapon().ammunition_id) == 0:
         Game.message.emit("No spare ammunition.")
         return
     reload_remaining = reload_seconds
@@ -173,7 +192,7 @@ func take_damage(amount: int) -> void:
     $HurtSound.play()
     Game.changed.emit()
     if Game.health <= 0:
-        Game.message.emit("Health depleted. Load checkpoint to resume.")
+        Game.message.emit("Health depleted. Load a saved game to resume.")
 
 func update_interaction() -> void:
     nearest = null
@@ -190,4 +209,4 @@ func update_interaction() -> void:
         hud.set_interaction(nearest)
 
 func is_aiming() -> bool:
-    return Input.is_action_pressed("aim") or combat_remaining > 0 or reload_remaining > 0
+    return Game.has_equipped_weapon() and (Input.is_action_pressed("aim") or combat_remaining > 0 or reload_remaining > 0)

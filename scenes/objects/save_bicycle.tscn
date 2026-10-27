@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3]
+[ext_resource type="Script" path="res://scripts/save_station.gd" id="script"]
+[ext_resource type="Texture2D" path="res://art/pixel/bicycle.png" id="art"]
+[ext_resource type="AudioStream" path="res://audio/bicycle_bell.wav" id="bell"]
+[sub_resource type="RectangleShape2D" id="area"]
+size = Vector2(64, 56)
+[node name="SaveBicycle" type="Area2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("script")
+station_name = "Bicycle"
+[node name="Bell" type="Node2D" parent="."]
+[node name="Bicycle" type="Sprite2D" parent="Bell"]
+position = Vector2(0, -28)
+scale = Vector2(2, 2)
+texture_filter = 1
+texture = ExtResource("art")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -28)
+shape = SubResource("area")
+[node name="SaveSpawn" type="Marker2D" parent="."]
+position = Vector2(-56, -32)
+[node name="BellSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("bell")
+volume_db = -5.0
+max_distance = 600.0

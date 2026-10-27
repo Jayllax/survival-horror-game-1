@@ -1,11 +1,12 @@
-[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3]
-[ext_resource type="Script" path="res://scripts/item_definition.gd" id="1"]
-[ext_resource type="Texture2D" path="res://art/pixel/fuse.png" id="2"]
+[gd_resource type="Resource" script_class="InventoryItemDefinition" format=3 uid="uid://dypxyyigtqp5t"]
+
+[ext_resource type="Script" uid="uid://ysok34dxqtu8" path="res://scripts/item_definition.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://cbhpijo3s3bnc" path="res://art/pixel/fuse.png" id="2"]
+
 [resource]
 script = ExtResource("1")
 id = "fuse"
 display_name = "Ceramic fuse"
-category = "Puzzle object"
-description = "A replaceable electrical fuse. Can be fitted into a compatible switchboard. Using it frees its inventory pocket."
+description = "An electrical fuse."
 icon = ExtResource("2")
-max_stack = 1
+grid_size = Vector2i(2, 1)

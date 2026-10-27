@@ -27,7 +27,6 @@ func travel(path: String, destination_spawn: String) -> void:
         await tree.process_frame
         while tree.current_scene == null or not tree.current_scene.is_node_ready():
             await tree.process_frame
-        Game.save_run()
     else:
         Game.spawn_id = previous_spawn
         Game.message.emit("Unable to load destination.")

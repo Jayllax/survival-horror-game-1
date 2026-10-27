@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="InventoryCatalog" load_steps=12 format=3]
+[gd_resource type="Resource" script_class="InventoryCatalog" load_steps=13 format=3]
 [ext_resource type="Script" path="res://scripts/item_catalog.gd" id="script"]
 [ext_resource type="Script" path="res://scripts/item_definition.gd" id="item_type"]
 [ext_resource type="Script" path="res://scripts/item_recipe.gd" id="recipe_type"]
@@ -10,7 +10,8 @@
 [ext_resource type="Resource" path="res://data/items/cloth.tres" id="item5"]
 [ext_resource type="Resource" path="res://data/items/antiseptic.tres" id="item6"]
 [ext_resource type="Resource" path="res://data/recipes/field_dressing.tres" id="recipe"]
+[ext_resource type="Resource" path="res://data/items/pistol.tres" id="pistol"]
 [resource]
 script = ExtResource("script")
-items = Array[ExtResource("item_type")]([ExtResource("item0"),ExtResource("item1"),ExtResource("item2"),ExtResource("item3"),ExtResource("item4"),ExtResource("item5"),ExtResource("item6")])
+items = Array[ExtResource("item_type")]([ExtResource("item0"),ExtResource("item1"),ExtResource("item2"),ExtResource("item3"),ExtResource("item4"),ExtResource("item5"),ExtResource("item6"),ExtResource("pistol")])
 recipes = Array[ExtResource("recipe_type")]([ExtResource("recipe")])

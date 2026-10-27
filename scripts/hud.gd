@@ -8,8 +8,9 @@ var message_remaining := 0.0
 var health_remaining := 0.0
 var pickup_remaining := 0.0
 var previous_health := 100
-var selected_slot := 0
-var combining_id := ""
+var selected_uid := -1
+var combining_uid := -1
+var return_to_pause := false
 var interaction_target: Area2D
 var puzzle_target: Area2D
 var dials := Vector3i(1, 1, 1)
@@ -22,11 +23,10 @@ func _ready() -> void:
     Game.changed.connect(refresh)
     Game.message.connect(show_message)
     Game.item_collected.connect(on_item_collected)
-    Game.checkpoint_saved.connect(on_checkpoint_saved)
     $Root/PausePanel/Resume.pressed.connect(toggle_pause)
-    $Root/PausePanel/Retry.pressed.connect(Game.retry_checkpoint)
+    $Root/PausePanel/Retry.pressed.connect(open_load_menu)
+    $SaveMenu.closed.connect(on_save_menu_closed)
     $Root/PausePanel/Menu.pressed.connect(back_to_menu)
-    $Root/PausePanel/Save.pressed.connect(Game.save_run)
     $Root/InventoryPanel/Use.pressed.connect(use_selected)
     $Root/InventoryPanel/Combine.pressed.connect(begin_combine)
     $Root/PausePanel/Controls.pressed.connect(show_controls)
@@ -35,10 +35,9 @@ func _ready() -> void:
         $Root/PausePanel.show())
     for path in ["InventoryPanel", "NotePanel", "PuzzlePanel"]:
         root.get_node(path + "/Close").pressed.connect(close_panels)
-    for i in 8:
-        var slot: Button = $Root/InventoryPanel/Slots.get_child(i)
-        slot.pressed.connect(select_slot.bind(i))
-        slot.focus_entered.connect(select_slot.bind(i))
+    $Root/InventoryPanel/Grid.item_selected.connect(select_item)
+    $Root/InventoryPanel/Grid.feedback.connect(inventory_feedback)
+    $Root/InventoryPanel/Rotate.pressed.connect(func(): $Root/InventoryPanel/Grid.rotate_item())
     for i in 3:
         $Root/PuzzlePanel.get_node("Dial%d" % (i+1)).pressed.connect(cycle_dial.bind(i))
     $Root/PuzzlePanel/Submit.pressed.connect(submit_puzzle)
@@ -71,16 +70,26 @@ func _process(delta: float) -> void:
     $Root/HealthBrief.modulate.a = minf(health_remaining, 1.0) if Game.health > 25 else 1.0
     $Root/PickupHint.visible = playing and show_pickup_hint and pickup_remaining > 0 and not combat
 
-func _unhandled_input(event: InputEvent) -> void:
-    if Game.transitioning:
+func _input(event: InputEvent) -> void:
+    if Game.transitioning or $SaveMenu.is_open():
+        return
+    if event.is_echo():
+        if $Root/InventoryPanel.visible and event.is_action("inventory"):
+            get_viewport().set_input_as_handled()
         return
     if event.is_action_pressed("pause"):
+        if $Root/InventoryPanel.visible and $Root/InventoryPanel/Grid.cancel_drag():
+            get_viewport().set_input_as_handled()
+            return
         if any_panel_open():
             close_panels()
         else:
             toggle_pause()
         get_viewport().set_input_as_handled()
-    elif event.is_action_pressed("inventory") and Game.health > 0:
+    elif $Root/InventoryPanel.visible and event.is_action_pressed("inventory_rotate"):
+        $Root/InventoryPanel/Grid.rotate_item()
+        get_viewport().set_input_as_handled()
+    elif event.is_action_pressed("inventory") and Game.health > 0 and ($Root/InventoryPanel.visible or not any_panel_open()):
         if $Root/InventoryPanel.visible:
             close_panels()
         elif not any_panel_open():
@@ -96,7 +105,9 @@ func any_panel_open() -> bool:
 func close_panels() -> void:
     if Game.health <= 0:
         return
-    combining_id = ""
+    combining_uid = -1
+    $Root/InventoryPanel/Grid.combining = false
+    $Root/InventoryPanel/Grid.cancel_drag()
     for path in ["PausePanel", "InventoryPanel", "NotePanel", "PuzzlePanel", "ControlsPanel"]:
         root.get_node(path).hide()
     get_tree().paused = false
@@ -106,90 +117,102 @@ func toggle_pause() -> void:
         return
     var should_open: bool = not $Root/PausePanel.visible
     close_panels()
+    $Root/PausePanel/Retry.disabled = not Game.has_saves()
     $Root/PausePanel.visible = should_open
     get_tree().paused = should_open
 
 func open_inventory() -> void:
-    refresh()
+    inventory_feedback("Drag items to move · R to rotate · Esc cancels a drag")
     $Root/InventoryPanel.show()
     get_tree().paused = true
-    if Game.slots[selected_slot].is_empty():
-        for i in 8:
-            if not Game.slots[i].is_empty():
-                selected_slot = i
-                break
-    select_slot(selected_slot)
-    $Root/InventoryPanel/Slots.get_child(selected_slot).grab_focus()
+    refresh()
+    var grid: Control = $Root/InventoryPanel/Grid
+    grid.grab_focus()
+    var item := Game.inventory.entry(selected_uid)
+    grid.keyboard_cell = Vector2i(item["x"], item["y"]) if not item.is_empty() else Vector2i.ZERO
     pickup_remaining = 0
 
-func select_slot(index: int) -> void:
-    if not combining_id.is_empty() and not Game.slots[index].is_empty():
-        var first := combining_id
-        combining_id = ""
-        var combined := Game.combine_items(first, Game.slots[index]["id"])
-        selected_slot = index
-        if combined:
-            for i in 8:
-                if Game.slots[i].get("id", "") == Game.last_combined_id:
-                    selected_slot = i
-                    break
-        refresh()
-        if combined:
-            $Root/InventoryPanel/Category.text += " · COMBINED"
+func inventory_feedback(text: String) -> void:
+    $Root/InventoryPanel/Help.text = text
+
+func select_item(uid: int) -> void:
+    if combining_uid >= 0:
+        var first := combining_uid
+        combining_uid = -1
+        $Root/InventoryPanel/Grid.combining = false
+        selected_uid = first
+        if Game.combine_uids(first, uid):
+            if Game.inventory.entry(first).get("id", "") != Game.last_combined_id:
+                selected_uid = Game.inventory.first_uid(Game.last_combined_id)
+            inventory_feedback("Items combined.")
         else:
-            $Root/InventoryPanel/Description.text = "These items cannot be combined, or there is no room for the result."
-        return
-    selected_slot = index
-    for i in 8:
-        $Root/InventoryPanel/Slots.get_child(i).set_pressed_no_signal(i == index)
-    var slot: Dictionary = Game.slots[index]
-    if slot.is_empty():
+            inventory_feedback("These items cannot combine, or there is no room for the result.")
+    else:
+        selected_uid = uid
+    update_selection()
+
+func update_selection() -> void:
+    var item := Game.inventory.entry(selected_uid)
+    $Root/InventoryPanel/Grid.selected_uid = selected_uid
+    $Root/InventoryPanel/Grid.queue_redraw()
+    if item.is_empty():
         $Root/InventoryPanel/Portrait.texture = null
-        $Root/InventoryPanel/ItemName.text = "Empty pocket"
+        $Root/InventoryPanel/ItemName.text = "Select an item"
         $Root/InventoryPanel/Category.text = ""
         $Root/InventoryPanel/Description.text = ""
         $Root/InventoryPanel/Quantity.text = ""
+        $Root/InventoryPanel/Footprint.text = ""
+        $Root/InventoryPanel/Use.text = "Use"
         $Root/InventoryPanel/Use.disabled = true
         $Root/InventoryPanel/Combine.disabled = true
+        $Root/InventoryPanel/Rotate.disabled = true
         return
-    var id: String = slot["id"]
+    var id: String = item["id"]
     var definition: InventoryItemDefinition = Game.item_catalog.get(id)
-    $Root/InventoryPanel/Use.disabled = not definition or definition.heal_amount <= 0 or Game.health >= 100
+    var weapon := definition != null and definition.is_weapon
+    $Root/InventoryPanel/Use.text = ("Unequip" if Game.equipped_uid == selected_uid else "Equip") if weapon else "Use"
+    $Root/InventoryPanel/Use.disabled = not weapon and (not definition or definition.heal_amount <= 0 or Game.health >= 100)
     $Root/InventoryPanel/Combine.disabled = not Game.can_combine(id)
+    $Root/InventoryPanel/Rotate.disabled = definition != null and not definition.can_rotate
     $Root/InventoryPanel/Portrait.texture = Game.item_icon(id)
     $Root/InventoryPanel/ItemName.text = Game.item_name(id)
-    $Root/InventoryPanel/Category.text = Game.item_category(id).to_upper()
+    $Root/InventoryPanel/Category.text = Game.item_category(id).to_upper() + (" · EQUIPPED" if Game.equipped_uid == selected_uid else "")
     $Root/InventoryPanel/Description.text = Game.item_description(id)
-    $Root/InventoryPanel/Quantity.text = "QUANTITY  %d" % slot["count"]
+    $Root/InventoryPanel/Quantity.text = "LOADED %d / %d" % [item["magazine"], definition.magazine_size] if weapon else "QUANTITY  %d" % item["count"]
+    var footprint := Game.inventory.dimensions(id, item["rotated"])
+    $Root/InventoryPanel/Footprint.text = "%d × %d CELLS%s" % [footprint.x, footprint.y, " · ROTATED" if item["rotated"] else ""]
 
 func use_selected() -> void:
-    if Game.slots[selected_slot].is_empty():
-        return
-    var id: String = Game.slots[selected_slot]["id"]
-    if Game.use_item(id):
-        refresh()
+    var item := Game.inventory.entry(selected_uid)
+    var definition: InventoryItemDefinition = Game.item_catalog.get(item.get("id", ""))
+    if definition and definition.is_weapon:
+        Game.equip_weapon(selected_uid)
+    else:
+        Game.use_uid(selected_uid)
 
 func begin_combine() -> void:
-    if Game.slots[selected_slot].is_empty():
+    if Game.inventory.entry(selected_uid).is_empty():
         return
-    combining_id = Game.slots[selected_slot]["id"]
-    $Root/InventoryPanel/Description.text = "Choose a second item to combine with this one. Close the inventory to cancel."
+    combining_uid = selected_uid
+    $Root/InventoryPanel/Grid.combining = true
+    inventory_feedback("Select a second item to combine. Close the inventory to cancel.")
+    $Root/InventoryPanel/Grid.grab_focus()
 
 func refresh() -> void:
     if Game.health < previous_health:
         health_remaining = health_feedback_seconds
     previous_health = Game.health
     $Root/HealthBrief.value = Game.health
-    $Root/Ammo.text = "%d  /  %d" % [Game.magazine, Game.count_item("ammo")]
+    var definition := Game.active_weapon()
+    var ammo_id := definition.ammunition_id if definition else "ammo"
+    $Root/Ammo.text = "%d  /  %d" % [Game.magazine, Game.count_item(ammo_id)]
     var condition: String = "Stable" if Game.health > 60 else ("Wounded" if Game.health > 25 else "Critical")
     $Root/InventoryPanel/Condition.text = "CONDITION  %s  ·  %d%%" % [condition, Game.health]
-    $Root/InventoryPanel/WeaponStatus.text = "HANDGUN  %d loaded  /  %d spare" % [Game.magazine, Game.count_item("ammo")]
-    for i in 8:
-        var slot: Dictionary = Game.slots[i]
-        var button: Button = $Root/InventoryPanel/Slots.get_child(i)
-        button.get_node("Icon").texture = null if slot.is_empty() else Game.item_icon(slot["id"])
-        button.get_node("Count").text = str(slot["count"]) if not slot.is_empty() and int(slot["count"]) > 1 else ""
-    select_slot(selected_slot)
+    $Root/InventoryPanel/WeaponStatus.text = "%s  %d loaded / %d spare" % [definition.display_name.to_upper(), Game.magazine, Game.count_item(ammo_id)] if definition else "NO WEAPON EQUIPPED"
+    $Root/InventoryPanel/Equipment.text = "FLASHLIGHT · EQUIPPED     GRID %d × %d" % [Game.inventory.columns, Game.inventory.rows]
+    if Game.inventory.entry(selected_uid).is_empty():
+        selected_uid = int(Game.inventory.entries[0]["uid"]) if not Game.inventory.entries.is_empty() else -1
+    update_selection()
     if Game.health <= 0:
         for path in ["InventoryPanel", "NotePanel", "PuzzlePanel", "ControlsPanel"]:
             root.get_node(path).hide()
@@ -197,7 +220,8 @@ func refresh() -> void:
         get_tree().paused = true
         $Root/PausePanel/Title.text = "HEALTH DEPLETED"
         $Root/PausePanel/Resume.disabled = true
-        $Root/PausePanel/Save.disabled = true
+        $Root/PausePanel/Retry.disabled = not Game.has_saves()
+        $Root/PausePanel/Subtitle.text = "Load a saved game or return to the main menu."
 
 func set_interaction(target: Area2D) -> void:
     interaction_target = target
@@ -211,9 +235,22 @@ func on_item_collected(_id: String) -> void:
     pickup_remaining = pickup_hint_seconds
     set_interaction(null)
 
-func on_checkpoint_saved() -> void:
-    if $Root/PausePanel.visible:
-        $Root/PausePanel/Subtitle.text = "Checkpoint saved."
+func show_save_station(station: Area2D) -> void:
+    if any_panel_open() or $SaveMenu.is_open() or Game.health <= 0:
+        return
+    return_to_pause = false
+    $SaveMenu.open_save(station)
+
+func open_load_menu() -> void:
+    return_to_pause = true
+    $Root/PausePanel.hide()
+    $SaveMenu.open_load()
+
+func on_save_menu_closed() -> void:
+    if return_to_pause:
+        $Root/PausePanel.show()
+        get_tree().paused = true
+    return_to_pause = false
 
 func show_message(text: String) -> void:
     $Root/Message.text = text
