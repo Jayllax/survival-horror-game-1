@@ -6,21 +6,7 @@ collision_layer = 0
 collision_mask = 0
 script = ExtResource("1")
 kind = 2
-prompt_text = "Use the switchboard"
 item_id = "ammo"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2")
-[node name="Indicator" type="Polygon2D" parent="."]
-position = Vector2(0, -65)
-polygon = PackedVector2Array(0,-5, 4,0, 0,5, -4,0)
-color = Color(0.95, 0.77, 0.43, 1)
-[node name="EditorLabel" type="Label" parent="."]
-offset_left = -65.0
-offset_top = 55.0
-offset_right = 65.0
-offset_bottom = 75.0
-text = "SWITCHBOARD"
-horizontal_alignment = 1
-modulate = Color(0.7, 0.73, 0.65, 1)
-theme_override_font_sizes/font_size = 11

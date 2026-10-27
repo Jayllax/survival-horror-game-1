@@ -27,6 +27,9 @@ var feedback_time := 0.0
 var animation_time := 0.0
 var coyote_remaining := 0.0
 var jump_buffer := 0.0
+var combat_remaining := 0.0
+@export var combat_feedback_seconds: float = 1.8
+@export_range(0.1, 1.0) var aiming_move_multiplier: float = 0.55
 @onready var body_art: Sprite2D = $Body
 @onready var aim: Node2D = $Aim
 @onready var flashlight_light: PointLight2D = $Aim/Gun/Flashlight
@@ -39,6 +42,7 @@ func _ready() -> void:
     flashlight_light.enabled = Game.flashlight_on
 
 func _physics_process(delta: float) -> void:
+    combat_remaining = maxf(0, combat_remaining - delta)
     invulnerable_remaining = maxf(0.0, invulnerable_remaining - delta)
     dodge_remaining = maxf(0.0, dodge_remaining - delta)
     dodge_cooldown = maxf(0.0, dodge_cooldown - delta)
@@ -85,6 +89,8 @@ func _physics_process(delta: float) -> void:
     if Input.is_action_just_pressed("dodge") and dodge_cooldown <= 0:
         begin_dodge(direction if direction != 0 else facing)
     velocity.x = dodge_direction * dodge_speed if dodge_remaining > 0 else move_toward(velocity.x, direction * move_speed, acceleration * delta)
+    if Input.is_action_pressed("aim") and dodge_remaining <= 0:
+        velocity.x = move_toward(velocity.x, direction * move_speed * aiming_move_multiplier, acceleration * delta)
     move_and_slide()
     if Input.is_action_just_pressed("flashlight"):
         flashlight_light.enabled = not flashlight_light.enabled
@@ -110,8 +116,9 @@ func shoot() -> void:
         return
     shot_cooldown = shot_interval
     if Game.magazine <= 0:
-        Game.message.emit("Empty magazine. Press R to reload.")
+        combat_remaining = combat_feedback_seconds
         return
+    combat_remaining = combat_feedback_seconds
     Game.magazine -= 1
     Game.changed.emit()
     $ShotSound.play()
@@ -142,7 +149,7 @@ func reload_weapon() -> void:
         Game.message.emit("No spare ammunition.")
         return
     reload_remaining = reload_seconds
-    Game.message.emit("Reloading…")
+    combat_remaining = reload_seconds + 1.0
 
 func melee() -> void:
     if melee_cooldown > 0 or dodge_remaining > 0:
@@ -180,4 +187,7 @@ func update_interaction() -> void:
             nearest = object
     var hud := get_tree().get_first_node_in_group("hud")
     if hud:
-        hud.set_prompt("[E] " + nearest.prompt_text if is_instance_valid(nearest) else "")
+        hud.set_interaction(nearest)
+
+func is_aiming() -> bool:
+    return Input.is_action_pressed("aim") or combat_remaining > 0 or reload_remaining > 0

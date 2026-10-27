@@ -190,13 +190,11 @@ color = Color(0.15,0.2,0.21,1)
 position = Vector2(560, 556)
 destination_scene = "res://scenes/levels/interior.tscn"
 destination_spawn = "from_street"
-prompt_text = "Enter building"
 
 [node name="AlleyEntrance" parent="Interactables" instance=ExtResource("4")]
 position = Vector2(1240, 556)
 destination_scene = "res://scenes/levels/alley.tscn"
 destination_spawn = "from_street"
-prompt_text = "Go down alley"
 interaction_radius = 110.0
 
 [node name="ShopNumber" type="Label" parent="Buildings"]

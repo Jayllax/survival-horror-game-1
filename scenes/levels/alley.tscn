@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3]
+[gd_scene load_steps=28 format=3]
 [ext_resource type="Script" path="res://scripts/location.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/actors/player.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="3"]
@@ -22,6 +22,8 @@
 [ext_resource type="AudioStream" path="res://audio/town_drone.wav" id="21"]
 [ext_resource type="Script" path="res://scripts/ambient.gd" id="22"]
 [ext_resource type="PackedScene" path="res://scenes/objects/bollard.tscn" id="23"]
+[ext_resource type="PackedScene" path="res://scenes/objects/chained_gate.tscn" id="gate"]
+[ext_resource type="PackedScene" path="res://scenes/objects/bandage.tscn" id="bandage"]
 [sub_resource type="RectangleShape2D" id="floor"]
 size = Vector2(1500, 120)
 [sub_resource type="RectangleShape2D" id="wall"]
@@ -158,7 +160,6 @@ position = Vector2(1180, 620)
 position = Vector2(140, 556)
 destination_scene = "res://scenes/levels/town.tscn"
 destination_spawn = "from_alley"
-prompt_text = "Return to street"
 
 [node name="Ammo" parent="Interactables" instance=ExtResource("15")]
 position = Vector2(1030, 595)
@@ -174,3 +175,9 @@ position = Vector2(250,588)
 
 [node name="from_street" type="Marker2D" parent="Spawns"]
 position = Vector2(250,588)
+
+[node name="ToolGate" parent="Interactables" instance=ExtResource("gate")]
+position = Vector2(1310,535)
+
+[node name="MedicalSupply" parent="Interactables" instance=ExtResource("bandage")]
+position = Vector2(1445,592)

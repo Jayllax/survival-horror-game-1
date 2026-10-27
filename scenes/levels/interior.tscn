@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3]
+[gd_scene load_steps=29 format=3]
 [ext_resource type="Script" path="res://scripts/location.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/actors/player.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="3"]
@@ -22,6 +22,9 @@
 [ext_resource type="AudioStream" path="res://audio/town_drone.wav" id="21"]
 [ext_resource type="Script" path="res://scripts/ambient.gd" id="22"]
 [ext_resource type="PackedScene" path="res://scenes/objects/bollard.tscn" id="23"]
+[ext_resource type="PackedScene" path="res://scenes/objects/cloth.tscn" id="extra0"]
+[ext_resource type="PackedScene" path="res://scenes/objects/antiseptic.tscn" id="extra1"]
+[ext_resource type="PackedScene" path="res://scenes/objects/bolt_cutters.tscn" id="extra2"]
 [sub_resource type="RectangleShape2D" id="floor"]
 size = Vector2(1152, 120)
 [sub_resource type="RectangleShape2D" id="wall"]
@@ -130,7 +133,6 @@ quantity = 12
 position = Vector2(150, 556)
 destination_scene = "res://scenes/levels/town.tscn"
 destination_spawn = "from_shop"
-prompt_text = "Return to street"
 
 [node name="InteriorLamp" parent="Props" instance=ExtResource("5")]
 position = Vector2(960, 620)
@@ -141,3 +143,12 @@ position = Vector2(250,588)
 
 [node name="from_street" type="Marker2D" parent="Spawns"]
 position = Vector2(250,588)
+
+[node name="Cloth" parent="Interactables" instance=ExtResource("extra0")]
+position = Vector2(440,592)
+
+[node name="Antiseptic" parent="Interactables" instance=ExtResource("extra1")]
+position = Vector2(880,592)
+
+[node name="BoltCutters" parent="Interactables" instance=ExtResource("extra2")]
+position = Vector2(1050,592)

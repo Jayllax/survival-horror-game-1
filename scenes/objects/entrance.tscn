@@ -10,7 +10,6 @@ script = ExtResource("1")
 kind = 5
 required_key = ""
 requires_power = false
-prompt_text = "Enter"
 interaction_radius = 110.0
 [node name="Facade" type="Sprite2D" parent="."]
 texture = ExtResource("2")

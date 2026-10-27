@@ -1,15 +1,31 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=7 format=3]
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1"]
 [ext_resource type="FontFile" path="res://art/fonts/Silkscreen-Regular.ttf" id="pixel_font"]
 [sub_resource type="StyleBoxFlat" id="panel"]
 bg_color = Color(0.065, 0.095, 0.11, 0.98)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.48, 0.44, 0.33, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.25, 0.31, 0.30, 1)
 content_margin_left = 16.0
 content_margin_top = 16.0
+[sub_resource type="StyleBoxFlat" id="slot"]
+bg_color = Color(0.07, 0.11, 0.12, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.24, 0.3, 0.29, 1)
+[sub_resource type="StyleBoxFlat" id="selected"]
+bg_color = Color(0.19, 0.22, 0.20, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.76, 0.68, 0.49, 1)
+[sub_resource type="StyleBoxFlat" id="health"]
+bg_color = Color(0.61, 0.24, 0.20, 0.85)
 [node name="HUD" type="CanvasLayer"]
 layer = 10
 script = ExtResource("1")
@@ -22,107 +38,423 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="TopShade" type="ColorRect" parent="Root"]
+
+[node name="Backdrop" type="ColorRect" parent="Root"]
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 1152.0
-offset_bottom = 86.0
-color = Color(0.02, 0.04, 0.05, 0.75)
-mouse_filter = 2
-
-[node name="Health" type="Label" parent="Root"]
-offset_left = 28.0
-offset_top = 16.0
-offset_right = 208.0
-offset_bottom = 46.0
-theme_override_font_sizes/font_size = 22
-text = "VITALS"
-mouse_filter = 2
-
-[node name="Ammo" type="Label" parent="Root"]
-offset_left = 230.0
-offset_top = 16.0
-offset_right = 450.0
-offset_bottom = 46.0
-theme_override_font_sizes/font_size = 22
-text = "9 MM"
-mouse_filter = 2
-
-[node name="Objective" type="Label" parent="Root"]
-offset_left = 28.0
-offset_top = 51.0
-offset_right = 1078.0
-offset_bottom = 77.0
-theme_override_font_sizes/font_size = 17
-text = "Find the notice."
-mouse_filter = 2
-
-[node name="Title" type="Label" parent="Root"]
-offset_left = 930.0
-offset_top = 16.0
-offset_right = 1130.0
-offset_bottom = 51.0
-theme_override_fonts/font = ExtResource("pixel_font")
-theme_override_font_sizes/font_size = 20
-text = "IGNOTUM"
-mouse_filter = 2
-
-[node name="BottomShade" type="ColorRect" parent="Root"]
-offset_left = 0.0
-offset_top = 558.0
-offset_right = 1152.0
 offset_bottom = 648.0
-color = Color(0.02, 0.04, 0.05, 0.8)
-mouse_filter = 2
-
-[node name="Message" type="Label" parent="Root"]
-offset_left = 28.0
-offset_top = 568.0
-offset_right = 1128.0
-offset_bottom = 608.0
-theme_override_font_sizes/font_size = 16
-text = ""
-autowrap_mode = 2
-mouse_filter = 2
-
-[node name="Controls" type="Label" parent="Root"]
-offset_left = 28.0
-offset_top = 618.0
-offset_right = 1128.0
-offset_bottom = 643.0
-theme_override_font_sizes/font_size = 12
-text = "A/D or arrows · Move     Space · Jump     Mouse · Aim / Shoot     R · Reload     Q · Melee     Shift · Dodge     E · Use     F · Light     I · Pockets     Esc · Pause"
+visible = false
+color = Color(0.01,0.02,0.025,0.62)
 mouse_filter = 2
 
 [node name="Prompt" type="Label" parent="Root"]
-offset_left = 370.0
-offset_top = 484.0
-offset_right = 1020.0
-offset_bottom = 520.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 180.0
+offset_bottom = 30.0
+theme_override_font_sizes/font_size = 15
+text = ""
+mouse_filter = 2
+visible = false
+horizontal_alignment = 1
+
+[node name="Message" type="Label" parent="Root"]
+offset_left = 300.0
+offset_top = 594.0
+offset_right = 852.0
+offset_bottom = 630.0
+theme_override_font_sizes/font_size = 15
+text = ""
+mouse_filter = 2
+visible = false
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HealthBrief" type="ProgressBar" parent="Root"]
+offset_left = 32.0
+offset_top = 608.0
+offset_right = 144.0
+offset_bottom = 612.0
+visible = false
+show_percentage = false
+theme_override_styles/fill = SubResource("health")
+mouse_filter = 2
+
+[node name="Ammo" type="Label" parent="Root"]
+offset_left = 952.0
+offset_top = 580.0
+offset_right = 1120.0
+offset_bottom = 608.0
 theme_override_font_sizes/font_size = 20
 text = ""
-autowrap_mode = 2
 mouse_filter = 2
+visible = false
+horizontal_alignment = 2
 
 [node name="Reload" type="Label" parent="Root"]
-offset_left = 28.0
-offset_top = 520.0
-offset_right = 328.0
-offset_bottom = 550.0
-theme_override_font_sizes/font_size = 18
+offset_left = 952.0
+offset_top = 610.0
+offset_right = 1120.0
+offset_bottom = 632.0
+theme_override_font_sizes/font_size = 12
 text = ""
-autowrap_mode = 2
 mouse_filter = 2
+visible = false
+horizontal_alignment = 2
 
-[node name="PausePanel" type="Panel" parent="Root"]
-offset_left = 246.0
-offset_top = 116.0
-offset_right = 906.0
-offset_bottom = 536.0
+[node name="PickupHint" type="Label" parent="Root"]
+offset_left = 1050.0
+offset_top = 610.0
+offset_right = 1120.0
+offset_bottom = 632.0
+theme_override_font_sizes/font_size = 13
+text = "I  +"
+mouse_filter = 2
+visible = false
+horizontal_alignment = 2
+
+[node name="Crosshair" type="Label" parent="Root"]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 16.0
+offset_bottom = 24.0
+theme_override_font_sizes/font_size = 16
+text = "+"
+mouse_filter = 2
+visible = false
+horizontal_alignment = 1
+
+[node name="InventoryPanel" type="Panel" parent="Root"]
+offset_left = 96.0
+offset_top = 74.0
+offset_right = 1056.0
+offset_bottom = 574.0
 visible = false
 theme_override_styles/panel = SubResource("panel")
 
-[node name="InventoryPanel" type="Panel" parent="Root"]
+[node name="Title" type="Label" parent="Root/InventoryPanel"]
+offset_left = 28.0
+offset_top = 22.0
+offset_right = 428.0
+offset_bottom = 54.0
+theme_override_font_sizes/font_size = 22
+text = "INVENTORY"
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("pixel_font")
+
+[node name="Condition" type="Label" parent="Root/InventoryPanel"]
+offset_left = 28.0
+offset_top = 69.0
+offset_right = 448.0
+offset_bottom = 93.0
+theme_override_font_sizes/font_size = 15
+text = ""
+mouse_filter = 2
+
+
+[node name="WeaponStatus" type="Label" parent="Root/InventoryPanel"]
+offset_left = 28.0
+offset_top = 96.0
+offset_right = 448.0
+offset_bottom = 124.0
+theme_override_font_sizes/font_size = 15
+text = ""
+mouse_filter = 2
+
+
+[node name="Slots" type="GridContainer" parent="Root/InventoryPanel"]
+offset_left = 28.0
+offset_top = 152.0
+offset_right = 458.0
+offset_bottom = 376.0
+columns = 4
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+
+[node name="Slot1" type="Button" parent="Root/InventoryPanel/Slots"]
+custom_minimum_size = Vector2(100, 102)
+toggle_mode = true
+theme_override_styles/normal = SubResource("slot")
+theme_override_styles/pressed = SubResource("selected")
+theme_override_styles/hover = SubResource("selected")
+
+[node name="Icon" type="TextureRect" parent="Root/InventoryPanel/Slots/Slot1"]
+offset_left = 18.0
+offset_top = 15.0
+offset_right = 82.0
+offset_bottom = 79.0
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+texture_filter = 1
+
+[node name="Count" type="Label" parent="Root/InventoryPanel/Slots/Slot1"]
+offset_left = 8.0
+offset_top = 78.0
+offset_right = 92.0
+offset_bottom = 98.0
+theme_override_font_sizes/font_size = 13
+text = ""
+mouse_filter = 2
+horizontal_alignment = 2
+
+[node name="Slot2" type="Button" parent="Root/InventoryPanel/Slots"]
+custom_minimum_size = Vector2(100, 102)
+toggle_mode = true
+theme_override_styles/normal = SubResource("slot")
+theme_override_styles/pressed = SubResource("selected")
+theme_override_styles/hover = SubResource("selected")
+
+[node name="Icon" type="TextureRect" parent="Root/InventoryPanel/Slots/Slot2"]
+offset_left = 18.0
+offset_top = 15.0
+offset_right = 82.0
+offset_bottom = 79.0
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+texture_filter = 1
+
+[node name="Count" type="Label" parent="Root/InventoryPanel/Slots/Slot2"]
+offset_left = 8.0
+offset_top = 78.0
+offset_right = 92.0
+offset_bottom = 98.0
+theme_override_font_sizes/font_size = 13
+text = ""
+mouse_filter = 2
+horizontal_alignment = 2
+
+[node name="Slot3" type="Button" parent="Root/InventoryPanel/Slots"]
+custom_minimum_size = Vector2(100, 102)
+toggle_mode = true
+theme_override_styles/normal = SubResource("slot")
+theme_override_styles/pressed = SubResource("selected")
+theme_override_styles/hover = SubResource("selected")
+
+[node name="Icon" type="TextureRect" parent="Root/InventoryPanel/Slots/Slot3"]
+offset_left = 18.0
+offset_top = 15.0
+offset_right = 82.0
+offset_bottom = 79.0
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+texture_filter = 1
+
+[node name="Count" type="Label" parent="Root/InventoryPanel/Slots/Slot3"]
+offset_left = 8.0
+offset_top = 78.0
+offset_right = 92.0
+offset_bottom = 98.0
+theme_override_font_sizes/font_size = 13
+text = ""
+mouse_filter = 2
+horizontal_alignment = 2
+
+[node name="Slot4" type="Button" parent="Root/InventoryPanel/Slots"]
+custom_minimum_size = Vector2(100, 102)
+toggle_mode = true
+theme_override_styles/normal = SubResource("slot")
+theme_override_styles/pressed = SubResource("selected")
+theme_override_styles/hover = SubResource("selected")
+
+[node name="Icon" type="TextureRect" parent="Root/InventoryPanel/Slots/Slot4"]
+offset_left = 18.0
+offset_top = 15.0
+offset_right = 82.0
+offset_bottom = 79.0
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+texture_filter = 1
+
+[node name="Count" type="Label" parent="Root/InventoryPanel/Slots/Slot4"]
+offset_left = 8.0
+offset_top = 78.0
+offset_right = 92.0
+offset_bottom = 98.0
+theme_override_font_sizes/font_size = 13
+text = ""
+mouse_filter = 2
+horizontal_alignment = 2
+
+[node name="Slot5" type="Button" parent="Root/InventoryPanel/Slots"]
+custom_minimum_size = Vector2(100, 102)
+toggle_mode = true
+theme_override_styles/normal = SubResource("slot")
+theme_override_styles/pressed = SubResource("selected")
+theme_override_styles/hover = SubResource("selected")
+
+[node name="Icon" type="TextureRect" parent="Root/InventoryPanel/Slots/Slot5"]
+offset_left = 18.0
+offset_top = 15.0
+offset_right = 82.0
+offset_bottom = 79.0
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+texture_filter = 1
+
+[node name="Count" type="Label" parent="Root/InventoryPanel/Slots/Slot5"]
+offset_left = 8.0
+offset_top = 78.0
+offset_right = 92.0
+offset_bottom = 98.0
+theme_override_font_sizes/font_size = 13
+text = ""
+mouse_filter = 2
+horizontal_alignment = 2
+
+[node name="Slot6" type="Button" parent="Root/InventoryPanel/Slots"]
+custom_minimum_size = Vector2(100, 102)
+toggle_mode = true
+theme_override_styles/normal = SubResource("slot")
+theme_override_styles/pressed = SubResource("selected")
+theme_override_styles/hover = SubResource("selected")
+
+[node name="Icon" type="TextureRect" parent="Root/InventoryPanel/Slots/Slot6"]
+offset_left = 18.0
+offset_top = 15.0
+offset_right = 82.0
+offset_bottom = 79.0
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+texture_filter = 1
+
+[node name="Count" type="Label" parent="Root/InventoryPanel/Slots/Slot6"]
+offset_left = 8.0
+offset_top = 78.0
+offset_right = 92.0
+offset_bottom = 98.0
+theme_override_font_sizes/font_size = 13
+text = ""
+mouse_filter = 2
+horizontal_alignment = 2
+
+[node name="Slot7" type="Button" parent="Root/InventoryPanel/Slots"]
+custom_minimum_size = Vector2(100, 102)
+toggle_mode = true
+theme_override_styles/normal = SubResource("slot")
+theme_override_styles/pressed = SubResource("selected")
+theme_override_styles/hover = SubResource("selected")
+
+[node name="Icon" type="TextureRect" parent="Root/InventoryPanel/Slots/Slot7"]
+offset_left = 18.0
+offset_top = 15.0
+offset_right = 82.0
+offset_bottom = 79.0
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+texture_filter = 1
+
+[node name="Count" type="Label" parent="Root/InventoryPanel/Slots/Slot7"]
+offset_left = 8.0
+offset_top = 78.0
+offset_right = 92.0
+offset_bottom = 98.0
+theme_override_font_sizes/font_size = 13
+text = ""
+mouse_filter = 2
+horizontal_alignment = 2
+
+[node name="Slot8" type="Button" parent="Root/InventoryPanel/Slots"]
+custom_minimum_size = Vector2(100, 102)
+toggle_mode = true
+theme_override_styles/normal = SubResource("slot")
+theme_override_styles/pressed = SubResource("selected")
+theme_override_styles/hover = SubResource("selected")
+
+[node name="Icon" type="TextureRect" parent="Root/InventoryPanel/Slots/Slot8"]
+offset_left = 18.0
+offset_top = 15.0
+offset_right = 82.0
+offset_bottom = 79.0
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+texture_filter = 1
+
+[node name="Count" type="Label" parent="Root/InventoryPanel/Slots/Slot8"]
+offset_left = 8.0
+offset_top = 78.0
+offset_right = 92.0
+offset_bottom = 98.0
+theme_override_font_sizes/font_size = 13
+text = ""
+mouse_filter = 2
+horizontal_alignment = 2
+
+[node name="Equipment" type="Label" parent="Root/InventoryPanel"]
+offset_left = 28.0
+offset_top = 400.0
+offset_right = 458.0
+offset_bottom = 425.0
+theme_override_font_sizes/font_size = 13
+text = "FLASHLIGHT · EQUIPPED"
+mouse_filter = 2
+
+
+[node name="Portrait" type="TextureRect" parent="Root/InventoryPanel"]
+offset_left = 522.0
+offset_top = 34.0
+offset_right = 650.0
+offset_bottom = 162.0
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+texture_filter = 1
+
+[node name="ItemName" type="Label" parent="Root/InventoryPanel"]
+offset_left = 490.0
+offset_top = 184.0
+offset_right = 928.0
+offset_bottom = 250.0
+theme_override_font_sizes/font_size = 25
+text = "Select an item"
+mouse_filter = 2
+autowrap_mode = 2
+
+[node name="Category" type="Label" parent="Root/InventoryPanel"]
+offset_left = 490.0
+offset_top = 253.0
+offset_right = 928.0
+offset_bottom = 281.0
+theme_override_font_sizes/font_size = 14
+text = ""
+mouse_filter = 2
+
+
+[node name="Description" type="Label" parent="Root/InventoryPanel"]
+offset_left = 490.0
+offset_top = 295.0
+offset_right = 928.0
+offset_bottom = 425.0
+theme_override_font_sizes/font_size = 17
+text = ""
+mouse_filter = 2
+autowrap_mode = 2
+
+[node name="Quantity" type="Label" parent="Root/InventoryPanel"]
+offset_left = 700.0
+offset_top = 100.0
+offset_right = 918.0
+offset_bottom = 132.0
+theme_override_font_sizes/font_size = 15
+text = ""
+mouse_filter = 2
+horizontal_alignment = 2
+
+[node name="Close" type="Button" parent="Root/InventoryPanel"]
+offset_left = 28.0
+offset_top = 446.0
+offset_right = 458.0
+offset_bottom = 478.0
+text = "Close   [I / Esc]"
+[node name="PausePanel" type="Panel" parent="Root"]
 offset_left = 246.0
 offset_top = 116.0
 offset_right = 906.0
@@ -157,134 +489,35 @@ mouse_filter = 2
 
 [node name="Subtitle" type="Label" parent="Root/PausePanel"]
 offset_left = 35.0
-offset_top = 89.0
+offset_top = 70.0
 offset_right = 625.0
-offset_bottom = 129.0
+offset_bottom = 95.0
 theme_override_font_sizes/font_size = 18
-text = "Session paused."
+text = ""
 mouse_filter = 2
 
 [node name="Resume" type="Button" parent="Root/PausePanel"]
 offset_left = 35.0
-offset_top = 155.0
+offset_top = 104.0
 offset_right = 625.0
-offset_bottom = 203.0
+offset_bottom = 148.0
 text = "Continue"
 focus_mode = 2
 
 [node name="Retry" type="Button" parent="Root/PausePanel"]
 offset_left = 35.0
-offset_top = 222.0
+offset_top = 216.0
 offset_right = 625.0
-offset_bottom = 270.0
+offset_bottom = 260.0
 text = "Load checkpoint"
 focus_mode = 2
 
 [node name="Menu" type="Button" parent="Root/PausePanel"]
 offset_left = 35.0
-offset_top = 289.0
+offset_top = 328.0
 offset_right = 625.0
-offset_bottom = 337.0
+offset_bottom = 372.0
 text = "Main menu"
-focus_mode = 2
-
-[node name="Title" type="Label" parent="Root/InventoryPanel"]
-offset_left = 25.0
-offset_top = 16.0
-offset_right = 625.0
-offset_bottom = 54.0
-theme_override_font_sizes/font_size = 24
-text = "POCKETS  /  8 SLOTS"
-mouse_filter = 2
-
-[node name="Info" type="Label" parent="Root/InventoryPanel"]
-offset_left = 25.0
-offset_top = 55.0
-offset_right = 635.0
-offset_bottom = 90.0
-theme_override_font_sizes/font_size = 16
-text = "Ammunition stacks to 24. Flashlight is worn equipment."
-mouse_filter = 2
-
-[node name="Slots" type="GridContainer" parent="Root/InventoryPanel"]
-offset_left = 25.0
-offset_top = 100.0
-offset_right = 635.0
-offset_bottom = 324.0
-columns = 4
-theme_override_constants/h_separation = 8
-theme_override_constants/v_separation = 8
-
-[node name="Slot1" type="Label" parent="Root/InventoryPanel/Slots"]
-custom_minimum_size = Vector2(146, 102)
-theme_override_styles/normal = SubResource("panel")
-theme_override_font_sizes/font_size = 14
-text = "1\n— empty —"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Slot2" type="Label" parent="Root/InventoryPanel/Slots"]
-custom_minimum_size = Vector2(146, 102)
-theme_override_styles/normal = SubResource("panel")
-theme_override_font_sizes/font_size = 14
-text = "2\n— empty —"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Slot3" type="Label" parent="Root/InventoryPanel/Slots"]
-custom_minimum_size = Vector2(146, 102)
-theme_override_styles/normal = SubResource("panel")
-theme_override_font_sizes/font_size = 14
-text = "3\n— empty —"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Slot4" type="Label" parent="Root/InventoryPanel/Slots"]
-custom_minimum_size = Vector2(146, 102)
-theme_override_styles/normal = SubResource("panel")
-theme_override_font_sizes/font_size = 14
-text = "4\n— empty —"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Slot5" type="Label" parent="Root/InventoryPanel/Slots"]
-custom_minimum_size = Vector2(146, 102)
-theme_override_styles/normal = SubResource("panel")
-theme_override_font_sizes/font_size = 14
-text = "5\n— empty —"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Slot6" type="Label" parent="Root/InventoryPanel/Slots"]
-custom_minimum_size = Vector2(146, 102)
-theme_override_styles/normal = SubResource("panel")
-theme_override_font_sizes/font_size = 14
-text = "6\n— empty —"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Slot7" type="Label" parent="Root/InventoryPanel/Slots"]
-custom_minimum_size = Vector2(146, 102)
-theme_override_styles/normal = SubResource("panel")
-theme_override_font_sizes/font_size = 14
-text = "7\n— empty —"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Slot8" type="Label" parent="Root/InventoryPanel/Slots"]
-custom_minimum_size = Vector2(146, 102)
-theme_override_styles/normal = SubResource("panel")
-theme_override_font_sizes/font_size = 14
-text = "8\n— empty —"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Close" type="Button" parent="Root/InventoryPanel"]
-offset_left = 25.0
-offset_top = 350.0
-offset_right = 635.0
-offset_bottom = 394.0
-text = "Close pockets [I / Esc]"
 focus_mode = 2
 
 [node name="Title" type="Label" parent="Root/NotePanel"]
@@ -384,30 +617,63 @@ focus_mode = 2
 
 [node name="Save" type="Button" parent="Root/PausePanel"]
 offset_left = 35.0
-offset_top = 355.0
+offset_top = 160.0
 offset_right = 625.0
-offset_bottom = 397.0
+offset_bottom = 204.0
 text = "Save checkpoint"
 
-[node name="HealthBar" type="ProgressBar" parent="Root"]
-offset_left = 28.0
-offset_top = 46.0
-offset_right = 190.0
-offset_bottom = 49.0
-show_percentage = false
+
+[node name="Controls" type="Button" parent="Root/PausePanel"]
+offset_left = 35.0
+offset_top = 272.0
+offset_right = 625.0
+offset_bottom = 316.0
+text = "Controls"
+
+[node name="ControlsPanel" type="Panel" parent="Root"]
+offset_left = 246.0
+offset_top = 96.0
+offset_right = 906.0
+offset_bottom = 552.0
+visible = false
+theme_override_styles/panel = SubResource("panel")
+
+[node name="Title" type="Label" parent="Root/ControlsPanel"]
+offset_left = 30.0
+offset_top = 24.0
+offset_right = 630.0
+offset_bottom = 64.0
+theme_override_font_sizes/font_size = 24
+text = "CONTROLS"
 mouse_filter = 2
-[node name="Dodge" type="Label" parent="Root"]
-offset_left = 470.0
-offset_top = 20.0
-offset_right = 780.0
-offset_bottom = 46.0
-theme_override_font_sizes/font_size = 14
-text = "DODGE READY"
-[node name="Crosshair" type="Label" parent="Root"]
-offset_left = -8.0
-offset_top = -12.0
-offset_right = 8.0
-offset_bottom = 12.0
-text = "+"
+
+
+[node name="Text" type="Label" parent="Root/ControlsPanel"]
+offset_left = 30.0
+offset_top = 86.0
+offset_right = 630.0
+offset_bottom = 366.0
+theme_override_font_sizes/font_size = 18
+text = "A / D or arrows    Move\nSpace    Jump\nRight mouse    Aim / careful movement\nLeft mouse    Shoot\nR    Reload     Q    Melee     Shift    Dodge\nE    Interact with nearby object\nF    Flashlight\nI    Inventory / inspect     Esc    Pause"
 mouse_filter = 2
-horizontal_alignment = 1
+
+
+[node name="Close" type="Button" parent="Root/ControlsPanel"]
+offset_left = 30.0
+offset_top = 386.0
+offset_right = 630.0
+offset_bottom = 430.0
+text = "Back"
+
+[node name="Use" type="Button" parent="Root/InventoryPanel"]
+offset_left = 490.0
+offset_top = 446.0
+offset_right = 698.0
+offset_bottom = 478.0
+text = "Use"
+[node name="Combine" type="Button" parent="Root/InventoryPanel"]
+offset_left = 710.0
+offset_top = 446.0
+offset_right = 928.0
+offset_bottom = 478.0
+text = "Combine"

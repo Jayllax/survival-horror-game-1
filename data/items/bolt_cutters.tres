@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/item_definition.gd" id="1"]
+[ext_resource type="Texture2D" path="res://art/pixel/bolt_cutters.png" id="2"]
+[resource]
+script = ExtResource("1")
+id = "bolt_cutters"
+display_name = "Bolt cutters"
+category = "Tool"
+description = "Cuts compatible chains. Carry it to a chained gate and interact to open the route permanently. This tool is reusable."
+icon = ExtResource("2")
+max_stack = 1
+heal_amount = 0

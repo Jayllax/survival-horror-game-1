@@ -25,7 +25,7 @@ Decorative façades and most street props do not block movement. Platforms, phys
 ## Add a door or alley entrance
 
 1. Drag `scenes/objects/entrance.tscn` into `Interactables`.
-2. Select its root. Set **Prompt Text**, such as “Enter” or “Go down alley”.
+2. Select its root. Set **Action Label**, such as “Enter”.
 3. Set **Destination Scene** with the file picker, such as `scenes/levels/interior.tscn`.
 4. Set **Destination Spawn** to a Marker2D name in that location's `Spawns` branch, such as `from_street`.
 5. Keep **Required Key** empty and **Requires Power** off for an unlocked entrance.
@@ -59,11 +59,41 @@ The flashlight is `Player/Aim/Gun/Flashlight`. It inherits aim and gun recoil. *
 
 Enemies expose Max Health, Speed, Detection Radius, Damage, Attack Interval, Patrol Width. They walk and chase on flat ground, do not navigate jumps, and disappear persistently after defeat. The default enemy takes three handgun hits. Place them on reachable flat surfaces. Their live partial health is not persisted across scene changes.
 
+## Quiet interface and inspectable items
+
+The world view has no permanent HUD bars, location/title labels, controls strip, pickup names, or floating item markers. A nearby object's generic action appears above it: Take, Examine, Use, Open, or Enter. Override **Action Label** for a different short verb, without revealing item identity. **Prompt Offset** positions the prompt relative to the object in world pixels; Interaction Radius controls proximity. Autosaves are silent outside the pause menu.
+
+Health appears briefly after damage, staying visible only at critical health. Select the HUD root to tune Health Feedback Seconds, Pickup Hint Seconds, Message Seconds, or turn Show Pickup Hint off. Select Player to tune Combat Feedback Seconds and Aiming Move Multiplier. Holding right mouse enables careful aiming movement and a small crosshair/ammo readout. Recent shots and reloading also show ammunition temporarily. Inspect exact condition and weapon status in the inventory. The flashlight remains equipped outside the eight pockets. Controls are under Pause → Controls.
+
+Open I and click an item icon, or move focus with arrow keys. Its name, large artwork, category, quantity, and description appear beside the grid. **Use** applies compatible supplies, **Combine** asks for a second item, and selection itself examines the item. Use is disabled at full health for medical items. A failed combination or an output that cannot fit consumes nothing. There is no discard or drag/drop UI.
+
+### Create an item without programming
+
+1. Duplicate a definition in `data/items/` from Godot's FileSystem dock. Open the `.tres` in the Inspector.
+2. Give it a unique stable **Id**, **Display Name**, **Category**, **Description**, **Icon**, and **Max Stack**. **Heal Amount** greater than zero makes it usable medicine.
+3. Open `data/catalog.tres`. Add the definition to its **Items** array. This makes names/icons/descriptions available even before revisiting a pickup's scene after loading.
+4. Duplicate a pickup scene and assign your definition to **Item Definition**. Set **Quantity**, put the matching image on its Sprite2D so it is visible in the editor, and place it. At runtime, the definition's Icon is applied to the pickup too.
+5. Play, collect, and inspect it in the inventory. The world will not label it with its name.
+
+When Item Definition is assigned it supplies Item Id; change the definition's Id rather than the legacy Item Id field. For quick generic keys with no definition, clear Item Definition first and set Item Id. Unknown IDs receive a generic inventory icon/description.
+
+### Create a combination recipe
+
+Duplicate `data/recipes/field_dressing.tres`. Set **Input A**, **Input B**, **Output Id**, and **Output Quantity** using item IDs from the catalog. Add it to **Recipes** in `data/catalog.tres`. Input order does not matter. Both inputs are consumed only when the complete result fits; the inventory restores the original items if the result cannot fit. A recipe can require two units of the same item by using the same ID for both inputs.
+
+The included recipe is clean cloth + antiseptic → field dressing. One dressing restores 30 health, capped at 100. Use never wastes it at full health.
+
+### Reusable tool gates
+
+`scenes/objects/chained_gate.tscn` uses **Required Key = bolt_cutters** and **Consume Key = Off**. Required Key can represent a tool as well as a traditional key. Change it to any carried item ID for another gate type. Once opened, the gate's collision and state remain open across scene changes and checkpoints.
+
+The supplied building has cloth, antiseptic, and bolt cutters. The alley's chained gate blocks access to a dressing. These are replaceable mechanical examples, not narrative objectives. Remove or rearrange them freely.
+
 ## Pickups, notes, and circuits
 
 There are eight pockets. Ammunition stacks to 24. Keys and puzzle objects each occupy one pocket. Full inventories leave pickups in place. Reloading consumes reserves; there is no inventory drag/drop or discard UI.
 
-Reuse `ammo.tscn`, `fuse.tscn`, or `key.tscn`. Change **Item Id**, **Quantity**, **Prompt Text**, and child Sprite2D Texture. Arbitrary item IDs work as keys or circuit inputs; names default to a readable capitalization. Built-ins have friendlier labels.
+Reuse `ammo.tscn`, `fuse.tscn`, or `key.tscn`. Assign **Item Definition**, set **Quantity** and optional **Action Label**, and update child Sprite2D Texture for the editor preview. Arbitrary item IDs work as keys or circuit inputs; names default to a readable capitalization. Built-ins have friendlier labels.
 
 `clue.tscn` is a neutral reference-card example. Set **Description** to your own text. **Kind = Examine** shows it without marking a puzzle reference; **Kind = Clue** records a reference for its Power Channel. Keep text to about nine lines or enlarge the note panel.
 
@@ -95,4 +125,4 @@ CanvasModulate sets ambient darkness. Lamps and the flashlight add real light. F
 
 Play from New Game, enter the building, collect ammo, return, revisit, and confirm it stays collected. Enter the alley, test combat, return, save, go to the menu, Continue, and verify state. Try an empty magazine, full pockets, a wrong puzzle answer, locked entrances, death, and retry. Physical sound and standalone exports still need testing on your computer.
 
-`./tools/check.sh` imports resources and runs automated integration checks. It uses a separate test data directory so your normal checkpoint is not overwritten. `tests/capture.tscn` is an optional graphical screenshot helper for Linux. Tests reference the supplied scene/node names, so update the tests if your intentional design changes rename them.
+`./tools/check.sh` imports resources and runs both gameplay and interface integration suites. It uses a separate test data directory so your normal checkpoint is not overwritten. `tests/capture.tscn` is an optional graphical screenshot helper for Linux. Tests reference the supplied scene/node names, so update the tests if your intentional design changes rename them.

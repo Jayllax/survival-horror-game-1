@@ -8,7 +8,6 @@ collision_layer = 0
 collision_mask = 0
 script = ExtResource("1")
 kind = 3
-prompt_text = "Unlock the eastern gate"
 interaction_radius = 130.0
 [node name="Frame" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-63,-95, 63,-95, 63,87, 54,87, 54,-85, -54,-85, -54,87, -63,87)
@@ -20,12 +19,3 @@ collision_layer = 1
 collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Barrier"]
 shape = SubResource("shape")
-[node name="Sign" type="Label" parent="."]
-offset_left = -120.0
-offset_top = -140.0
-offset_right = 120.0
-offset_bottom = -105.0
-text = "ØSTPORT  /  EXIT"
-horizontal_alignment = 1
-theme_override_font_sizes/font_size = 17
-modulate = Color(0.83, 0.74, 0.55, 1)

@@ -20,13 +20,30 @@ func run() -> void:
         get_tree().root.add_child(location)
         get_tree().current_scene = location
         var player: CharacterBody2D = location.get_node("Actors/Player")
+        var hud: CanvasLayer = location.get_node("HUD")
         await get_tree().create_timer(0.3).timeout
         player.set_physics_process(false)
         player.aim.rotation = 0
+        hud.set_interaction(null)
         await snap("/tmp/ignotum-" + name + ".png")
         if name == "town":
-            player.position.x = 900
-            await snap("/tmp/ignotum-alley-entrance.png")
+            player.combat_remaining = 10
+            await snap("/tmp/ignotum-combat.png")
+        if name == "interior":
+            player.position = Vector2(770,588)
+            player.update_interaction()
+            await snap("/tmp/ignotum-pickup-prompt.png")
+            Game.add_item("bandage")
+            Game.add_item("cloth")
+            Game.add_item("antiseptic")
+            Game.add_item("bolt_cutters")
+            hud.open_inventory()
+            await snap("/tmp/ignotum-inventory.png")
+            Game.health = 70
+            Game.changed.emit()
+            hud.get_node("Root/InventoryPanel/Slots").get_child(1).grab_focus()
+            await snap("/tmp/ignotum-inventory-inspect.png")
+            hud.close_panels()
         location.queue_free()
         get_tree().current_scene = null
         for i in 4:

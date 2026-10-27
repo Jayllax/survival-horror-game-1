@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="InventoryCatalog" load_steps=12 format=3]
+[ext_resource type="Script" path="res://scripts/item_catalog.gd" id="script"]
+[ext_resource type="Script" path="res://scripts/item_definition.gd" id="item_type"]
+[ext_resource type="Script" path="res://scripts/item_recipe.gd" id="recipe_type"]
+[ext_resource type="Resource" path="res://data/items/ammo.tres" id="item0"]
+[ext_resource type="Resource" path="res://data/items/gate_key.tres" id="item1"]
+[ext_resource type="Resource" path="res://data/items/fuse.tres" id="item2"]
+[ext_resource type="Resource" path="res://data/items/bolt_cutters.tres" id="item3"]
+[ext_resource type="Resource" path="res://data/items/bandage.tres" id="item4"]
+[ext_resource type="Resource" path="res://data/items/cloth.tres" id="item5"]
+[ext_resource type="Resource" path="res://data/items/antiseptic.tres" id="item6"]
+[ext_resource type="Resource" path="res://data/recipes/field_dressing.tres" id="recipe"]
+[resource]
+script = ExtResource("script")
+items = Array[ExtResource("item_type")]([ExtResource("item0"),ExtResource("item1"),ExtResource("item2"),ExtResource("item3"),ExtResource("item4"),ExtResource("item5"),ExtResource("item6")])
+recipes = Array[ExtResource("recipe_type")]([ExtResource("recipe")])

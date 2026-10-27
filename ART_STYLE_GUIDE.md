@@ -49,6 +49,7 @@ Use highlight colors sparingly. A readable low-contrast object can be lit by God
 | Shelf / radiator | 64×72 / 44×28 | Interior dressing |
 | Bin / drain / bollard / pipe | 24×36 / 32×8 / 10×26 / 8×100 | Street dressing |
 | Sign | 50×22 | Blank plaque: add a Godot Label for your text |
+| Bolt cutters / dressing / cloth / antiseptic | 24×28 each | New tool, medicine, and combination materials |
 | Ammo / fuse / key / notice / switchboard | See source PNG dimensions | Inventory and interaction props |
 
 ## Replace an asset

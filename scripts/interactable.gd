@@ -1,8 +1,10 @@
 extends Area2D
 ## All interactables are placed in the editor. Duplicate an existing scene and edit these fields.
 @export_enum("Pickup", "Clue", "Switchboard", "Door", "Examine", "Entrance") var kind: int = 0
-@export var prompt_text: String = "Take item"
 @export var interaction_radius: float = 84.0
+@export var item_definition: InventoryItemDefinition
+@export var action_label: String = ""
+@export var prompt_offset: Vector2 = Vector2(0, -54)
 @export var item_id: String = "ammo"
 @export_range(1, 99) var quantity: int = 6
 @export_multiline var description: String = ""
@@ -22,8 +24,12 @@ var opened := false
 
 func _ready() -> void:
     add_to_group("interactable")
-    if kind == 2 and is_powered() and has_node("Indicator"):
-        $Indicator.color = Color(0.5,1,0.6)
+    if item_definition:
+        item_id = item_definition.id
+        Game.register_item(item_definition)
+        if kind == 0 and has_node("Sprite2D") and item_definition.icon:
+            $Sprite2D.texture = item_definition.icon
+
     if Game.world.get(state_key(), false):
         if kind == 0:
             queue_free()
@@ -38,6 +44,11 @@ func is_powered() -> bool:
 func state_key() -> String:
     return persistent_id if not persistent_id.is_empty() else Game.object_id(self)
 
+func interaction_action() -> String:
+    if not action_label.is_empty():
+        return action_label
+    return ["Take", "Examine", "Use", "Open", "Examine", "Enter"][kind]
+
 func is_available() -> bool:
     return not opened
 
@@ -47,9 +58,9 @@ func interact(_player: Node) -> void:
     match kind:
         0:
             if Game.add_item(item_id, quantity):
-                Game.message.emit("Collected %s × %d" % [Game.item_name(item_id), quantity])
                 Game.world[state_key()] = true
                 opened = true
+                Game.item_collected.emit(item_id)
                 queue_free()
         1:
             Game.world["reference:" + power_channel] = true
@@ -95,7 +106,6 @@ func solve_puzzle(code: Vector3i) -> bool:
         return false
     Game.world["power:" + power_channel] = true
     Game.changed.emit()
-    $Indicator.color = Color(0.5, 1, 0.6)
     Game.message.emit("Circuit activated.")
     return true
 

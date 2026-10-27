@@ -73,7 +73,7 @@ offset_top = 540.0
 offset_right = 1108.0
 offset_bottom = 610.0
 theme_override_font_sizes/font_size = 15
-text = "A/D · Move    Space · Jump    Mouse · Aim / Fire    R · Reload    Q · Melee\nShift · Dodge (0.5s invulnerable)    E · Use    F · Flashlight    I · Pockets    Esc · Pause\nDesktop controls • Checkpoints save at entrances and from the pause menu."
+text = "A/D · Move    Space · Jump    Right mouse · Aim    Left mouse · Fire    R · Reload    Q · Melee\nShift · Dodge (0.5s invulnerable)    E · Use    F · Flashlight    I · Pockets    Esc · Pause\nDesktop controls • Checkpoints save at entrances and from the pause menu."
 mouse_filter = 2
 
 [node name="TownName" type="Label" parent="Station"]
@@ -98,7 +98,7 @@ offset_left = 68.0
 offset_top = 247.0
 offset_right = 600.0
 offset_bottom = 280.0
-text = "DEVELOPMENT FOUNDATION  /  02"
+text = "DEVELOPMENT FOUNDATION  /  03"
 theme_override_font_sizes/font_size = 14
 
 [node name="Options" type="Button" parent="."]

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/item_definition.gd" id="1"]
+[ext_resource type="Texture2D" path="res://art/pixel/ammo.png" id="2"]
+[resource]
+script = ExtResource("1")
+id = "ammo"
+display_name = "9 mm rounds"
+category = "Ammunition"
+description = "Handgun ammunition. Reload with R to transfer rounds from your pockets into the magazine. Each pocket holds up to 24 rounds."
+icon = ExtResource("2")
+max_stack = 24
