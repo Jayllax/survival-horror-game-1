@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/interactable.gd" id="1"]
+[ext_resource type="Texture2D" path="res://art/key.svg" id="2"]
+[node name="Key" type="Area2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1")
+kind = 0
+prompt_text = "Take brass key"
+item_id = "gate_key"
+quantity = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2")
+[node name="Indicator" type="Polygon2D" parent="."]
+position = Vector2(0, -42)
+polygon = PackedVector2Array(0,-5, 4,0, 0,5, -4,0)
+color = Color(0.95, 0.77, 0.43, 1)
+[node name="EditorLabel" type="Label" parent="."]
+offset_left = -65.0
+offset_top = 30.0
+offset_right = 65.0
+offset_bottom = 50.0
+text = "KEY"
+horizontal_alignment = 1
+modulate = Color(0.7, 0.73, 0.65, 1)
+theme_override_font_sizes/font_size = 11

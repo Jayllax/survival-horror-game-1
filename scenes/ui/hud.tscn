@@ -1,0 +1,423 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1"]
+[sub_resource type="StyleBoxFlat" id="panel"]
+bg_color = Color(0.065, 0.095, 0.11, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.48, 0.44, 0.33, 1)
+content_margin_left = 16.0
+content_margin_top = 16.0
+[node name="HUD" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1")
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TopShade" type="ColorRect" parent="Root"]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 1152.0
+offset_bottom = 86.0
+color = Color(0.02, 0.04, 0.05, 0.75)
+mouse_filter = 2
+
+[node name="Health" type="Label" parent="Root"]
+offset_left = 28.0
+offset_top = 16.0
+offset_right = 208.0
+offset_bottom = 46.0
+theme_override_font_sizes/font_size = 22
+text = "VITALS"
+mouse_filter = 2
+
+[node name="Ammo" type="Label" parent="Root"]
+offset_left = 230.0
+offset_top = 16.0
+offset_right = 450.0
+offset_bottom = 46.0
+theme_override_font_sizes/font_size = 22
+text = "9 MM"
+mouse_filter = 2
+
+[node name="Objective" type="Label" parent="Root"]
+offset_left = 28.0
+offset_top = 51.0
+offset_right = 1078.0
+offset_bottom = 77.0
+theme_override_font_sizes/font_size = 17
+text = "Find the notice."
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="Root"]
+offset_left = 930.0
+offset_top = 16.0
+offset_right = 1130.0
+offset_bottom = 51.0
+theme_override_font_sizes/font_size = 23
+text = "IGNOTUM"
+mouse_filter = 2
+
+[node name="BottomShade" type="ColorRect" parent="Root"]
+offset_left = 0.0
+offset_top = 558.0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.02, 0.04, 0.05, 0.8)
+mouse_filter = 2
+
+[node name="Message" type="Label" parent="Root"]
+offset_left = 28.0
+offset_top = 568.0
+offset_right = 1128.0
+offset_bottom = 608.0
+theme_override_font_sizes/font_size = 16
+text = ""
+autowrap_mode = 2
+mouse_filter = 2
+
+[node name="Controls" type="Label" parent="Root"]
+offset_left = 28.0
+offset_top = 618.0
+offset_right = 1128.0
+offset_bottom = 643.0
+theme_override_font_sizes/font_size = 12
+text = "A/D or arrows · Move     Space · Jump     Mouse · Aim / Shoot     R · Reload     Q · Melee     Shift · Dodge     E · Use     F · Light     I · Pockets     Esc · Pause"
+mouse_filter = 2
+
+[node name="Prompt" type="Label" parent="Root"]
+offset_left = 370.0
+offset_top = 484.0
+offset_right = 1020.0
+offset_bottom = 520.0
+theme_override_font_sizes/font_size = 20
+text = ""
+autowrap_mode = 2
+mouse_filter = 2
+
+[node name="Reload" type="Label" parent="Root"]
+offset_left = 28.0
+offset_top = 520.0
+offset_right = 328.0
+offset_bottom = 550.0
+theme_override_font_sizes/font_size = 18
+text = ""
+autowrap_mode = 2
+mouse_filter = 2
+
+[node name="PausePanel" type="Panel" parent="Root"]
+offset_left = 246.0
+offset_top = 116.0
+offset_right = 906.0
+offset_bottom = 536.0
+visible = false
+theme_override_styles/panel = SubResource("panel")
+
+[node name="InventoryPanel" type="Panel" parent="Root"]
+offset_left = 246.0
+offset_top = 116.0
+offset_right = 906.0
+offset_bottom = 536.0
+visible = false
+theme_override_styles/panel = SubResource("panel")
+
+[node name="NotePanel" type="Panel" parent="Root"]
+offset_left = 246.0
+offset_top = 116.0
+offset_right = 906.0
+offset_bottom = 536.0
+visible = false
+theme_override_styles/panel = SubResource("panel")
+
+[node name="PuzzlePanel" type="Panel" parent="Root"]
+offset_left = 246.0
+offset_top = 116.0
+offset_right = 906.0
+offset_bottom = 536.0
+visible = false
+theme_override_styles/panel = SubResource("panel")
+
+[node name="EndingPanel" type="Panel" parent="Root"]
+offset_left = 246.0
+offset_top = 116.0
+offset_right = 906.0
+offset_bottom = 536.0
+visible = false
+theme_override_styles/panel = SubResource("panel")
+
+[node name="Title" type="Label" parent="Root/PausePanel"]
+offset_left = 35.0
+offset_top = 32.0
+offset_right = 625.0
+offset_bottom = 77.0
+theme_override_font_sizes/font_size = 30
+text = "PAUSED"
+mouse_filter = 2
+
+[node name="Subtitle" type="Label" parent="Root/PausePanel"]
+offset_left = 35.0
+offset_top = 89.0
+offset_right = 625.0
+offset_bottom = 129.0
+theme_override_font_sizes/font_size = 18
+text = "The square waits for you."
+mouse_filter = 2
+
+[node name="Resume" type="Button" parent="Root/PausePanel"]
+offset_left = 35.0
+offset_top = 155.0
+offset_right = 625.0
+offset_bottom = 203.0
+text = "Continue"
+focus_mode = 2
+
+[node name="Retry" type="Button" parent="Root/PausePanel"]
+offset_left = 35.0
+offset_top = 222.0
+offset_right = 625.0
+offset_bottom = 270.0
+text = "Restart the square"
+focus_mode = 2
+
+[node name="Menu" type="Button" parent="Root/PausePanel"]
+offset_left = 35.0
+offset_top = 289.0
+offset_right = 625.0
+offset_bottom = 337.0
+text = "Main menu"
+focus_mode = 2
+
+[node name="Title" type="Label" parent="Root/InventoryPanel"]
+offset_left = 25.0
+offset_top = 16.0
+offset_right = 625.0
+offset_bottom = 54.0
+theme_override_font_sizes/font_size = 24
+text = "POCKETS  /  8 SLOTS"
+mouse_filter = 2
+
+[node name="Info" type="Label" parent="Root/InventoryPanel"]
+offset_left = 25.0
+offset_top = 55.0
+offset_right = 635.0
+offset_bottom = 90.0
+theme_override_font_sizes/font_size = 16
+text = "Ammunition stacks to 24. Flashlight is worn equipment."
+mouse_filter = 2
+
+[node name="Slots" type="GridContainer" parent="Root/InventoryPanel"]
+offset_left = 25.0
+offset_top = 100.0
+offset_right = 635.0
+offset_bottom = 324.0
+columns = 4
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+
+[node name="Slot1" type="Label" parent="Root/InventoryPanel/Slots"]
+custom_minimum_size = Vector2(146, 102)
+theme_override_styles/normal = SubResource("panel")
+theme_override_font_sizes/font_size = 14
+text = "1\n— empty —"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot2" type="Label" parent="Root/InventoryPanel/Slots"]
+custom_minimum_size = Vector2(146, 102)
+theme_override_styles/normal = SubResource("panel")
+theme_override_font_sizes/font_size = 14
+text = "2\n— empty —"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot3" type="Label" parent="Root/InventoryPanel/Slots"]
+custom_minimum_size = Vector2(146, 102)
+theme_override_styles/normal = SubResource("panel")
+theme_override_font_sizes/font_size = 14
+text = "3\n— empty —"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot4" type="Label" parent="Root/InventoryPanel/Slots"]
+custom_minimum_size = Vector2(146, 102)
+theme_override_styles/normal = SubResource("panel")
+theme_override_font_sizes/font_size = 14
+text = "4\n— empty —"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot5" type="Label" parent="Root/InventoryPanel/Slots"]
+custom_minimum_size = Vector2(146, 102)
+theme_override_styles/normal = SubResource("panel")
+theme_override_font_sizes/font_size = 14
+text = "5\n— empty —"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot6" type="Label" parent="Root/InventoryPanel/Slots"]
+custom_minimum_size = Vector2(146, 102)
+theme_override_styles/normal = SubResource("panel")
+theme_override_font_sizes/font_size = 14
+text = "6\n— empty —"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot7" type="Label" parent="Root/InventoryPanel/Slots"]
+custom_minimum_size = Vector2(146, 102)
+theme_override_styles/normal = SubResource("panel")
+theme_override_font_sizes/font_size = 14
+text = "7\n— empty —"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot8" type="Label" parent="Root/InventoryPanel/Slots"]
+custom_minimum_size = Vector2(146, 102)
+theme_override_styles/normal = SubResource("panel")
+theme_override_font_sizes/font_size = 14
+text = "8\n— empty —"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Close" type="Button" parent="Root/InventoryPanel"]
+offset_left = 25.0
+offset_top = 350.0
+offset_right = 635.0
+offset_bottom = 394.0
+text = "Close pockets [I / Esc]"
+focus_mode = 2
+
+[node name="Title" type="Label" parent="Root/NotePanel"]
+offset_left = 30.0
+offset_top = 20.0
+offset_right = 630.0
+offset_bottom = 60.0
+theme_override_font_sizes/font_size = 25
+text = "A MEMORY ON PAPER"
+mouse_filter = 2
+
+[node name="Text" type="Label" parent="Root/NotePanel"]
+offset_left = 30.0
+offset_top = 78.0
+offset_right = 630.0
+offset_bottom = 338.0
+theme_override_font_sizes/font_size = 18
+text = ""
+autowrap_mode = 2
+mouse_filter = 2
+
+[node name="Close" type="Button" parent="Root/NotePanel"]
+offset_left = 30.0
+offset_top = 350.0
+offset_right = 630.0
+offset_bottom = 394.0
+text = "Keep the memory [Esc]"
+focus_mode = 2
+
+[node name="Title" type="Label" parent="Root/PuzzlePanel"]
+offset_left = 30.0
+offset_top = 20.0
+offset_right = 630.0
+offset_bottom = 58.0
+theme_override_font_sizes/font_size = 25
+text = "STATION SWITCHBOARD"
+mouse_filter = 2
+
+[node name="Hint" type="Label" parent="Root/PuzzlePanel"]
+offset_left = 30.0
+offset_top = 63.0
+offset_right = 630.0
+offset_bottom = 113.0
+theme_override_font_sizes/font_size = 16
+text = "West → east. Click each dial to change it.\nRequires a ceramic fuse. The station notice holds the sequence."
+mouse_filter = 2
+
+[node name="Dial1" type="Button" parent="Root/PuzzlePanel"]
+offset_left = 100.0
+offset_top = 130.0
+offset_right = 230.0
+offset_bottom = 205.0
+text = "1"
+focus_mode = 2
+
+[node name="Dial2" type="Button" parent="Root/PuzzlePanel"]
+offset_left = 260.0
+offset_top = 130.0
+offset_right = 390.0
+offset_bottom = 205.0
+text = "1"
+focus_mode = 2
+
+[node name="Dial3" type="Button" parent="Root/PuzzlePanel"]
+offset_left = 420.0
+offset_top = 130.0
+offset_right = 550.0
+offset_bottom = 205.0
+text = "1"
+focus_mode = 2
+
+[node name="Feedback" type="Label" parent="Root/PuzzlePanel"]
+offset_left = 30.0
+offset_top = 220.0
+offset_right = 630.0
+offset_bottom = 285.0
+theme_override_font_sizes/font_size = 15
+text = ""
+autowrap_mode = 2
+mouse_filter = 2
+
+[node name="Submit" type="Button" parent="Root/PuzzlePanel"]
+offset_left = 30.0
+offset_top = 298.0
+offset_right = 630.0
+offset_bottom = 342.0
+text = "Insert fuse & restore power"
+focus_mode = 2
+
+[node name="Close" type="Button" parent="Root/PuzzlePanel"]
+offset_left = 30.0
+offset_top = 352.0
+offset_right = 630.0
+offset_bottom = 396.0
+text = "Step away [Esc]"
+focus_mode = 2
+
+[node name="Title" type="Label" parent="Root/EndingPanel"]
+offset_left = 35.0
+offset_top = 25.0
+offset_right = 625.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 30
+text = "YOU LEFT NØRREBY"
+mouse_filter = 2
+
+[node name="Text" type="Label" parent="Root/EndingPanel"]
+offset_left = 35.0
+offset_top = 98.0
+offset_right = 625.0
+offset_bottom = 248.0
+theme_override_font_sizes/font_size = 18
+text = "Beyond the gate, the fog smells of rain.\nFor a moment you remember a voice calling you home.\n\nThe street behind you is empty again.\n\nEnd of the Ignotum template. Thank you for playing."
+mouse_filter = 2
+
+[node name="Retry" type="Button" parent="Root/EndingPanel"]
+offset_left = 35.0
+offset_top = 282.0
+offset_right = 625.0
+offset_bottom = 330.0
+text = "Play again"
+focus_mode = 2
+
+[node name="Menu" type="Button" parent="Root/EndingPanel"]
+offset_left = 35.0
+offset_top = 346.0
+offset_right = 625.0
+offset_bottom = 394.0
+text = "Main menu"
+focus_mode = 2
