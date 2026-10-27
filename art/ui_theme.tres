@@ -1,26 +1,7 @@
-[gd_resource type="Theme" load_steps=6 format=3]
-[ext_resource type="FontFile" path="res://art/fonts/Silkscreen-Regular.ttf" id="font"]
-[sub_resource type="StyleBoxFlat" id="normal"]
-bg_color = Color(0.20, 0.17, 0.23, 1)
-border_width_left = 2
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.48, 0.43, 0.31, 1)
-[sub_resource type="StyleBoxFlat" id="hover"]
-bg_color = Color(0.28, 0.22, 0.28, 1)
-border_width_left = 3
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.85, 0.7, 0.45, 1)
-[sub_resource type="StyleBoxFlat" id="pressed"]
-bg_color = Color(0.16, 0.13, 0.19, 1)
-border_width_left = 3
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.85, 0.7, 0.45, 1)
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://ughu8ktudw4d"]
+
+[ext_resource type="FontFile" uid="uid://b0awfo2ongx6g" path="res://art/fonts/Silkscreen-Regular.ttf" id="font"]
+
 [sub_resource type="StyleBoxFlat" id="focus"]
 bg_color = Color(0, 0, 0, 0)
 border_width_left = 2
@@ -28,16 +9,41 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.85, 0.7, 0.45, 1)
+
+[sub_resource type="StyleBoxFlat" id="hover"]
+bg_color = Color(0.28, 0.22, 0.28, 1)
+border_width_left = 3
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.85, 0.7, 0.45, 1)
+
+[sub_resource type="StyleBoxFlat" id="normal"]
+bg_color = Color(0.2, 0.17, 0.23, 1)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.48, 0.43, 0.31, 1)
+
+[sub_resource type="StyleBoxFlat" id="pressed"]
+bg_color = Color(0.16, 0.13, 0.19, 1)
+border_width_left = 3
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.85, 0.7, 0.45, 1)
+
 [resource]
 default_font_size = 16
+Button/colors/font_color = Color(0.85, 0.84, 0.75, 1)
+Button/colors/font_hover_color = Color(1, 0.9, 0.7, 1)
 Button/fonts/font = ExtResource("font")
+Button/styles/focus = SubResource("focus")
+Button/styles/hover = SubResource("hover")
+Button/styles/normal = SubResource("normal")
+Button/styles/pressed = SubResource("pressed")
 Label/colors/font_color = Color(0.85, 0.84, 0.75, 1)
 Label/colors/font_shadow_color = Color(0.02, 0.04, 0.05, 0.8)
 Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
-Button/colors/font_color = Color(0.85, 0.84, 0.75, 1)
-Button/colors/font_hover_color = Color(1, 0.9, 0.7, 1)
-Button/styles/normal = SubResource("normal")
-Button/styles/hover = SubResource("hover")
-Button/styles/pressed = SubResource("pressed")
-Button/styles/focus = SubResource("focus")
