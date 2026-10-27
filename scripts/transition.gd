@@ -19,10 +19,14 @@ func travel(path: String, destination_spawn: String) -> void:
     await tween.finished
     var previous_spawn := Game.spawn_id
     Game.spawn_id = destination_spawn
-    var result := get_tree().change_scene_to_file(path)
+    var tree := get_tree()
+    var result := tree.change_scene_to_file(path)
     if result == OK:
-        await get_tree().scene_changed
-        await get_tree().process_frame
+        # SceneTree.scene_changed is unavailable in older Godot 4 releases.
+        # Scene replacement is deferred: wait for the new root and its _ready().
+        await tree.process_frame
+        while tree.current_scene == null or not tree.current_scene.is_node_ready():
+            await tree.process_frame
         Game.save_run()
     else:
         Game.spawn_id = previous_spawn

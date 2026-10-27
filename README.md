@@ -4,7 +4,7 @@ A desktop Godot 4 side-view survival-horror foundation with original pixel art. 
 
 ## Open and play
 
-Use **Godot 4.4+ Standard edition** (validated on 4.6.3). Import `project.godot` and press **F5**. No plugins or .NET installation required.
+Use **Godot 4.4+ Standard edition** (validated on 4.4.1 and 4.6.3). Import `project.godot` and press **F5**. No plugins or .NET installation required.
 
 | Control | Action |
 | --- | --- |

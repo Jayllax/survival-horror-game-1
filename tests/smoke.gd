@@ -113,6 +113,9 @@ func run() -> void:
     await get_tree().create_timer(1.2).timeout
     var interior: Node2D = get_tree().current_scene
     check(interior.scene_file_path.ends_with("interior.tscn") and not Game.transitioning, "Fade loads interior and completes")
+    check(not Transition.busy and is_zero_approx(Transition.curtain.color.a), "Transition completes fade and releases input lock")
+    var arrival_save: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(Game.SAVE_PATH))
+    check(arrival_save.get("scene") == interior.scene_file_path and arrival_save.get("spawn") == "from_street", "Arrival checkpoint records loaded scene and named spawn")
     player = interior.get_node("Actors/Player")
     check(absf(player.position.x - 250) < 2, "Named entry spawn selected")
     check(Game.health == 90 and Game.magazine == 6, "Health and magazine persist between scenes")
