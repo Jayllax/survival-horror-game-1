@@ -9,7 +9,8 @@ var health_remaining := 0.0
 var pickup_remaining := 0.0
 var previous_health := 100
 var selected_slot := 0
-var combining_id := ""
+var combining_slot := -1
+var return_to_pause := false
 var interaction_target: Area2D
 var puzzle_target: Area2D
 var dials := Vector3i(1, 1, 1)
@@ -22,11 +23,10 @@ func _ready() -> void:
     Game.changed.connect(refresh)
     Game.message.connect(show_message)
     Game.item_collected.connect(on_item_collected)
-    Game.checkpoint_saved.connect(on_checkpoint_saved)
     $Root/PausePanel/Resume.pressed.connect(toggle_pause)
-    $Root/PausePanel/Retry.pressed.connect(Game.retry_checkpoint)
+    $Root/PausePanel/Retry.pressed.connect(open_load_menu)
+    $SaveMenu.closed.connect(on_save_menu_closed)
     $Root/PausePanel/Menu.pressed.connect(back_to_menu)
-    $Root/PausePanel/Save.pressed.connect(Game.save_run)
     $Root/InventoryPanel/Use.pressed.connect(use_selected)
     $Root/InventoryPanel/Combine.pressed.connect(begin_combine)
     $Root/PausePanel/Controls.pressed.connect(show_controls)
@@ -38,7 +38,7 @@ func _ready() -> void:
     for i in 8:
         var slot: Button = $Root/InventoryPanel/Slots.get_child(i)
         slot.pressed.connect(select_slot.bind(i))
-        slot.focus_entered.connect(select_slot.bind(i))
+        slot.focus_entered.connect(focus_slot.bind(i))
     for i in 3:
         $Root/PuzzlePanel.get_node("Dial%d" % (i+1)).pressed.connect(cycle_dial.bind(i))
     $Root/PuzzlePanel/Submit.pressed.connect(submit_puzzle)
@@ -71,8 +71,12 @@ func _process(delta: float) -> void:
     $Root/HealthBrief.modulate.a = minf(health_remaining, 1.0) if Game.health > 25 else 1.0
     $Root/PickupHint.visible = playing and show_pickup_hint and pickup_remaining > 0 and not combat
 
-func _unhandled_input(event: InputEvent) -> void:
-    if Game.transitioning:
+func _input(event: InputEvent) -> void:
+    if Game.transitioning or $SaveMenu.is_open():
+        return
+    if event.is_echo():
+        if $Root/InventoryPanel.visible and event.is_action("inventory"):
+            get_viewport().set_input_as_handled()
         return
     if event.is_action_pressed("pause"):
         if any_panel_open():
@@ -80,7 +84,7 @@ func _unhandled_input(event: InputEvent) -> void:
         else:
             toggle_pause()
         get_viewport().set_input_as_handled()
-    elif event.is_action_pressed("inventory") and Game.health > 0:
+    elif event.is_action_pressed("inventory") and Game.health > 0 and ($Root/InventoryPanel.visible or not any_panel_open()):
         if $Root/InventoryPanel.visible:
             close_panels()
         elif not any_panel_open():
@@ -96,7 +100,7 @@ func any_panel_open() -> bool:
 func close_panels() -> void:
     if Game.health <= 0:
         return
-    combining_id = ""
+    combining_slot = -1
     for path in ["PausePanel", "InventoryPanel", "NotePanel", "PuzzlePanel", "ControlsPanel"]:
         root.get_node(path).hide()
     get_tree().paused = false
@@ -106,6 +110,7 @@ func toggle_pause() -> void:
         return
     var should_open: bool = not $Root/PausePanel.visible
     close_panels()
+    $Root/PausePanel/Retry.disabled = not Game.has_saves()
     $Root/PausePanel.visible = should_open
     get_tree().paused = should_open
 
@@ -122,13 +127,18 @@ func open_inventory() -> void:
     $Root/InventoryPanel/Slots.get_child(selected_slot).grab_focus()
     pickup_remaining = 0
 
+func focus_slot(index: int) -> void:
+    # Moving keyboard focus must never consume items or complete a combination.
+    if combining_slot < 0:
+        select_slot(index)
+
 func select_slot(index: int) -> void:
-    if not combining_id.is_empty() and not Game.slots[index].is_empty():
-        var first := combining_id
-        combining_id = ""
-        var combined := Game.combine_items(first, Game.slots[index]["id"])
-        selected_slot = index
-        if combined:
+    if combining_slot >= 0:
+        var first := combining_slot
+        combining_slot = -1
+        selected_slot = first
+        var combined := Game.combine_slots(first, index)
+        if combined and Game.slots[first].get("id", "") != Game.last_combined_id:
             for i in 8:
                 if Game.slots[i].get("id", "") == Game.last_combined_id:
                     selected_slot = i
@@ -137,7 +147,7 @@ func select_slot(index: int) -> void:
         if combined:
             $Root/InventoryPanel/Category.text += " · COMBINED"
         else:
-            $Root/InventoryPanel/Description.text = "These items cannot be combined, or there is no room for the result."
+            $Root/InventoryPanel/Description.text = "Choose two different compatible pockets. Matching stacks must have room for more items."
         return
     selected_slot = index
     for i in 8:
@@ -172,7 +182,7 @@ func use_selected() -> void:
 func begin_combine() -> void:
     if Game.slots[selected_slot].is_empty():
         return
-    combining_id = Game.slots[selected_slot]["id"]
+    combining_slot = selected_slot
     $Root/InventoryPanel/Description.text = "Choose a second item to combine with this one. Close the inventory to cancel."
 
 func refresh() -> void:
@@ -197,7 +207,8 @@ func refresh() -> void:
         get_tree().paused = true
         $Root/PausePanel/Title.text = "HEALTH DEPLETED"
         $Root/PausePanel/Resume.disabled = true
-        $Root/PausePanel/Save.disabled = true
+        $Root/PausePanel/Retry.disabled = not Game.has_saves()
+        $Root/PausePanel/Subtitle.text = "Load a saved game or return to the main menu."
 
 func set_interaction(target: Area2D) -> void:
     interaction_target = target
@@ -211,9 +222,22 @@ func on_item_collected(_id: String) -> void:
     pickup_remaining = pickup_hint_seconds
     set_interaction(null)
 
-func on_checkpoint_saved() -> void:
-    if $Root/PausePanel.visible:
-        $Root/PausePanel/Subtitle.text = "Checkpoint saved."
+func show_save_station(station: Area2D) -> void:
+    if any_panel_open() or $SaveMenu.is_open() or Game.health <= 0:
+        return
+    return_to_pause = false
+    $SaveMenu.open_save(station)
+
+func open_load_menu() -> void:
+    return_to_pause = true
+    $Root/PausePanel.hide()
+    $SaveMenu.open_load()
+
+func on_save_menu_closed() -> void:
+    if return_to_pause:
+        $Root/PausePanel.show()
+        get_tree().paused = true
+    return_to_pause = false
 
 func show_message(text: String) -> void:
     $Root/Message.text = text

@@ -27,8 +27,9 @@ func _ready() -> void:
     run.call_deferred()
 
 func run() -> void:
-    if FileAccess.file_exists(Game.SAVE_PATH):
-        DirAccess.remove_absolute(ProjectSettings.globalize_path(Game.SAVE_PATH))
+    for index in Game.SAVE_SLOT_COUNT:
+        if FileAccess.file_exists(Game.slot_path(index)):
+            DirAccess.remove_absolute(ProjectSettings.globalize_path(Game.slot_path(index)))
     Game.reset_run()
     check(Game.slots.size() == 8, "Eight inventory slots")
     Game.add_item("ammo", 20)
@@ -92,7 +93,7 @@ func run() -> void:
     for angle in [0.0, PI, -PI/2, PI/2]:
         player.aim.rotation = angle
         var forward := Vector2.RIGHT.rotated(angle)
-        check((light.global_position-player.aim.global_position).dot(forward) > 25, "Flashlight source ahead of grip at angle %.2f" % angle)
+        check((light.global_position + forward * light.offset.x - player.aim.global_position).dot(forward) > 200, "Flashlight beam extends ahead of grip at angle %.2f" % angle)
     player.begin_dodge(1)
     check(is_equal_approx(player.invulnerable_remaining, 0.5), "Exactly 0.5s dodge window")
     player.take_damage(10)
@@ -104,7 +105,7 @@ func run() -> void:
     player.take_damage(10)
     check(Game.health == 90, "Damage applies after 0.5s")
     player.set_physics_process(true)
-    player.position = Vector2(560,588)
+    player.position = Vector2(town.get_node("Interactables/ShopEntrance").position.x,588)
     await frames(3)
     await press("interact")
     check(Game.transitioning, "E starts entrance fade")
@@ -114,24 +115,24 @@ func run() -> void:
     var interior: Node2D = get_tree().current_scene
     check(interior.scene_file_path.ends_with("interior.tscn") and not Game.transitioning, "Fade loads interior and completes")
     check(not Transition.busy and is_zero_approx(Transition.curtain.color.a), "Transition completes fade and releases input lock")
-    var arrival_save: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(Game.SAVE_PATH))
-    check(arrival_save.get("scene") == interior.scene_file_path and arrival_save.get("spawn") == "from_street", "Arrival checkpoint records loaded scene and named spawn")
+    check(not Game.has_saves(), "Entering a location does not create an automatic save")
     player = interior.get_node("Actors/Player")
-    check(absf(player.position.x - 250) < 2, "Named entry spawn selected")
+    check(absf(player.position.x - interior.get_node("Spawns/from_street").position.x) < 2, "Named entry spawn selected")
     check(Game.health == 90 and Game.magazine == 6, "Health and magazine persist between scenes")
-    player.position = Vector2(770,588)
-    await frames(3)
+    var supply: Area2D = interior.get_node("Interactables/SupplyBox")
+    player.global_position = supply.global_position + Vector2(0, 20)
+    await frames(1)
     await press("interact")
     check(Game.count_item("ammo") == 24, "Interior pickup collected")
     check(Game.world.size() == 1, "Pickup stores stable location state")
-    player.position = Vector2(150,588)
+    player.position = Vector2(interior.get_node("Interactables/ExitToStreet").position.x,588)
     await frames(3)
     await press("interact")
     await get_tree().create_timer(1.2).timeout
     town = get_tree().current_scene
     player = town.get_node("Actors/Player")
-    check(town.scene_file_path.ends_with("town.tscn") and absf(player.position.x-650)<2, "Return door selects street return marker")
-    player.position = Vector2(560,588)
+    check(town.scene_file_path.ends_with("town.tscn") and absf(player.position.x-town.get_node("Spawns/from_shop").position.x)<2, "Return door selects street return marker")
+    player.position = Vector2(town.get_node("Interactables/ShopEntrance").position.x,588)
     await frames(3)
     await press("interact")
     await get_tree().create_timer(1.2).timeout
@@ -171,11 +172,14 @@ func run() -> void:
     enemy.take_damage(100)
     await frames(3)
     check(get_tree().get_nodes_in_group("enemy").is_empty(), "Enemy defeat")
-    Game.save_run()
-    check(Game.has_checkpoint(), "Checkpoint file exists")
+    var test_bike: Area2D = load("res://scenes/objects/save_bicycle.tscn").instantiate()
+    test_bike.position = Vector2(1000,620)
+    alley.get_node("Interactables").add_child(test_bike)
+    player.position = Vector2(960,588)
+    check(Game.save_slot(0, test_bike) and Game.has_saves(), "Bicycle writes a manual save")
     Game.health = 1
     Game.world.clear()
-    Game.continue_game()
+    Game.load_slot(0)
     await frames(10)
     alley = get_tree().current_scene
     check(Game.health > 1 and Game.count_item("ammo") == 23, "Continue restores health and inventory")
@@ -191,19 +195,22 @@ func run() -> void:
     var escape := InputEventAction.new()
     escape.action = "pause"
     escape.pressed = true
-    hud._unhandled_input(escape)
+    hud._input(escape)
     check(get_tree().paused, "Escape cannot bypass death screen")
-    Game.retry_checkpoint()
+    Game.load_slot(0)
     await frames(10)
-    check(Game.health > 0 and not get_tree().paused, "Retry restores checkpoint")
+    check(Game.health > 0 and not get_tree().paused, "Retry restores saved game")
     var running: Node = get_tree().current_scene
     running.get_node("HUD").back_to_menu()
     await frames(6)
-    check(not get_tree().current_scene.get_node("Continue").disabled, "Menu Continue available after checkpoint")
+    check(not get_tree().current_scene.get_node("Continue").disabled, "Menu load picker available after manual save")
     var final_menu: Control = get_tree().current_scene
     final_menu.get_node("Start").pressed.emit()
-    check(final_menu.get_node("NewGameConfirmation").visible, "New game protects existing checkpoint with confirmation")
-    final_menu.get_node("NewGameConfirmation").hide()
+    await frames(6)
+    check(Game.has_saves(), "Starting a new game preserves existing manual saves")
+    get_tree().current_scene.get_node("HUD").back_to_menu()
+    await frames(6)
+    final_menu = get_tree().current_scene
     final_menu.set_volume(-12)
     check(is_equal_approx(AudioServer.get_bus_volume_db(0), -12), "Options slider changes master volume")
     final_menu.set_volume(0)

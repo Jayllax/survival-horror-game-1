@@ -27,10 +27,17 @@ func run() -> void:
         hud.set_interaction(null)
         await snap("/tmp/ignotum-" + name + ".png")
         if name == "town":
+            player.position = Vector2(150,588)
+            player.update_interaction()
+            player.get_node("Camera2D").force_update_scroll()
+            await snap("/tmp/ignotum-bicycle.png")
+            hud.show_save_station(location.get_node("Interactables/SaveBicycle"))
+            await snap("/tmp/ignotum-save-menu.png")
+            hud.get_node("SaveMenu").close()
             player.combat_remaining = 10
             await snap("/tmp/ignotum-combat.png")
         if name == "interior":
-            player.position = Vector2(770,588)
+            player.global_position = location.get_node("Interactables/SupplyBox").global_position + Vector2(0,20)
             player.update_interaction()
             await snap("/tmp/ignotum-pickup-prompt.png")
             Game.add_item("bandage")

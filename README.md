@@ -1,4 +1,4 @@
-# Ignotum / development foundation 04
+# Ignotum / development foundation 05
 
 A desktop Godot 4 side-view survival-horror foundation with original pixel art. No authored story, forced quest, campaign ending, or victory screen. Start on a street, enter a building or alley with E, and return through matching entrances. These small connected spaces demonstrate the reusable location system; they are not a campaign.
 
@@ -9,14 +9,14 @@ Use **Godot 4.4+ Standard edition** (validated on 4.4.1 and 4.6.3). Import `proj
 | Control | Action |
 | --- | --- |
 | A/D or arrows | Move |
-| Space | Jump (buffered, with coyote time) |
+| Space / W | Jump (buffered, with coyote time) |
 | Right mouse / left click | Held aim / fire |
-| R / Q / Shift | Reload / melee / dodge |
+| R / Q / Alt | Reload / melee / dodge |
 | E | Collect, examine, operate, or enter |
 | F | Gun-mounted flashlight |
-| I / Esc | Eight-slot inventory / pause |
+| I or Tab / Esc | Toggle eight-slot inventory / pause |
 
-**Main menu:** New game, Continue, Options (volume/fullscreen), Quit. A new game asks before replacing an existing checkpoint. Entrances automatically save a checkpoint; Pause → Save checkpoint updates it manually. Loading restores the last entrance spawn, health, ammunition, inventory, circuit states, collected pickups, opened doors, and defeated enemies. Partial enemy health and active animations are not saved.
+**Main menu:** New game, Load game (four slots), Options (volume/fullscreen), Quit. Saving is manual: approach a bicycle, press E to ring its bell, and choose a slot. Occupied slots require overwrite confirmation. There is no saving from the pause menu or when changing rooms. Loading restores your saved world/inventory and returns beside the bicycle. Starting a new game leaves all four files intact. Partial enemy health and active animations are not saved.
 
 ## Simplified sprite replacement
 
@@ -28,7 +28,7 @@ The redesign is implemented as **29 individual production sprite PNGs**: 28 scen
 
 Exploration has no fixed HUD panels, logo, controls strip, or permanent crosshair. Health briefly appears after damage (and remains subtly visible when critical). Ammo/crosshair appear only during aiming, recent firing, or reload. Hold right mouse to aim and move carefully. Controls are available from Pause → Controls.
 
-Pickups are just their artwork. A nearby **[E] Take** prompt identifies an action, not the item. Collecting does not announce its name. Open I, select an icon with the mouse or keyboard, and read its name, description, category, quantity, and artwork. Medical supplies can be **Used**; select **Combine** on a material, then select its partner. Cloth + antiseptic creates a field dressing that heals 30. Full-health use and failed combinations waste nothing.
+Pickups are just their artwork. A nearby **[E] Take** prompt identifies an action, not the item. Collecting does not announce its name. Open I or Tab, select an icon with the mouse or keyboard, and read its name, description, category, quantity, and artwork. Medical supplies can be **Used**; select **Combine** on a material, then select its partner. Cloth + antiseptic creates a field dressing that heals 30. Matching stacks can also be combined: 20 + 2 rounds becomes 22; 20 + 10 becomes 24 + 6. Full-health use and failed combinations waste nothing.
 
 The building contains bolt cutters. Carry them to the alley's chained gate to permanently open access to a medical supply. All additions are authored scene instances with editable item resources and recipe resources, not a mandatory quest. No story or ending is attached.
 
@@ -40,9 +40,9 @@ Sources and the specific design adaptations are documented in [INSPIRATION_NOTES
 - **[ART_STYLE_GUIDE.md](ART_STYLE_GUIDE.md):** dimensions, palette, pixel rules, replacement workflow.
 - **`art/pixel/STYLE_SHEET.png`:** labeled visual asset sheet.
 - **`art/pixel/source/`:** native-resolution PNGs to edit in your pixel editor.
-- **`art/pixel/ignotum.gpl`:** importable 16-color palette.
+- **`art/pixel/ignotum.gpl`:** original kit palette; your revised asset colors and bicycle palette are described in the art guide.
 
-All environments, characters, props, entrances, and colliders are authored editor-visible nodes. Every source image has a ready-to-use 2× PNG, and character sheets include six walk frames. Smooth lighting gradients are intentionally separate from pixel art.
+All environments, characters, props, entrances, and colliders are authored editor-visible nodes. The older source images have ready-to-use 2× PNGs, and character sheets include six walk frames. The new bicycle is one native 32×28 PNG, scaled 2× by its scene. Smooth lighting gradients are intentionally separate from pixel art.
 
 ## Previews
 
@@ -54,12 +54,16 @@ Inventory inspection:
 
 ![Icon inventory and item actions](docs/previews/inventory.png)
 
+Bicycle save menu:
+
+![Four manual save slots](docs/previews/save-menu.png)
+
 ## Validation
 
 ```sh
-./tools/check.sh
+bash tools/check.sh
 ```
 
-This imports the project and runs integration tests in an isolated checkpoint data directory. It exercises movement, jump, flashlight attachment and beam offset, exact 0.5-second dodge, combat, inventory, independent power circuits, animated doors, round-trip scene transitions, named spawns, persistent pickups/enemies, checkpoints, death/retry, and menu controls. A second suite covers quiet HUD visibility, proximity prompts, inventory inspection, medical use, combination rollback, and tool-gated persistence. All three suites must complete: `IGNOTUM: … checks, 0 failures`, `IGNOTUM INTERFACE: … checks, 0 failures`, and `IGNOTUM ASSETS: … checks, 0 failures`; script errors are failures even if Godot returns zero.
+This imports resources and runs four integration suites in isolated user-data folders. Gameplay checks cover movement, combat, exact 0.5-second dodge, puzzles, persistent world state, and transitions. Interface checks cover quiet HUD, inspection, healing and recipes. Asset checks cover imported textures. Manual-save checks cover actual Tab/I key input, stack overflow, focused-button behavior, bicycle interaction, all four slots, canceled/confirmed overwrite, restored position/state, corrupt files, death loading, and preservation of existing slots. All suites must finish with zero failures; script/resource errors are failures even if Godot returns zero.
 
-With a graphical display, `godot --path . res://tests/capture.tscn` writes screenshots to `/tmp/ignotum-*.png`. Rendering has been inspected using software OpenGL. Physical audio output, standalone exports, and other operating systems have not been tested. The Silkscreen UI font is distributed under its included OFL license in `art/fonts/`; game artwork and sounds were created for this project.
+With a graphical display, `godot --path . res://tests/capture.tscn` writes screenshots to `/tmp/ignotum-*.png`. The example layouts now include your revisions from `human-changes`. Physical audio output, standalone exports, and other operating systems have not been tested. The Silkscreen UI font is distributed under its included OFL license in `art/fonts/`; game artwork and sounds were created for this project.

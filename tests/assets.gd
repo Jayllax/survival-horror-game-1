@@ -29,11 +29,11 @@ func run() -> void:
                 var bottom: float = building.global_position.y + building.texture.get_height() * building.global_scale.y / 2
                 check(is_equal_approx(bottom,620), name + ": resized building stays grounded / " + building.name)
         for object in scene.get_node("Interactables").get_children():
-            if object.kind == 5 and object.has_node("Facade"):
+            if object.get("kind") == 5 and object.has_node("Facade"):
                 var facade: Sprite2D = object.get_node("Facade")
                 var bottom: float = facade.global_position.y + facade.texture.get_height() * facade.global_scale.y / 2
                 check(is_equal_approx(bottom,620), name + ": doorway art meets ground / " + object.name)
-            if object.kind == 3:
+            if object.get("kind") == 3:
                 var leaf: Sprite2D = object.get_node("Leaf")
                 check(is_equal_approx(leaf.global_position.y + leaf.texture.get_height()/2.0,620), name + ": physical gate art aligns with collision floor")
         for object in scene.get_node("Props").get_children():

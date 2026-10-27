@@ -1,10 +1,10 @@
 extends Control
 func _ready() -> void:
     $Start.pressed.connect(new_game)
-    $NewGameConfirmation.confirmed.connect(Game.start_game)
+    $SaveMenu.closed.connect(func(): $Continue.grab_focus())
     $Quit.pressed.connect(func(): get_tree().quit())
-    $Continue.disabled = not Game.has_checkpoint()
-    $Continue.pressed.connect(Game.continue_game)
+    $Continue.disabled = not Game.has_saves()
+    $Continue.pressed.connect(func(): $SaveMenu.open_load())
     $Options.pressed.connect(func(): $OptionsPanel.show())
     $OptionsPanel/Close.pressed.connect(func(): $OptionsPanel.hide())
     $OptionsPanel/Volume.value = AudioServer.get_bus_volume_db(0)
@@ -14,10 +14,8 @@ func _ready() -> void:
     $Start.grab_focus()
 
 func new_game() -> void:
-    if Game.has_checkpoint():
-        $NewGameConfirmation.popup_centered()
-    else:
-        Game.start_game()
+    # Starting a run never overwrites any of the four manual save files.
+    Game.start_game()
 
 func set_volume(value: float) -> void:
     AudioServer.set_bus_volume_db(0, value)
@@ -30,5 +28,5 @@ func set_fullscreen(enabled: bool) -> void:
     Game.save_settings()
 
 func _unhandled_input(event: InputEvent) -> void:
-    if event.is_action_pressed("pause"):
+    if not $SaveMenu.is_open() and event.is_action_pressed("pause"):
         $OptionsPanel.hide()

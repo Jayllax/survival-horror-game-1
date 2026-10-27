@@ -80,3 +80,9 @@ This verifies each generated native/export pair has exact 2× nearest-neighbor p
 `python tools/build_simple_assets.py --write` regenerates the supplied scenery/prop/item/enemy art. **That command overwrites those named PNGs**, so keep your hand edits backed up and do not run it as part of ordinary gameplay or validation. It never overwrites player or ammo. The PNGs are fully usable without the generator.
 
 The optional UI font remains Silkscreen, with its OFL license in `art/fonts/`. All game artwork in this asset kit is original; no Silver Pines artwork is included.
+
+## Bicycle save station (current player palette)
+
+`art/pixel/bicycle.png` is one native **32×28 RGBA PNG**, displayed at **2×** by `save_bicycle.tscn`. There is no second enlarged PNG. Edit this file directly in your pixel editor and retain its dimensions and transparent background. It is a front elevation with exact left/right mirror symmetry, including highlights and pedals. Six colors are sampled from the current player/house assets: `#24222e`, `#344f69`, `#4e6474`, `#8f6c61`, `#ccbb98`, `#b0866c`. Existing art is not recolored.
+
+The optional `godot --headless --path . --script tools/build_bicycle.gd -- --write` rebuilds only the bicycle from exact-grid rectangles. **Do not run it after editing your bicycle unless you intend to replace your edits.** It does not run during gameplay or normal validation. The older asset generator likewise contains the previous kit palette; it should not be run over your revised art.

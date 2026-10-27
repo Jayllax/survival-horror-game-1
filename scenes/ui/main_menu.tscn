@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1"]
 [ext_resource type="Texture2D" path="res://art/pixel/station.png" id="2"]
 [ext_resource type="FontFile" path="res://art/fonts/Silkscreen-Regular.ttf" id="pixel_font"]
+[ext_resource type="PackedScene" path="res://scenes/ui/save_menu.tscn" id="save_menu"]
 [node name="MainMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -73,7 +74,7 @@ offset_top = 540.0
 offset_right = 1108.0
 offset_bottom = 610.0
 theme_override_font_sizes/font_size = 15
-text = "A/D · Move    Space · Jump    Right mouse · Aim    Left mouse · Fire    R · Reload    Q · Melee\nShift · Dodge (0.5s invulnerable)    E · Use    F · Flashlight    I · Pockets    Esc · Pause\nDesktop controls • Checkpoints save at entrances and from the pause menu."
+text = "A/D · Move    Space/W · Jump    Right mouse · Aim    Left mouse · Fire    R · Reload    Q · Melee\nAlt · Dodge (0.5s invulnerable)    E · Use    F · Flashlight    I/Tab · Pockets    Esc · Pause\nSave manually at bicycles. Four independent save slots."
 mouse_filter = 2
 
 [node name="TownName" type="Label" parent="Station"]
@@ -92,13 +93,13 @@ offset_left = 68.0
 offset_top = 300.0
 offset_right = 433.0
 offset_bottom = 344.0
-text = "Continue"
+text = "Load game"
 [node name="Version" type="Label" parent="."]
 offset_left = 68.0
 offset_top = 247.0
 offset_right = 600.0
 offset_bottom = 280.0
-text = "DEVELOPMENT FOUNDATION  /  04"
+text = "DEVELOPMENT FOUNDATION  /  05"
 theme_override_font_sizes/font_size = 14
 
 [node name="Options" type="Button" parent="."]
@@ -141,7 +142,4 @@ offset_top = 275.0
 offset_right = 677.0
 offset_bottom = 319.0
 text = "Back"
-[node name="NewGameConfirmation" type="ConfirmationDialog" parent="."]
-title = "New game"
-size = Vector2i(480, 160)
-dialog_text = "Start a new game? This replaces your existing checkpoint."
+[node name="SaveMenu" parent="." instance=ExtResource("save_menu")]

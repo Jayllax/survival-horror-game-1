@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=8 format=3]
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1"]
 [ext_resource type="FontFile" path="res://art/fonts/Silkscreen-Regular.ttf" id="pixel_font"]
+[ext_resource type="PackedScene" path="res://scenes/ui/save_menu.tscn" id="save_menu"]
 [sub_resource type="StyleBoxFlat" id="panel"]
 bg_color = Color(0.065, 0.095, 0.11, 0.98)
 border_width_left = 1
@@ -453,7 +454,7 @@ offset_left = 28.0
 offset_top = 446.0
 offset_right = 458.0
 offset_bottom = 478.0
-text = "Close   [I / Esc]"
+text = "Close   [I / Tab / Esc]"
 [node name="PausePanel" type="Panel" parent="Root"]
 offset_left = 246.0
 offset_top = 116.0
@@ -506,17 +507,17 @@ focus_mode = 2
 
 [node name="Retry" type="Button" parent="Root/PausePanel"]
 offset_left = 35.0
-offset_top = 216.0
+offset_top = 160.0
 offset_right = 625.0
-offset_bottom = 260.0
-text = "Load checkpoint"
+offset_bottom = 204.0
+text = "Load game"
 focus_mode = 2
 
 [node name="Menu" type="Button" parent="Root/PausePanel"]
 offset_left = 35.0
-offset_top = 328.0
+offset_top = 272.0
 offset_right = 625.0
-offset_bottom = 372.0
+offset_bottom = 316.0
 text = "Main menu"
 focus_mode = 2
 
@@ -615,19 +616,11 @@ offset_bottom = 396.0
 text = "Step away [Esc]"
 focus_mode = 2
 
-[node name="Save" type="Button" parent="Root/PausePanel"]
-offset_left = 35.0
-offset_top = 160.0
-offset_right = 625.0
-offset_bottom = 204.0
-text = "Save checkpoint"
-
-
 [node name="Controls" type="Button" parent="Root/PausePanel"]
 offset_left = 35.0
-offset_top = 272.0
+offset_top = 216.0
 offset_right = 625.0
-offset_bottom = 316.0
+offset_bottom = 260.0
 text = "Controls"
 
 [node name="ControlsPanel" type="Panel" parent="Root"]
@@ -654,7 +647,7 @@ offset_top = 86.0
 offset_right = 630.0
 offset_bottom = 366.0
 theme_override_font_sizes/font_size = 18
-text = "A / D or arrows    Move\nSpace    Jump\nRight mouse    Aim / careful movement\nLeft mouse    Shoot\nR    Reload     Q    Melee     Shift    Dodge\nE    Interact with nearby object\nF    Flashlight\nI    Inventory / inspect     Esc    Pause"
+text = "A / D or arrows    Move\nSpace / W    Jump\nRight mouse    Aim / careful movement\nLeft mouse    Shoot\nR    Reload     Q    Melee     Alt    Dodge\nE    Interact with nearby object\nF    Flashlight\nI / Tab    Inventory / inspect     Esc    Pause"
 mouse_filter = 2
 
 
@@ -677,3 +670,5 @@ offset_top = 446.0
 offset_right = 928.0
 offset_bottom = 478.0
 text = "Combine"
+
+[node name="SaveMenu" parent="." instance=ExtResource("save_menu")]

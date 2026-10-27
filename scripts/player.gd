@@ -173,7 +173,7 @@ func take_damage(amount: int) -> void:
     $HurtSound.play()
     Game.changed.emit()
     if Game.health <= 0:
-        Game.message.emit("Health depleted. Load checkpoint to resume.")
+        Game.message.emit("Health depleted. Load a saved game to resume.")
 
 func update_interaction() -> void:
     nearest = null

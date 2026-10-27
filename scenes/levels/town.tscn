@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://6qrdl5x7rakj"]
+[gd_scene load_steps=13 format=3 uid="uid://6qrdl5x7rakj"]
 
 [ext_resource type="Script" uid="uid://6ac0fiq4jtxt" path="res://scripts/location.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="2"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://blll32qgmq7p2" path="res://art/fog.svg" id="10"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="21"]
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="22"]
+
+[ext_resource type="PackedScene" path="res://scenes/objects/save_bicycle.tscn" id="save_bicycle"]
 
 [sub_resource type="RectangleShape2D" id="floor"]
 size = Vector2(2200, 120)
@@ -86,6 +88,10 @@ destination_spawn = "from_street"
 
 [node name="Facade" parent="Interactables/AlleyEntrance" index="0"]
 visible = false
+
+[node name="SaveBicycle" parent="Interactables" instance=ExtResource("save_bicycle")]
+position = Vector2(200, 620)
+station_name = "Street bicycle"
 
 [node name="Actors" type="Node2D" parent="."]
 

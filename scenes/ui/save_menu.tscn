@@ -1,0 +1,89 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/save_menu.gd" id="script"]
+[sub_resource type="StyleBoxFlat" id="panel"]
+bg_color = Color(0.075, 0.07, 0.09, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.55, 0.42, 0.38, 1)
+[node name="SaveMenu" type="CanvasLayer"]
+layer = 30
+process_mode = 3
+script = ExtResource("script")
+[node name="Shade" type="ColorRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.015, 0.012, 0.02, 0.9)
+[node name="Center" type="CenterContainer" parent="Shade"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+[node name="Panel" type="PanelContainer" parent="Shade/Center"]
+custom_minimum_size = Vector2(920, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("panel")
+[node name="Margin" type="MarginContainer" parent="Shade/Center/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_bottom = 20
+[node name="Content" type="VBoxContainer" parent="Shade/Center/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+[node name="Title" type="Label" parent="Shade/Center/Panel/Margin/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "SAVE YOUR GAME"
+[node name="Slots" type="VBoxContainer" parent="Shade/Center/Panel/Margin/Content"]
+layout_mode = 2
+theme_override_constants/separation = 10
+[node name="Slot1" type="Button" parent="Shade/Center/Panel/Margin/Content/Slots"]
+custom_minimum_size = Vector2(0, 78)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "SLOT 1    Empty"
+alignment = 0
+clip_text = true
+[node name="Slot2" type="Button" parent="Shade/Center/Panel/Margin/Content/Slots"]
+custom_minimum_size = Vector2(0, 78)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "SLOT 2    Empty"
+alignment = 0
+clip_text = true
+[node name="Slot3" type="Button" parent="Shade/Center/Panel/Margin/Content/Slots"]
+custom_minimum_size = Vector2(0, 78)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "SLOT 3    Empty"
+alignment = 0
+clip_text = true
+[node name="Slot4" type="Button" parent="Shade/Center/Panel/Margin/Content/Slots"]
+custom_minimum_size = Vector2(0, 78)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "SLOT 4    Empty"
+alignment = 0
+clip_text = true
+[node name="Feedback" type="Label" parent="Shade/Center/Panel/Margin/Content"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 2
+text = "Choose a save slot."
+[node name="Close" type="Button" parent="Shade/Center/Panel/Margin/Content"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Back [Esc]"
+[node name="Overwrite" type="ConfirmationDialog" parent="."]
+title = "Overwrite save?"
+size = Vector2i(540, 170)
+exclusive = true
+ok_button_text = "Overwrite"
+dialog_text = "Replace this saved game?"
