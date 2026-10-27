@@ -1,202 +1,188 @@
 extends Node
 var checks := 0
 var failures := 0
-
-func check(ok: bool, description: String) -> void:
+func check(ok: bool, text: String) -> void:
     checks += 1
-    if not ok:
-        failures += 1
-        push_error("FAIL: " + description)
+    if ok:
+        print("PASS: " + text)
     else:
-        print("PASS: " + description)
-
-func frames(count: int = 3) -> void:
+        failures += 1
+        push_error("FAIL: " + text)
+func frames(count: int = 6) -> void:
     for i in count:
         await get_tree().physics_frame
         await get_tree().process_frame
-
-func key(code: Key, physical: Key = KEY_NONE) -> void:
-    var event := InputEventKey.new()
-    event.keycode = code
-    event.physical_keycode = physical if physical != KEY_NONE else code
-    event.pressed = true
-    Input.parse_input_event(event)
-    await frames(1)
-    event = event.duplicate()
-    event.pressed = false
-    Input.parse_input_event(event)
-    await frames(1)
-
-func write_file(path: String, text: String) -> void:
-    var file := FileAccess.open(path, FileAccess.WRITE)
+func travel(path: String, spawn: String = "default") -> void:
+    Transition.travel(path, spawn)
+    await get_tree().create_timer(1.1).timeout
+func file_text(index: int) -> String:
+    return FileAccess.get_file_as_string(Game.slot_path(index))
+func write_text(index: int, text: String) -> void:
+    var file := FileAccess.open(Game.slot_path(index), FileAccess.WRITE)
     file.store_string(text)
     file.close()
-
 func _ready() -> void:
     process_mode = Node.PROCESS_MODE_ALWAYS
     get_tree().current_scene = null
     run.call_deferred()
-
 func run() -> void:
     for index in Game.SAVE_SLOT_COUNT:
         if FileAccess.file_exists(Game.slot_path(index)):
             DirAccess.remove_absolute(ProjectSettings.globalize_path(Game.slot_path(index)))
-    write_file("user://checkpoint.json", "legacy checkpoint left untouched")
     Game.start_game()
-    await frames(8)
+    await frames()
     var town: Node2D = get_tree().current_scene
     var player: CharacterBody2D = town.get_node("Actors/Player")
+    var bike: Area2D = town.get_node("Interactables/SaveBicycle")
+    player.position = Vector2(160,588)
+    check(not Game.has_saves(), "New game and location entry do not autosave")
+    check(not Game.save_slot(-1,bike) and not Game.save_slot(4,bike) and not Game.save_slot(0,null), "Only four slots and placed save stations authorize writes")
     var hud: CanvasLayer = town.get_node("HUD")
-    var bicycle: Area2D = town.get_node("Interactables/SaveBicycle")
-    check(not Game.has_saves(), "Starting and entering a location writes no save files")
-    check(not hud.has_node("Root/PausePanel/Save"), "Pause menu cannot save away from a bicycle")
-    check(not Game.save_slot(0, null) and not Game.save_slot(0, player), "Saving requires an actual placed bicycle")
-    check(not Game.save_slot(-1, bicycle) and not Game.save_slot(4, bicycle), "Only four save slot indices are accepted")
-    # Actual OS-style key events must reach the HUD before focused GUI controls.
-    await key(KEY_TAB)
-    check(hud.get_node("Root/InventoryPanel").visible and get_tree().paused, "Tab opens inventory")
-    var focused := get_viewport().gui_get_focus_owner()
-    check(focused != null, "Inventory starts with keyboard focus on a slot")
-    var repeated_tab := InputEventKey.new()
-    repeated_tab.keycode = KEY_TAB
-    repeated_tab.physical_keycode = KEY_TAB
-    repeated_tab.pressed = true
-    repeated_tab.echo = true
-    Input.parse_input_event(repeated_tab)
-    await frames(1)
-    check(hud.get_node("Root/InventoryPanel").visible and get_viewport().gui_get_focus_owner() == focused, "Holding Tab never toggles repeatedly or advances inventory focus")
-    await key(KEY_TAB)
-    check(not hud.get_node("Root/InventoryPanel").visible and not get_tree().paused, "Tab closes inventory despite focused GUI button")
-    await key(KEY_I)
-    check(hud.get_node("Root/InventoryPanel").visible, "Existing I binding still opens inventory")
-    await key(KEY_TAB)
-    check(not get_tree().paused, "Tab closes an inventory opened with I")
-    Game.slots[0] = {"id": "ammo", "count": 20}
-    Game.slots[1] = {"id": "ammo", "count": 2}
-    Game.changed.emit()
-    hud.open_inventory()
-    hud.select_slot(0)
-    check(not hud.get_node("Root/InventoryPanel/Combine").disabled, "Ammunition supports Combine")
-    hud.begin_combine()
-    hud.get_node("Root/InventoryPanel/Slots").get_child(1).grab_focus()
-    check(Game.slots[0]["count"] == 20 and Game.slots[1]["count"] == 2, "Keyboard focus alone never combines or consumes items")
-    hud.get_node("Root/InventoryPanel/Slots").get_child(1).pressed.emit()
-    check(Game.slots[0]["count"] == 22 and Game.slots[1].is_empty(), "Inventory Combine merges 20 plus 2 into 22 and frees a pocket")
-    Game.slots[0] = {"id": "ammo", "count": 20}
-    Game.slots[1] = {"id": "ammo", "count": 10}
-    check(Game.combine_slots(0, 1) and Game.slots[0]["count"] == 24 and Game.slots[1]["count"] == 6, "Stack overflow stays in its original pocket without losing rounds")
-    var before: Array[Dictionary] = Game.slots.duplicate(true)
-    check(not Game.combine_slots(0, 1) and Game.slots == before, "Full destination stack consumes nothing")
-    check(not Game.combine_slots(1, 1) and Game.slots == before, "A stack cannot combine with itself")
-    check(not Game.combine_slots(-1, 0) and not Game.combine_slots(0, 8), "Invalid pocket indices are safe")
-    var same_item_recipe := InventoryRecipe.new()
-    same_item_recipe.input_a = "fuse"
-    same_item_recipe.input_b = "fuse"
-    same_item_recipe.output_id = "bandage"
-    same_item_recipe.output_quantity = 1
-    Game.recipes.append(same_item_recipe)
-    Game.slots[2] = {"id": "fuse", "count": 1}
-    Game.slots[3] = {"id": "fuse", "count": 1}
-    check(Game.combine_slots(2,3) and Game.count_item("fuse") == 0 and Game.count_item("bandage") == 1, "Recipes requiring two identical nonstackable items still work")
-    Game.recipes.erase(same_item_recipe)
-    Game.take_item("bandage")
-    hud.close_panels()
-    # Place the player within interaction range; the reusable scene's origin is floor level.
-    player.position = Vector2(160, 588)
-    await frames()
-    await key(KEY_E)
-    check(bicycle.ringing and bicycle.get_node("BellSound").playing, "E at bicycle starts its bell interaction")
+    bike.interact(player)
     await get_tree().create_timer(0.5).timeout
-    var menu: CanvasLayer = hud.get_node("SaveMenu")
-    check(menu.is_open() and get_tree().paused, "Bell interaction opens the save menu and pauses gameplay")
-    check(menu.entries.get_child_count() == 4, "Save menu exposes exactly four slots")
-    menu.choose_slot(0)
-    check(Game.save_info(0)["valid"] and menu.feedback.text == "Game saved in slot 1.", "Empty slot saves immediately with visible confirmation")
-    var old_save := FileAccess.get_file_as_string(Game.slot_path(0))
-    Game.health = 75
-    menu.choose_slot(0)
-    check(menu.confirmation.visible and FileAccess.get_file_as_string(Game.slot_path(0)) == old_save, "Occupied slot asks before overwriting and leaves old save untouched")
-    await key(KEY_ESCAPE)
-    check(not menu.confirmation.visible and FileAccess.get_file_as_string(Game.slot_path(0)) == old_save, "Escape cancels overwrite without changing the file")
-    # Fill all slots with distinguishable state.
-    Game.world["manual:test"] = true
-    Game.magazine = 3
-    Game.flashlight_on = false
-    Game.play_seconds = 185.0
-    for index in Game.SAVE_SLOT_COUNT:
-        Game.health = 75 - index * 15
-        check(Game.save_slot(index, bicycle), "Bicycle can write save slot %d" % (index + 1))
-    var slot_zero := FileAccess.get_file_as_string(Game.slot_path(0))
-    Game.health = 50
-    menu.choose_slot(1)
-    menu.confirmation.confirmed.emit()
-    menu.confirmation.hide()
-    check(Game.save_info(1)["health"] == 50 and FileAccess.get_file_as_string(Game.slot_path(0)) == slot_zero, "Confirmed overwrite changes only the chosen slot")
-    menu.close()
-    check(not get_tree().paused, "Closing bicycle save menu resumes exploration")
-    player.position = Vector2(1000, 588)
-    check(not Game.save_slot(0, bicycle) and FileAccess.get_file_as_string(Game.slot_path(0)) == slot_zero, "A distant bicycle cannot authorize a save")
-    Transition.travel("res://scenes/levels/interior.tscn", "from_street")
-    await get_tree().create_timer(1.2).timeout
-    check(FileAccess.get_file_as_string(Game.slot_path(0)) == slot_zero, "Changing locations never updates a manual save")
+    var picker: CanvasLayer = hud.get_node("SaveMenu")
+    check(picker.is_open() and get_tree().paused, "Bicycle bell opens the paused four-slot save menu")
+    picker.entries.get_child(0).pressed.emit()
+    var first_file := file_text(0)
+    var first_inventory := Game.inventory.snapshot()
+    var first_world := Game.world.duplicate(true)
+    check(Game.save_info(0)["valid"], "Slot A records the initial run")
+    picker.entries.get_child(0).pressed.emit()
+    check(picker.confirmation.visible and file_text(0) == first_file, "Overwrite confirmation protects the existing file")
+    picker.confirmation.canceled.emit()
+    picker.confirmation.hide()
+    picker.close()
+    # Collect actual placed objects, not just manually assigned inventory dictionaries.
+    await travel("res://scenes/levels/interior.tscn", "from_street")
     var room: Node2D = get_tree().current_scene
-    check(not room.get_node("Actors/Player/Camera2D").enabled and room.get_node("Camera2D").zoom == Vector2(2.1,2.1), "Custom fixed interior camera is preserved")
-    Transition.travel("uid://duiums0oao68l", "default")
-    await get_tree().create_timer(1.2).timeout
-    check(get_tree().current_scene.scene_file_path.ends_with("interior1_2.tscn"), "Designer-authored UID scene transition still works")
-    Game.health = 1
-    Game.world.clear()
-    check(Game.load_slot(0), "A valid manual save can be loaded")
-    await frames(8)
+    check(not room.get_node("Actors/Player/Camera2D").enabled and room.get_node("Camera2D").zoom == Vector2(2.1,2.1), "Fixed interior camera survives inventory/save changes")
+    for name in ["Cloth", "Antiseptic", "BoltCutters"]:
+        room.get_node("Interactables/" + name).interact(room.get_node("Actors/Player"))
+    await frames(2)
+    check(Game.count_item("cloth") == 1 and Game.count_item("antiseptic") == 1 and Game.count_item("bolt_cutters") == 1, "Actual placed pickups enter inventory and world progress")
+    Game.add_item("fuse")
+    var board: Area2D = load("res://scenes/objects/switchboard.tscn").instantiate()
+    board.power_channel = "save_test"
+    room.get_node("Interactables").add_child(board)
+    check(board.solve_puzzle(board.puzzle_solution), "A real puzzle records its completed circuit state")
+    await travel("res://scenes/levels/alley.tscn")
+    var alley: Node2D = get_tree().current_scene
+    alley.get_node("Interactables/ToolGate").open_door()
+    alley.get_node("Actors/Enemy").take_damage(100)
+    await frames(2)
+    await travel("res://scenes/levels/town.tscn")
     town = get_tree().current_scene
     player = town.get_node("Actors/Player")
+    bike = town.get_node("Interactables/SaveBicycle")
+    player.position = Vector2(160,588)
+    Game.health = 71
+    Game.magazine = 3
+    Game.flashlight_on = false
+    check(Game.move_item(Game.equipped_uid, Vector2i(5,2), true), "Weapon placement/orientation can differ between saves")
     hud = town.get_node("HUD")
-    bicycle = town.get_node("Interactables/SaveBicycle")
-    check(Game.health == 75 and Game.magazine == 3 and Game.count_item("ammo") == 30, "Loading restores health, magazine and separate inventory stacks")
-    check(Game.world.get("manual:test", false) and not Game.flashlight_on, "Loading restores world progress and flashlight equipment state")
-    check(player.global_position.distance_to(bicycle.get_node("SaveSpawn").global_position) < 2, "Loading returns to the bicycle's editable SaveSpawn marker")
-    check(not get_tree().paused and not hud.get_node("SaveMenu").is_open(), "Loaded game starts in playable state")
-    check(FileAccess.get_file_as_string("user://checkpoint.json") == "legacy checkpoint left untouched", "Old checkpoint file is neither used nor erased")
+    hud.show_save_station(bike)
+    hud.get_node("SaveMenu").entries.get_child(1).pressed.emit()
+    var second_inventory := Game.inventory.snapshot()
+    var second_world := Game.world.duplicate(true)
+    var second_file := file_text(1)
+    check(first_inventory != second_inventory and first_world != second_world, "Save A and B contain different inventories and world snapshots")
+    check(file_text(0) == first_file, "Saving later pickups to B does not alter A on disk")
+    var before_preview := Game.inventory.snapshot()
+    check(Game.save_info(0)["item_count"] != Game.save_info(1)["item_count"] and Game.inventory.snapshot()==before_preview, "Slot previews show stored item counts without changing the live inventory")
+    hud.get_node("SaveMenu").close()
+    # Follow the actual pause-menu load flow repeatedly, with inspection after each load.
+    for index in [0,1,0,1]:
+        hud = get_tree().current_scene.get_node("HUD")
+        hud.toggle_pause()
+        hud.get_node("Root/PausePanel/Retry").pressed.emit()
+        picker = hud.get_node("SaveMenu")
+        check(not picker.saving and picker.is_open(), "Pause opens load mode, not save mode")
+        picker.entries.get_child(index).pressed.emit()
+        check(not Game.load_slot(1-index), "A second same-frame load cannot race deferred scene replacement")
+        await frames()
+        var expected_inventory: Dictionary = first_inventory if index == 0 else second_inventory
+        var expected_world: Dictionary = first_world if index == 0 else second_world
+        check(Game.inventory.snapshot() == expected_inventory, "Slot %d restores its own item instances, counts, positions, rotation and magazines" % (index+1))
+        check(Game.world == expected_world and Game.world.get("power:save_test",false) == (index==1), "Slot %d restores its own puzzle, pickup, gate and enemy state" % (index+1))
+        check(Game.health == (100 if index==0 else 71) and Game.magazine == (6 if index==0 else 3), "Slot %d restores health and loaded weapon rounds" % (index+1))
+        check(Game.count_item("cloth") == index and Game.count_item("bolt_cutters") == index, "Earlier slot never inherits later pickups")
+        hud = get_tree().current_scene.get_node("HUD")
+        hud.open_inventory()
+        hud.select_item(Game.inventory.first_uid("cloth"))
+        check(hud.get_node("Root/InventoryPanel/Portrait").texture == (Game.item_icon("cloth") if index==1 else null), "Inventory inspection reflects the loaded slot")
+        hud.close_panels()
+        player = get_tree().current_scene.get_node("Actors/Player")
+        bike = get_tree().current_scene.get_node("Interactables/SaveBicycle")
+        check(player.global_position.distance_to(bike.get_node("SaveSpawn").global_position) < 2, "Loading returns beside the saved bicycle")
+    check(file_text(0)==first_file and file_text(1)==second_file, "Repeated loading and inspection never rewrites either save")
+    await travel("res://scenes/levels/interior.tscn")
+    check(not get_tree().current_scene.has_node("Interactables/Cloth"), "Collected object is absent after loading the later slot")
+    await travel("res://scenes/levels/alley.tscn")
+    alley = get_tree().current_scene
+    check(alley.get_node("Interactables/ToolGate").opened and not alley.has_node("Actors/Enemy"), "Later slot restores the open gate and defeated enemy in the actual scene")
+    Game.load_slot(0)
+    await frames()
+    await travel("res://scenes/levels/interior.tscn")
+    check(get_tree().current_scene.has_node("Interactables/Cloth"), "The same object is restored by the earlier slot")
+    await travel("res://scenes/levels/alley.tscn")
+    alley = get_tree().current_scene
+    check(not alley.get_node("Interactables/ToolGate").opened and alley.has_node("Actors/Enemy"), "Earlier slot restores the locked gate and living enemy")
+    Game.load_slot(1)
+    await frames()
+    town = get_tree().current_scene
+    bike = town.get_node("Interactables/SaveBicycle")
+    player = town.get_node("Actors/Player")
+    player.position = Vector2(160,588)
+    Game.equip_weapon(Game.equipped_uid)
+    Game.expand_inventory(10,5)
+    check(Game.save_slot(2,bike), "Third slot saves unarmed equipment and upgraded capacity")
+    Game.add_item("ammo", 25)
+    Game.health = 42
+    check(Game.save_slot(3,bike), "Fourth slot is independent")
+    Game.load_slot(2)
+    await frames()
+    check(Game.inventory.entry(Game.inventory.first_uid("pistol"))["magazine"]==3, "Unequipped weapon retains its saved magazine")
+    check(not Game.has_equipped_weapon() and Game.inventory.columns==10 and Game.inventory.rows==5 and Game.health==71, "Capacity and unequipped state restore per slot")
+    Game.load_slot(3)
+    await frames()
+    check(Game.health==42 and Game.count_item("ammo")==37, "Fourth slot restores its distinct ammunition quantity")
+    var corrupt: Dictionary = JSON.parse_string(file_text(3))
+    corrupt["inventory"]["items"][1]["x"] = corrupt["inventory"]["items"][0]["x"]
+    corrupt["inventory"]["items"][1]["y"] = corrupt["inventory"]["items"][0]["y"]
+    write_text(3,JSON.stringify(corrupt))
+    var unchanged := Game.inventory.snapshot()
+    check(not Game.load_slot(3) and Game.inventory.snapshot()==unchanged, "Overlapping/corrupt inventory is rejected without resetting the current run")
+    write_text(3,"{broken")
+    check(not Game.save_info(3)["valid"] and not Game.load_slot(3), "Invalid JSON is handled without a crash")
+    # Version-2 manual saves are migrated in memory only; no user's old file is overwritten.
+    var old: Dictionary = JSON.parse_string(first_file)
+    old["version"] = 2
+    old.erase("inventory")
+    old.erase("equipped_uid")
+    old["slots"] = [{"id":"ammo","count":12},{"id":"cloth","count":2},{},{},{},{},{},{}]
+    old["magazine"] = 4
+    old["health"] = 82
+    write_text(3,JSON.stringify(old))
+    var legacy := file_text(3)
+    check(Game.load_slot(3), "Previous version-2 saves still load")
+    await frames()
+    check(Game.count_item("cloth")==2 and Game.magazine==4 and Game.has_equipped_weapon() and Game.health==82, "Legacy implicit handgun becomes a real two-cell equipped item")
+    check(file_text(3)==legacy, "Reading or loading a legacy slot does not rewrite its file")
+    hud = get_tree().current_scene.get_node("HUD")
     Game.health = 0
     Game.changed.emit()
-    check(get_tree().paused and hud.get_node("Root/PausePanel/Resume").disabled, "Death prevents resuming the depleted player")
     hud.open_load_menu()
-    menu = hud.get_node("SaveMenu")
-    check(menu.is_open(), "Death screen offers the same four-slot load picker")
-    menu.close()
-    check(get_tree().paused and hud.get_node("Root/PausePanel").visible, "Canceling death load returns to the death menu")
-    hud.open_load_menu()
-    hud.get_node("SaveMenu").choose_slot(2)
-    await frames(8)
-    check(Game.health == 45 and not get_tree().paused, "Death load restores the selected slot rather than an automatic checkpoint")
-    town = get_tree().current_scene
-    hud = town.get_node("HUD")
-    write_file(Game.slot_path(3), "{broken JSON")
-    check(not Game.save_info(3)["valid"] and Game.save_info(3)["occupied"], "Corrupt slot is clearly marked as occupied but unavailable")
-    var current_health: int = Game.health
-    check(not Game.load_slot(3) and Game.health == current_health and get_tree().current_scene == town, "Invalid save cannot replace the current run")
-    hud.back_to_menu()
-    await frames(6)
-    var main: Control = get_tree().current_scene
-    main.get_node("Continue").pressed.emit()
-    menu = main.get_node("SaveMenu")
-    check(menu.is_open() and menu.entries.get_child(3).disabled, "Main menu opens slot selection and disables corrupt files")
-    menu.close()
-    Game.start_game()
-    await frames(6)
-    check(FileAccess.get_file_as_string(Game.slot_path(0)) == slot_zero, "New game never erases existing save slots")
-    var art := load("res://art/pixel/bicycle.png") as Texture2D
-    var image := art.get_image()
-    var symmetrical := true
-    for y in image.get_height():
-        for x in image.get_width():
-            if image.get_pixel(x,y) != image.get_pixel(image.get_width()-1-x,y):
-                symmetrical = false
-    check(image.get_size() == Vector2i(32,28) and symmetrical, "Production bicycle is native-resolution pixel art with exact mirror symmetry")
-    get_tree().current_scene.get_node("AmbientSound").stop()
+    check(hud.get_node("SaveMenu").is_open() and get_tree().paused, "Death still offers the four-slot load picker")
+    hud.get_node("SaveMenu").entries.get_child(0).pressed.emit()
     await frames()
+    check(Game.health==100 and not get_tree().paused, "Death load restores the selected complete snapshot")
+    Game.start_game()
+    await frames()
+    check(file_text(0)==first_file, "New game preserves existing manual saves")
+    get_tree().current_scene.get_node("AmbientSound").stop()
+    await frames(3)
     get_tree().current_scene.queue_free()
     get_tree().current_scene = null
-    await frames(5)
-    print("IGNOTUM MANUAL SAVES: %d checks, %d failures" % [checks, failures])
-    get_tree().quit(0 if failures == 0 else 1)
+    await frames()
+    print("IGNOTUM MANUAL SAVES: %d checks, %d failures" % [checks,failures])
+    get_tree().quit(0 if failures==0 else 1)

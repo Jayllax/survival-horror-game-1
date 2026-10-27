@@ -6,6 +6,6 @@ script = ExtResource("1")
 id = "ammo"
 display_name = "9 mm rounds"
 category = "Ammunition"
-description = "Handgun ammunition. Reload with R to transfer rounds from your pockets into the magazine. Each pocket holds up to 24 rounds."
+description = "Handgun ammunition. Reload with R to transfer rounds from your inventory into the magazine. Each stack holds up to 24 rounds."
 icon = ExtResource("2")
 max_stack = 24

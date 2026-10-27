@@ -63,9 +63,9 @@ Enemies expose Max Health, Speed, Detection Radius, Damage, Attack Interval, Pat
 
 The world view has no permanent HUD bars, location/title labels, controls strip, pickup names, or floating item markers. A nearby object's generic action appears above it: Take, Examine, Use, Open, or Enter. Override **Action Label** for a different short verb, without revealing item identity. **Prompt Offset** positions the prompt relative to the object in world pixels; Interaction Radius controls proximity. Saving is manual and only available at placed bicycles.
 
-Health appears briefly after damage, staying visible only at critical health. Select the HUD root to tune Health Feedback Seconds, Pickup Hint Seconds, Message Seconds, or turn Show Pickup Hint off. Select Player to tune Combat Feedback Seconds and Aiming Move Multiplier. Holding right mouse enables careful aiming movement and a small crosshair/ammo readout. Recent shots and reloading also show ammunition temporarily. Inspect exact condition and weapon status in the inventory. The flashlight remains equipped outside the eight pockets. Controls are under Pause → Controls.
+Health appears briefly after damage, staying visible only at critical health. Select the HUD root to tune Health Feedback Seconds, Pickup Hint Seconds, Message Seconds, or turn Show Pickup Hint off. Select Player to tune Combat Feedback Seconds and Aiming Move Multiplier. Holding right mouse enables careful aiming movement and a small crosshair/ammo readout. Recent shots and reloading also show ammunition temporarily. Inspect exact condition and weapon status in the inventory. The flashlight remains equipped outside the inventory. Controls are under Pause → Controls.
 
-Open I and click an item icon, or move focus with arrow keys. Its name, large artwork, category, quantity, and description appear beside the grid. **Use** applies compatible supplies, **Combine** asks for a second item, and selection itself examines the item. Use is disabled at full health for medical items. A failed combination or an output that cannot fit consumes nothing. There is no discard or drag/drop UI.
+Open I and click an item icon, or move focus with arrow keys. Its name, large artwork, category, quantity, and description appear beside the grid. **Use** applies compatible supplies, **Combine** asks for a second item, and selection itself examines the item. Use is disabled at full health for medical items. A failed combination or an output that cannot fit consumes nothing. Drag items within the grid to move them. See the grid inventory section below for rotation and equipment. Discarding items is not implemented.
 
 ### Create an item without programming
 
@@ -91,7 +91,40 @@ The supplied building has cloth, antiseptic, and bolt cutters. The alley's chain
 
 ## Pickups, notes, and circuits
 
-There are eight pockets. Open/close the inventory with **I or Tab**; Tab does not move focus while the inventory is open. Arrow keys and the mouse still select items. Ammunition stacks to 24. To merge stacks, select the stack you want to fill, press **Combine**, then activate a different matching stack. For example, 20 + 2 becomes 22 and frees a pocket; 20 + 10 becomes 24 + 6. Moving keyboard focus alone never combines items.  Keys and puzzle objects each occupy one pocket. Full inventories leave pickups in place. Reloading consumes reserves; there is no inventory drag/drop or discard UI.
+The starting inventory is an **8-column × 4-row grid (32 cells)**. Press **I or Tab** to open/close it. Tab is reserved for toggling while inventory is open; it still navigates the other menus. Ammunition stacks to 24 per item instance. The handgun occupies **2×1 cells**, and each handgun is a separate item with its own loaded rounds. Most existing supplies, keys and puzzle objects use one cell until you change their footprint. Full or fragmented grids leave pickups in the world.
+
+### Move, rotate and combine
+
+- **Left-drag** an item to a clear area and release to place it. Grab any occupied cell of a large item.
+- Press **R while dragging** to rotate the preview by 90°. Red means it cannot fit; an invalid drop leaves the original item completely unchanged.
+- Select an item and press **R**, or click **Rotate [R]**, to rotate in place when there is room.
+- **Escape** cancels an active drag first. Escape again closes the inventory; I/Tab also close it and cancel the drag.
+- Drag an ammo stack onto another matching stack to merge. **20 + 2 becomes 22**, freeing a cell. **20 + 10 becomes 24 + 6**. Overflow is never discarded.
+- The **Combine** button still supports recipes: select the first material, press Combine, then click the second. Moving focus never consumes items.
+- For keyboard placement, focus the grid, use **arrow keys** to move the cell cursor, and **Enter/Space** to pick up or place an item. R rotates the held preview.
+
+### Equip weapons
+
+Select the handgun and click **Unequip** to put it away; select it and click **Equip** to use it again. Equipped weapons still occupy their grid cells. An **E** marker on the item identifies the equipped weapon. Unequipped weapons cannot fire or reload, and aiming feedback is hidden. Switching weapons cancels an unfinished reload; loaded rounds stay in their original weapon. Q remains the melee attack. The flashlight stays available while unarmed and consumes no cells.
+
+### Configure capacity and item sizes
+
+Open **`data/inventory_settings.tres`** in the Inspector. **Columns/Rows** set the starting grid, **Starting Weapon** sets its item ID (empty means start unarmed), and **Starting Ammo** sets the reserve. Existing save slots retain their saved capacity. The UI fits supported grids from **4×2 to 12×8**. No existing inventory is silently shrunk or repacked.
+
+Open any item definition `.tres` and edit **Inventory Footprint → Grid Size**: X is columns, Y is rows. For example, use **(3, 2)** for a large puzzle object or **(4, 1)** for a long weapon. **Can Rotate** controls rotation. Keep dimensions positive and no larger than the supported grid. Change **Max Stack** independently; a whole stack uses that item's footprint. Automatic pickups try the natural orientation, then the rotated orientation, without moving existing items.
+
+A future upgrade can call **`Game.expand_inventory(columns, rows)`**. This only enlarges the current run's grid; coordinates and items remain intact, and each manual save retains its own upgraded size. The foundation includes this hook, not an authored backpack-upgrade pickup.
+
+### Add future weapons without changing player code
+
+1. Duplicate **`data/items/pistol.tres`**, giving it a new file name and unique **Id**.
+2. Set **Display Name**, **Description**, **Icon**, and **Grid Size**; set **Category = Weapon**, **Is Weapon = On**, **Max Stack = 1**.
+3. Under **Weapon**, assign **Weapon Texture**, **Ammunition Id**, **Magazine Size**, **Bullet Damage**, **Shot Interval**, and **Reload Seconds**.
+4. Add the resource to **Items** in `data/catalog.tres`.
+5. Duplicate a pickup scene and assign the new **Item Definition**; update its child Sprite2D texture for the editor preview. Place it where you want the weapon to be discovered.
+6. Collect it, arrange it, and select **Equip**. Multiple weapons, including duplicate weapons of the same type, have independent magazines and stable instance IDs. New weapon pickups start unloaded; the starting weapon begins loaded.
+
+These definitions currently drive the existing **hitscan firearm** behavior. Shotgun spread, alternate fire modes and distinct weapon animations require later gameplay additions. Five or six definitions do not require five or six player scripts. Define a new ammunition item and match its ID for a different ammunition type. Existing Player movement, melee and dodge settings remain on the Player; firearm stats now come from the equipped definition.
 
 Reuse `ammo.tscn`, `fuse.tscn`, or `key.tscn`. Assign **Item Definition**, set **Quantity** and optional **Action Label**, and update child Sprite2D Texture for the editor preview. Arbitrary item IDs work as keys or circuit inputs; names default to a readable capitalization. Built-ins have friendlier labels.
 
@@ -123,7 +156,7 @@ An example bicycle is placed at **(200, 620)** on the street. The front-facing a
 
 ### What each slot remembers
 
-Each independent file records the location, bicycle's return position, all eight inventory stacks, health, loaded magazine, flashlight state, circuit/reference flags, collected pickups, opened gates, defeated enemies, and elapsed play time. The slot menu shows location, station name, local save date/time, played hours/minutes, and health. Saving does not heal the player or refill ammunition. Partly injured living enemies, their patrol positions, and active animations reset when a scene reloads.
+Each independent file records the location, bicycle's return position, the grid dimensions, every item instance (ID, quantity, coordinates and rotation), equipped weapon, health, each weapon’s loaded magazine, flashlight state, circuit/reference flags, collected pickups, opened gates, defeated enemies, and elapsed play time. The slot menu shows location, station name, local save date/time, played hours/minutes, and health. Saving does not heal the player or refill ammunition. Partly injured living enemies, their patrol positions, and active animations reset when a scene reloads.
 
 **Main menu → Load game** and **Pause → Load game** both open the four-slot picker. The death menu also loads a selected file. Loading returns to the recorded **SaveSpawn position**, not the last entrance. **New game** starts fresh in memory and preserves all four files. A player can later overwrite a slot only by saving at a bicycle and confirming.
 
@@ -131,16 +164,16 @@ The scene must use `scripts/location.gd`, as the supplied locations do. Keep its
 
 State IDs default to `scene file path + node path`. Renaming a persistent object changes its identity. Give interactables a unique **Persistent Id** before release if you intend to rename them. Do not duplicate explicit IDs. Enemy identities currently use their scene/node paths. Back up saves before changing scene paths, item IDs, or geometry around saved return positions.
 
-In Godot, choose **Project → Open User Data Folder** to find **`save_1.json` through `save_4.json`**, plus `settings.cfg`. Files are written to a temporary file first, then committed. Unavailable/corrupt saves are marked in the picker and cannot be loaded; they can be replaced after confirmation. The old `checkpoint.json` is left untouched and is not used by this system. It is not automatically converted into a bicycle save.
+In Godot, choose **Project → Open User Data Folder** to find **`save_1.json` through `save_4.json`**, plus `settings.cfg`. Files are written to a temporary file first, then committed. Save previews include the stored item count, grid capacity and whether a weapon is equipped. Loading validates the entire snapshot before changing scenes and applies it as one state change; it never merges the loaded inventory or progress with the current run. Every slot reads its own file; opening another slot’s preview does not change the run. Unavailable/corrupt saves are marked in the picker and cannot be loaded; they can be replaced after confirmation. The old `checkpoint.json` remains unused. Previous **version-2 bicycle saves** are read without rewriting them: the eight pockets are placed in an 8×4 grid and the formerly implicit handgun becomes an equipped 2-cell item with its saved ammunition. Saving at a bicycle writes the new version-3 format only to the chosen slot.
 
 ## Art and interface
 
 See **ART_STYLE_GUIDE.md** and **art/pixel/STYLE_SHEET.png** for the palette and editable source sizes. Older pixel assets have a native source and a ready-to-use 2× texture. The bicycle uses one native PNG and scales its Sprite2D instead. The new houses are 96×128 native pixels and the shop is 128×128; their placed baselines have already been adjusted. Do not stretch them to the old building bounds. Player and ammo files are preserved. `STYLE_SHEET.png` now shows actual production PNGs, not the earlier illustration. Place `building_house.tscn`, `building_shop.tscn`, or `building_station.tscn`, and decorate with reusable props under `scenes/objects/`.
 
-CanvasModulate sets ambient darkness. Lamps and the flashlight add real light. Fog sprites are authored transparent layers. The scene's ambient audio loops; replace its Stream with your own WAV. The pause panels and eight inventory slots are laid out in `scenes/ui/hud.tscn`; button styles are shared through `art/ui_theme.tres`. Menu Options changes volume/fullscreen and stores settings.
+CanvasModulate sets ambient darkness. Lamps and the flashlight add real light. Fog sprites are authored transparent layers. The scene's ambient audio loops; replace its Stream with your own WAV. The pause and inventory panels are laid out in `scenes/ui/hud.tscn`; its `Grid` Control draws the saved item footprints; button styles are shared through `art/ui_theme.tres`. Menu Options changes volume/fullscreen and stores settings.
 
 ## Test before sharing
 
-Play from New Game, enter the building, collect ammo, return, revisit, and confirm it stays collected. Enter the alley, test combat, return to the bicycle, save to a slot, go to the menu, choose Load game, and verify state. Try the other slots and cancel an overwrite. Try an empty magazine, full pockets, a wrong puzzle answer, locked entrances, death, and retry. Physical sound and standalone exports still need testing on your computer.
+Play from New Game, enter the building, collect ammo, return, revisit, and confirm it stays collected. Enter the alley, test combat, return to the bicycle, save to a slot, go to the menu, choose Load game, and verify state. Try the other slots and cancel an overwrite. Save A, collect several items and finish a puzzle, save B, then repeatedly load A/B and check the differences. Try moving, rotating and unequipping the handgun before saving. Try an empty magazine, full pockets, a wrong puzzle answer, locked entrances, death, and retry. Physical sound and standalone exports still need testing on your computer.
 
-`bash tools/check.sh` imports resources and runs gameplay, interface, asset, and manual-save integration suites. Each suite uses a separate test data directory so your normal saves are not overwritten. `tests/capture.tscn` is an optional graphical screenshot helper for Linux. Tests reference the supplied scene/node names, so update the tests if your intentional design changes rename them.
+`bash tools/check.sh` imports resources and runs gameplay, interface, asset, manual-save and grid-input integration suites. Each suite uses a separate test data directory so your normal saves are not overwritten. `tests/capture.tscn` is an optional graphical screenshot helper for Linux. Tests reference the supplied scene/node names, so update the tests if your intentional design changes rename them.

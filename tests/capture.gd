@@ -44,11 +44,12 @@ func run() -> void:
             Game.add_item("cloth")
             Game.add_item("antiseptic")
             Game.add_item("bolt_cutters")
+            Game.move_item(Game.inventory.first_uid("pistol"), Vector2i(6,1), true)
             hud.open_inventory()
             await snap("/tmp/ignotum-inventory.png")
             Game.health = 70
             Game.changed.emit()
-            hud.get_node("Root/InventoryPanel/Slots").get_child(1).grab_focus()
+            hud.select_item(Game.inventory.first_uid("pistol"))
             await snap("/tmp/ignotum-inventory-inspect.png")
             hud.close_panels()
         location.queue_free()

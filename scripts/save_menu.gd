@@ -57,6 +57,7 @@ func refresh_slots() -> void:
         if info["valid"]:
             var minutes := int(float(info["play_seconds"]) / 60.0)
             details = "%s  |  %s\n%s  |  Played %02d:%02d  |  Health %d%%" % [info.get("location", "Location"), info.get("station_label", "Bicycle"), info.get("saved_at", ""), minutes / 60, minutes % 60, int(info["health"])]
+            details += "\nInventory %d items / %d × %d cells  |  %s" % [info["item_count"], info["grid_columns"], info["grid_rows"], "Weapon equipped" if info["armed"] else "Unarmed"]
         elif info["occupied"]:
             details = "Unavailable save — " + info.get("error", "Invalid file")
         entry.text = "SLOT %d    %s" % [index + 1, details]

@@ -31,16 +31,16 @@ func run() -> void:
         if FileAccess.file_exists(Game.slot_path(index)):
             DirAccess.remove_absolute(ProjectSettings.globalize_path(Game.slot_path(index)))
     Game.reset_run()
-    check(Game.slots.size() == 8, "Eight inventory slots")
+    check(Game.inventory.columns == 8 and Game.inventory.rows == 4, "Inventory starts with an 8 by 4 grid")
     Game.add_item("ammo", 20)
-    check(Game.slots[0]["count"] == 24 and Game.slots[1]["count"] == 8, "Ammo stack split at 24")
-    for i in 6:
+    check(Game.count_item("ammo") == 32 and Game.inventory.entries.filter(func(item): return item["id"] == "ammo").size() == 2, "Ammo stack splits at 24")
+    for i in 28:
         Game.add_item("test" + str(i))
     check(not Game.add_item("fuse") and Game.count_item("fuse") == 0, "Full inventory rejects pickup atomically")
     check(not Game.take_item("ammo", 99), "No negative reserve")
     Game.reset_run()
     Game.add_item("fuse")
-    for i in 6:
+    for i in 28:
         Game.add_item("object" + str(i))
     var board: Area2D = load("res://scenes/objects/switchboard.tscn").instantiate()
     var other_board: Area2D = load("res://scenes/objects/switchboard.tscn").instantiate()

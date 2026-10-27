@@ -1,5 +1,5 @@
 extends Node
-## Shared run state. Inventory has exactly eight slots; the flashlight is equipment.
+## Run state is applied atomically. Save files own independent inventory/world snapshots.
 signal changed
 signal message(text: String)
 signal item_collected(id: String)
@@ -7,10 +7,20 @@ signal save_written(slot_index: int)
 var item_catalog: Dictionary = {}
 var recipes: Array[InventoryRecipe] = []
 var last_combined_id := ""
-const SLOT_COUNT := 8
-var slots: Array[Dictionary] = []
+var inventory: GridInventory
+var equipped_uid := -1
+var loading_save := false
 var health: int = 100
-var magazine: int = 6
+var magazine: int:
+    get:
+        var item := inventory.entry(equipped_uid) if inventory else {}
+        return int(item.get("magazine", 0))
+    set(value):
+        if inventory:
+            var item := inventory.entry(equipped_uid)
+            if not item.is_empty():
+                var definition: InventoryItemDefinition = item_catalog.get(item["id"])
+                item["magazine"] = clampi(value, 0, definition.magazine_size if definition else 0)
 var clue_read := false
 var power_restored := false
 var world: Dictionary = {}
@@ -19,7 +29,7 @@ var spawn_id := "default"
 var transitioning := false
 var flashlight_on := true
 const SAVE_SLOT_COUNT := 4
-const SAVE_VERSION := 2
+const SAVE_VERSION := 3
 var pending_restore: Dictionary = {}
 var play_seconds := 0.0
 
@@ -42,17 +52,23 @@ func save_settings() -> void:
 func reset_run() -> void:
     pending_restore.clear()
     play_seconds = 0.0
-    slots.clear()
-    for i in SLOT_COUNT:
-        slots.append({})
     health = 100
-    magazine = 6
     clue_read = false
     power_restored = false
-    world.clear()
+    world = {}
     spawn_id = "default"
     flashlight_on = true
-    add_item("ammo", 12)
+    loading_save = false
+    transitioning = false
+    var settings: InventorySettings = load("res://data/inventory_settings.tres")
+    inventory = GridInventory.new(item_catalog, settings.columns, settings.rows)
+    equipped_uid = -1
+    inventory.add("ammo", settings.starting_ammo)
+    if not settings.starting_weapon.is_empty() and inventory.add(settings.starting_weapon):
+        equipped_uid = inventory.first_uid(settings.starting_weapon)
+        var definition := active_weapon()
+        if definition:
+            magazine = definition.magazine_size
     changed.emit()
 
 func load_item_catalog() -> void:
@@ -62,10 +78,14 @@ func load_item_catalog() -> void:
     recipes.assign(catalog.recipes)
 
 func use_item(id: String) -> bool:
-    var definition: InventoryItemDefinition = item_catalog.get(id)
-    if not definition or definition.heal_amount <= 0 or health >= 100 or count_item(id) == 0:
+    return use_uid(inventory.first_uid(id))
+
+func use_uid(uid: int) -> bool:
+    var item := inventory.entry(uid)
+    var definition: InventoryItemDefinition = item_catalog.get(item.get("id", ""))
+    if not definition or definition.heal_amount <= 0 or health >= 100 or item.is_empty():
         return false
-    take_item(id)
+    inventory.consume_uid(uid)
     health = mini(100, health + definition.heal_amount)
     changed.emit()
     return true
@@ -79,48 +99,81 @@ func can_combine(id: String) -> bool:
     return false
 
 func combine_items(first: String, second: String) -> bool:
+    var first_uid := inventory.first_uid(first)
+    var second_uid := -1
+    for item in inventory.entries:
+        if item["id"] == second and item["uid"] != first_uid:
+            second_uid = int(item["uid"])
+            break
+    return combine_uids(first_uid, second_uid)
+
+func combine_uids(first_uid: int, second_uid: int) -> bool:
     last_combined_id = ""
+    var first := inventory.entry(first_uid)
+    var second := inventory.entry(second_uid)
+    if first_uid == second_uid or first.is_empty() or second.is_empty():
+        return false
     for recipe in recipes:
-        if not ((recipe.input_a == first and recipe.input_b == second) or (recipe.input_a == second and recipe.input_b == first)):
+        if not ((recipe.input_a == first["id"] and recipe.input_b == second["id"]) or (recipe.input_b == first["id"] and recipe.input_a == second["id"])):
             continue
-        if count_item(first) < (2 if first == second else 1) or count_item(second) < 1:
+        var trial := inventory.copy()
+        trial.consume_uid(first_uid)
+        trial.consume_uid(second_uid)
+        if not trial.add(recipe.output_id, recipe.output_quantity):
             return false
-        var before: Array[Dictionary] = slots.duplicate(true)
-        take_item(first)
-        take_item(second)
-        if not add_item(recipe.output_id, recipe.output_quantity):
-            slots.assign(before)
-            changed.emit()
-            return false
+        inventory = trial
         last_combined_id = recipe.output_id
+        _repair_equipment()
         changed.emit()
         return true
-    return false
+    return merge_items(first_uid, second_uid)
 
-# Slot indices matter: identical item IDs can occupy separate pockets.
-func combine_slots(first: int, second: int) -> bool:
-    last_combined_id = ""
-    if first < 0 or second < 0 or first >= SLOT_COUNT or second >= SLOT_COUNT or first == second:
+func merge_items(target_uid: int, source_uid: int) -> bool:
+    var target := inventory.entry(target_uid)
+    if target.is_empty():
         return false
-    if slots[first].is_empty() or slots[second].is_empty():
+    var id: String = target["id"]
+    if not inventory.merge(target_uid, source_uid):
         return false
-    var id: String = slots[first]["id"]
-    var other_id: String = slots[second]["id"]
-    for recipe in recipes:
-        if (recipe.input_a == id and recipe.input_b == other_id) or (recipe.input_b == id and recipe.input_a == other_id):
-            return combine_items(id, other_id)
-    if id != other_id:
-        return false
-    var amount := mini(int(slots[second]["count"]), stack_limit(id) - int(slots[first]["count"]))
-    if amount <= 0:
-        return false
-    slots[first]["count"] += amount
-    slots[second]["count"] -= amount
-    if slots[second]["count"] == 0:
-        slots[second] = {}
     last_combined_id = id
+    _repair_equipment()
     changed.emit()
     return true
+
+func move_item(uid: int, cell: Vector2i, rotated: bool) -> bool:
+    if not inventory.move(uid, cell, rotated):
+        return false
+    changed.emit()
+    return true
+
+func expand_inventory(columns: int, rows: int) -> bool:
+    if columns < inventory.columns or rows < inventory.rows or columns > 12 or rows > 8:
+        return false
+    inventory.columns = columns
+    inventory.rows = rows
+    changed.emit()
+    return true
+
+func active_weapon() -> InventoryItemDefinition:
+    var item := inventory.entry(equipped_uid) if inventory else {}
+    var definition: InventoryItemDefinition = item_catalog.get(item.get("id", ""))
+    return definition if definition and definition.is_weapon else null
+
+func has_equipped_weapon() -> bool:
+    return active_weapon() != null
+
+func equip_weapon(uid: int) -> bool:
+    var item := inventory.entry(uid)
+    var definition: InventoryItemDefinition = item_catalog.get(item.get("id", ""))
+    if not definition or not definition.is_weapon:
+        return false
+    equipped_uid = -1 if equipped_uid == uid else uid
+    changed.emit()
+    return true
+
+func _repair_equipment() -> void:
+    if active_weapon() == null:
+        equipped_uid = -1
 
 func register_item(definition: InventoryItemDefinition) -> void:
     if definition and not definition.id.is_empty():
@@ -147,51 +200,19 @@ func stack_limit(id: String) -> int:
     return definition.max_stack if definition else 1
 
 func count_item(id: String) -> int:
-    var total := 0
-    for slot in slots:
-        if slot.get("id", "") == id:
-            total += int(slot["count"])
-    return total
+    return inventory.count(id)
 
 func add_item(id: String, amount: int = 1) -> bool:
-    if amount <= 0:
+    if not inventory.add(id, amount):
+        message.emit("No room in the inventory. Rearrange items or free some space.")
         return false
-    var capacity := 0
-    for slot in slots:
-        if slot.is_empty():
-            capacity += stack_limit(id)
-        elif slot.get("id") == id:
-            capacity += stack_limit(id) - int(slot["count"])
-    if capacity < amount:
-        message.emit("All eight pockets are full. Free space by using ammunition or puzzle items.")
-        return false
-    var remaining := amount
-    for slot in slots:
-        if slot.get("id", "") == id:
-            var added: int = mini(remaining, stack_limit(id) - int(slot["count"]))
-            slot["count"] += added
-            remaining -= added
-    for i in SLOT_COUNT:
-        if remaining > 0 and slots[i].is_empty():
-            var added: int = mini(remaining, stack_limit(id))
-            slots[i] = {"id": id, "count": added}
-            remaining -= added
     changed.emit()
     return true
 
 func take_item(id: String, amount: int = 1) -> bool:
-    if amount <= 0 or count_item(id) < amount:
+    if not inventory.remove(id, amount):
         return false
-    var remaining := amount
-    for i in SLOT_COUNT:
-        if slots[i].get("id", "") == id:
-            var taken: int = mini(remaining, int(slots[i]["count"]))
-            slots[i]["count"] -= taken
-            remaining -= taken
-            if slots[i]["count"] == 0:
-                slots[i] = {}
-            if remaining == 0:
-                break
+    _repair_equipment()
     changed.emit()
     return true
 
@@ -220,43 +241,70 @@ func _read_slot(index: int) -> Variant:
         return null
     return parser.data
 
+func _saved_catalog(data: Dictionary) -> Dictionary:
+    var catalog := item_catalog.duplicate()
+    for definition_path in data.get("item_definitions", []):
+        if not definition_path is String or not definition_path.begins_with("res://") or not definition_path.ends_with(".tres") or not ResourceLoader.exists(definition_path):
+            return {}
+        var definition := load(definition_path) as InventoryItemDefinition
+        if not definition:
+            return {}
+        catalog[definition.id] = definition
+    return catalog
+
+func _saved_inventory(data: Dictionary, catalog: Dictionary) -> GridInventory:
+    if data.get("version") == SAVE_VERSION:
+        return GridInventory.restore(data.get("inventory"), catalog)
+    # Read version-2 saves without modifying them. The old handgun was implicit equipment.
+    var old_slots: Variant = data.get("slots")
+    if not old_slots is Array or old_slots.size() != 8:
+        return null
+    var result := GridInventory.new(catalog, 8, 4)
+    for pocket in old_slots:
+        if not pocket is Dictionary:
+            return null
+        if not pocket.is_empty():
+            if not pocket.get("id") is String or not GridInventory.whole(pocket.get("count"), 1, 99) or not result.add(pocket["id"], int(pocket["count"])):
+                return null
+    if result.first_uid("pistol") < 0 and not result.add("pistol"):
+        return null
+    var pistol := result.entry(result.first_uid("pistol"))
+    if not GridInventory.whole(data.get("magazine", 6), 0, 6):
+        return null
+    pistol["magazine"] = int(data.get("magazine",6))
+    return result
+
 func _save_error(data: Variant) -> String:
-    if not data is Dictionary or data.get("version") != SAVE_VERSION:
+    if not data is Dictionary or not GridInventory.whole(data.get("version"), 2, SAVE_VERSION):
         return "Save format is invalid."
     var path: Variant = data.get("scene")
     if not path is String or not path.begins_with("res://") or not path.ends_with(".tscn") or not ResourceLoader.exists(path):
         return "Saved location is unavailable."
-    var inventory: Variant = data.get("slots")
-    if not inventory is Array or inventory.size() != SLOT_COUNT:
-        return "Saved inventory is invalid."
-    for pocket in inventory:
-        if not pocket is Dictionary:
-            return "Saved inventory is invalid."
-        if not pocket.is_empty():
-            if not pocket.get("id") is String or pocket["id"].is_empty():
-                return "Saved item is invalid."
-            var count: Variant = pocket.get("count")
-            if not (count is float or count is int) or not is_finite(float(count)) or count != int(count) or count < 1 or count > 99:
-                return "Saved item quantity is invalid."
+    if not data.get("world") is Dictionary or not data.get("item_definitions") is Array:
+        return "Saved world state is invalid."
+    var catalog := _saved_catalog(data)
+    var model := _saved_inventory(data, catalog) if not catalog.is_empty() else null
+    if model == null:
+        return "Saved inventory or item definitions are invalid."
+    if data["version"] == SAVE_VERSION:
+        if not GridInventory.whole(data.get("equipped_uid"), -1, 1000000000):
+            return "Saved equipment is invalid."
+        var equipped := model.entry(int(data["equipped_uid"]))
+        var weapon: InventoryItemDefinition = catalog.get(equipped.get("id", ""))
+        if data["equipped_uid"] != -1 and (not weapon or not weapon.is_weapon):
+            return "Saved weapon is unavailable."
     var position: Variant = data.get("position")
     if not position is Array or position.size() != 2:
         return "Saved position is invalid."
     for coordinate in position:
         if not (coordinate is float or coordinate is int) or not is_finite(float(coordinate)):
             return "Saved position is invalid."
-    for field in ["health", "magazine", "play_seconds", "facing"]:
+    for field in ["health", "play_seconds", "facing"]:
         var value: Variant = data.get(field)
         if not (value is float or value is int) or not is_finite(float(value)):
             return "Saved player state is invalid."
-    if data["health"] < 1 or data["health"] > 100 or data["magazine"] < 0 or data["magazine"] > 99:
+    if not GridInventory.whole(data["health"], 1, 100) or data["play_seconds"] < 0:
         return "Saved player state is invalid."
-    if not data.get("world") is Dictionary or not data.get("item_definitions") is Array:
-        return "Saved world state is invalid."
-    for definition_path in data["item_definitions"]:
-        if not definition_path is String or not definition_path.begins_with("res://") or not definition_path.ends_with(".tres") or not ResourceLoader.exists(definition_path):
-            return "A saved item definition is unavailable."
-        if not load(definition_path) is InventoryItemDefinition:
-            return "A saved item definition is invalid."
     return ""
 
 func save_info(index: int) -> Dictionary:
@@ -272,6 +320,16 @@ func save_info(index: int) -> Dictionary:
     var info: Dictionary = data.duplicate(true)
     info["occupied"] = true
     info["valid"] = true
+    if data["version"] == SAVE_VERSION:
+        info["item_count"] = data["inventory"]["items"].size()
+        info["grid_columns"] = int(data["inventory"]["columns"])
+        info["grid_rows"] = int(data["inventory"]["rows"])
+        info["armed"] = data["equipped_uid"] != -1
+    else:
+        info["item_count"] = data["slots"].filter(func(item): return not item.is_empty()).size() + 1
+        info["grid_columns"] = 8
+        info["grid_rows"] = 4
+        info["armed"] = true
     return info
 
 func has_saves() -> bool:
@@ -301,9 +359,10 @@ func save_slot(index: int, station: Node2D) -> bool:
         "location": location_name, "position": [position.x, position.y], "facing": player.facing,
         "saved_at": Time.get_datetime_string_from_system(false, true),
         "timestamp": Time.get_unix_time_from_system(), "play_seconds": play_seconds,
-        "slots": slots, "health": health, "magazine": magazine, "world": world,
+        "inventory": inventory.snapshot(), "equipped_uid": equipped_uid,
+        "health": health, "magazine": magazine, "world": world.duplicate(true),
         "clue": clue_read, "power": power_restored, "flashlight": flashlight_on,
-        "item_definitions": definition_paths}
+        "item_definitions": definition_paths.duplicate()}
     var error := _save_error(data)
     if not error.is_empty():
         message.emit(error)
@@ -336,21 +395,35 @@ func load_slot(index: int) -> bool:
     if packed == null:
         message.emit("Saved location could not be loaded.")
         return false
-    reset_run()
-    for definition_path in data["item_definitions"]:
-        register_item(load(definition_path))
-    for index_in_inventory in SLOT_COUNT:
-        slots[index_in_inventory] = data["slots"][index_in_inventory].duplicate(true)
+    var catalog := _saved_catalog(data)
+    var restored := _saved_inventory(data, catalog)
+    # Reject another load during deferred scene replacement. No partial reset/change signals.
+    var result := get_tree().change_scene_to_packed(packed)
+    if result != OK:
+        message.emit("Saved location could not be opened.")
+        return false
+    loading_save = true
+    transitioning = true
+    inventory = restored
+    item_catalog = catalog
+    inventory.definitions = item_catalog
+    equipped_uid = int(data["equipped_uid"]) if data["version"] == SAVE_VERSION else inventory.first_uid("pistol")
     health = int(data["health"])
-    magazine = int(data["magazine"])
     world = data["world"].duplicate(true)
     clue_read = bool(data.get("clue", false))
     power_restored = bool(data.get("power", false))
     flashlight_on = bool(data.get("flashlight", true))
-    play_seconds = maxf(0.0, float(data["play_seconds"]))
+    play_seconds = float(data["play_seconds"])
+    spawn_id = "default"
     pending_restore = {"position": Vector2(data["position"][0], data["position"][1]), "facing": float(data["facing"])}
     get_tree().paused = false
-    return get_tree().change_scene_to_packed(packed) == OK
+    return true
+
+func finish_location_load() -> void:
+    if loading_save:
+        loading_save = false
+        transitioning = false
+    changed.emit()
 
 func start_game() -> void:
     get_tree().paused = false

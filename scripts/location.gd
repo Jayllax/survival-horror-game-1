@@ -25,4 +25,4 @@ func _ready() -> void:
             camera.limit_right = camera_bounds.end.x
             camera.limit_bottom = camera_bounds.end.y
             camera.reset_smoothing()
-    Game.changed.emit()
+    Game.finish_location_load()

@@ -22,10 +22,7 @@ func press(action: String) -> void:
     await frames(2)
 
 func slot_for(id: String) -> int:
-    for i in 8:
-        if Game.slots[i].get("id", "") == id:
-            return i
-    return -1
+    return Game.inventory.first_uid(id)
 
 func _ready() -> void:
     process_mode = Node.PROCESS_MODE_ALWAYS
@@ -38,11 +35,11 @@ func run() -> void:
     Game.add_item("cloth", 2)
     Game.add_item("antiseptic", 2)
     Game.add_item("bandage", 3)
-    for i in 5:
+    for i in 27:
         Game.add_item("filler" + str(i))
-    var before: Array[Dictionary] = Game.slots.duplicate(true)
-    check(not Game.combine_items("cloth", "antiseptic") and Game.slots == before, "Crafting rolls back both materials when output cannot fit")
-    check(not Game.combine_items("cloth", "cloth") and Game.slots == before, "Invalid recipe consumes nothing")
+    var before := Game.inventory.snapshot()
+    check(not Game.combine_items("cloth", "antiseptic") and Game.inventory.snapshot() == before, "Crafting rolls back both materials when output cannot fit")
+    check(not Game.combine_items("cloth", "cloth") and Game.inventory.snapshot() == before, "Invalid recipe consumes nothing")
     Game.start_game()
     await frames(8)
     var street: Node2D = get_tree().current_scene
@@ -91,24 +88,24 @@ func run() -> void:
     hud.open_inventory()
     await frames(2)
     check(get_tree().paused and hud.get_node("Root/InventoryPanel").visible, "Inventory inspection pauses the game")
-    check(hud.get_node("Root/InventoryPanel/Slots").get_child_count() == 8, "Icon inventory retains exactly eight pockets")
-    hud.select_slot(slot_for("ammo"))
+    check(Game.inventory.columns * Game.inventory.rows == 32, "Grid inventory starts with 32 cells")
+    hud.select_item(slot_for("ammo"))
     check(hud.get_node("Root/InventoryPanel/ItemName").text == "9 mm rounds", "Item identity is revealed in inventory")
     check(hud.get_node("Root/InventoryPanel/Portrait").texture == Game.item_icon("ammo") and not hud.get_node("Root/InventoryPanel/Description").text.is_empty(), "Inventory displays item artwork and useful description")
-    check(hud.get_node("Root/InventoryPanel/Slots").get_child(slot_for("ammo")).get_node("Count").text == "24", "Inventory displays ammunition stack count")
+    check(hud.get_node("Root/InventoryPanel/Quantity").text == "QUANTITY  24", "Inventory displays ammunition stack count")
     Game.add_item("bandage")
-    hud.select_slot(slot_for("bandage"))
+    hud.select_item(slot_for("bandage"))
     check(hud.get_node("Root/InventoryPanel/Use").disabled and not Game.use_item("bandage") and Game.count_item("bandage") == 1, "Medical item cannot be wasted at full health")
     Game.health = 60
     Game.changed.emit()
-    hud.select_slot(slot_for("bandage"))
+    hud.select_item(slot_for("bandage"))
     hud.get_node("Root/InventoryPanel/Use").pressed.emit()
     check(Game.health == 90 and Game.count_item("bandage") == 0, "Inventory Use consumes one dressing and heals 30")
     Game.add_item("cloth")
     Game.add_item("antiseptic")
-    hud.select_slot(slot_for("cloth"))
+    hud.select_item(slot_for("cloth"))
     hud.get_node("Root/InventoryPanel/Combine").pressed.emit()
-    hud.get_node("Root/InventoryPanel/Slots").get_child(slot_for("antiseptic")).pressed.emit()
+    hud.select_item(slot_for("antiseptic"))
     check(Game.count_item("cloth") == 0 and Game.count_item("antiseptic") == 0 and Game.count_item("bandage") == 1, "Inventory Combine crafts from the selected pair")
     check(hud.get_node("Root/InventoryPanel/ItemName").text == "Field dressing", "Combination result is selected for immediate inspection")
     hud.close_panels()
