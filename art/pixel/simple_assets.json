@@ -1,0 +1,352 @@
+{
+  "display_scale": 2,
+  "palette": {
+    "ink": "#342b3d",
+    "roof": "#513b50",
+    "roof_light": "#705065",
+    "brick_shadow": "#74464e",
+    "brick": "#9a4f51",
+    "brick_light": "#b77566",
+    "wood_shadow": "#75545a",
+    "wood": "#a17767",
+    "tan": "#c39b7d",
+    "cream": "#ded1a5",
+    "ivory": "#e5dfbb",
+    "plaster": "#d4cba8",
+    "metal_dark": "#405b59",
+    "metal": "#5b7c6e",
+    "metal_light": "#8ca896",
+    "glass": "#354358",
+    "glass_light": "#536e80",
+    "mint": "#b4d1bd",
+    "lavender": "#a49bb3",
+    "paving": "#73717b",
+    "paving_dark": "#585463"
+  },
+  "assets": {
+    "house": {
+      "native_size": [
+        96,
+        128
+      ],
+      "game_size": [
+        192,
+        256
+      ],
+      "baseline": 128
+    },
+    "house_cream": {
+      "native_size": [
+        96,
+        128
+      ],
+      "game_size": [
+        192,
+        256
+      ],
+      "baseline": 128
+    },
+    "station": {
+      "native_size": [
+        128,
+        144
+      ],
+      "game_size": [
+        256,
+        288
+      ],
+      "baseline": 144
+    },
+    "shop": {
+      "native_size": [
+        128,
+        128
+      ],
+      "game_size": [
+        256,
+        256
+      ],
+      "baseline": 128
+    },
+    "door": {
+      "native_size": [
+        24,
+        44
+      ],
+      "game_size": [
+        48,
+        88
+      ],
+      "baseline": 44,
+      "solid_rectangle": true
+    },
+    "gate": {
+      "native_size": [
+        55,
+        85
+      ],
+      "game_size": [
+        110,
+        170
+      ],
+      "baseline": 85
+    },
+    "lamp": {
+      "native_size": [
+        24,
+        96
+      ],
+      "game_size": [
+        48,
+        192
+      ],
+      "baseline": 96,
+      "light_center": [
+        14,
+        12
+      ]
+    },
+    "crate": {
+      "native_size": [
+        32,
+        32
+      ],
+      "game_size": [
+        64,
+        64
+      ],
+      "baseline": 32,
+      "solid_rectangle": true
+    },
+    "bench": {
+      "native_size": [
+        48,
+        28
+      ],
+      "game_size": [
+        96,
+        56
+      ],
+      "baseline": 28
+    },
+    "bin": {
+      "native_size": [
+        24,
+        36
+      ],
+      "game_size": [
+        48,
+        72
+      ],
+      "baseline": 36
+    },
+    "drain": {
+      "native_size": [
+        32,
+        8
+      ],
+      "game_size": [
+        64,
+        16
+      ],
+      "baseline": 8,
+      "solid_rectangle": true
+    },
+    "pipe": {
+      "native_size": [
+        8,
+        100
+      ],
+      "game_size": [
+        16,
+        200
+      ],
+      "baseline": 100
+    },
+    "sign": {
+      "native_size": [
+        50,
+        22
+      ],
+      "game_size": [
+        100,
+        44
+      ]
+    },
+    "shelf": {
+      "native_size": [
+        64,
+        72
+      ],
+      "game_size": [
+        128,
+        144
+      ],
+      "baseline": 72
+    },
+    "radiator": {
+      "native_size": [
+        44,
+        28
+      ],
+      "game_size": [
+        88,
+        56
+      ],
+      "baseline": 28
+    },
+    "bollard": {
+      "native_size": [
+        10,
+        26
+      ],
+      "game_size": [
+        20,
+        52
+      ],
+      "baseline": 26
+    },
+    "ground": {
+      "native_size": [
+        32,
+        32
+      ],
+      "game_size": [
+        64,
+        64
+      ],
+      "tile": true
+    },
+    "bricks": {
+      "native_size": [
+        32,
+        32
+      ],
+      "game_size": [
+        64,
+        64
+      ],
+      "tile": true
+    },
+    "floor": {
+      "native_size": [
+        32,
+        16
+      ],
+      "game_size": [
+        64,
+        32
+      ],
+      "tile": true
+    },
+    "gun": {
+      "native_size": [
+        17,
+        8
+      ],
+      "game_size": [
+        34,
+        16
+      ]
+    },
+    "key": {
+      "native_size": [
+        20,
+        24
+      ],
+      "game_size": [
+        40,
+        48
+      ]
+    },
+    "fuse": {
+      "native_size": [
+        18,
+        12
+      ],
+      "game_size": [
+        36,
+        24
+      ]
+    },
+    "cloth": {
+      "native_size": [
+        24,
+        28
+      ],
+      "game_size": [
+        48,
+        56
+      ]
+    },
+    "antiseptic": {
+      "native_size": [
+        24,
+        28
+      ],
+      "game_size": [
+        48,
+        56
+      ]
+    },
+    "bandage": {
+      "native_size": [
+        24,
+        28
+      ],
+      "game_size": [
+        48,
+        56
+      ]
+    },
+    "bolt_cutters": {
+      "native_size": [
+        24,
+        28
+      ],
+      "game_size": [
+        48,
+        56
+      ]
+    },
+    "notice": {
+      "native_size": [
+        24,
+        30
+      ],
+      "game_size": [
+        48,
+        60
+      ]
+    },
+    "switchboard": {
+      "native_size": [
+        35,
+        50
+      ],
+      "game_size": [
+        70,
+        100
+      ]
+    },
+    "enemy": {
+      "native_size": [
+        120,
+        36
+      ],
+      "game_size": [
+        240,
+        72
+      ],
+      "frames": 6,
+      "frame_size": [
+        20,
+        36
+      ]
+    }
+  },
+  "preserved": [
+    "player",
+    "ammo"
+  ]
+}

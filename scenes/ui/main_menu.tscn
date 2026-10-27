@@ -18,7 +18,7 @@ color = Color(0.055, 0.09, 0.11, 1)
 mouse_filter = 2
 
 [node name="Station" type="Sprite2D" parent="."]
-position = Vector2(885, 360)
+position = Vector2(885, 432)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("2")
 modulate = Color(0.4, 0.48, 0.47, 1)
@@ -98,7 +98,7 @@ offset_left = 68.0
 offset_top = 247.0
 offset_right = 600.0
 offset_bottom = 280.0
-text = "DEVELOPMENT FOUNDATION  /  03"
+text = "DEVELOPMENT FOUNDATION  /  04"
 theme_override_font_sizes/font_size = 14
 
 [node name="Options" type="Button" parent="."]

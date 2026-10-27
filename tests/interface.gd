@@ -141,7 +141,10 @@ func run() -> void:
     alley.get_node("HUD/Root/PausePanel/Controls").pressed.emit()
     check(get_tree().paused and alley.get_node("HUD/Root/ControlsPanel").visible, "Controls remain available in pause menu")
     alley.get_node("HUD").close_panels()
+    # Allow the audio server to resume before stopping its playback during teardown.
+    await frames(3)
     alley.get_node("AmbientSound").stop()
+    await frames(3)
     alley.queue_free()
     get_tree().current_scene = null
     await frames(5)

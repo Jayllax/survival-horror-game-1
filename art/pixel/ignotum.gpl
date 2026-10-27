@@ -1,20 +1,25 @@
 GIMP Palette
-Name: Ignotum
-Columns: 8
+Name: Ignotum simplified
+Columns: 7
 #
-17 27 36 #111b24
-27 41 50 #1b2932
-44 59 66 #2c3b42
-64 80 79 #40504f
-89 99 91 #59635b
-123 123 101 #7b7b65
-160 155 122 #a09b7a
-208 185 138 #d0b98a
-241 215 162 #f1d7a2
-108 81 72 #6c5148
-139 105 85 #8b6955
-172 160 128 #aca080
-67 92 98 #435c62
-100 128 128 #648080
-143 170 170 #8faaaa
-185 198 181 #b9c6b5
+52 43 61 ink
+81 59 80 roof
+112 80 101 roof_light
+116 70 78 brick_shadow
+154 79 81 brick
+183 117 102 brick_light
+117 84 90 wood_shadow
+161 119 103 wood
+195 155 125 tan
+222 209 165 cream
+229 223 187 ivory
+212 203 168 plaster
+64 91 89 metal_dark
+91 124 110 metal
+140 168 150 metal_light
+53 67 88 glass
+83 110 128 glass_light
+180 209 189 mint
+164 155 179 lavender
+115 113 123 paving
+88 84 99 paving_dark

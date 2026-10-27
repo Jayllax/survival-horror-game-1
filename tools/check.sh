@@ -10,3 +10,4 @@ test_data_root="${IGNOTUM_TEST_DATA_DIR:-/tmp/ignotum-automated-tests}"
 "$godot_bin" --headless --editor --path . --import --quit
 XDG_DATA_HOME="$test_data_root" "$godot_bin" --headless --path . res://tests/smoke.tscn
 XDG_DATA_HOME="$test_data_root" "$godot_bin" --headless --path . res://tests/interface.tscn
+XDG_DATA_HOME="$test_data_root" "$godot_bin" --headless --path . res://tests/assets.tscn

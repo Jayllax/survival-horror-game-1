@@ -5,10 +5,10 @@
 [node name="Streetlamp" type="Node2D"]
 [node name="Post" type="Sprite2D" parent="."]
 texture = ExtResource("1")
-position = Vector2(0, -110)
+position = Vector2(0, -96)
 [node name="WarmLight" type="PointLight2D" parent="."]
 script = ExtResource("3")
-position = Vector2(22, -195)
+position = Vector2(4, -168)
 texture = ExtResource("2")
 texture_scale = 3.1
 energy = 1.35

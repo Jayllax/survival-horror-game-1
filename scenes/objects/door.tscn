@@ -11,7 +11,7 @@ kind = 3
 interaction_radius = 130.0
 [node name="Frame" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-63,-95, 63,-95, 63,87, 54,87, 54,-85, -54,-85, -54,87, -63,87)
-color = Color(0.48, 0.48, 0.39, 1)
+color = Color(0.25, 0.36, 0.35, 1)
 [node name="Leaf" type="Sprite2D" parent="."]
 texture = ExtResource("2")
 [node name="Barrier" type="StaticBody2D" parent="."]

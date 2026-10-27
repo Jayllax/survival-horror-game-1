@@ -1,4 +1,4 @@
-# Ignotum / development foundation 03
+# Ignotum / development foundation 04
 
 A desktop Godot 4 side-view survival-horror foundation with original pixel art. No authored story, forced quest, campaign ending, or victory screen. Start on a street, enter a building or alley with E, and return through matching entrances. These small connected spaces demonstrate the reusable location system; they are not a campaign.
 
@@ -17,6 +17,12 @@ Use **Godot 4.4+ Standard edition** (validated on 4.4.1 and 4.6.3). Import `proj
 | I / Esc | Eight-slot inventory / pause |
 
 **Main menu:** New game, Continue, Options (volume/fullscreen), Quit. A new game asks before replacing an existing checkpoint. Entrances automatically save a checkpoint; Pause → Save checkpoint updates it manually. Loading restores the last entrance spawn, health, ammunition, inventory, circuit states, collected pickups, opened doors, and defeated enemies. Partial enemy health and active animations are not saved.
+
+## Simplified sprite replacement
+
+The redesign is implemented as **29 individual production sprite PNGs**: 28 scenery/prop/item/enemy replacements at their existing paths, plus a new cream-house variant. Player and ammo PNGs are preserved. Buildings have smaller native dimensions and simpler surfaces; scene positions, door selection shapes, and light offsets have been adjusted accordingly.
+
+`art/pixel/STYLE_SHEET.png` shows the actual assets now used by the project. See [ART_STYLE_GUIDE.md](ART_STYLE_GUIDE.md) for native sizes and the exact 2× pixel workflow. The earlier illustrated sheet is only an art reference.
 
 ## Exploration and inventory
 
@@ -54,6 +60,6 @@ Inventory inspection:
 ./tools/check.sh
 ```
 
-This imports the project and runs integration tests in an isolated checkpoint data directory. It exercises movement, jump, flashlight attachment and beam offset, exact 0.5-second dodge, combat, inventory, independent power circuits, animated doors, round-trip scene transitions, named spawns, persistent pickups/enemies, checkpoints, death/retry, and menu controls. A second suite covers quiet HUD visibility, proximity prompts, inventory inspection, medical use, combination rollback, and tool-gated persistence. Both suites must complete: `IGNOTUM: … checks, 0 failures` and `IGNOTUM INTERFACE: … checks, 0 failures`; script errors are failures even if Godot returns zero.
+This imports the project and runs integration tests in an isolated checkpoint data directory. It exercises movement, jump, flashlight attachment and beam offset, exact 0.5-second dodge, combat, inventory, independent power circuits, animated doors, round-trip scene transitions, named spawns, persistent pickups/enemies, checkpoints, death/retry, and menu controls. A second suite covers quiet HUD visibility, proximity prompts, inventory inspection, medical use, combination rollback, and tool-gated persistence. All three suites must complete: `IGNOTUM: … checks, 0 failures`, `IGNOTUM INTERFACE: … checks, 0 failures`, and `IGNOTUM ASSETS: … checks, 0 failures`; script errors are failures even if Godot returns zero.
 
 With a graphical display, `godot --path . res://tests/capture.tscn` writes screenshots to `/tmp/ignotum-*.png`. Rendering has been inspected using software OpenGL. Physical audio output, standalone exports, and other operating systems have not been tested. The Silkscreen UI font is distributed under its included OFL license in `art/fonts/`; game artwork and sounds were created for this project.

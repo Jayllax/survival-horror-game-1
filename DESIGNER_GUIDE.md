@@ -117,7 +117,7 @@ Files live in Godot's **user data folder**, not the project. In the editor choos
 
 ## Art and interface
 
-See **ART_STYLE_GUIDE.md** and **art/pixel/STYLE_SHEET.png** for the palette and editable source sizes. Every pixel asset has a native source and a ready-to-use 2× texture. Place `building_house.tscn`, `building_shop.tscn`, or `building_station.tscn`, and decorate with reusable props under `scenes/objects/`.
+See **ART_STYLE_GUIDE.md** and **art/pixel/STYLE_SHEET.png** for the palette and editable source sizes. Every pixel asset has a native source and a ready-to-use 2× texture. The new houses are 96×128 native pixels and the shop is 128×128; their placed baselines have already been adjusted. Do not stretch them to the old building bounds. Player and ammo files are preserved. `STYLE_SHEET.png` now shows actual production PNGs, not the earlier illustration. Place `building_house.tscn`, `building_shop.tscn`, or `building_station.tscn`, and decorate with reusable props under `scenes/objects/`.
 
 CanvasModulate sets ambient darkness. Lamps and the flashlight add real light. Fog sprites are authored transparent layers. The scene's ambient audio loops; replace its Stream with your own WAV. The pause panels and eight inventory slots are laid out in `scenes/ui/hud.tscn`; button styles are shared through `art/ui_theme.tres`. Menu Options changes volume/fullscreen and stores settings.
 
