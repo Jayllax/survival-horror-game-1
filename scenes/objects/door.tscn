@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3]
 [ext_resource type="Script" path="res://scripts/interactable.gd" id="1"]
-[ext_resource type="Texture2D" path="res://art/gate.svg" id="2"]
+[ext_resource type="Texture2D" path="res://art/pixel/gate.png" id="2"]
 [sub_resource type="RectangleShape2D" id="shape"]
 size = Vector2(100, 165)
 [node name="Gate" type="Area2D"]

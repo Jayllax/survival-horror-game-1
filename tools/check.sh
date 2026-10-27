@@ -7,4 +7,4 @@ export XDG_DATA_HOME="${XDG_DATA_HOME:-/tmp/ignotum-data}"
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-/tmp/ignotum-config}"
 godot_bin="${GODOT_BIN:-godot}"
 "$godot_bin" --headless --editor --path . --import --quit
-"$godot_bin" --headless --path . res://tests/smoke.tscn
+XDG_DATA_HOME=/tmp/ignotum-automated-tests "$godot_bin" --headless --path . res://tests/smoke.tscn

@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1"]
+[ext_resource type="FontFile" path="res://art/fonts/Silkscreen-Regular.ttf" id="pixel_font"]
 [sub_resource type="StyleBoxFlat" id="panel"]
 bg_color = Color(0.065, 0.095, 0.11, 0.98)
 border_width_left = 2
@@ -61,7 +62,8 @@ offset_left = 930.0
 offset_top = 16.0
 offset_right = 1130.0
 offset_bottom = 51.0
-theme_override_font_sizes/font_size = 23
+theme_override_fonts/font = ExtResource("pixel_font")
+theme_override_font_sizes/font_size = 20
 text = "IGNOTUM"
 mouse_filter = 2
 
@@ -144,14 +146,6 @@ offset_bottom = 536.0
 visible = false
 theme_override_styles/panel = SubResource("panel")
 
-[node name="EndingPanel" type="Panel" parent="Root"]
-offset_left = 246.0
-offset_top = 116.0
-offset_right = 906.0
-offset_bottom = 536.0
-visible = false
-theme_override_styles/panel = SubResource("panel")
-
 [node name="Title" type="Label" parent="Root/PausePanel"]
 offset_left = 35.0
 offset_top = 32.0
@@ -167,7 +161,7 @@ offset_top = 89.0
 offset_right = 625.0
 offset_bottom = 129.0
 theme_override_font_sizes/font_size = 18
-text = "The square waits for you."
+text = "Session paused."
 mouse_filter = 2
 
 [node name="Resume" type="Button" parent="Root/PausePanel"]
@@ -183,7 +177,7 @@ offset_left = 35.0
 offset_top = 222.0
 offset_right = 625.0
 offset_bottom = 270.0
-text = "Restart the square"
+text = "Load checkpoint"
 focus_mode = 2
 
 [node name="Menu" type="Button" parent="Root/PausePanel"]
@@ -299,7 +293,7 @@ offset_top = 20.0
 offset_right = 630.0
 offset_bottom = 60.0
 theme_override_font_sizes/font_size = 25
-text = "A MEMORY ON PAPER"
+text = "EXAMINE"
 mouse_filter = 2
 
 [node name="Text" type="Label" parent="Root/NotePanel"]
@@ -317,7 +311,7 @@ offset_left = 30.0
 offset_top = 350.0
 offset_right = 630.0
 offset_bottom = 394.0
-text = "Keep the memory [Esc]"
+text = "Close [Esc]"
 focus_mode = 2
 
 [node name="Title" type="Label" parent="Root/PuzzlePanel"]
@@ -326,7 +320,7 @@ offset_top = 20.0
 offset_right = 630.0
 offset_bottom = 58.0
 theme_override_font_sizes/font_size = 25
-text = "STATION SWITCHBOARD"
+text = "SWITCHBOARD"
 mouse_filter = 2
 
 [node name="Hint" type="Label" parent="Root/PuzzlePanel"]
@@ -335,7 +329,7 @@ offset_top = 63.0
 offset_right = 630.0
 offset_bottom = 113.0
 theme_override_font_sizes/font_size = 16
-text = "West → east. Click each dial to change it.\nRequires a ceramic fuse. The station notice holds the sequence."
+text = "West → east. Click each dial to change it.\nRequires a ceramic fuse. Set the reference sequence."
 mouse_filter = 2
 
 [node name="Dial1" type="Button" parent="Root/PuzzlePanel"]
@@ -388,36 +382,32 @@ offset_bottom = 396.0
 text = "Step away [Esc]"
 focus_mode = 2
 
-[node name="Title" type="Label" parent="Root/EndingPanel"]
+[node name="Save" type="Button" parent="Root/PausePanel"]
 offset_left = 35.0
-offset_top = 25.0
+offset_top = 355.0
 offset_right = 625.0
-offset_bottom = 80.0
-theme_override_font_sizes/font_size = 30
-text = "YOU LEFT NØRREBY"
+offset_bottom = 397.0
+text = "Save checkpoint"
+
+[node name="HealthBar" type="ProgressBar" parent="Root"]
+offset_left = 28.0
+offset_top = 46.0
+offset_right = 190.0
+offset_bottom = 49.0
+show_percentage = false
 mouse_filter = 2
-
-[node name="Text" type="Label" parent="Root/EndingPanel"]
-offset_left = 35.0
-offset_top = 98.0
-offset_right = 625.0
-offset_bottom = 248.0
-theme_override_font_sizes/font_size = 18
-text = "Beyond the gate, the fog smells of rain.\nFor a moment you remember a voice calling you home.\n\nThe street behind you is empty again.\n\nEnd of the Ignotum template. Thank you for playing."
+[node name="Dodge" type="Label" parent="Root"]
+offset_left = 470.0
+offset_top = 20.0
+offset_right = 780.0
+offset_bottom = 46.0
+theme_override_font_sizes/font_size = 14
+text = "DODGE READY"
+[node name="Crosshair" type="Label" parent="Root"]
+offset_left = -8.0
+offset_top = -12.0
+offset_right = 8.0
+offset_bottom = 12.0
+text = "+"
 mouse_filter = 2
-
-[node name="Retry" type="Button" parent="Root/EndingPanel"]
-offset_left = 35.0
-offset_top = 282.0
-offset_right = 625.0
-offset_bottom = 330.0
-text = "Play again"
-focus_mode = 2
-
-[node name="Menu" type="Button" parent="Root/EndingPanel"]
-offset_left = 35.0
-offset_top = 346.0
-offset_right = 625.0
-offset_bottom = 394.0
-text = "Main menu"
-focus_mode = 2
+horizontal_alignment = 1

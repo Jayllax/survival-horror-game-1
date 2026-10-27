@@ -1,167 +1,98 @@
-# Ignotum — a guide for level designers
+# Ignotum / designer guide
 
-## 1. Open and play your project
+## Your starting point
 
-Use the **standard edition of Godot 4.4 or newer**. This project uses GDScript, so you do not need the .NET edition. It was validated with Godot 4.6.3.
+Import `project.godot` with Godot 4.4+ Standard, open `scenes/levels/town.tscn`, choose **2D**, and press **F6** to test. **F5** starts the main menu. Stop with F8 before editing. The game has no story progression requirement or ending. You own the writing and campaign structure.
 
-In Godot's Project Manager, choose **Import**, select `project.godot`, and choose **Import & Edit**. Let the artwork import. Press **F5** and choose **Enter the square**. All controls are printed on the menu and at the bottom of the game.
+The supplied first street links to a small ground-floor interior and service alley to demonstrate entrances. The alley includes one enemy for testing combat; delete its instance if you want a peaceful blockout. All objects are visible in the editor, including every destination and spawn marker.
 
-For level editing, double-click `scenes/levels/town.tscn` in the FileSystem dock and select the **2D** workspace. Press **F6** to test this scene directly. Press **F8** to stop testing before editing again. The game uses a fresh run when launched; restarting the square also clears your inventory and objective.
+## Move and duplicate
 
-## 2. Understand the editor
+Click a scene-tree node and drag it in the 2D view. **Ctrl+D** duplicates. Drag reusable `.tscn` files from FileSystem to place objects. Move an instance's **root**, not just its sprite, to keep its visuals and collision together.
 
-- **Scene tree, left:** the objects in your current level. Click a name to select it.
-- **2D viewport, middle:** the visual layout. Drag the selected object to move it. W selects the move tool; F frames the selection.
-- **Inspector, right:** settings for the selected object. Exported gameplay settings appear near the top, under its script.
-- **FileSystem dock:** reusable scene files and artwork. Drag a `.tscn` from here into the viewport to place another instance.
-
-The finished level is already laid out. Its buildings, walls, ground, platforms, player, enemy, items, doors, lights, benches, and crates all exist as nodes in `town.tscn` or its instanced scenes. The editor view is the actual playable geometry. Shooting tracers and damage flashes are temporary effects; they do not build the environment.
-
-The level's useful groups are:
-
-| Scene tree branch | What to edit |
+| Branch | Contents |
 | --- | --- |
-| `Buildings` | Individual house and station sprites, with their labels |
-| `Geometry` | Street collision, boundaries, and jumpable platforms |
-| `Props` | Lamps, benches, and solid crates |
-| `Interactables` | Notice, fuse, ammunition, switchboard, gate |
-| `Actors` | Player spawn and enemy |
-| `Fog` | Transparent fog sprites, drawn in front of the world |
-| `HUD` | An instance of the interface scene |
+| Buildings | Background façades and alley-mouth polygons |
+| Geometry | Ground, visible paving, curb, boundaries |
+| Props | Lamps, benches, pipes, drains, bins, bollards |
+| Interactables | Entrances and pickups |
+| Actors | One player and optional enemies |
+| Spawns | Named Marker2D entry points |
+| HUD | One reusable interface scene |
 
-**Decorative buildings and benches have no collision.** Crates, platforms, the street, boundaries, and the closed gate do. Use **Debug → Visible Collision Shapes** while testing to see solid surfaces.
+Decorative façades and most street props do not block movement. Platforms, physical gates, boundaries, and ground do. Use **Debug → Visible Collision Shapes** when testing. `scenes/objects/platform.tscn` exposes **Platform Size**, which updates its existing art/collision/shadow nodes in the editor. Keep jump steps roughly 40–60 world pixels with default movement settings.
 
-## 3. Rearrange the square
+## Add a door or alley entrance
 
-1. Select `Actors/Player` and drag it to change the starting position. Keep its feet above a solid surface. Its origin is approximately at the body's center, about 32 pixels above its feet.
-2. Select any object under `Interactables` and move it. Items have a small gold diamond above them. This is their visible interaction marker, not collision.
-3. Select a lamp under `Props` and move it. The post and warm light move together.
-4. Move platforms or crates to make a jump route. With default tuning the jump rises about **72 pixels**. Steps of 40–60 pixels and horizontal gaps below roughly 120 pixels are comfortable. Test every route.
-5. Save with **Ctrl+S**, then test with F6.
+1. Drag `scenes/objects/entrance.tscn` into `Interactables`.
+2. Select its root. Set **Prompt Text**, such as “Enter” or “Go down alley”.
+3. Set **Destination Scene** with the file picker, such as `scenes/levels/interior.tscn`.
+4. Set **Destination Spawn** to a Marker2D name in that location's `Spawns` branch, such as `from_street`.
+5. Keep **Required Key** empty and **Requires Power** off for an unlocked entrance.
+6. In the destination, place a return entrance that targets the original scene and a different return marker.
+7. Test both directions. Place return markers roughly 100–140 pixels beside the entrance rather than directly on top of another interactable.
 
-Select the **root of an instance**, such as `StationStep`, instead of just its child sprite. Moving only the art leaves collision behind. To tune a child in a scene instance, right-click the instance and choose **Editable Children**. Editing the original reusable scene changes all its instances; editing an instance's exported settings overrides only that instance.
+The player presses **E** within Interaction Radius. The scene fades to black, loads the destination, places the player at the named marker, saves a checkpoint, and fades back in. Input is locked throughout. It never walks the character along an invisible depth axis. There is no end-of-level trigger.
 
-## 4. Place reusable objects
+For an alley, enable **Editable Children** on the entrance instance and hide its `Facade` sprite. Put a dark, visible gap in the buildings behind it. The supplied `AlleyEntrance` demonstrates this. Its Area2D rectangle helps selection in the editor; interaction is based on proximity. Avoid placing accessible triggers on opposite sides of a thin wall because the proximity system does not check line of sight.
 
-Drag these scenes from FileSystem into your level. Then select the new root and change its Inspector settings:
+For a key lock, set Required Key to a pickup's **Item Id**, such as `workshop_key`. The key is reusable. An entrance is a background transition; `door.tscn` is a physical sliding gate that opens on the same side-scrolling plane. Physical gates support **Consume Key** if you deliberately want a one-use key.
 
-| Scene | Designer settings |
-| --- | --- |
-| `scenes/actors/player.tscn` | Move Speed, Jump Velocity, Gravity, Magazine Size, Bullet Damage, Shot Interval, Reload Seconds, Melee Damage, Melee Reach, Dodge Speed |
-| `scenes/actors/enemy.tscn` | Max Health, Speed, Detection Radius, Damage, Attack Interval, Patrol Width |
-| `scenes/objects/platform.tscn` | Platform Size: width and thickness; visual, collision, and light shadow resize together in the editor |
-| `scenes/objects/ammo.tscn` | Item Id, Quantity, Prompt Text, Interaction Radius |
-| `scenes/objects/key.tscn` | Pickup settings; default Item Id is `gate_key` |
-| `scenes/objects/fuse.tscn` | Same pickup settings; default Item Id is `fuse` |
-| `scenes/objects/clue.tscn` | Description (multiline text), Prompt Text, Interaction Radius |
-| `scenes/objects/switchboard.tscn` | Puzzle Solution (three numbers, each 1–3), Prompt Text, Interaction Radius |
-| `scenes/objects/door.tscn` | Required Key, Requires Power, Escape Door, Door Animation Seconds, Prompt Text, Interaction Radius |
-| `scenes/objects/streetlamp.tscn` | Move the root; edit `WarmLight` for color, Texture Scale, Emergency Energy, and Powered Energy |
+## Make another location
 
-Use **Ctrl+D** to duplicate a selected instance. Do not duplicate the player or HUD: keep exactly one of each per playable scene. Enemies can be duplicated.
+1. Open a similar location and choose **Scene → Save As** under `scenes/levels/`.
+2. Keep the root's `location.gd` script. Set its **Display Name** and **Camera Bounds** in the Inspector.
+3. Keep exactly one Player and one HUD. Keep ground and boundaries, adjusting their positions and shapes for the new width.
+4. Keep a `Spawns` Node2D with a Marker2D called `default`. Add named return markers as needed.
+5. Rearrange art, props, pickups, enemies, and entrances. Link it from another entrance with the file picker.
+6. Test F6, then test entering it from the actual source location. F6 begins with fresh state; Continue restores your last checkpoint instead.
 
-For an enemy that stays close to its spawn, reduce Patrol Width. Increasing Detection Radius makes it notice you sooner. The enemy only navigates along the ground; it does not jump gaps or climb stairs. Keep patrol routes flat and accessible. The default enemy has 78 health, so three handgun hits kill it.
+New Game loads `town.tscn`. To replace the starting location without programming, keep a backup and save your final start layout over that file. Do not add a second Player or HUD. There is no need for a separate Git worktree; edit this checkout.
 
-**Platform Size** is safe to change per instance: the scene's collision and shadow resources are local to that instance. Avoid scaling a physics body to resize it. For the street, enable Editable Children, select its CollisionShape2D, and change the rectangle's Size; then adjust the Asphalt and Curb polygons with the polygon edit tool so their visible edges match. Make a shape resource unique before editing it if you duplicated a plain physics node that shares its resource.
+## Tune movement and combat
 
-Keep tuning numbers positive, except Jump Velocity, which must be **negative** to jump upward. The gun begins with six loaded rounds, clamped to your Magazine Size. The starting reserve is 12. The dodge's invulnerability is deliberately fixed at **0.5 seconds**; Dodge Speed changes its distance, not that duration.
+Select Player for Move Speed, Acceleration, Jump Velocity, Gravity, Coyote Seconds, Jump Buffer Seconds, Magazine Size, Bullet Damage, Shot Interval, Reload Seconds, Melee Damage, Melee Reach, and Dodge Speed.
 
-## 5. Items, pockets, and interactions
+Jump Velocity must be negative; other tuning values should be positive. Dodge invulnerability stays exactly **0.5 seconds**, with a 1.05-second reuse interval. The gun starts with six loaded rounds, clamped to Magazine Size, plus twelve reserve rounds. Character walk frames advance automatically. Movement accelerates smoothly; a short coyote window and jump buffer make platforming forgiving.
 
-There are exactly eight pockets. Each pocket holds one item stack. Ammunition stacks to 24 rounds; keys and puzzle objects occupy one pocket each. There is no drag-and-drop inventory management or discard action. Reloading consumes reserve ammunition and can free pockets.
+The flashlight is `Player/Aim/Gun/Flashlight`. It inherits aim and gun recoil. **Offset = (256, 0)** places its beam in front of the barrel. Energy/Color/Texture Scale change its illumination. Do not use `texture_offset`; that is not a Godot PointLight2D property. F toggles it, and its state persists between locations. It never occupies an inventory slot.
 
-The flashlight is equipment, not an inventory item. F toggles a real Godot PointLight2D attached to the aiming arm. Point the mouse to aim both the gun and flashlight. LightOccluder2D nodes on crates and platforms cast shadows.
+Enemies expose Max Health, Speed, Detection Radius, Damage, Attack Interval, Patrol Width. They walk and chase on flat ground, do not navigate jumps, and disappear persistently after defeat. The default enemy takes three handgun hits. Place them on reachable flat surfaces. Their live partial health is not persisted across scene changes.
 
-To make another pickup without coding:
+## Pickups, notes, and circuits
 
-1. Duplicate an ammunition or fuse scene instance.
-2. Set **Kind** to **Pickup**.
-3. Enter its **Item Id** and **Quantity**.
-4. Change **Prompt Text**.
-5. Enable Editable Children and replace `Sprite2D`'s Texture by dragging a different image into the Texture field.
+There are eight pockets. Ammunition stacks to 24. Keys and puzzle objects each occupy one pocket. Full inventories leave pickups in place. Reloading consumes reserves; there is no inventory drag/drop or discard UI.
 
-Supported gameplay identifiers are `ammo`, `fuse`, and `gate_key`. Other names are accepted as collectible puzzle objects or custom keys, but they do not gain a use automatically. A door can require any matching Item Id. For example, put `cellar_key` on a pickup and on a door's Required Key. Use Quantity 1 for keys.
+Reuse `ammo.tscn`, `fuse.tscn`, or `key.tscn`. Change **Item Id**, **Quantity**, **Prompt Text**, and child Sprite2D Texture. Arbitrary item IDs work as keys or circuit inputs; names default to a readable capitalization. Built-ins have friendlier labels.
 
-A full inventory refuses a pickup and leaves it in the world. It never silently deletes items. The nearest available interactable within its **Interaction Radius** gets the E prompt. Avoid placing different objects on top of each other. Radius measures distance from object origin to player center; about 84 pixels works for small items and 130 for tall doors. Interactions use proximity, not line of sight; keep objects separated from walls where appropriate.
+`clue.tscn` is a neutral reference-card example. Set **Description** to your own text. **Kind = Examine** shows it without marking a puzzle reference; **Kind = Clue** records a reference for its Power Channel. Keep text to about nine lines or enlarge the note panel.
 
-To create a readable prop, duplicate a notice. **Kind = Clue** marks the station clue as read; **Kind = Examine** displays the Description without advancing that clue flag. Use Examine for optional notes and environmental descriptions. Keep descriptions short enough to fit the note panel (about nine lines at its default font size), or enlarge that panel in `scenes/ui/hud.tscn`.
+`switchboard.tscn` is an optional reusable three-dial puzzle; it is not placed in the starting street. Set:
 
-## 6. Design the clue, puzzle, and exit
+- **Puzzle Solution:** each of three values must be 1–3.
+- **Puzzle Input Item:** an item to consume; leave empty for no requirement.
+- **Puzzle Reward Item:** item awarded; leave empty for no reward.
+- **Require Reference:** optionally require a Clue with the same Power Channel first.
+- **Power Channel:** a unique circuit name, such as `workshop`.
 
-The included sequence is:
+Doors, entrances, and streetlamp `WarmLight` nodes can use that same Power Channel. Different channels are independent and persist in checkpoints. Street lamps expose Emergency Energy and Powered Energy. For a permanently lit lamp, make those values equal. Keep clues and puzzle answers consistent yourself; no narrative is supplied.
 
-1. Read the notice by the station. It describes the bells: **3, 1, 2**, west to east.
-2. Pick up the **ceramic fuse** beside the stacked crates.
-3. At the switchboard, click each of the three dials to set **3 / 1 / 2**. Choose **Insert fuse & restore power**.
-4. This consumes the fuse, restores the streetlamps, and gives you a **brass gate key**.
-5. At the eastern gate, press E. The key is consumed, the gate slides open, collision clears, and the ending appears.
+## Persistence and checkpoints
 
-The switchboard checks that you read the clue, have a fuse, and selected the correct code. A wrong answer costs nothing. Using the fuse frees its pocket for the key, so solving the puzzle works even with all eight pockets filled.
+Entering a location automatically saves a single checkpoint. The pause menu also has **Save checkpoint**. It stores the current location and last entrance marker, health, magazine, reserves/inventory, flashlight state, circuit/reference flags, pickups, gate unlocks, and defeated enemies. Loading returns to the entrance marker, not the precise position where you pressed Save. The menu's Continue and the death screen's Load checkpoint restore it. A new game clears run state and replaces that checkpoint after confirmation.
 
-To change the answer, select your switchboard and change **Puzzle Solution** in the Inspector. Each number must be 1, 2, or 3. Then edit the notice's Description to provide the new answer. Change both together.
+State IDs default to `scene file path + node path`. Renaming an existing scene or persistent object changes its identity. Give interactables a unique **Persistent Id** before releasing a build if you intend to move or rename them. Do not duplicate an existing explicit ID: each physical object needs its own ID. Enemy identities currently use their scene/node paths.
 
-Doors have these useful configurations:
+Files live in Godot's **user data folder**, not the project. In the editor choose **Project → Open User Data Folder** to find `checkpoint.json` and `settings.cfg`. Checkpoints are a versioned single-slot foundation, not a multi-slot save manager or a migration system for changing released levels. Corrupt basic formats are rejected; arbitrary modded save files are not supported. Back up saves before changing scene paths or item IDs.
 
-- **Locked exit:** Required Key = `gate_key`, Requires Power = On, Escape Door = On.
-- **Ordinary locked passage:** set Required Key to your pickup's Item Id, Requires Power = Off, Escape Door = Off. The door opens without ending the level.
-- **Unlocked passage:** leave Required Key empty, Requires Power = Off, Escape Door = Off.
+## Art and interface
 
-A door opens permanently for that run. A key is consumed on use, so supply one pickup for every locked door that needs it. The door's origin is its center, about 85 pixels above the ground.
+See **ART_STYLE_GUIDE.md** and **art/pixel/STYLE_SHEET.png** for the palette and editable source sizes. Every pixel asset has a native source and a ready-to-use 2× texture. Place `building_house.tscn`, `building_shop.tscn`, or `building_station.tscn`, and decorate with reusable props under `scenes/objects/`.
 
-This template has one shared station clue flag, one switchboard power flag, and one ending. Multiple switchboards would share that same progression. You can rearrange or replace this puzzle through the Inspector, but separate independent puzzle chains would require extending the scripts in a future programming task.
+CanvasModulate sets ambient darkness. Lamps and the flashlight add real light. Fog sprites are authored transparent layers. The scene's ambient audio loops; replace its Stream with your own WAV. The pause panels and eight inventory slots are laid out in `scenes/ui/hud.tscn`; button styles are shared through `art/ui_theme.tres`. Menu Options changes volume/fullscreen and stores settings.
 
-## 7. Make your own level without starting from nothing
+## Test before sharing
 
-The easiest path is to duplicate the authored town:
+Play from New Game, enter the building, collect ammo, return, revisit, and confirm it stays collected. Enter the alley, test combat, return, save, go to the menu, Continue, and verify state. Try an empty magazine, full pockets, a wrong puzzle answer, locked entrances, death, and retry. Physical sound and standalone exports still need testing on your computer.
 
-1. Open `town.tscn`, choose **Scene → Save As**, and save as `scenes/levels/my_town.tscn`.
-2. Keep one Player, one HUD, street collision, and the boundaries.
-3. Delete or rearrange buildings and props. Drag more reusable scenes into the level.
-4. Keep a reachable notice, fuse, switchboard, and escape door if using the built-in objective.
-5. Test the scene with F6, including a full playthrough from spawn.
-6. For a longer level, select the Player, enable Editable Children, select Camera2D, and adjust **Limit → Right / Bottom**. Move the end boundary, extend the street collision and visuals, sky polygon, and fog. The supplied level is 3100 × 720 pixels.
-
-To keep your new level as the menu's destination **without editing code**, leave your saved custom copy as a backup and save the final playable version over `scenes/levels/town.tscn`. The menu's Start and Restart buttons intentionally load that path. Setting another scene as Project → Project Settings → Application → Run → Main Scene starts it directly; it does not change the menu's destination.
-
-## 8. Change the atmosphere
-
-- **AmbientTint:** change CanvasModulate's color. Darker colors make the unlit world darker. Avoid pure black until you have tested flashlight-off navigation.
-- **Street lamps:** WarmLight's texture is an original radial gradient. Texture Scale changes its reach. Emergency Energy is the dim starting state; Powered Energy is the brighter state after the puzzle.
-- **Flashlight:** in `player.tscn`, select Aim/Flashlight. Energy, Color, Texture Scale, and Shadow Enabled control the beam. Texture Offset places the cone ahead of its light source; leave its existing offset unless intentionally reshaping the beam.
-- **Fog:** move, duplicate, or scale the fog sprites. Modulate controls their tint and opacity. They are static transparent layers, with no hidden gameplay behavior.
-- **Artwork:** replace Sprite2D Texture resources with your own PNG/SVG files. The included SVGs are editable original placeholders. Godot does not render SVG text reliably, so building names use actual Label nodes.
-- **Sound:** replace AmbientSound's Stream with a WAV. It loops when finished. Adjust Volume dB. ShotSound and HurtSound are inside the player scene. The included audio was synthesized for this project.
-- **Interface:** edit `scenes/ui/hud.tscn` for text, colors, spacing, and panels. Shared button and label styling lives in `art/ui_theme.tres`.
-
-## 9. Check a change before sharing
-
-Play from the menu and make sure you can finish the level without teleporting or skipping a required item. Try shooting until empty, reloading, melee, dodging an enemy attack, toggling the light, pausing, opening pockets, reading the clue again, a wrong puzzle answer, and restarting after death.
-
-For automated checks, open a terminal in the project folder and run:
-
-```sh
-./tools/check.sh
-```
-
-On Windows, run the equivalent commands from README with the path to your Godot executable. The tests use the original town's node names and reference puzzle answer; update tests if you intentionally rename those nodes or change the answer. A test failure after such an intentional design change does not necessarily mean the game is broken, but always test the actual new route.
-
-The smoke suite checks the complete gameplay chain with real scene resources and physics. It also verifies the exact 0.5-second dodge boundary and stack limits. `tests/capture.tscn` is an optional screenshot helper for a graphical session on Linux; screenshots go to `/tmp`, not into the project.
-
-If the game does not start, inspect the red errors in Godot's **Debugger** panel. A missing resource usually means a file was moved outside Godot: use Godot's FileSystem dock to move or rename resources so scene references update.
-
-## 10. Project map and scope
-
-```text
-project.godot          Project settings, controls, Game autoload, menu entry
-art/                  Original SVG placeholders and UI theme
-audio/                Original WAV effects and ambience
-scenes/actors/        Reusable player and enemy
-scenes/objects/       Pickups, clues, puzzle, doors, platforms, lamps
-scenes/levels/        Visually authored town
-scenes/ui/            Main menu and HUD panels
-scripts/              Small reusable gameplay scripts
-tests/                Integration and rendering helper scenes
-tools/check.sh        Reproducible validation command
-```
-
-No plugins, network services, secret keys, or code-generated level data are required. The template has no persistent save/load, gamepad controls, or independent multi-level quest system. Those are future extensions, not requirements for editing and playing this level.
+`./tools/check.sh` imports resources and runs automated integration checks. It uses a separate test data directory so your normal checkpoint is not overwritten. `tests/capture.tscn` is an optional graphical screenshot helper for Linux. Tests reference the supplied scene/node names, so update the tests if your intentional design changes rename them.

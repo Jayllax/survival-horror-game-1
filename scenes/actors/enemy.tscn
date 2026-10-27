@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=3]
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1"]
-[ext_resource type="Texture2D" path="res://art/enemy.svg" id="2"]
+[ext_resource type="Texture2D" path="res://art/pixel/enemy.png" id="2"]
 [sub_resource type="CapsuleShape2D" id="shape"]
 radius = 14.0
 height = 68.0
-[node name="LostMemory" type="CharacterBody2D"]
+[node name="Enemy" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 1
 script = ExtResource("1")
@@ -12,4 +12,5 @@ script = ExtResource("1")
 shape = SubResource("shape")
 [node name="Body" type="Sprite2D" parent="."]
 texture = ExtResource("2")
+hframes = 6
 position = Vector2(0, -5)

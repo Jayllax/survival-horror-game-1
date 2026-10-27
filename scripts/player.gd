@@ -1,5 +1,8 @@
 extends CharacterBody2D
 ## Movement and weapon tuning is exposed here for designers.
+@export var acceleration: float = 1400.0
+@export var coyote_seconds: float = 0.10
+@export var jump_buffer_seconds: float = 0.12
 @export var move_speed: float = 205.0
 @export var jump_velocity: float = -390.0
 @export var gravity: float = 1050.0
@@ -21,15 +24,19 @@ var facing := 1.0
 var dodge_direction := 1.0
 var nearest: Area2D
 var feedback_time := 0.0
+var animation_time := 0.0
+var coyote_remaining := 0.0
+var jump_buffer := 0.0
 @onready var body_art: Sprite2D = $Body
 @onready var aim: Node2D = $Aim
-@onready var flashlight_light: PointLight2D = $Aim/Flashlight
-@onready var muzzle: PointLight2D = $Aim/Muzzle
+@onready var flashlight_light: PointLight2D = $Aim/Gun/Flashlight
+@onready var muzzle: PointLight2D = $Aim/Gun/Muzzle
 
 func _ready() -> void:
     add_to_group("player")
     Game.magazine = mini(Game.magazine, magazine_size)
     Game.changed.emit()
+    flashlight_light.enabled = Game.flashlight_on
 
 func _physics_process(delta: float) -> void:
     invulnerable_remaining = maxf(0.0, invulnerable_remaining - delta)
@@ -42,7 +49,7 @@ func _physics_process(delta: float) -> void:
     if dodge_remaining > 0:
         body_art.modulate = Color(0.5, 0.8, 1.1, 0.6)
     muzzle.energy = maxf(0.0, muzzle.energy - delta * 30.0)
-    if Game.health <= 0 or Game.won:
+    if Game.health <= 0 or Game.transitioning:
         velocity = Vector2.ZERO
         return
     if reload_remaining > 0:
@@ -53,22 +60,35 @@ func _physics_process(delta: float) -> void:
                 Game.take_item("ammo", needed)
                 Game.magazine += needed
                 Game.changed.emit()
+    $Aim/Gun.position.x = move_toward($Aim/Gun.position.x, 18.0, delta * 40.0)
     var direction := Input.get_axis("move_left", "move_right")
     if direction != 0:
         facing = direction
+    animation_time += delta
+    body_art.frame = (int(animation_time * 10.0) % 6) if absf(velocity.x) > 5.0 else 0
+    body_art.position.y = -3.0 + (sin(animation_time * 2.0) * 0.5 if absf(velocity.x) < 5.0 else 0.0)
     body_art.flip_h = facing < 0
     aim.rotation = (get_global_mouse_position() - aim.global_position).angle()
     $Aim/Gun.flip_v = cos(aim.rotation) < 0
+    flashlight_light.position.y = -4 if $Aim/Gun.flip_v else 4
+    if direction == 0:
+        facing = signf(cos(aim.rotation))
+        body_art.flip_h = facing < 0
     if not is_on_floor():
         velocity.y += gravity * delta
-    if Input.is_action_just_pressed("jump") and is_on_floor() and dodge_remaining <= 0:
+    coyote_remaining = coyote_seconds if is_on_floor() else maxf(0, coyote_remaining - delta)
+    jump_buffer = jump_buffer_seconds if Input.is_action_just_pressed("jump") else maxf(0, jump_buffer - delta)
+    if jump_buffer > 0 and coyote_remaining > 0 and dodge_remaining <= 0:
         velocity.y = jump_velocity
+        jump_buffer = 0
+        coyote_remaining = 0
     if Input.is_action_just_pressed("dodge") and dodge_cooldown <= 0:
         begin_dodge(direction if direction != 0 else facing)
-    velocity.x = dodge_direction * dodge_speed if dodge_remaining > 0 else direction * move_speed
+    velocity.x = dodge_direction * dodge_speed if dodge_remaining > 0 else move_toward(velocity.x, direction * move_speed, acceleration * delta)
     move_and_slide()
     if Input.is_action_just_pressed("flashlight"):
         flashlight_light.enabled = not flashlight_light.enabled
+        Game.flashlight_on = flashlight_light.enabled
     if Input.is_action_pressed("shoot"):
         shoot()
     if Input.is_action_just_pressed("reload"):
@@ -96,7 +116,8 @@ func shoot() -> void:
     Game.changed.emit()
     $ShotSound.play()
     muzzle.energy = 2.5
-    var origin: Vector2 = aim.global_position
+    $Aim/Gun.position.x = 15.0
+    var origin: Vector2 = $Aim/Gun/Muzzle.global_position
     var target: Vector2 = origin + Vector2.RIGHT.rotated(aim.rotation) * 900
     var query := PhysicsRayQueryParameters2D.create(origin, target, 5)
     query.exclude = [get_rid()]
@@ -138,14 +159,14 @@ func melee() -> void:
                 enemy.take_damage(melee_damage)
 
 func take_damage(amount: int) -> void:
-    if invulnerable_remaining > 0 or Game.health <= 0 or Game.won:
+    if invulnerable_remaining > 0 or Game.health <= 0 or Game.transitioning:
         return
     Game.health = maxi(0, Game.health - amount)
     feedback_time = 0.18
     $HurtSound.play()
     Game.changed.emit()
     if Game.health <= 0:
-        Game.message.emit("The town has kept you. Retry from the pause screen.")
+        Game.message.emit("Health depleted. Load checkpoint to resume.")
 
 func update_interaction() -> void:
     nearest = null

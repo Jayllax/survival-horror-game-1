@@ -10,7 +10,7 @@ func _ready() -> void:
     Game.changed.connect(refresh)
     Game.message.connect(show_message)
     $Root/PausePanel/Resume.pressed.connect(toggle_pause)
-    $Root/PausePanel/Retry.pressed.connect(Game.start_game)
+    $Root/PausePanel/Retry.pressed.connect(Game.retry_checkpoint)
     $Root/PausePanel/Menu.pressed.connect(back_to_menu)
     $Root/InventoryPanel/Close.pressed.connect(close_panels)
     $Root/NotePanel/Close.pressed.connect(close_panels)
@@ -19,29 +19,30 @@ func _ready() -> void:
     $Root/PuzzlePanel/Dial2.pressed.connect(cycle_dial.bind(1))
     $Root/PuzzlePanel/Dial3.pressed.connect(cycle_dial.bind(2))
     $Root/PuzzlePanel/Submit.pressed.connect(submit_puzzle)
-    $Root/EndingPanel/Retry.pressed.connect(Game.start_game)
-    $Root/EndingPanel/Menu.pressed.connect(back_to_menu)
+    $Root/PausePanel/Save.pressed.connect(Game.save_run)
     refresh()
-    show_message("NØRREBY • 02:13. The bells have stopped. Read the notice by the station.")
 
 func _process(delta: float) -> void:
+    $Root/Crosshair.visible = not get_tree().paused and not Game.transitioning
+    $Root/Crosshair.position = get_viewport().get_mouse_position() - Vector2(8,12)
     if not get_tree().paused:
         message_remaining = maxf(0.0, message_remaining - delta)
         $Root/Message.visible = message_remaining > 0
         var player := get_tree().get_first_node_in_group("player")
         if player:
+            $Root/Dodge.text = "DODGE  %.1f" % player.dodge_cooldown if player.dodge_cooldown > 0 else "DODGE READY"
             $Root/Reload.text = "RELOADING… %.1f" % player.reload_remaining if player.reload_remaining > 0 else ""
 
 func _unhandled_input(event: InputEvent) -> void:
     if event.is_action_pressed("pause"):
-        if $Root/EndingPanel.visible:
+        if Game.transitioning:
             return
         if any_panel_open():
             close_panels()
         else:
             toggle_pause()
         get_viewport().set_input_as_handled()
-    elif event.is_action_pressed("inventory") and not Game.won:
+    elif event.is_action_pressed("inventory") and not Game.transitioning:
         if $Root/InventoryPanel.visible:
             close_panels()
         elif not any_panel_open():
@@ -50,23 +51,28 @@ func _unhandled_input(event: InputEvent) -> void:
         get_viewport().set_input_as_handled()
 
 func any_panel_open() -> bool:
-    for path in ["PausePanel", "InventoryPanel", "NotePanel", "PuzzlePanel", "EndingPanel"]:
+    for path in ["PausePanel", "InventoryPanel", "NotePanel", "PuzzlePanel"]:
         if root.get_node(path).visible:
             return true
     return false
 
 func close_panels() -> void:
+    if Game.health <= 0:
+        return
     for path in ["PausePanel", "InventoryPanel", "NotePanel", "PuzzlePanel"]:
         root.get_node(path).hide()
     get_tree().paused = false
 
 func toggle_pause() -> void:
+    if Game.health <= 0 and $Root/PausePanel.visible:
+        return
     var should_open: bool = not $Root/PausePanel.visible
     close_panels()
     $Root/PausePanel.visible = should_open
     get_tree().paused = should_open
 
 func refresh() -> void:
+    $Root/HealthBar.value = Game.health
     $Root/Health.text = "VITALS  %03d" % Game.health
     $Root/Ammo.text = "9 MM   %d / %d" % [Game.magazine, Game.count_item("ammo")]
     $Root/Objective.text = Game.objective()
@@ -80,8 +86,9 @@ func refresh() -> void:
 × %d" % [i + 1, Game.item_name(slot["id"]), slot["count"]]
     if Game.health <= 0 and not any_panel_open():
         toggle_pause()
-        $Root/PausePanel/Title.text = "THE TOWN KEPT YOU"
+        $Root/PausePanel/Title.text = "HEALTH DEPLETED"
         $Root/PausePanel/Resume.disabled = true
+        $Root/PausePanel/Save.disabled = true
 
 func set_prompt(text: String) -> void:
     $Root/Prompt.text = text
@@ -117,9 +124,6 @@ func submit_puzzle() -> void:
     else:
         $Root/PuzzlePanel/Feedback.text = $Root/Message.text
 
-func show_ending() -> void:
-    $Root/EndingPanel.show()
-    get_tree().paused = true
 
 func back_to_menu() -> void:
     get_tree().paused = false

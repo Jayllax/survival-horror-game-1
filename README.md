@@ -1,47 +1,39 @@
-# Ignotum
+# Ignotum / development foundation 02
 
-A playable Godot 4 2D survival-horror foundation set in Nørreby, an empty Danish town shaped by distorted memories. Muted original SVG artwork, fog, warm 2D lights, and synthesized ambient sound are included. All level objects are authored nodes in the editor; nothing constructs the level at runtime.
+A desktop Godot 4 side-view survival-horror foundation with original pixel art. No authored story, forced quest, campaign ending, or victory screen. Start on a street, enter a building or alley with E, and return through matching entrances. These small connected spaces demonstrate the reusable location system; they are not a campaign.
 
-## Play
+## Open and play
 
-1. Install **Godot 4.4 or newer, standard edition** (tested with **4.6.3**). No .NET, plugins, downloads, accounts, or external services are required.
-2. Import `project.godot` in Godot's Project Manager.
-3. Press **F6** to play the currently open scene, or **F5** to start at the main menu. The intended entry point is `scenes/ui/main_menu.tscn`.
+Use **Godot 4.4+ Standard edition** (validated on 4.6.3). Import `project.godot` and press **F5**. No plugins or .NET installation required.
 
-| Action | Control |
+| Control | Action |
 | --- | --- |
-| Move | A / D or left / right arrows |
-| Jump | Space |
-| Aim / shoot | Mouse / left mouse button |
-| Reload | R |
-| Melee | Q |
-| Dodge | Shift; exactly 0.5 seconds invulnerable, 1.05 seconds between dodges |
-| Interact | E |
-| Flashlight | F; equipped separately from inventory |
-| Eight pockets | I |
-| Pause / close panel | Escape |
+| A/D or arrows | Move |
+| Space | Jump (buffered, with coyote time) |
+| Mouse / left click | Aim / fire |
+| R / Q / Shift | Reload / melee / dodge |
+| E | Collect, examine, operate, or enter |
+| F | Gun-mounted flashlight |
+| I / Esc | Eight-slot inventory / pause |
 
-**Your goal:** Read the station notice, find the ceramic fuse beside the crates, restore power at the switchboard, then unlock the eastern gate. The notice explains the three-dial solution. There is one enemy; ammunition and melee can both kill it. A short ending completes the loop. Restart from pause or the ending to reset the run.
+**Main menu:** New game, Continue, Options (volume/fullscreen), Quit. A new game asks before replacing an existing checkpoint. Entrances automatically save a checkpoint; Pause → Save checkpoint updates it manually. Loading restores the last entrance spawn, health, ammunition, inventory, circuit states, collected pickups, opened doors, and defeated enemies. Partial enemy health and active animations are not saved.
 
-Start with [DESIGNER_GUIDE.md](DESIGNER_GUIDE.md) to rearrange objects, tune mechanics, and build another level without writing scripts.
+## Design your own game
 
-## Checks
+- **[DESIGNER_GUIDE.md](DESIGNER_GUIDE.md):** edit locations and link door/alley destinations without programming.
+- **[ART_STYLE_GUIDE.md](ART_STYLE_GUIDE.md):** dimensions, palette, pixel rules, replacement workflow.
+- **`art/pixel/STYLE_SHEET.png`:** labeled visual asset sheet.
+- **`art/pixel/source/`:** native-resolution PNGs to edit in your pixel editor.
+- **`art/pixel/ignotum.gpl`:** importable 16-color palette.
 
-On Linux/macOS with Godot on `PATH`:
+All environments, characters, props, entrances, and colliders are authored editor-visible nodes. Every source image has a ready-to-use 2× PNG, and character sheets include six walk frames. Smooth lighting gradients are intentionally separate from pixel art.
+
+## Validation
 
 ```sh
 ./tools/check.sh
 ```
 
-Or run these commands from this folder with your Godot executable:
+This imports the project and runs integration tests in an isolated checkpoint data directory. It exercises movement, jump, flashlight attachment and beam offset, exact 0.5-second dodge, combat, inventory, independent power circuits, animated doors, round-trip scene transitions, named spawns, persistent pickups/enemies, checkpoints, death/retry, and menu controls. Require the final `IGNOTUM: … checks, 0 failures` line; script errors are failures even if Godot returns zero.
 
-```sh
-godot --headless --editor --path . --import --quit
-godot --headless --path . res://tests/smoke.tscn
-```
-
-The integration scene currently passes 53 checks on Godot 4.6.3. It tests the real level, input-driven movement and interactions, traversal over authored obstacles, combat, reload, exact dodge boundary, inventory limits, puzzle prerequisites, door animation, collision release, pause, death, restart, and ending. Menu, town, note, and puzzle screens were also rendered and visually inspected using the Compatibility renderer with software OpenGL. Audio output on physical hardware and exported standalone builds have not been tested. Tests print a count and return a nonzero exit code on failed assertions. If a Godot script error stops the test itself, treat it as a failed run; a successful run must end with `IGNOTUM: … checks, 0 failures`.
-
-To inspect rendering, run `godot --path . res://tests/capture.tscn` **with a graphical display**. It saves menu, town, note, and puzzle screenshots to `/tmp/ignotum-*.png` on Linux and quits. Do not use `--headless` for screenshots. This is a helper, not the game entry point.
-
-This is a compact, single-level template: progression is in memory, there is no save/load system, and doors share the one switchboard's power state. It is intended as an editable foundation, not a finished commercial campaign. Artwork and audio are original placeholders created for this project; there are no external asset packs.
+With a graphical display, `godot --path . res://tests/capture.tscn` writes screenshots to `/tmp/ignotum-*.png`. Rendering has been inspected using software OpenGL. Physical audio output, standalone exports, and other operating systems have not been tested. The Silkscreen UI font is distributed under its included OFL license in `art/fonts/`; game artwork and sounds were created for this project.

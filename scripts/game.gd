@@ -8,10 +8,27 @@ var health: int = 100
 var magazine: int = 6
 var clue_read := false
 var power_restored := false
-var won := false
+var world: Dictionary = {}
+var location_name := "Street"
+var spawn_id := "default"
+var transitioning := false
+var flashlight_on := true
+const SAVE_PATH := "user://checkpoint.json"
 
 func _ready() -> void:
+    var settings := ConfigFile.new()
+    if settings.load("user://settings.cfg") == OK:
+        AudioServer.set_bus_volume_db(0, float(settings.get_value("audio", "master_db", -6.0)))
+        AudioServer.set_bus_mute(0, AudioServer.get_bus_volume_db(0) <= -60)
+        if bool(settings.get_value("display", "fullscreen", false)) and DisplayServer.get_name() != "headless":
+            DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
     reset_run()
+
+func save_settings() -> void:
+    var settings := ConfigFile.new()
+    settings.set_value("audio", "master_db", AudioServer.get_bus_volume_db(0))
+    settings.set_value("display", "fullscreen", DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN)
+    settings.save("user://settings.cfg")
 
 func reset_run() -> void:
     slots.clear()
@@ -21,7 +38,9 @@ func reset_run() -> void:
     magazine = 6
     clue_read = false
     power_restored = false
-    won = false
+    world.clear()
+    spawn_id = "default"
+    flashlight_on = true
     add_item("ammo", 12)
     changed.emit()
 
@@ -81,13 +100,67 @@ func take_item(id: String, amount: int = 1) -> bool:
     return true
 
 func objective() -> String:
-    if won:
-        return "You left the square. The town remembers."
-    if power_restored:
-        return "Use the brass key at the eastern gate."
-    if clue_read:
-        return "Find a fuse. Restore power at the switchboard."
-    return "Find out why the station bells stopped."
+    return location_name.to_upper()
+
+func object_id(node: Node) -> String:
+    var location: Node = node
+    while location.get_parent() and not location.has_method("checkpoint_name"):
+        location = location.get_parent()
+    return location.scene_file_path + ":" + str(location.get_path_to(node))
+
+func has_checkpoint() -> bool:
+    return FileAccess.file_exists(SAVE_PATH)
+
+func save_run() -> void:
+    if health <= 0:
+        return
+    var scene := get_tree().current_scene
+    if scene == null or not scene.has_method("checkpoint_name"):
+        return
+    var file := FileAccess.open(SAVE_PATH + ".tmp", FileAccess.WRITE)
+    if file == null:
+        message.emit("Checkpoint could not be written.")
+        return
+    file.store_string(JSON.stringify({"version": 1, "scene": scene.scene_file_path, "spawn": spawn_id,
+        "slots": slots, "health": health, "magazine": magazine, "world": world,
+        "clue": clue_read, "power": power_restored, "flashlight": flashlight_on}))
+    file.flush()
+    file.close()
+    if DirAccess.rename_absolute(ProjectSettings.globalize_path(SAVE_PATH + ".tmp"), ProjectSettings.globalize_path(SAVE_PATH)) != OK:
+        message.emit("Checkpoint could not be committed.")
+        return
+    message.emit("Checkpoint saved.")
+
+func continue_game() -> void:
+    if not has_checkpoint():
+        return
+    var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(SAVE_PATH))
+    if not data is Dictionary or data.get("version") != 1 or not data.get("slots") is Array or data["slots"].size() != 8:
+        message.emit("Checkpoint is invalid.")
+        return
+    var path: String = data.get("scene", "")
+    if not path.begins_with("res://scenes/levels/") or not ResourceLoader.exists(path):
+        message.emit("Checkpoint location is unavailable.")
+        return
+    reset_run()
+    for i in SLOT_COUNT:
+        if data["slots"][i] is Dictionary:
+            slots[i] = data["slots"][i]
+    health = clampi(int(data.get("health", 100)), 1, 100)
+    magazine = clampi(int(data.get("magazine", 6)), 0, 99)
+    world = data.get("world", {})
+    clue_read = data.get("clue", false)
+    power_restored = data.get("power", false)
+    flashlight_on = data.get("flashlight", true)
+    spawn_id = data.get("spawn", "default")
+    get_tree().paused = false
+    get_tree().change_scene_to_file(path)
+
+func retry_checkpoint() -> void:
+    if has_checkpoint():
+        continue_game()
+    else:
+        start_game()
 
 func start_game() -> void:
     get_tree().paused = false

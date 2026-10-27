@@ -13,9 +13,11 @@ window/size/viewport_height=648
 window/size/window_width_override=1152
 window/size/window_height_override=648
 window/stretch/mode="canvas_items"
+window/stretch/scale_mode="integer"
 
 [autoload]
 Game="*res://scripts/game.gd"
+Transition="*res://scenes/ui/transition.tscn"
 
 [gui]
 theme/custom="res://art/ui_theme.tres"
@@ -26,6 +28,8 @@ renderer/rendering_method.mobile="gl_compatibility"
 textures/default_filters/use_nearest_mipmap_filter=false
 textures/canvas_textures/default_texture_filter=0
 environment/defaults/default_clear_color=Color(0.055, 0.075, 0.09, 1)
+
+2d/snap/snap_2d_transforms_to_pixel=true
 
 [input]
 move_left={
