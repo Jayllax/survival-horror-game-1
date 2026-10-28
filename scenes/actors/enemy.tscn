@@ -6,22 +6,26 @@
 radius = 12.0
 height = 64.0
 [sub_resource type="RectangleShape2D" id="attack_shape"]
-size = Vector2(76,44)
+size = Vector2(40,44)
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 1
 script = ExtResource("1")
+use_sleep_placeholder_pose = false
+use_attack_placeholder_pose = false
+use_death_placeholder_pose = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("shape")
 [node name="Body" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2")
 animation = &"idle"
 position = Vector2(0, 32)
-offset = Vector2(0, -36)
+offset = Vector2(0, -20)
+scale = Vector2(2, 2)
 script = ExtResource("visuals")
 [node name="AttackPivot" type="Node2D" parent="."]
 [node name="Hitbox" type="Area2D" parent="AttackPivot"]
-position = Vector2(38,-6)
+position = Vector2(20,-6)
 collision_layer = 0
 collision_mask = 2
 monitorable = false

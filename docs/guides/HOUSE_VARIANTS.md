@@ -2,7 +2,7 @@
 
 Eight separate, ready-to-place house assets based on your current house. The roof, eaves, windows, door panels, simple pixel detail, and proportions follow the existing sprite. Each front is exactly mirror-symmetric, with a centered door and matching windows. Five houses have one chimney on alternating sides; three have no chimney. Only the requested side chimneys break the roof silhouette’s symmetry.
 
-![The eight actual production sprites, in table order](docs/previews/house-variants.png)
+![The eight actual production sprites, in table order](../previews/house-variants.png)
 
 | Variant | Chimney | Reusable scene in `scenes/objects/houses/` |
 | --- | --- | --- |
@@ -23,7 +23,7 @@ Each PNG is **96 × 128 native pixels**, matching your current source house. Eac
 
 The images live in `art/pixel/house_variants/house_<color>.png`. There is **one PNG per variant**, with no separate enlarged copy. Edit these files directly at native resolution. Keep the dimensions and the scene's 2× scale to preserve the current pixel size. If you assign one of these native PNGs directly to another Sprite2D, set that sprite's scale to `(2, 2)` as well.
 
-The palette is copied from **Sparkle's palette** embedded in your current `art/pixlart/house.pixil`, rather than the older asset generator's palette. The included `art/pixel/house_variants/palette.gpl` contains those exact 32 colors for use in your pixel editor. Every visible pixel in these variants belongs to that palette; alpha is either 0 or 255. Lighting in Godot can change their displayed appearance.
+The palette is copied from **Sparkle's palette** embedded in your current `art/pixlart/house.pixil`, rather than the older asset generator's palette. The included `art/pixel/ignotum.gpl` contains those exact 32 colors for use in your pixel editor. Every visible pixel in these variants belongs to that palette; alpha is either 0 or 255. Lighting in Godot can change their displayed appearance.
 
 These scenes are background facades. For an enterable house, place the existing `scenes/objects/entrance.tscn` at the door and set its destination scene/spawn in the Inspector. You can hide that entrance's **Facade** child if you want to use only the door already painted on the house.
 

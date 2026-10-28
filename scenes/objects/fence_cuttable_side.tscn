@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3]
+[ext_resource type="Script" path="res://scripts/cuttable_fence.gd" id="script"]
+[ext_resource type="Texture2D" path="res://art/pixel/fence_cuttable_side.png" id="art"]
+[sub_resource type="AtlasTexture" id="top"]
+atlas = ExtResource("art")
+region = Rect2(0,0,6,16)
+[sub_resource type="AtlasTexture" id="bottom"]
+atlas = ExtResource("art")
+region = Rect2(0,16,6,16)
+[sub_resource type="RectangleShape2D" id="barrier"]
+size = Vector2(12,64)
+[node name="CuttableFenceSide" type="Area2D"]
+texture_filter = 1
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("script")
+edge_on_break = true
+[node name="LeftPanel" type="Node2D" parent="."]
+position = Vector2(0,-32)
+[node name="Sprite2D" type="Sprite2D" parent="LeftPanel"]
+position = Vector2(0,-16)
+scale = Vector2(2,2)
+texture = SubResource("top")
+[node name="RightPanel" type="Node2D" parent="."]
+position = Vector2(0,-32)
+[node name="Sprite2D" type="Sprite2D" parent="RightPanel"]
+position = Vector2(0,16)
+scale = Vector2(2,2)
+texture = SubResource("bottom")
+[node name="Barrier" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 2
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Barrier"]
+position = Vector2(0,-32)
+shape = SubResource("barrier")

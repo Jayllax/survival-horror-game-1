@@ -60,7 +60,7 @@ func wall(enabled: bool, x: float = 1050) -> void:
 
 func prepare_attack() -> CharacterBody2D:
     await wall(false)
-    await place_player(Vector2(1050,588))
+    await place_player(Vector2(1040,588))
     var foe := await fresh_foe(Vector2(1000,588),1,{"max_health":500})
     foe.set_physics_process(false)
     player.set_physics_process(false)
@@ -87,7 +87,7 @@ func run() -> void:
     var foe := await fresh_foe(Vector2(850,588))
     var rounds: int = Game.magazine
     Input.action_press("move_right")
-    await frames(150)
+    await frames(ceili(215/(player.move_speed*player.crouch_speed_multiplier)*60))
     Input.action_release("move_right")
     await frames(6)
     check(player.position.x > foe.position.x+100 and foe.state == foe.State.SLEEPING and Game.health == 100, "Actual crouch movement passes completely through a sleeping enemy without waking it")
@@ -179,8 +179,8 @@ func run() -> void:
     await frames(180)
     check(foe.is_on_floor() and foe.position.x > 1950 and foe.position.x < 2050, "Ground probes prevent patrols walking off an authored platform")
     await place_player(Vector2(1000,588))
-    foe = await fresh_foe(Vector2(950,588),1)
-    var second := await add_foe(Vector2(1050,588),1,{"facing_direction":-1})
+    foe = await fresh_foe(Vector2(965,588),1)
+    var second := await add_foe(Vector2(1035,588),1,{"facing_direction":-1})
     check(foe.state == foe.State.ATTACK and second.state != second.State.ATTACK, "Nearby enemies stagger their attack starts instead of all striking at once")
     foe = await prepare_attack()
     check(foe.state == foe.State.ATTACK and foe.get_node("Body").animation == &"attack", "Entering range starts a committed attack animation")
@@ -212,7 +212,7 @@ func run() -> void:
     foe._physics_process(0.05)
     check(Game.health == 100, "A dodged strike is consumed rather than repeatedly damaging the player")
     foe = await prepare_attack()
-    player.position.x = 1055
+    player.position.x = 1045
     await wall(true,1028)
     foe._physics_process(0.33)
     check(foe.attack_hitbox.overlaps_body(player) and Game.health == 100, "Even an overlapping attack hitbox cannot damage through a solid wall")

@@ -48,6 +48,7 @@ var footstep_remaining := 0.0
 var standing_shape: CapsuleShape2D
 var standing_collision_position := Vector2.ZERO
 var standing_aim_position := Vector2.ZERO
+var standing_art_scale := Vector2.ONE
 var coyote_remaining := 0.0
 var jump_buffer := 0.0
 var combat_remaining := 0.0
@@ -69,6 +70,7 @@ func _ready() -> void:
     body_collision.shape = standing_shape.duplicate()
     standing_collision_position = body_collision.position
     standing_aim_position = aim.position
+    standing_art_scale = body_art.scale
     update_animation()
     Game.changed.connect(sync_weapon)
     sync_weapon()
@@ -84,7 +86,7 @@ func sync_weapon() -> void:
         shot_cooldown = 0
         muzzle.energy = 0
         weapon_uid = Game.equipped_uid
-    $Aim/Gun.texture = definition.weapon_texture if definition and Input.is_action_pressed("aim") else null
+    $Aim/Gun.texture = definition.weapon_texture if definition and Input.is_action_pressed("aim") and dodge_remaining <= 0 else null
     if definition:
         magazine_size = definition.magazine_size
         bullet_damage = definition.bullet_damage
@@ -197,25 +199,34 @@ func update_animation() -> void:
         state = &"crouch_walk" if absf(velocity.x) > 5 else &"crouch_idle"
     elif absf(velocity.x) > 5:
         state = &"sprint" if is_sprinting else &"walk"
+    if is_aiming() and dodge_remaining <= 0:
+        var aimed_state := StringName("crouch_aim_" + str(state).trim_prefix("crouch_")) if str(state).begins_with("crouch_") else StringName("aim_" + str(state))
+        if body_art.has_state(aimed_state):
+            state = aimed_state
     body_art.play_state(state,dodge_seconds if state == &"dodge" else 0.0)
+    if state in [&"walk",&"sprint",&"crouch_walk",&"aim_walk",&"crouch_aim_walk"]:
+        var reference_speed := move_speed * (crouch_speed_multiplier if is_crouching else (sprint_multiplier if is_sprinting else 1.0))
+        body_art.speed_scale = clampf(absf(velocity.x)/maxf(reference_speed,1.0),0.2,1.75)
+        if is_aiming() and velocity.x*facing < 0:
+            body_art.speed_scale *= -1.0
     var pose_scale := 1.0
     if standing_shape and is_crouching and use_crouch_placeholder_pose:
         pose_scale = clampf(crouch_height/standing_shape.height,0.1,1.0)
     elif dodge_remaining > 0 and use_dodge_placeholder_pose:
         pose_scale = 0.8
-    body_art.scale.y = pose_scale
+    body_art.scale.y = standing_art_scale.y * pose_scale
 
-func update_aim(direction: float) -> void:
+func update_aim(_direction: float) -> void:
     # Keep the Gun node active: its light children also work while holstered.
     var aiming := Input.is_action_pressed("aim")
     aim.rotation = (get_global_mouse_position() - aim.global_position).angle() if aiming else (PI if facing < 0 else 0.0)
     $Aim/Gun.flip_v = cos(aim.rotation) < 0
     flashlight_light.position.y = -4 if $Aim/Gun.flip_v else 4
-    if aiming and direction == 0:
+    if aiming:
         facing = -1.0 if cos(aim.rotation) < 0 else 1.0
     body_art.flip_h = facing < 0
     var definition := Game.active_weapon()
-    $Aim/Gun.texture = definition.weapon_texture if definition and aiming else null
+    $Aim/Gun.texture = definition.weapon_texture if definition and aiming and dodge_remaining <= 0 else null
 
 func begin_dodge(direction: float) -> bool:
     if not is_on_floor() or is_crouching or dodge_cooldown > 0 or dodge_remaining > 0 or Game.health <= 0 or Game.transitioning:
@@ -246,7 +257,17 @@ func shoot() -> void:
     var target: Vector2 = origin + Vector2.RIGHT.rotated(aim.rotation) * 900
     var query := PhysicsRayQueryParameters2D.create(origin, target, 5)
     query.exclude = [get_rid()]
-    var hit := get_world_2d().direct_space_state.intersect_ray(query)
+    query.hit_from_inside = true
+    # A long gun can visually extend past a thin fence while the body is blocked.
+    # Check shoulder-to-muzzle first so it cannot fire through that obstruction.
+    var barrel_query := PhysicsRayQueryParameters2D.create(aim.global_position,origin,1)
+    barrel_query.exclude = [get_rid()]
+    barrel_query.hit_from_inside = true
+    var hit := get_world_2d().direct_space_state.intersect_ray(barrel_query)
+    if hit.is_empty():
+        hit = get_world_2d().direct_space_state.intersect_ray(query)
+    else:
+        origin = hit["position"]
     var end: Vector2 = hit.get("position", target)
     if not hit.is_empty() and hit["collider"].has_method("take_damage"):
         hit["collider"].take_damage(bullet_damage)

@@ -50,7 +50,7 @@ func run() -> void:
     var ui: Control = hud.get_node("StoryUI")
     check(not ui.is_open() and not hud.any_panel_open(), "New narrative UI stays hidden during exploration")
     check(not player.get_node("Camera2D").enabled and sandbox.get_node("Camera2D").enabled, "Sandbox uses its authored fixed camera")
-    check(npc.get_node("Body").texture == player.get_node("Body").sprite_frames.get_frame_texture("idle",0).atlas and npc.get_node("Body").hframes == 6, "NPC stand-in uses the player's exact sprite frame dimensions")
+    check(npc.get_node("Body").texture.atlas == player.get_node("Body").sprite_frames.get_frame_texture("idle",0).atlas and npc.get_node("Body").texture.get_size() == Vector2(32,40) and npc.get_node("Body").scale == Vector2(2,2), "NPC stand-in uses the player's exact sprite frame dimensions")
     check(note.is_in_group("interactable") and npc.is_in_group("interactable"), "Placed notes and NPCs join the existing interaction system")
     check(not hud.get_node("Root/Prompt").visible, "No narrative interaction prompt appears out of range")
     player.global_position = bike.global_position + Vector2(-40,-32)

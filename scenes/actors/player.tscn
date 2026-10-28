@@ -9,6 +9,8 @@
 [ext_resource type="AudioStream" uid="uid://27hq6m8o0c76" path="res://audio/hurt.wav" id="7"]
 [ext_resource type="Script" uid="uid://battg16dcvdnc" path="res://scripts/character_visuals.gd" id="visuals"]
 
+[ext_resource type="PackedScene" path="res://scenes/actors/weapon_arms.tscn" id="arms"]
+
 [sub_resource type="CapsuleShape2D" id="body"]
 resource_local_to_scene = true
 radius = 12.0
@@ -19,15 +21,18 @@ collision_layer = 2
 script = ExtResource("1")
 move_speed = 125.0
 jump_velocity = -200.0
+use_crouch_placeholder_pose = false
+use_dodge_placeholder_pose = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1385853004]
 shape = SubResource("body")
 
 [node name="Body" type="AnimatedSprite2D" parent="." unique_id=1613376934]
 position = Vector2(0, 32)
+scale = Vector2(2, 2)
 sprite_frames = ExtResource("2")
 animation = &"idle"
-offset = Vector2(0, -36)
+offset = Vector2(0, -20)
 script = ExtResource("visuals")
 
 [node name="Aim" type="Node2D" parent="." unique_id=329102497]
@@ -69,3 +74,5 @@ volume_db = -12.0
 [node name="HurtSound" type="AudioStreamPlayer" parent="." unique_id=1690239658]
 stream = ExtResource("7")
 volume_db = -13.0
+
+[node name="WeaponArms" parent="." instance=ExtResource("arms")]

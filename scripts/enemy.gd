@@ -27,13 +27,16 @@ enum State { SLEEPING, WAKING, IDLE, PATROL, INVESTIGATE, CHASE, ATTACK, RECOVER
 @export var avoid_ledges: bool = true
 @export var personal_space: float = 34.0
 @export_group("Attack")
-@export var attack_trigger_range: float = 62.0
+@export var attack_trigger_range: float = 40.0
 @export var attack_windup_seconds: float = 0.32
 @export var attack_active_seconds: float = 0.10
 @export var attack_recovery_seconds: float = 0.58
 ## Minimum start-to-start interval, also limited by the full attack duration.
 @export var attack_interval: float = 1.1
 @export var nearby_attack_spacing: float = 110.0
+## Frames before and during contact; remaining frames play during recovery.
+@export_range(0,64) var attack_windup_frames: int = 2
+@export_range(1,64) var attack_contact_frames: int = 2
 @export_group("Hit and Death")
 @export var hit_reaction_seconds: float = 0.18
 ## Limits interruptions by repeated gunfire; damage still applies on every hit.
@@ -67,6 +70,7 @@ var patrol_pause_remaining := 0.0
 var blocked_seconds := 0.0
 var search_facing := -1.0
 var visual_origin := Vector2.ZERO
+var visual_scale := Vector2.ONE
 @onready var body_art: CharacterVisuals = $Body
 @onready var attack_pivot: Node2D = $AttackPivot
 @onready var attack_hitbox: Area2D = $AttackPivot/Hitbox
@@ -81,6 +85,7 @@ func _ready() -> void:
     last_known_position = home_position
     direction = -1.0 if facing_direction < 0 else 1.0
     visual_origin = body_art.position
+    visual_scale = body_art.scale
     add_to_group("enemy")
     Game.noise_emitted.connect(hear_noise)
     settle()
@@ -311,7 +316,7 @@ func move_ground(movement: float, delta: float) -> void:
 
 func update_visuals() -> void:
     body_art.position = visual_origin
-    body_art.scale.y = 1
+    body_art.scale.y = visual_scale.y
     body_art.modulate = Color(1.5,0.8,0.7) if flash_remaining > 0 else Color.WHITE
     body_art.flip_h = direction < 0
     if state not in [State.ATTACK,State.RECOVER]:
@@ -319,12 +324,13 @@ func update_visuals() -> void:
     if state == State.SLEEPING:
         body_art.play_state(&"sleep")
         if use_sleep_placeholder_pose:
-            body_art.scale.y = 0.72
+            body_art.scale.y = visual_scale.y * 0.72
     elif state == State.WAKING:
         body_art.play_state(&"wake",maxf(wake_seconds,0.01))
         if use_sleep_placeholder_pose:
-            body_art.scale.y = lerpf(0.72,1.0,clampf(state_elapsed/maxf(wake_seconds,0.01),0,1))
+            body_art.scale.y = visual_scale.y * lerpf(0.72,1.0,clampf(state_elapsed/maxf(wake_seconds,0.01),0,1))
     elif state in [State.ATTACK,State.RECOVER]:
+        sync_attack_pose()
         if use_attack_placeholder_pose:
             var offset := 0.0
             if attack_time < attack_windup_seconds:
@@ -351,7 +357,7 @@ func take_damage(amount: int) -> void:
         hit_remaining = 0
         flash_remaining = 0
         body_art.position = visual_origin
-        body_art.scale.y = 1
+        body_art.scale.y = visual_scale.y
         body_art.modulate = Color.WHITE
         Game.world[Game.object_id(self)] = true
         remove_from_group("enemy")
@@ -379,7 +385,7 @@ func take_damage(amount: int) -> void:
 func update_death(delta: float) -> void:
     death_remaining = maxf(0,death_remaining-delta)
     if use_death_placeholder_pose:
-        body_art.scale.y = lerpf(0.18,1.0,clampf((death_remaining-corpse_linger_seconds)/maxf(death_seconds,0.01),0,1))
+        body_art.scale.y = visual_scale.y * lerpf(0.18,1.0,clampf((death_remaining-corpse_linger_seconds)/maxf(death_seconds,0.01),0,1))
     if death_remaining <= corpse_linger_seconds:
         body_art.stop()
         if body_art.has_state(&"death"):
@@ -387,3 +393,25 @@ func update_death(delta: float) -> void:
             body_art.frame = body_art.sprite_frames.get_frame_count(&"death")-1
     if death_remaining <= 0 and not leave_corpse:
         queue_free()
+
+func sync_attack_pose() -> void:
+    if not body_art.has_state(&"attack"):
+        return
+    var count := body_art.sprite_frames.get_frame_count(&"attack")
+    var windup := clampi(attack_windup_frames,0,count-1)
+    var contact := clampi(attack_contact_frames,1,count-windup)
+    var start := 0
+    var length := windup
+    var progress := attack_time/maxf(attack_windup_seconds,0.001)
+    if attack_time >= attack_windup_seconds+attack_active_seconds:
+        start = windup+contact
+        length = count-start
+        progress = (attack_time-attack_windup_seconds-attack_active_seconds)/maxf(attack_recovery_seconds,0.001)
+    elif attack_time >= attack_windup_seconds:
+        start = windup
+        length = contact
+        progress = (attack_time-attack_windup_seconds)/maxf(attack_active_seconds,0.001)
+    var position_in_phase := clampf(progress,0,0.9999)*length
+    var frame_index := clampi(start+int(position_in_phase),0,count-1)
+    body_art.pause()
+    body_art.set_frame_and_progress(frame_index,fmod(position_in_phase,1.0))

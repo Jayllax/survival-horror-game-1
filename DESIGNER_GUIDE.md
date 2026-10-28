@@ -1,16 +1,18 @@
 # Ignotum / designer guide
 
-For sleeping enemies, crouch bypasses, directional sight/hearing, patrol/search behaviour, and the attack animation/hitbox, see [ENEMY_AI_GUIDE.md](ENEMY_AI_GUIDE.md).
+For reusable wire/solid fences in broad and end views, see [FENCE_GUIDE.md](docs/guides/FENCE_GUIDE.md). Try `scenes/levels/fence_sandbox.tscn` with F6.
 
-For player/enemy SpriteFrames, crouch, sprint, short dodge, and gun-only combat, see [CHARACTER_GUIDE.md](CHARACTER_GUIDE.md). Open `scenes/levels/combat_sandbox.tscn` with F6 to try them.
+For sleeping enemies, crouch bypasses, directional sight/hearing, patrol/search behaviour, and the attack animation/hitbox, see [ENEMY_AI_GUIDE.md](docs/guides/ENEMY_AI_GUIDE.md).
 
-For editable environmental notes, colored speakers, and NPC conversations, see [NARRATIVE_GUIDE.md](NARRATIVE_GUIDE.md). Open `scenes/levels/story_sandbox.tscn` and press F6 to try the framework without changing your town.
+For player/enemy SpriteFrames, crouch, sprint, short dodge, and gun-only combat, see [CHARACTER_GUIDE.md](docs/guides/CHARACTER_GUIDE.md). Open `scenes/levels/combat_sandbox.tscn` with F6 to try them.
+
+For editable environmental notes, colored speakers, and NPC conversations, see [NARRATIVE_GUIDE.md](docs/guides/NARRATIVE_GUIDE.md). Open `scenes/levels/story_sandbox.tscn` and press F6 to try the framework without changing your town.
 
 ## Your starting point
 
 Import `project.godot` with Godot 4.7.2 Standard, open `scenes/levels/town.tscn`, choose **2D**, and press **F6** to test. **F5** starts the main menu. Stop with F8 before editing. The game has no story progression requirement or ending. You own the writing and campaign structure.
 
-The supplied first street links to a small ground-floor interior and service alley to demonstrate entrances. The alley includes one enemy for testing combat; delete its instance if you want a peaceful blockout. All objects are visible in the editor, including every destination and spawn marker.
+The supplied first street links to a small ground-floor interior and service alley to demonstrate entrances. Your uploaded alley is a blockout; use the separate combat/stealth sandbox scenes to test enemies, then place them where your levels need them. All objects are visible in the editor, including every destination and spawn marker.
 
 ## Move and duplicate
 
@@ -57,7 +59,7 @@ New Game loads `town.tscn`. To replace the starting location without programming
 
 ## Tune movement and combat
 
-Select Player for movement, sprint/crouch, and short dodge settings. Firearm stats come from the equipped weapon definition. See CHARACTER_GUIDE.md for all animation names and Inspector defaults.
+Select Player for movement, sprint/crouch, and short dodge settings. Firearm stats come from the equipped weapon definition. See docs/guides/CHARACTER_GUIDE.md for all animation names and Inspector defaults.
 
 Jump Velocity must be negative; other tuning values should be positive. The short grounded dodge defaults to **0.18 seconds of motion** and **0.12 seconds of invulnerability**, with a 0.65-second cooldown between starts. All three values are exported. The gun starts with six loaded rounds, clamped to Magazine Size; reserve ammunition comes from your inventory settings. Character states play named SpriteFrames animations automatically. Movement accelerates smoothly; a short coyote window and jump buffer make platforming forgiving.
 
@@ -174,7 +176,7 @@ In Godot, choose **Project → Open User Data Folder** to find **`save_1.json` t
 
 ## Art and interface
 
-See **ART_STYLE_GUIDE.md** and **art/pixel/STYLE_SHEET.png** for the palette and editable source sizes. Older pixel assets have a native source and a ready-to-use 2× texture. The bicycle uses one native PNG and scales its Sprite2D instead. The new houses are 96×128 native pixels and the shop is 128×128; their placed baselines have already been adjusted. Do not stretch them to the old building bounds. Player and ammo files are preserved. `STYLE_SHEET.png` now shows actual production PNGs, not the earlier illustration. Place `building_house.tscn`, `building_shop.tscn`, or `building_station.tscn`, and decorate with reusable props under `scenes/objects/`.
+See [the art guide](docs/guides/ART_STYLE_GUIDE.md) for native sizes and palette rules. New player/enemy atlases, houses, bicycle and fences use single native PNGs at Sprite scale 2×. Older scenery/item source/export pairs remain in place. The current palette is `art/pixel/ignotum.gpl`; editable `.pixil` files remain in `art/pixlart/`. Place reusable scenery under `scenes/objects/` and keep its native pixel scale.
 
 CanvasModulate sets ambient darkness. Lamps and the flashlight add real light. Fog sprites are authored transparent layers. The scene's ambient audio loops; replace its Stream with your own WAV. The pause and inventory panels are laid out in `scenes/ui/hud.tscn`; its `Grid` Control draws the saved item footprints; button styles are shared through `art/ui_theme.tres`. Menu Options changes volume/fullscreen and stores settings.
 

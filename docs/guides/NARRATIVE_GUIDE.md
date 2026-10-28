@@ -43,7 +43,7 @@ Each entry is one displayed block, rather than one sentence or one physical text
 
 Drag `scenes/actors/npc.tscn` into the level's `Actors` node. Place its root at the same height as the player's center: with the example ground at Y = 620, the character root is Y = 588. Assign your **Dialogue** sequence in the Inspector. Optionally assign **Repeat Dialogue** for subsequent conversations; leaving it empty replays the first conversation.
 
-Enable **Editable Children** and select **Body** to replace the sprite. The existing player sheet is 240 × 72 pixels: six 40 × 72 frames. The sample NPC uses **Hframes = 6**, **Frame = 0**, the same scale, and Body position `(0, -3)`. For a single 40 × 72 still image, set **Hframes = 1**. Use the same source/enlarged convention as your other character assets; do not double their size again. Set Body's **Modulate** back to white to remove the example tint.
+Enable **Editable Children** and select **Body** to replace the sprite. The current stand-in uses an AtlasTexture from `art/pixel/player_motion.png`, region `(0,200,32,40)`, with Body **Position (0,32)**, **Offset (0,-20)**, **Scale (2,2)** and Hframes 1. For your own native 32×40 still image, replace Texture directly and keep that transform. For an already-enlarged 64×80 image, use Scale (1,1), Offset (0,-40). Keep feet aligned to the bottom and set Modulate back to white to remove the example tint.
 
 NPCs stand in place and face the player when spoken to. **Face Player** can disable that turn. They do not block the walking plane and do not have combat, patrols, or automatic walk animation. Their sprite, origin, and interaction settings remain editable. You can make a reusable character scene with **Scene → Save As** and place it wherever you need.
 

@@ -1,89 +1,49 @@
-# Ignotum / development foundation 06
+# Ignotum
 
-A desktop Godot 4 side-view survival-horror foundation with original pixel art. No authored story, forced quest, campaign ending, or victory screen. Start on a street, enter a building or alley with E, and return through matching entrances. These small connected spaces demonstrate the reusable location system; they are not a campaign.
+Editable Godot **4.7.2 Standard** 2D survival-horror foundation. Import `project.godot` in Godot, then press **F5** for the main menu and your town. All level geometry, props, characters and interactables are authored scene nodes.
 
-## Open and play
+Your October 28 upload's alley, interiors, player speed/jump, camera, lighting and input changes are preserved. This iteration adds matching simple player/enemy pixel animations, hands that hold the equipped pistol while aiming, and reusable cuttable/permanent fences in both broad and end views. Your story and main level design remain yours to build.
 
-Use **Godot 4.7.2 Standard edition**. Import `project.godot` and press **F5**. No plugins or .NET installation required.
+## Start here
 
-| Control | Action |
+- [DESIGNER_GUIDE.md](DESIGNER_GUIDE.md): build levels, connect entrances, place items, puzzles and bicycle saves.
+- [Character guide](docs/guides/CHARACTER_GUIDE.md): native atlas rows, animation names, aiming arms and movement settings.
+- [Fence guide](docs/guides/FENCE_GUIDE.md): tool-gated paths, permanent barriers, both viewpoints and saved openings.
+- [Enemy AI guide](docs/guides/ENEMY_AI_GUIDE.md): sleeping enemies, quiet crouch bypasses, sight/hearing, searching and timed attacks.
+- [Narrative guide](docs/guides/NARRATIVE_GUIDE.md): notes, NPCs, colored speakers and conversations.
+- [Art guide](docs/guides/ART_STYLE_GUIDE.md) and [house variants](docs/guides/HOUSE_VARIANTS.md): palette, pixel size and editing assets.
+- [Workspace layout](docs/WORKSPACE.md): where things live and what was cleaned up.
+- [Inspiration notes](docs/guides/INSPIRATION_NOTES.md): sources and implementation choices; no copied game assets or authored campaign.
+
+## Test scenes
+
+Open a scene and press **F6**:
+
+| Scene under `scenes/levels/` | Try |
 | --- | --- |
-| A/D or arrows | Move |
-| Space / W | Jump (buffered, with coyote time) |
-| Right mouse / left click | Hold to aim / fire while aiming |
-| R / Alt | Reload / short dodge |
-| Shift / Ctrl, S, Down | Sprint / hold to crouch |
-| E | Collect, examine, operate, or enter |
-| F | Flashlight (also works while unarmed) |
-| Drag / R in inventory | Move / rotate items |
-| I or Tab / Esc | Toggle grid inventory / pause |
+| `fence_sandbox.tscn` | Cutters, bicycle save, broad/end-view wire fences, permanent fences |
+| `combat_sandbox.tscn` | Movement, aim, crouch clearance, short dodge, enemy reactions |
+| `stealth_sandbox.tscn` | Sleeping enemies, quiet bypasses, noisy actions, pursuit |
+| `story_sandbox.tscn` | Note reader and NPC dialogue |
 
-**Main menu:** New game, Load game (four slots), Options (volume/fullscreen), Quit. Saving is manual: approach a bicycle, press E to ring its bell, and choose a slot. Occupied slots require overwrite confirmation. There is no saving from the pause menu or when changing rooms. Loading restores your saved world/inventory and returns beside the bicycle. Starting a new game leaves all four files intact. Partial enemy health and active animations are not saved.
+These are separate demonstrations; they do not overwrite your levels. New fence roots sit on the floor, for example Y=620. New character/fence PNGs are native resolution displayed at 2×; edit those PNGs directly.
 
-## Grid inventory and equipment
+## Existing systems
 
-The starting bag is **8×4 cells**, with drag placement and 90° rotation. The handgun is a **2-cell item**: select it to **Equip/Unequip**. Every weapon instance keeps its own magazine; future weapon resources supply their own size, ammunition and firearm stats. Keys, puzzle objects and weapons can use larger rectangles through exported Inspector fields. Starting capacity is editable in `data/inventory_settings.tres`, with an expansion hook for future upgrades. Invalid moves, full-grid pickups and failed recipes preserve all items.
+Hold right mouse to draw and aim an equipped gun; release to holster. The independent flashlight follows aim while held, and walking direction otherwise. The arms follow the grip points in both standing and crouched aim. Gunshots stop at fences/walls even if the barrel visually extends past a thin obstruction.
 
-Each save slot stores a separate complete snapshot: inventory layout and quantities, per-weapon rounds, equipped weapon, capacity, health, puzzle flags, pickups, gates and defeated enemies. Loading replaces current state atomically. Version-2 bicycle saves remain readable and are migrated in memory; their files are preserved until explicitly overwritten at a bicycle.
+The 8×4 inventory supports dragging, rotation, stacking, equipping and per-weapon magazines. Larger item footprints and future inventory upgrades are supported. Starting item quantities and definitions retain your settings. UI stays quiet; world pickups show only a nearby generic action, and item identity is read in the inventory. No control legends were added to the game.
 
-## Simplified sprite replacement
-
-The redesign is implemented as **29 individual production sprite PNGs**: 28 scenery/prop/item/enemy replacements at their existing paths, plus a new cream-house variant. Player and ammo PNGs are preserved. Buildings have smaller native dimensions and simpler surfaces; scene positions, door selection shapes, and light offsets have been adjusted accordingly.
-
-`art/pixel/STYLE_SHEET.png` shows the actual assets now used by the project. See [ART_STYLE_GUIDE.md](ART_STYLE_GUIDE.md) for native sizes and the exact 2× pixel workflow. The earlier illustrated sheet is only an art reference.
-
-## Enemy AI and stealth
-
-Enemies now support sleeping, directional sight, hearing, investigation, chase/search/return, patrols, and committed attacks. Quiet crouch movement can bypass sleepers; noisy actions disturb them. Attacks have wind-up, a timed editor-visible hitbox, and recovery; contact alone causes no damage. See [ENEMY_AI_GUIDE.md](ENEMY_AI_GUIDE.md), or try `scenes/levels/stealth_sandbox.tscn` with F6.
-
-## Character movement and combat
-
-Player combat uses equipped guns; melee and its arc are removed. Sprint, crouch, and the short grounded dodge have Inspector settings. Both player and enemy use editable named SpriteFrames animations, including player jump/fall/crouch/dodge and enemy hit/death. The enemy artwork is an exact player palette swap with sage skin and plum clothing. See [CHARACTER_GUIDE.md](CHARACTER_GUIDE.md); test `scenes/levels/combat_sandbox.tscn` with F6.
-
-## Exploration and inventory
-
-Environmental notes and NPC dialogue are available as reusable editor scenes. Try `scenes/levels/story_sandbox.tscn` with F6; see [NARRATIVE_GUIDE.md](NARRATIVE_GUIDE.md) for writing notes, selecting colored speakers, creating conversations, and replacing the NPC stand-in art. The existing town and main menu remain the normal starting point.
-
-Exploration has no fixed HUD panels, logo, controls strip, or permanent crosshair. Health briefly appears after damage (and remains subtly visible when critical). Hold right mouse to draw the equipped gun, aim with the cursor, and move carefully; left click fires while aiming. Release right mouse to holster the gun and point the flashlight in the last walking direction. The crosshair appears only while aiming; ammunition also appears briefly after firing or during reload. Control legends and keyboard hints are removed from the game for your tutorial.
-
-Pickups are just their artwork. A nearby **Take** prompt identifies an action, not the item. Collecting does not announce its name. Open I or Tab, drag items to arrange them, press R to rotate, and select an icon with the mouse or keyboard, and read its name, description, category, quantity, and artwork. Medical supplies can be **Used**; select **Combine** on a material, then select its partner. Cloth + antiseptic creates a field dressing that heals 30. Matching stacks can also be combined: 20 + 2 rounds becomes 22; 20 + 10 becomes 24 + 6. Full-health use and failed combinations waste nothing.
-
-The building contains bolt cutters. Carry them to the alley's chained gate to permanently open access to a medical supply. All additions are authored scene instances with editable item resources and recipe resources, not a mandatory quest. No story or ending is attached.
-
-Sources and the specific design adaptations are documented in [INSPIRATION_NOTES.md](INSPIRATION_NOTES.md).
-
-## Design your own game
-
-- **[DESIGNER_GUIDE.md](DESIGNER_GUIDE.md):** edit locations and link door/alley destinations without programming.
-- **[ART_STYLE_GUIDE.md](ART_STYLE_GUIDE.md):** dimensions, palette, pixel rules, replacement workflow.
-- **`art/pixel/STYLE_SHEET.png`:** labeled visual asset sheet.
-- **`art/pixel/source/`:** native-resolution PNGs to edit in your pixel editor.
-- **`art/pixel/ignotum.gpl`:** original kit palette; your revised asset colors and bicycle palette are described in the art guide.
-
-All environments, characters, props, entrances, and colliders are authored editor-visible nodes. The older source images have ready-to-use 2× PNGs, and character sheets include six walk frames. The new bicycle is one native 32×28 PNG, scaled 2× by its scene. Smooth lighting gradients are intentionally separate from pixel art.
-
-## Previews
-
-Exploration:
-
-![Unobstructed exploration](docs/previews/exploration.png)
-
-Inventory inspection:
-
-![Icon inventory and item actions](docs/previews/inventory.png)
-
-Bicycle save menu:
-
-![Four manual save slots](docs/previews/save-menu.png)
+Four bicycle-only save slots independently store inventory/layout/equipment, ammunition, health, flashlight state, completed puzzles, collected items, opened fences/doors and defeated enemies. New Game leaves saves intact. Active enemy alertness, partial enemy health and unfinished animations are transient. Version-2 bicycle saves remain readable; current saves use version 3.
 
 ## Validation
 
 ```sh
-bash tools/check.sh
+GODOT_BIN=/path/to/godot-4.7.2 bash tools/check.sh aiming narrative combat stealth fences character_art
 ```
 
-This imports resources and runs nine integration suites in isolated user-data folders. Gameplay checks cover movement, combat, short dodge timing, puzzles, persistent world state, and transitions. Interface checks cover quiet HUD, inspection, healing and recipes. Asset checks cover imported textures. Manual-save checks repeatedly switch between files containing different actual pickups, puzzle completion, gates, enemy state, health, layout, capacity and equipment. Grid checks use real mouse/key events for drag, rotation, canceled/invalid drops, stack merging and equipment; they also cover fragmentation, independent weapon magazines, snapshot validation and upgrade hooks. Aiming checks cover holstering and flashlight direction. Narrative checks cover notes, colored speakers, reveal/advance/cancel controls, repeat dialogue, and independent saved progress. Combat checks cover named character animations, sprint, crouch clearance, short dodge collision/invulnerability, gun reactions, death playback and saved defeat. Stealth checks cover quiet bypasses, hearing/vision obstruction, memory/search/return, patrols/ledges, committed strikes, dodging, and stagger resistance. All suites must finish with zero failures; script/resource errors are failures even if Godot returns zero.
+This imports the project and runs six suites against your current settings, with isolated user-data folders. They cover UI/aim, notes/dialogue, movement/combat, stealth, independently saved fence routes, pixel animation states, phased enemy strikes and both hands staying on gun grips across aim angles.
 
-The original five suites assume the original template's item names, starting ammunition, stack sizes, and example layouts. Your later designer settings intentionally differ. The narrative, aiming, combat, and stealth suites work with the current settings: run `bash tools/check.sh aiming narrative combat stealth` to check these features without changing your item data. The full original regression suite was also checked separately with its original test settings.
+The older five suites (`smoke`, `interface`, `assets`, `manual_saves`, `grid_inventory`) assume historical item names, quantities and example level layouts. Your later designer revisions intentionally differ. The script's no-argument mode includes all eleven suites; select the six current suites above for this snapshot. Never change your designer data to satisfy historical fixtures.
 
-With a graphical display, `godot --path . res://tests/capture.tscn` writes screenshots to `/tmp/ignotum-*.png`. The example layouts now include your revisions from `human-changes`. Physical audio output, standalone exports, and other operating systems have not been tested. The Silkscreen UI font is distributed under its included OFL license in `art/fonts/`; game artwork and sounds were created for this project.
+Graphical checks used Linux software OpenGL. Standalone exports, other operating systems and physical audio output have not been tested. Required font license files remain in `art/fonts/`.

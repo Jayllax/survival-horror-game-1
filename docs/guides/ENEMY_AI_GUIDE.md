@@ -67,14 +67,14 @@ The flashlight does not currently change awareness. Other environmental sound ef
 ## Add the attack animation
 
 1. Open an enemy scene and select **Body**.
-2. Click **Sprite Frames**, then select the named **attack** animation. Replace its placeholder frames with your own 40 × 72 game frames, keeping the feet at the bottom of the canvas. Turn **Loop** off.
+2. Click **Sprite Frames**, then select the named **attack** animation. Replace its frames with your own 32 × 40 native frames, keeping the feet at the bottom of the canvas. Turn **Loop** off.
 3. Select the enemy root and adjust the attack timing fields below to match when the animation makes contact.
-4. Once your art contains the swing/lunge, turn **Use Attack Placeholder Pose** off. The current placeholder shifts the existing character sprite during wind-up and impact; there is no arc graphic.
+4. Once your art contains the swing/lunge, turn **Use Attack Placeholder Pose** off. The supplied attack uses drawn frames with this option already disabled. The optional placeholder setting shifts the sprite for older art; there is no arc graphic.
 5. Enable **Editable Children** on an instance and expand **AttackPivot → Hitbox → CollisionShape2D** to edit the actual damage box in the 2D editor. Its positive-X side is the right-facing strike. The script mirrors the pivot for left-facing attacks. Make the shape resource unique if one instance needs different geometry.
 
 | Root setting | Default | Effect |
 | --- | --- | --- |
-| Attack Trigger Range | 62 | Distance at which the enemy may commit to a swing |
+| Attack Trigger Range | 40 | Distance at which the enemy may commit to a swing |
 | Attack Windup Seconds | 0.32 | Visible warning with no damage |
 | Attack Active Seconds | 0.10 | Brief window in which the authored hitbox can hit |
 | Attack Recovery Seconds | 0.58 | Vulnerable pause after the strike, with no damage |
@@ -92,7 +92,7 @@ Death cancels all pending attack damage immediately. Existing death timing, opti
 
 ## Sleep and wake animation slots
 
-The Body's SpriteFrames also contains **sleep** (looping) and **wake** (non-looping). Replace these like any other clip. **Wake Seconds** controls the fitted wake duration. The current sleep/wake poses use the existing sprite with temporary compression; disable **Use Sleep Placeholder Pose** when replacing them with actual posed art.
+The Body's SpriteFrames also contains **sleep** (looping) and **wake** (non-looping). Replace these like any other clip. **Wake Seconds** controls the fitted wake duration. The supplied sleep/wake poses are drawn animations with **Use Sleep Placeholder Pose** already disabled; leave it disabled when replacing them with your own posed art.
 
 For debugging, inspect an enemy's remote `state`, `last_known_position`, and timers while the game runs, or connect its `state_changed` signal. No state labels, control legends, or alert meters are added to the game HUD.
 
@@ -103,3 +103,9 @@ Defeated enemies remain recorded in each independent bicycle save. Alertness, a 
 This is a ground-based AI framework. It handles sight, hearing, state changes, spacing, walls, and ledges, but does not jump, climb, open doors, find alternate platform routes, or follow the player through location transitions. Design reachable patrol ground and intentional bypasses. No new story content or character art has been introduced.
 
 Run `GODOT_BIN=/path/to/godot bash tools/check.sh aiming narrative combat stealth` for current feature checks with isolated test saves. The stealth suite verifies real crouch/sprint movement, perception through geometry, searching, patrols, ledges, timed strikes, evasion, interruption, and missing attack clips.
+
+## Current artwork and attack frame synchronization
+
+The enemy now uses `art/pixel/enemy_motion.png`: native 32×40 frames in a 6×6 atlas, matching the new player. The Body scale is 2×. Actual sleep/wake, attack, hit and death clips replace the old compressed poses; all placeholder flags are disabled on the scene. See [CHARACTER_GUIDE.md](CHARACTER_GUIDE.md) for atlas rows. Attack Windup Frames (2) and Attack Contact Frames (2) divide the clip into warning/contact/recovery; animation frame selection follows those gameplay phases even when their durations change.
+
+The default strike collider is now **40×44 world pixels**, centered at `(20,-6)` under AttackPivot; trigger distance is 40. This brings contact closer to the new extended hand, instead of retaining the old long invisible reach. If you draw a longer weapon/attack, tune the collider and trigger range together.

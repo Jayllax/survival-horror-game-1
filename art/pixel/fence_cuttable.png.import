@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dupd7xw2xsmdm"
-path="res://.godot/imported/save-menu.png-1802ed2ec8677e85ba2797ee6c2afd39.ctex"
+uid="uid://8idgvstj2a3s"
+path="res://.godot/imported/fence_cuttable.png-0e921d1b70af411972fe7f777d52c29d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://docs/previews/save-menu.png"
-dest_files=["res://.godot/imported/save-menu.png-1802ed2ec8677e85ba2797ee6c2afd39.ctex"]
+source_file="res://art/pixel/fence_cuttable.png"
+dest_files=["res://.godot/imported/fence_cuttable.png-0e921d1b70af411972fe7f777d52c29d.ctex"]
 
 [params]
 
