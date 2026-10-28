@@ -50,7 +50,14 @@ func run() -> void:
     var ui: Control = hud.get_node("StoryUI")
     check(not ui.is_open() and not hud.any_panel_open(), "New narrative UI stays hidden during exploration")
     check(not player.get_node("Camera2D").enabled and sandbox.get_node("Camera2D").enabled, "Sandbox uses its authored fixed camera")
-    check(npc.get_node("Body").texture.atlas == player.get_node("Body").sprite_frames.get_frame_texture("idle",0).atlas and npc.get_node("Body").texture.get_size() == Vector2(32,40) and npc.get_node("Body").scale == Vector2(2,2), "NPC stand-in uses the player's exact sprite frame dimensions")
+    var npc_body: AnimatedSprite2D = npc.get_node("Body")
+    var npc_frames := npc_body.sprite_frames
+    check(npc_frames.get_frame_texture("idle",0).get_size() == Vector2(32,40) and npc_body.scale == Vector2(2,2) and npc_body.modulate == Color.WHITE, "NPC uses native player-sized art with palette colors rather than a global tint")
+    check(npc_frames.get_frame_count("idle") == 6 and npc_body.animation == &"idle" and npc_body.is_playing(), "Placed NPC starts its editable breathing animation automatically")
+    var idle_frame := npc_body.frame
+    var idle_progress := npc_body.frame_progress
+    await get_tree().create_timer(0.15).timeout
+    check(npc_body.frame != idle_frame or npc_body.frame_progress > idle_progress, "NPC idle playback advances during exploration")
     check(note.is_in_group("interactable") and npc.is_in_group("interactable"), "Placed notes and NPCs join the existing interaction system")
     check(not hud.get_node("Root/Prompt").visible, "No narrative interaction prompt appears out of range")
     player.global_position = bike.global_position + Vector2(-40,-32)

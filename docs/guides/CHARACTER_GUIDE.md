@@ -6,7 +6,7 @@ Open `scenes/levels/combat_sandbox.tscn` with **F6** in Godot **4.7.2 Standard**
 
 ## Edit the supplied animation atlases
 
-`art/pixel/player_motion.png` is **192×560 native pixels**, arranged **6 columns × 14 rows**, with **32×40 pixels per frame**. It matches the completed Pixilart master. The enemy remains **192×240**, **6×6**, with the same cell size. These are single native PNGs. Body uses **Position (0,32)**, **Offset (0,-20)** and **Scale (2,2)**; one native pixel is two world pixels.
+`art/pixel/player_motion.png` is **192×560 native pixels**, arranged **6 columns × 14 rows**, with **32×40 pixels per frame**. It matches the completed Pixilart master. The enemy is now **192×280**, **6×7**, and the NPC is **192×80**, **6×2**, with the same cell size. These are single native PNGs. Body uses **Position (0,32)**, **Offset (0,-20)** and **Scale (2,2)**; one native pixel is two world pixels.
 
 | Player row | Animation |
 | --- | --- |
@@ -27,12 +27,12 @@ Open `scenes/levels/combat_sandbox.tscn` with **F6** in Godot **4.7.2 Standard**
 
 All player rows have six frames. The initial idle/walk/run drawings and jump/fall entry poses come from your uploaded file, preserved separately in [player_animation/animations-human-made.pixil](../../art/pixlart/player_animation/animations-human-made.pixil). Grounded feet were moved down one native pixel to the frame boundary; the deepest idle bob uses a neighboring authored pose, and the repeated walk/run loop-ending frame has a shorter duration. New poses reuse your hair/face shape, proportions and simple clothing colors. See the [animated preview](../previews/player-animation-review.gif).
 
-Enemy rows are unchanged: walk; sleep/wake; attack; hit; death; idle. The sample NPC atlas region now points to player row 1.
+Enemy rows are **idle, walk, sleep, wake, attack, hit, death**, six frames per row. NPC rows are **idle, walk**. Both now use your current player silhouette and native pixel scale, with palette variants for clothing/skin. Their Body Position is **(-1,32)** to center the odd-width artwork; player body centering is handled by its attachment profile. The NPC plays idle automatically and keeps its existing interaction/face-player behavior. Enemy combat timing and AI are unchanged. See the [cast comparison](../previews/character-cast.png), [enemy animation preview](../previews/enemy-animation-review.gif) and [editable sources](../../art/pixlart/cast_animation/README.md).
 
 The player has brown **hair**, no hat, and a flat face without a protruding nose. The enemy matches its proportions with green skin and a burgundy shirt. Crouch and death are drawn poses; all temporary pose-compression options are disabled in the supplied scenes.
 
 1. Open `scenes/actors/player.tscn` or `enemy.tscn`, select **Body**, and click **Sprite Frames**.
-2. Select an animation by name. Replace its frames with individual PNGs or **Add frames from a sprite sheet** (6 horizontal × 14 vertical for the player, 6 × 6 for the enemy).
+2. Select an animation by name. Replace its frames with individual PNGs or **Add frames from a sprite sheet** (6 horizontal × 14 vertical for the player, 6 × 7 for the enemy, 6 × 2 for the NPC).
 3. Keep the animation names. Set FPS and Loop, then save the shared `.tres` resource. To vary one enemy, use **Make Unique → Save As** first.
 4. Keep native replacement frames 32×40 if using the supplied Body transform. For already-enlarged 64×80 frames, use Body Scale (1,1) and Offset (0,-40) instead. Keep feet at the bottom.
 
@@ -70,7 +70,7 @@ The profile's **Reference Aim Position** is the original player-local baseline (
 
 To tune a future redraw, change these point lists while keeping the animation names. **Body Position (0,32)** remains the editor base; runtime alignment adjusts its X per frame. Keep character artwork and attachment data together when sharing changes. No PNG editing or automatic color-based detection happens during gameplay.
 
-On WeaponArms, **Handheld Flashlight Offset** adds a small world-pixel offset from the hand, default (2,0), mirrored by facing. **Barrel Flashlight Offset** is gun-local, default (14,4), mirrored vertically with the drawn gun. Those fields control the light's position during play; manually moving the PointLight2D position alone will be superseded. Its Energy, Color, Texture, Texture Scale and forward beam texture Offset are still ordinary Godot lighting settings.
+On WeaponArms, **Handheld Flashlight Offset** adds a small world-pixel offset from the hand, default (2,0), mirrored by facing. **Barrel Flashlight Offset** is gun-local, default (14,4), mirrored vertically with the drawn gun. Those fields control the light's position during play; manually moving the PointLight2D position alone will be superseded. Its Energy, Color, Texture, Texture Scale and forward beam texture Offset are still ordinary Godot lighting settings. The player light now has **Transform → Scale (0.85,1.25)**: about 15% shorter reach and 25% wider texture height than before, with the apex still on its animated attachment. Increase Scale Y for a broader cone or Scale X for longer reach. Keep Offset (256,0) with the supplied 512-pixel texture; changing that offset moves the apex away from the hand/barrel. Only the player light was reshaped; the shared beam texture and placed lamps are unchanged. See the [before/after beam comparison](../previews/flashlight-comparison.png).
 
 ## Movement tuning
 
@@ -103,4 +103,4 @@ Project Settings → Input Map retains your bindings. Move left/right; Shift spr
 
 ![Player hands holding the aimed pistol in a separate test scene](../previews/aiming.png)
 
-![Matching enemy strike art in the combat sandbox](../previews/enemy-strike.png)
+![Matching NPC and enemy with the enemy attack pose shown](../previews/enemy-strike.png)

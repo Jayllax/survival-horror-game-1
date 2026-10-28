@@ -14,7 +14,7 @@
 | `art/pixel/source/` | Preserved older native source drawings, including the original character reference |
 | `art/pixlart/` | Your editable `.pixil` working files |
 | `art/templates/characters/` | Blank layered Pixilart animation templates, excluded from runtime import |
-| `docs/downloads/` | Downloadable animation-template pack |
+| `docs/downloads/` | Blank templates and completed editable player/NPC/enemy animation packs |
 | `art/pixel/ignotum.gpl` | Current Sparkle's palette from your house source |
 | `audio/` | Sound files |
 | `docs/guides/` | Focused art, characters, fences, AI, narrative and house guides |
@@ -33,3 +33,5 @@ Your editable PNG sources, `.pixil` files, scenery/prop kit, audio, levels and f
 Godot's `.png.import`, `.tres`, `.tscn`, and `.gd.uid` files are useful project metadata/resources, not duplicate artwork. Keep them with the associated files. `.godot/` is an ignored generated cache and is not committed. Removed historical generated references remain recoverable from Git history.
 
 The current completed player artwork and untouched uploaded reference are in [art/pixlart/player_animation](../art/pixlart/player_animation/README.md). The [editable animation pack](downloads/Ignotum-completed-player-animations.zip) includes all fourteen player clips.
+
+NPC and enemy editable sources are in [art/pixlart/cast_animation](../art/pixlart/cast_animation/README.md), using the same native character design. [Download their animation pack](downloads/Ignotum-NPC-enemy-animations.zip).

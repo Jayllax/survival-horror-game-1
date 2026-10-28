@@ -70,7 +70,7 @@ Each file in `player_clips/` has six native animation frames. The optional `PLAY
 
 For a quick start, just draw **idle, walk, sprint, crouch_idle and crouch_walk**. A single held frame is fine for jump/fall initially. The optional aim rows can follow later.
 
-The player master now shares the **6-column × 14-row layout** of the current runtime `player_motion.png`. These templates are still blank. The [completed player pack](../../../docs/downloads/Ignotum-completed-player-animations.zip) contains the artwork based on your returned drawing. Send edits back for integration so attachment points stay matched to the new poses. The enemy master remains a separate seven-row authoring layout.
+The player master now shares the **6-column × 14-row layout** of the current runtime `player_motion.png`. These templates are still blank. The [completed player pack](../../../docs/downloads/Ignotum-completed-player-animations.zip) contains the artwork based on your returned drawing. Send edits back for integration so attachment points stay matched to the new poses. The enemy master also matches the current seven-row enemy atlas. Completed NPC/enemy drawings are in the [cast animation pack](../../../docs/downloads/Ignotum-NPC-enemy-animations.zip).
 
 ## Optional enemy templates
 

@@ -45,9 +45,11 @@ func interact(player: Node) -> void:
             mark_completed()
     elif hud.show_dialogue(current_dialogue(), self):
         if face_player and player is Node2D and has_node("Body"):
-            var body := get_node("Body") as Sprite2D
-            if body:
-                body.flip_h = player.global_position.x < global_position.x
+            var body := get_node("Body")
+            if body is AnimatedSprite2D:
+                (body as AnimatedSprite2D).flip_h = player.global_position.x < global_position.x
+            elif body is Sprite2D:
+                (body as Sprite2D).flip_h = player.global_position.x < global_position.x
 
 func mark_completed() -> void:
     Game.world[state_key()] = true

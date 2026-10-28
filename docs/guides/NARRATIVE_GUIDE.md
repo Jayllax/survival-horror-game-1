@@ -8,7 +8,7 @@ Open `scenes/levels/story_sandbox.tscn` and press **F6**. Walk right to the note
 
 Nearby objects show only **Read** or **Talk**, without key hints. Reading opens a centered, scrollable note; conversation opens a box at the bottom of the screen. Both pause the player and enemies. Use **E**, **Enter**, or **Space** to reveal/advance dialogue, or click its Continue button. First press finishes revealing the current line; next press advances. **Esc** or Leave cancels. Inventory cannot open over either reader.
 
-The example NPC uses a tinted copy of the player's existing sprite sheet as a stand-in. No player artwork has been changed. Replace its Body texture when your NPC art is ready.
+The example NPC now uses its own green-shirt palette variant of your current player design, with a six-frame idle animation. Its art has the same head, proportions, native pixel scale and standing height as the player. No player artwork has been changed.
 
 ## Place and write a note
 
@@ -43,9 +43,11 @@ Each entry is one displayed block, rather than one sentence or one physical text
 
 Drag `scenes/actors/npc.tscn` into the level's `Actors` node. Place its root at the same height as the player's center: with the example ground at Y = 620, the character root is Y = 588. Assign your **Dialogue** sequence in the Inspector. Optionally assign **Repeat Dialogue** for subsequent conversations; leaving it empty replays the first conversation.
 
-Enable **Editable Children** and select **Body** to replace the sprite. The current stand-in uses an AtlasTexture from `art/pixel/player_motion.png`, region `(0,200,32,40)`, with Body **Position (0,32)**, **Offset (0,-20)**, **Scale (2,2)** and Hframes 1. For your own native 32×40 still image, replace Texture directly and keep that transform. For an already-enlarged 64×80 image, use Scale (1,1), Offset (0,-40). Keep feet aligned to the bottom and set Modulate back to white to remove the example tint.
+Enable **Editable Children** and select **Body → Sprite Frames** to replace the animation artwork. The supplied `data/animations/npc_frames.tres` uses `art/pixel/npc_motion.png`: **192×80**, six 32×40 cells across and two rows (**idle**, **walk**). Its editable Pixilart master is [npc_motion.pixil](../../art/pixlart/cast_animation/npc_motion.pixil); the [cast animation pack](../downloads/Ignotum-NPC-enemy-animations.zip) includes individual timeline files. Use **Make Unique → Save As** on SpriteFrames before editing one particular NPC's shared art.
 
-NPCs stand in place and face the player when spoken to. **Face Player** can disable that turn. They do not block the walking plane and do not have combat, patrols, or automatic walk animation. Their sprite, origin, and interaction settings remain editable. You can make a reusable character scene with **Scene → Save As** and place it wherever you need.
+Body is an **AnimatedSprite2D** with Position **(-1,32)**, Offset **(0,-20)**, Scale **(2,2)** and white Modulate. Idle plays automatically. Keep the same padding and ground baseline when replacing frames. For a still drawing, use a single frame in the idle animation. Older custom NPCs with a Sprite2D Body still turn correctly when spoken to.
+
+NPCs stand in place and face the player when spoken to. **Face Player** can disable that turn. They do not block the walking plane and do not have combat, patrols or navigation. The walk clip is supplied as editable artwork for future behavior, not automatic walking. Their appearance, origin and interaction settings remain editable. You can make a reusable character scene with **Scene → Save As** and place it wherever you need.
 
 ## Track progress and save it
 

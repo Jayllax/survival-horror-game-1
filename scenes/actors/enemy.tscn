@@ -19,7 +19,7 @@ shape = SubResource("shape")
 [node name="Body" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2")
 animation = &"idle"
-position = Vector2(0, 32)
+position = Vector2(-1, 32)
 offset = Vector2(0, -20)
 scale = Vector2(2, 2)
 script = ExtResource("visuals")
