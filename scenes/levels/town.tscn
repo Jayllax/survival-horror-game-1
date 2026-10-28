@@ -8,7 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_terracotta_no_chimney.tscn" id="5_5ycnk"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_plum_no_chimney.tscn" id="5_ihmxm"]
-[ext_resource type="PackedScene" path="res://scenes/objects/building_house.tscn" id="8_n8lao"]
+[ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_sage_right.tscn" id="6_otbwl"]
+[ext_resource type="PackedScene" path="res://scenes/objects/fence_cuttable.tscn" id="7_rklyf"]
+[ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house.tscn" id="8_n8lao"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="21"]
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="22"]
 [ext_resource type="PackedScene" path="res://scenes/objects/save_bicycle.tscn" id="save_bicycle"]
@@ -31,21 +33,31 @@ color = Color(0.038397163, 0.038397174, 0.038397145, 1)
 [node name="House" parent="Buildings" unique_id=176933239 instance=ExtResource("8_n8lao")]
 position = Vector2(349, 492)
 
-[node name="HouseCream" parent="Buildings" unique_id=1913707553 instance=ExtResource("2_35lbs")]
-position = Vector2(699, 492)
-
 [node name="HousePlum" parent="Buildings" unique_id=1755587701 instance=ExtResource("5_ihmxm")]
 position = Vector2(874, 492)
 
+[node name="HouseCream" parent="Buildings" unique_id=1913707553 instance=ExtResource("2_35lbs")]
+position = Vector2(698, 492)
+
 [node name="HouseTerracotta" parent="Buildings" unique_id=621109973 instance=ExtResource("5_5ycnk")]
-position = Vector2(1051, 492)
+position = Vector2(1050, 492)
 
 [node name="AlleyMouth2" type="Polygon2D" parent="Buildings" unique_id=1408196773]
 z_index = -9
-position = Vector2(-1805.6821, 251.00003)
-scale = Vector2(1.8684193, 0.59354824)
+position = Vector2(-1805.6821, 255.00006)
+scale = Vector2(1.8684193, 0.5870966)
 color = Color(0.08627451, 0.12941177, 0.15686275, 0.26666668)
 polygon = PackedVector2Array(1150, 310, 1244.9397, 310.99933, 1340, 312, 1340, 463.84204, 1340, 620, 1150, 620, 1149.9999, 464.1112)
+
+[node name="AlleyMouth3" type="Polygon2D" parent="Buildings" unique_id=756567879]
+z_index = -9
+position = Vector2(556.94824, 256.00012)
+scale = Vector2(0.5052625, 0.5870964)
+color = Color(0.08627451, 0.12941177, 0.15686275, 0.26666668)
+polygon = PackedVector2Array(1150, 310, 1244.9999, 310.0001, 1340.0001, 310.0001, 1340, 463.84204, 1340, 620, 1150, 620, 1149.9999, 464.1112)
+
+[node name="HouseSage" parent="Buildings" unique_id=912907548 instance=ExtResource("6_otbwl")]
+position = Vector2(1322, 492)
 
 [node name="Geometry" type="Node2D" parent="." unique_id=491046715]
 
@@ -85,7 +97,13 @@ polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 626, 1101, 626,
 position = Vector2(471, 620)
 
 [node name="Streetlamp2" parent="Geometry" unique_id=18078998 instance=ExtResource("3_ip0dd")]
-position = Vector2(1293, 620)
+position = Vector2(962, 620)
+
+[node name="CuttableFence" parent="Geometry" unique_id=1304159414 instance=ExtResource("7_rklyf")]
+position = Vector2(1186, 620)
+
+[node name="CollisionShape2D" parent="Geometry/CuttableFence/Barrier" index="0"]
+disabled = true
 
 [node name="Props" type="Node2D" parent="." unique_id=1527274168]
 
@@ -122,7 +140,7 @@ position = Vector2(92, 588)
 position = Vector2(306, 588)
 
 [node name="from_alley" type="Marker2D" parent="Spawns" unique_id=7785010]
-position = Vector2(524, 568)
+position = Vector2(524, 588)
 
 [node name="HUD" parent="." unique_id=296689736 instance=ExtResource("3")]
 
@@ -132,4 +150,5 @@ volume_db = -16.0
 autoplay = true
 script = ExtResource("22")
 
+[editable path="Geometry/CuttableFence"]
 [editable path="Interactables/AlleyEntrance"]
