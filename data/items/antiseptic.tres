@@ -1,12 +1,13 @@
-[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3]
-[ext_resource type="Script" path="res://scripts/item_definition.gd" id="1"]
-[ext_resource type="Texture2D" path="res://art/pixel/antiseptic.png" id="2"]
+[gd_resource type="Resource" script_class="InventoryItemDefinition" format=3 uid="uid://i77pedfgvhlr"]
+
+[ext_resource type="Script" uid="uid://ysok34dxqtu8" path="res://scripts/item_definition.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://dj2kmbahjeiwu" path="res://art/pixel/antiseptic.png" id="2"]
+
 [resource]
 script = ExtResource("1")
 id = "antiseptic"
 display_name = "Antiseptic"
 category = "Material"
-description = "Combine with clean cloth to prepare a field dressing."
+description = "Can be combined to create an item."
 icon = ExtResource("2")
 max_stack = 3
-heal_amount = 0

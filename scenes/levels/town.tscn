@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://6qrdl5x7rakj"]
+[gd_scene format=3 uid="uid://6qrdl5x7rakj"]
 
 [ext_resource type="Script" uid="uid://6ac0fiq4jtxt" path="res://scripts/location.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="2"]
@@ -9,7 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://blll32qgmq7p2" path="res://art/fog.svg" id="10"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="21"]
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="22"]
-
 [ext_resource type="PackedScene" path="res://scenes/objects/save_bicycle.tscn" id="save_bicycle"]
 
 [sub_resource type="RectangleShape2D" id="floor"]
@@ -18,70 +17,70 @@ size = Vector2(2200, 120)
 [sub_resource type="RectangleShape2D" id="wall"]
 size = Vector2(40, 720)
 
-[node name="Location" type="Node2D"]
+[node name="Location" type="Node2D" unique_id=653106688]
 script = ExtResource("1")
 camera_bounds = Rect2i(0, 0, 2200, 720)
 
-[node name="AmbientTint" type="CanvasModulate" parent="."]
+[node name="AmbientTint" type="CanvasModulate" parent="." unique_id=857491603]
 color = Color(0, 0, 0, 1)
 
-[node name="Buildings" type="Node2D" parent="."]
+[node name="Buildings" type="Node2D" parent="." unique_id=1653355476]
 
-[node name="AlleyMouth" type="Polygon2D" parent="Buildings"]
+[node name="AlleyMouth" type="Polygon2D" parent="Buildings" unique_id=1478018618]
 z_index = -9
 color = Color(0.025, 0.045, 0.06, 1)
 polygon = PackedVector2Array(1150, 310, 1340, 312, 1340, 620, 1150, 620)
 
-[node name="House" parent="Buildings" instance=ExtResource("8_n8lao")]
+[node name="House" parent="Buildings" unique_id=176933239 instance=ExtResource("8_n8lao")]
 position = Vector2(349, 492)
 
-[node name="Geometry" type="Node2D" parent="."]
+[node name="Geometry" type="Node2D" parent="." unique_id=491046715]
 
-[node name="Street" type="StaticBody2D" parent="Geometry"]
+[node name="Street" type="StaticBody2D" parent="Geometry" unique_id=1806807780]
 visible = false
 position = Vector2(1100, 680)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Street"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Street" unique_id=1794584501]
 shape = SubResource("floor")
 
-[node name="Curb" type="Polygon2D" parent="Geometry"]
+[node name="Curb" type="Polygon2D" parent="Geometry" unique_id=1824508447]
 position = Vector2(0, -13329.9)
 scale = Vector2(1, 22.4998)
 color = Color(0.45, 0.44, 0.48, 1)
 polygon = PackedVector2Array(0, 620, 2200, 620, 2200, 626, 1100.73, 626, 0, 626)
 
-[node name="WestBoundary" type="StaticBody2D" parent="Geometry"]
+[node name="WestBoundary" type="StaticBody2D" parent="Geometry" unique_id=1159423724]
 position = Vector2(-20, 360)
 
-[node name="Shape" type="CollisionShape2D" parent="Geometry/WestBoundary"]
+[node name="Shape" type="CollisionShape2D" parent="Geometry/WestBoundary" unique_id=1114114445]
 shape = SubResource("wall")
 
-[node name="EastBoundary" type="StaticBody2D" parent="Geometry"]
+[node name="EastBoundary" type="StaticBody2D" parent="Geometry" unique_id=722109662]
 position = Vector2(2220, 360)
 
-[node name="Shape" type="CollisionShape2D" parent="Geometry/EastBoundary"]
+[node name="Shape" type="CollisionShape2D" parent="Geometry/EastBoundary" unique_id=524093992]
 shape = SubResource("wall")
 
-[node name="Background" type="Polygon2D" parent="Geometry"]
+[node name="Background" type="Polygon2D" parent="Geometry" unique_id=162884734]
 z_index = -10
 position = Vector2(0, -76157.5)
 scale = Vector2(1.17544, 122.833)
 color = Color(0.184572, 0.180707, 0.200034, 1)
 polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 626, 1101, 626, 0, 626)
 
-[node name="Streetlamp" parent="Geometry" instance=ExtResource("3_ip0dd")]
+[node name="Streetlamp" parent="Geometry" unique_id=892845672 instance=ExtResource("3_ip0dd")]
 position = Vector2(119, 620)
 
-[node name="Props" type="Node2D" parent="."]
+[node name="Props" type="Node2D" parent="." unique_id=1527274168]
 
-[node name="Interactables" type="Node2D" parent="."]
+[node name="Interactables" type="Node2D" parent="." unique_id=1337389834]
 
-[node name="ShopEntrance" parent="Interactables" instance=ExtResource("4")]
+[node name="ShopEntrance" parent="Interactables" unique_id=1065461545 instance=ExtResource("4")]
 position = Vector2(305.76, 556)
 destination_scene = "res://scenes/levels/interior.tscn"
 destination_spawn = "from_street"
 
-[node name="AlleyEntrance" parent="Interactables" instance=ExtResource("4")]
+[node name="AlleyEntrance" parent="Interactables" unique_id=1980432981 instance=ExtResource("4")]
 position = Vector2(1240, 556)
 destination_scene = "res://scenes/levels/alley.tscn"
 destination_spawn = "from_street"
@@ -89,37 +88,37 @@ destination_spawn = "from_street"
 [node name="Facade" parent="Interactables/AlleyEntrance" index="0"]
 visible = false
 
-[node name="SaveBicycle" parent="Interactables" instance=ExtResource("save_bicycle")]
+[node name="SaveBicycle" parent="Interactables" unique_id=52212124 instance=ExtResource("save_bicycle")]
 position = Vector2(200, 620)
 station_name = "Street bicycle"
 
-[node name="Actors" type="Node2D" parent="."]
+[node name="Actors" type="Node2D" parent="." unique_id=1189311552]
 
-[node name="Player" parent="Actors" instance=ExtResource("2")]
+[node name="Player" parent="Actors" unique_id=1065848384 instance=ExtResource("2")]
 position = Vector2(200, 588)
 move_speed = 200.0
 dodge_speed = 275.0
 
-[node name="Spawns" type="Node2D" parent="."]
+[node name="Spawns" type="Node2D" parent="." unique_id=1790161343]
 
-[node name="default" type="Marker2D" parent="Spawns"]
+[node name="default" type="Marker2D" parent="Spawns" unique_id=835030279]
 position = Vector2(92, 588)
 
-[node name="from_shop" type="Marker2D" parent="Spawns"]
+[node name="from_shop" type="Marker2D" parent="Spawns" unique_id=1936546829]
 position = Vector2(306, 588)
 
-[node name="from_alley" type="Marker2D" parent="Spawns"]
+[node name="from_alley" type="Marker2D" parent="Spawns" unique_id=7785010]
 position = Vector2(1240, 588)
 
-[node name="HUD" parent="." instance=ExtResource("3")]
+[node name="HUD" parent="." unique_id=296689736 instance=ExtResource("3")]
 
-[node name="AmbientSound" type="AudioStreamPlayer" parent="."]
+[node name="AmbientSound" type="AudioStreamPlayer" parent="." unique_id=722606247]
 stream = ExtResource("21")
 volume_db = -16.0
 autoplay = true
 script = ExtResource("22")
 
-[node name="Fog0" type="Sprite2D" parent="."]
+[node name="Fog0" type="Sprite2D" parent="." unique_id=498034089]
 visible = false
 modulate = Color(0.7, 0.85, 0.9, 0.7)
 z_index = 6

@@ -1,8 +1,7 @@
-[gd_resource type="Resource" script_class="InventorySettings" load_steps=2 format=3]
-[ext_resource type="Script" path="res://scripts/inventory_settings.gd" id="script"]
+[gd_resource type="Resource" script_class="InventorySettings" format=3 uid="uid://cctcbnw27y8hi"]
+
+[ext_resource type="Script" uid="uid://daa6n5kicvjt" path="res://scripts/inventory_settings.gd" id="script"]
+
 [resource]
 script = ExtResource("script")
-columns = 8
-rows = 4
-starting_weapon = "pistol"
-starting_ammo = 12
+starting_ammo = 0

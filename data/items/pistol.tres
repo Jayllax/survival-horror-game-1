@@ -1,14 +1,15 @@
-[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3]
-[ext_resource type="Script" path="res://scripts/item_definition.gd" id="script"]
-[ext_resource type="Texture2D" path="res://art/pixel/gun.png" id="art"]
+[gd_resource type="Resource" script_class="InventoryItemDefinition" format=3 uid="uid://et2nquwup3rj"]
+
+[ext_resource type="Texture2D" uid="uid://dgwce2e1ve8ni" path="res://art/pixel/gun.png" id="art"]
+[ext_resource type="Script" uid="uid://ysok34dxqtu8" path="res://scripts/item_definition.gd" id="script"]
+
 [resource]
 script = ExtResource("script")
 id = "pistol"
 display_name = "Handgun"
 category = "Weapon"
-description = "A six-round handgun. Equip it to aim, fire and reload; unequip it to put it away. Drag to rearrange it, or press R to rotate its two-cell footprint. Loaded rounds stay with this individual weapon."
+description = "A six-round handgun. Holds 9mm rounds."
 icon = ExtResource("art")
 grid_size = Vector2i(2, 1)
 is_weapon = true
 weapon_texture = ExtResource("art")
-magazine_size = 6
