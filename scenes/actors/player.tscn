@@ -16,6 +16,7 @@ radius = 12.0
 height = 64.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1141822702]
+z_index = 5
 collision_layer = 2
 floor_snap_length = 8.0
 script = ExtResource("1")

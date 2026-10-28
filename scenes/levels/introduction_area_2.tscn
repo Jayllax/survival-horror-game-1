@@ -1,0 +1,169 @@
+[gd_scene format=3 uid="uid://d22fnxrmc8sh3"]
+
+[ext_resource type="Script" uid="uid://6ac0fiq4jtxt" path="res://scripts/location.gd" id="1_hq8ni"]
+[ext_resource type="PackedScene" path="res://scenes/objects/bin.tscn" id="2_o6ti5"]
+[ext_resource type="PackedScene" uid="uid://dfitvfrdt4ym7" path="res://scenes/objects/streetlamp.tscn" id="2_wxw3f"]
+[ext_resource type="PackedScene" path="res://scenes/objects/bolt_cutters.tscn" id="3_2rmq6"]
+[ext_resource type="PackedScene" path="res://scenes/objects/antiseptic.tscn" id="3_mo1ix"]
+[ext_resource type="PackedScene" path="res://scenes/objects/platform.tscn" id="3_ptwdc"]
+[ext_resource type="PackedScene" path="res://scenes/objects/note.tscn" id="3_sh5d3"]
+[ext_resource type="PackedScene" path="res://scenes/objects/cloth.tscn" id="4_sh5d3"]
+[ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="4_wxw3f"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_ptwdc"]
+[ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="6_lw1bj"]
+[ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="6_o6ti5"]
+[ext_resource type="PackedScene" path="res://scenes/objects/bench.tscn" id="7_hq8ni"]
+[ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="7_lw1bj"]
+[ext_resource type="Script" uid="uid://ct1jqn7k4e0md" path="res://scripts/narrative/note_document.gd" id="8_ynkaq"]
+
+[sub_resource type="RectangleShape2D" id="floor"]
+size = Vector2(2774, 120)
+
+[sub_resource type="RectangleShape2D" id="wall"]
+size = Vector2(40, 720)
+
+[sub_resource type="Resource" id="Resource_2rmq6"]
+script = ExtResource("8_ynkaq")
+title = "Note from stranger"
+text = "Your health is is important. Look out for yourself.
+
+- Pete"
+
+[node name="Location" type="Node2D" unique_id=653106688]
+script = ExtResource("1_hq8ni")
+camera_bounds = Rect2i(0, 0, 2200, 720)
+
+[node name="AmbientTint" type="CanvasModulate" parent="." unique_id=857491603]
+color = Color(0.038397163, 0.038397174, 0.038397145, 1)
+
+[node name="Buildings" type="Node2D" parent="." unique_id=1653355476]
+
+[node name="AlleyMouth2" type="Polygon2D" parent="Buildings" unique_id=1027169608]
+z_index = -9
+position = Vector2(-150.33441, 394.00015)
+scale = Vector2(0.32898647, 0.3645157)
+color = Color(0.08627451, 0.12941177, 0.15686275, 0.26666668)
+polygon = PackedVector2Array(1150, 310, 1244.9397, 310.99933, 1340, 312, 1340, 463.84204, 1340, 620, 1150, 620, 1149.9999, 464.1112)
+
+[node name="Geometry" type="Node2D" parent="." unique_id=491046715]
+
+[node name="Ground" type="StaticBody2D" parent="Geometry" unique_id=1806807780]
+position = Vector2(1100, 680)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Ground" unique_id=1794584501]
+position = Vector2(-274, 1)
+shape = SubResource("floor")
+
+[node name="Curb" type="Polygon2D" parent="Geometry" unique_id=1824508447]
+position = Vector2(-718, -13329.9)
+scale = Vector2(1.3359091, 22.4998)
+color = Color(0.38545707, 0.28626725, 0.2282412, 1)
+polygon = PackedVector2Array(0, 620, 2200, 620, 2200, 622.93976, 2200, 626, 1100.73, 626, 0, 626)
+
+[node name="WestBoundary" type="StaticBody2D" parent="Geometry" unique_id=1159423724]
+position = Vector2(-266, 360)
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/WestBoundary" unique_id=1114114445]
+shape = SubResource("wall")
+
+[node name="EastBoundary" type="StaticBody2D" parent="Geometry" unique_id=722109662]
+position = Vector2(1644, 360)
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/EastBoundary" unique_id=524093992]
+shape = SubResource("wall")
+
+[node name="Background" type="Polygon2D" parent="Geometry" unique_id=162884734]
+z_index = -10
+position = Vector2(-718, -76157.5)
+scale = Vector2(1.333182, 122.833)
+color = Color(0.184572, 0.180707, 0.200034, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 626, 1101, 626, 0, 626)
+
+[node name="Platform" parent="Geometry" unique_id=2139491061 instance=ExtResource("3_ptwdc")]
+position = Vector2(1076, 612)
+scale = Vector2(0.8, 0.8)
+
+[node name="Platform2" parent="Geometry" unique_id=563036951 instance=ExtResource("3_ptwdc")]
+position = Vector2(1153, 607.00006)
+scale = Vector2(1.3, 1.3)
+
+[node name="Platform3" parent="Geometry" unique_id=167607111 instance=ExtResource("3_ptwdc")]
+position = Vector2(1321, 612)
+scale = Vector2(0.8, 0.8)
+
+[node name="Platform4" parent="Geometry" unique_id=1472417184 instance=ExtResource("3_ptwdc")]
+position = Vector2(1896, 511)
+scale = Vector2(3, 3)
+platform_size = Vector2(409.755, 20)
+
+[node name="Platform5" parent="Geometry" unique_id=827102903 instance=ExtResource("3_ptwdc")]
+position = Vector2(2024, 558)
+rotation = 1.5707964
+scale = Vector2(0.8, 0.8)
+platform_size = Vector2(154, 1000)
+
+[node name="Pickup" parent="Geometry" unique_id=1921340829 instance=ExtResource("3_2rmq6")]
+position = Vector2(1577, 613)
+rotation = 1.727876
+scale = Vector2(0.5, 0.5)
+
+[node name="Props" type="Node2D" parent="." unique_id=1527274168]
+
+[node name="Streetlamp" parent="Props" unique_id=714982314 instance=ExtResource("2_wxw3f")]
+position = Vector2(811, 620)
+
+[node name="Bench" parent="Props" unique_id=1828626849 instance=ExtResource("7_hq8ni")]
+position = Vector2(748, 592)
+
+[node name="Bin" parent="Props" unique_id=1001212981 instance=ExtResource("2_o6ti5")]
+position = Vector2(664, 584)
+
+[node name="Entrance" parent="Props" unique_id=166180848 instance=ExtResource("6_lw1bj")]
+position = Vector2(260, 556)
+destination_scene = "uid://dyo3etebfk0vw"
+destination_spawn = "from_area_2"
+
+[node name="Facade" parent="Props/Entrance" index="0" unique_id=1815167978]
+visible = false
+
+[node name="Interactables" type="Node2D" parent="." unique_id=1337389834]
+
+[node name="Note" parent="Interactables" unique_id=489710493 instance=ExtResource("3_sh5d3")]
+z_index = 1
+position = Vector2(712.00006, 596)
+rotation = 0.20943952
+scale = Vector2(0.3, 0.3)
+skew = 1.2758356
+document = SubResource("Resource_2rmq6")
+
+[node name="Pickup" parent="Interactables" unique_id=525940370 instance=ExtResource("3_mo1ix")]
+z_index = 1
+position = Vector2(783, 589)
+scale = Vector2(0.4, 0.4)
+
+[node name="Pickup2" parent="Interactables" unique_id=757723452 instance=ExtResource("4_sh5d3")]
+z_index = 1
+position = Vector2(766.00006, 594)
+rotation = 0.65449846
+scale = Vector2(0.4, 0.4)
+skew = 0.32637656
+
+[node name="Actors" type="Node2D" parent="." unique_id=1189311552]
+
+[node name="Player" parent="Actors" unique_id=1065848384 instance=ExtResource("4_wxw3f")]
+position = Vector2(259, 588)
+
+[node name="Spawns" type="Node2D" parent="." unique_id=1790161343]
+
+[node name="default" type="Marker2D" parent="Spawns" unique_id=835030279]
+position = Vector2(260, 588)
+
+[node name="HUD" parent="." unique_id=296689736 instance=ExtResource("5_ptwdc")]
+
+[node name="AmbientSound" type="AudioStreamPlayer" parent="." unique_id=722606247]
+stream = ExtResource("6_o6ti5")
+volume_db = -16.0
+autoplay = true
+script = ExtResource("7_lw1bj")
+
+[editable path="Props/Entrance"]
