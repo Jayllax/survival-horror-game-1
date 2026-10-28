@@ -8,17 +8,17 @@ The old AI switched between patrol and chase based only on distance and damaged 
 
 ```mermaid
 flowchart LR
-    Sleep[Sleeping] -->|Nearby standing player or heard noise| Wake[Waking]
-    Wake -->|Sees player| Chase[Chase]
-    Wake -->|Heard but unseen| Investigate[Investigate sound]
-    Investigate -->|Sees player| Chase
-    Chase --> Attack[Wind-up and strike]
-    Attack --> Recover[Recovery]
-    Recover --> Chase
-    Chase -->|Lost target| Search[Search]
-    Investigate --> Search
-    Search --> Return[Return to post]
-    Return --> Sleep
+	Sleep[Sleeping] -->|Nearby standing player or heard noise| Wake[Waking]
+	Wake -->|Sees player| Chase[Chase]
+	Wake -->|Heard but unseen| Investigate[Investigate sound]
+	Investigate -->|Sees player| Chase
+	Chase --> Attack[Wind-up and strike]
+	Attack --> Recover[Recovery]
+	Recover --> Chase
+	Chase -->|Lost target| Search[Search]
+	Investigate --> Search
+	Search --> Return[Return to post]
+	Return --> Sleep
 ```
 
 A sleeper ignores the crouched player's proximity by default, allowing the player to pass completely across its position. Standing still or walking within **Wake Proximity Radius** (140) and a clear line disturbs it. The enemy then spends **Wake Seconds** (0.5) waking up before pursuing. There is no damage merely from touching its body.

@@ -1,31 +1,145 @@
-[gd_resource type="SpriteFrames" load_steps=8 format=3]
-[ext_resource type="Texture2D" path="res://art/pixel/player.png" id="sheet"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://c6m8ur0l38c2y"]
+
+[ext_resource type="Texture2D" uid="uid://dj7445bv3uw2o" path="res://art/pixel/player.png" id="sheet"]
+
 [sub_resource type="AtlasTexture" id="frame_0"]
 atlas = ExtResource("sheet")
 region = Rect2(0, 0, 40, 72)
+
 [sub_resource type="AtlasTexture" id="frame_1"]
 atlas = ExtResource("sheet")
 region = Rect2(40, 0, 40, 72)
+
 [sub_resource type="AtlasTexture" id="frame_2"]
 atlas = ExtResource("sheet")
 region = Rect2(80, 0, 40, 72)
+
 [sub_resource type="AtlasTexture" id="frame_3"]
 atlas = ExtResource("sheet")
 region = Rect2(120, 0, 40, 72)
+
 [sub_resource type="AtlasTexture" id="frame_4"]
 atlas = ExtResource("sheet")
 region = Rect2(160, 0, 40, 72)
+
 [sub_resource type="AtlasTexture" id="frame_5"]
 atlas = ExtResource("sheet")
 region = Rect2(200, 0, 40, 72)
+
 [resource]
-animations = [
-{"frames": [{"duration": 1.0, "texture": SubResource("frame_0")}], "loop": true, "name": &"idle", "speed": 1.0},
-{"frames": [{"duration": 1.0, "texture": SubResource("frame_0")}, {"duration": 1.0, "texture": SubResource("frame_1")}, {"duration": 1.0, "texture": SubResource("frame_2")}, {"duration": 1.0, "texture": SubResource("frame_3")}, {"duration": 1.0, "texture": SubResource("frame_4")}, {"duration": 1.0, "texture": SubResource("frame_5")}], "loop": true, "name": &"walk", "speed": 10.0},
-{"frames": [{"duration": 1.0, "texture": SubResource("frame_0")}, {"duration": 1.0, "texture": SubResource("frame_1")}, {"duration": 1.0, "texture": SubResource("frame_2")}, {"duration": 1.0, "texture": SubResource("frame_3")}, {"duration": 1.0, "texture": SubResource("frame_4")}, {"duration": 1.0, "texture": SubResource("frame_5")}], "loop": true, "name": &"sprint", "speed": 15.0},
-{"frames": [{"duration": 1.0, "texture": SubResource("frame_1")}], "loop": false, "name": &"jump", "speed": 1.0},
-{"frames": [{"duration": 1.0, "texture": SubResource("frame_4")}], "loop": false, "name": &"fall", "speed": 1.0},
-{"frames": [{"duration": 1.0, "texture": SubResource("frame_0")}], "loop": true, "name": &"crouch_idle", "speed": 1.0},
-{"frames": [{"duration": 1.0, "texture": SubResource("frame_0")}, {"duration": 1.0, "texture": SubResource("frame_1")}, {"duration": 1.0, "texture": SubResource("frame_2")}, {"duration": 1.0, "texture": SubResource("frame_3")}, {"duration": 1.0, "texture": SubResource("frame_4")}, {"duration": 1.0, "texture": SubResource("frame_5")}], "loop": true, "name": &"crouch_walk", "speed": 6.0},
-{"frames": [{"duration": 1.0, "texture": SubResource("frame_1")}, {"duration": 1.0, "texture": SubResource("frame_2")}, {"duration": 1.0, "texture": SubResource("frame_3")}], "loop": false, "name": &"dodge", "speed": 16.666667},
-]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("frame_0")
+}],
+"loop": 1,
+"name": &"crouch_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("frame_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_5")
+}],
+"loop": 1,
+"name": &"crouch_walk",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("frame_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_3")
+}],
+"loop": 0,
+"name": &"dodge",
+"speed": 16.666667
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("frame_4")
+}],
+"loop": 0,
+"name": &"fall",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("frame_0")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("frame_1")
+}],
+"loop": 0,
+"name": &"jump",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("frame_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_5")
+}],
+"loop": 1,
+"name": &"sprint",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("frame_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_5")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 10.0
+}]
