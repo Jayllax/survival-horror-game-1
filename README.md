@@ -10,7 +10,7 @@ Use **Godot 4.4+ Standard edition** (validated on 4.4.1 and 4.6.3). Import `proj
 | --- | --- |
 | A/D or arrows | Move |
 | Space / W | Jump (buffered, with coyote time) |
-| Right mouse / left click | Held aim / fire |
+| Right mouse / left click | Hold to aim / fire while aiming |
 | R / Q / Alt | Reload / melee / dodge |
 | E | Collect, examine, operate, or enter |
 | F | Flashlight (also works while unarmed) |
@@ -33,7 +33,7 @@ The redesign is implemented as **29 individual production sprite PNGs**: 28 scen
 
 ## Exploration and inventory
 
-Exploration has no fixed HUD panels, logo, controls strip, or permanent crosshair. Health briefly appears after damage (and remains subtly visible when critical). Ammo/crosshair appear only during aiming, recent firing, or reload. Hold right mouse to aim and move carefully. Controls are available from Pause → Controls.
+Exploration has no fixed HUD panels, logo, controls strip, or permanent crosshair. Health briefly appears after damage (and remains subtly visible when critical). Hold right mouse to draw the equipped gun, aim with the cursor, and move carefully; left click fires while aiming. Release right mouse to holster the gun and point the flashlight in the last walking direction. The crosshair appears only while aiming; ammunition also appears briefly after firing or during reload. Controls are available from Pause → Controls.
 
 Pickups are just their artwork. A nearby **[E] Take** prompt identifies an action, not the item. Collecting does not announce its name. Open I or Tab, drag items to arrange them, press R to rotate, and select an icon with the mouse or keyboard, and read its name, description, category, quantity, and artwork. Medical supplies can be **Used**; select **Combine** on a material, then select its partner. Cloth + antiseptic creates a field dressing that heals 30. Matching stacks can also be combined: 20 + 2 rounds becomes 22; 20 + 10 becomes 24 + 6. Full-health use and failed combinations waste nothing.
 

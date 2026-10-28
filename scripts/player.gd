@@ -52,7 +52,7 @@ func sync_weapon() -> void:
         shot_cooldown = 0
         muzzle.energy = 0
         weapon_uid = Game.equipped_uid
-    $Aim/Gun.texture = definition.weapon_texture if definition else null
+    $Aim/Gun.texture = definition.weapon_texture if definition and Input.is_action_pressed("aim") else null
     if definition:
         magazine_size = definition.magazine_size
         bullet_damage = definition.bullet_damage
@@ -90,13 +90,7 @@ func _physics_process(delta: float) -> void:
     animation_time += delta
     body_art.frame = (int(animation_time * 10.0) % 6) if absf(velocity.x) > 5.0 else 0
     body_art.position.y = -3.0 + (sin(animation_time * 2.0) * 0.5 if absf(velocity.x) < 5.0 else 0.0)
-    body_art.flip_h = facing < 0
-    aim.rotation = (get_global_mouse_position() - aim.global_position).angle()
-    $Aim/Gun.flip_v = cos(aim.rotation) < 0
-    flashlight_light.position.y = -4 if $Aim/Gun.flip_v else 4
-    if direction == 0:
-        facing = signf(cos(aim.rotation))
-        body_art.flip_h = facing < 0
+    update_aim(direction)
     if not is_on_floor():
         velocity.y += gravity * delta
     coyote_remaining = coyote_seconds if is_on_floor() else maxf(0, coyote_remaining - delta)
@@ -124,6 +118,18 @@ func _physics_process(delta: float) -> void:
     if Input.is_action_just_pressed("interact") and is_instance_valid(nearest):
         nearest.interact(self)
 
+func update_aim(direction: float) -> void:
+    # Keep the Gun node active: its light children also work while holstered.
+    var aiming := Input.is_action_pressed("aim")
+    aim.rotation = (get_global_mouse_position() - aim.global_position).angle() if aiming else (PI if facing < 0 else 0.0)
+    $Aim/Gun.flip_v = cos(aim.rotation) < 0
+    flashlight_light.position.y = -4 if $Aim/Gun.flip_v else 4
+    if aiming and direction == 0:
+        facing = -1.0 if cos(aim.rotation) < 0 else 1.0
+    body_art.flip_h = facing < 0
+    var definition := Game.active_weapon()
+    $Aim/Gun.texture = definition.weapon_texture if definition and aiming else null
+
 func begin_dodge(direction: float) -> void:
     dodge_direction = direction
     dodge_remaining = DODGE_INVULNERABILITY
@@ -131,7 +137,7 @@ func begin_dodge(direction: float) -> void:
     dodge_cooldown = 1.05
 
 func shoot() -> void:
-    if not Game.has_equipped_weapon() or shot_cooldown > 0 or reload_remaining > 0 or dodge_remaining > 0:
+    if not Input.is_action_pressed("aim") or not Game.has_equipped_weapon() or shot_cooldown > 0 or reload_remaining > 0 or dodge_remaining > 0:
         return
     shot_cooldown = shot_interval
     if Game.magazine <= 0:
@@ -209,4 +215,7 @@ func update_interaction() -> void:
         hud.set_interaction(nearest)
 
 func is_aiming() -> bool:
-    return Game.has_equipped_weapon() and (Input.is_action_pressed("aim") or combat_remaining > 0 or reload_remaining > 0)
+    return Game.has_equipped_weapon() and Input.is_action_pressed("aim")
+
+func is_showing_combat_feedback() -> bool:
+    return Game.has_equipped_weapon() and (is_aiming() or combat_remaining > 0 or reload_remaining > 0)

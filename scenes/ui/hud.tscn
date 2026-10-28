@@ -441,7 +441,7 @@ offset_top = 86.0
 offset_right = 630.0
 offset_bottom = 366.0
 theme_override_font_sizes/font_size = 18
-text = "A / D or arrows    Move\nSpace / W    Jump\nRight mouse    Aim / careful movement\nLeft mouse    Shoot\nR    Reload     Q    Melee     Alt    Dodge\nE    Interact with nearby object\nF    Flashlight\nI / Tab    Inventory / inspect     Esc    Pause"
+text = "A / D or arrows    Move\nSpace / W    Jump\nRight mouse    Aim / careful movement\nLeft mouse    Shoot (while aiming)\nR    Reload     Q    Melee     Alt    Dodge\nE    Interact with nearby object\nF    Flashlight\nI / Tab    Inventory / inspect     Esc    Pause"
 mouse_filter = 2
 
 

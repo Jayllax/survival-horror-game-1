@@ -155,7 +155,9 @@ func run() -> void:
     enemy.position = Vector2(1120,588)
     await frames(3)
     player.aim.rotation = 0
+    Input.action_press("aim")
     player.shoot()
+    Input.action_release("aim")
     check(enemy.health == 52 and Game.magazine == 5, "Hitscan damages enemy and spends round")
     player.reload_seconds = 0.1
     player.reload_weapon()

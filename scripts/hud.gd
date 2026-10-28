@@ -51,8 +51,8 @@ func _process(delta: float) -> void:
     Input.mouse_mode = Input.MOUSE_MODE_HIDDEN if playing else Input.MOUSE_MODE_VISIBLE
     $Root/Backdrop.visible = any_panel_open()
     var player := get_tree().get_first_node_in_group("player")
-    var combat: bool = playing and player != null and player.is_aiming()
-    $Root/Crosshair.visible = combat
+    var combat: bool = playing and player != null and player.is_showing_combat_feedback()
+    $Root/Crosshair.visible = playing and player != null and player.is_aiming()
     $Root/Crosshair.position = get_viewport().get_mouse_position() - Vector2(8,12)
     $Root/Ammo.visible = combat
     $Root/Reload.visible = combat and player.reload_remaining > 0 if player else false
