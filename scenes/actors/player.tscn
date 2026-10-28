@@ -17,6 +17,7 @@ height = 64.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1141822702]
 collision_layer = 2
+floor_snap_length = 8.0
 script = ExtResource("1")
 move_speed = 125.0
 jump_velocity = -200.0

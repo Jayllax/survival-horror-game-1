@@ -1,0 +1,39 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://tests/interiors.gd" id="test"]
+[ext_resource type="PackedScene" path="res://scenes/actors/player.tscn" id="player"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/stairs/stairs_right.tscn" id="right"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/stairs/stairs_left.tscn" id="left"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/stairs/stairs_half_right.tscn" id="half_right"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/stairs/stairs_half_left.tscn" id="half_left"]
+[sub_resource type="RectangleShape2D" id="ground"]
+size = Vector2(3000,120)
+[sub_resource type="RectangleShape2D" id="upper"]
+size = Vector2(208,12)
+[sub_resource type="RectangleShape2D" id="half_upper"]
+size = Vector2(104,12)
+[node name="InteriorTests" type="Node2D"]
+script = ExtResource("test")
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(1500,680)
+[node name="Shape" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("ground")
+[node name="UpperFloor" type="StaticBody2D" parent="."]
+position = Vector2(516,498)
+[node name="Shape" type="CollisionShape2D" parent="UpperFloor"]
+shape = SubResource("upper")
+[node name="UpRight" parent="." instance=ExtResource("right")]
+position = Vector2(220,620)
+[node name="UpLeft" parent="." instance=ExtResource("left")]
+position = Vector2(620,620)
+[node name="Player" parent="." instance=ExtResource("player")]
+position = Vector2(150,588)
+[node name="Camera2D" parent="Player" index="3"]
+enabled = false
+[node name="HalfUpRight" parent="." instance=ExtResource("half_right")]
+position = Vector2(1520,620)
+[node name="HalfUpLeft" parent="." instance=ExtResource("half_left")]
+position = Vector2(1720,620)
+[node name="HalfUpperFloor" type="StaticBody2D" parent="."]
+position = Vector2(1668,562)
+[node name="Shape" type="CollisionShape2D" parent="HalfUpperFloor"]
+shape = SubResource("half_upper")

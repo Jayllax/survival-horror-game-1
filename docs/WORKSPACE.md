@@ -35,3 +35,5 @@ Godot's `.png.import`, `.tres`, `.tscn`, and `.gd.uid` files are useful project 
 The current completed player artwork and untouched uploaded reference are in [art/pixlart/player_animation](../art/pixlart/player_animation/README.md). The [editable animation pack](downloads/Ignotum-completed-player-animations.zip) includes all fourteen player clips.
 
 NPC and enemy editable sources are in [art/pixlart/cast_animation](../art/pixlart/cast_animation/README.md), using the same native character design. [Download their animation pack](downloads/Ignotum-NPC-enemy-animations.zip).
+
+The [interior kit](guides/INTERIOR_KIT_GUIDE.md) keeps native furniture PNGs under `art/pixel/interiors/`, matching reusable scenes under `scenes/objects/interiors/`, and editor controls under `scripts/interiors/`. Its separate showroom and catalog scenes do not replace your house layouts.

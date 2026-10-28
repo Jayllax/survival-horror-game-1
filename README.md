@@ -49,3 +49,5 @@ This imports the project and runs six suites against your current settings, with
 The older five suites (`smoke`, `interface`, `assets`, `manual_saves`, `grid_inventory`) assume historical item names, quantities and example level layouts. Your later designer revisions intentionally differ. The script's no-argument mode includes all eleven suites; select the six current suites above for this snapshot. Never change your designer data to satisfy historical fixtures.
 
 Graphical checks used Linux software OpenGL. Standalone exports, other operating systems and physical audio output have not been tested. Required font license files remain in `art/fonts/`.
+
+Interior furniture, working lamps and walkable stairs are ready to place from `scenes/objects/interiors/`. See the [interior kit guide](docs/guides/INTERIOR_KIT_GUIDE.md) and [color catalog](docs/previews/interior-kit-catalog.png). Open `scenes/levels/interior_kit_showroom.tscn` with F6 to try them without changing your existing levels.

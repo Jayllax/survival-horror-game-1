@@ -1,0 +1,23 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://scripts/interiors/interior_prop.gd" id="script"]
+[ext_resource type="Texture2D" path="res://art/pixel/interiors/living_room/dining_chair_warm.png" id="warm"]
+[ext_resource type="Texture2D" path="res://art/pixel/interiors/living_room/dining_chair_sage.png" id="sage"]
+[ext_resource type="Texture2D" path="res://art/pixel/interiors/living_room/dining_chair_slate.png" id="slate"]
+[sub_resource type="RectangleShape2D" id="footprint"]
+size = Vector2(28, 46)
+[node name="DiningChair" type="Node2D"]
+z_index = -1
+texture_filter = 1
+script = ExtResource("script")
+variant_textures = Array[Texture2D]([ExtResource("warm"), ExtResource("sage"), ExtResource("slate")])
+[node name="Artwork" type="Sprite2D" parent="."]
+position = Vector2(0, -24)
+scale = Vector2(2, 2)
+texture = ExtResource("warm")
+[node name="Solid" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+[node name="Shape" type="CollisionShape2D" parent="Solid"]
+position = Vector2(0, -24)
+shape = SubResource("footprint")
+disabled = true

@@ -1,0 +1,378 @@
+[gd_scene format=3]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/sofa.tscn" id="sofa"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/armchair.tscn" id="armchair"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/coffee_table.tscn" id="coffee_table"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/dining_table.tscn" id="dining_table"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/dining_chair.tscn" id="dining_chair"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/bookcase.tscn" id="bookcase"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/sideboard.tscn" id="sideboard"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/kitchen/base_cabinet.tscn" id="base_cabinet"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/kitchen/wall_cabinet.tscn" id="wall_cabinet"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/kitchen/sink_cabinet.tscn" id="sink_cabinet"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/kitchen/stove.tscn" id="stove"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/kitchen/fridge.tscn" id="fridge"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bathroom/bathtub.tscn" id="bathtub"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bathroom/toilet.tscn" id="toilet"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bathroom/pedestal_sink.tscn" id="pedestal_sink"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bathroom/medicine_cabinet.tscn" id="medicine_cabinet"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bathroom/shower.tscn" id="shower"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bedroom/bed.tscn" id="bed"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bedroom/nightstand.tscn" id="nightstand"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bedroom/wardrobe.tscn" id="wardrobe"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/table_lamp.tscn" id="table_lamp"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/floor_lamp.tscn" id="floor_lamp"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/ceiling_lamp.tscn" id="ceiling_lamp"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/wall_lamp.tscn" id="wall_lamp"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/stairs/stairs_right.tscn" id="stairs_right"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/stairs/stairs_left.tscn" id="stairs_left"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/stairs/stairs_half_right.tscn" id="stairs_half_right"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/stairs/stairs_half_left.tscn" id="stairs_half_left"]
+[node name="InteriorKitCatalog" type="Node2D"]
+[node name="Label0" type="Label" parent="."]
+offset_top = 0.0
+text = "living_room / sofa"
+[node name="sofa_0" parent="." instance=ExtResource("sofa")]
+position = Vector2(80,108)
+color_variant = 0
+[node name="sofa_1" parent="." instance=ExtResource("sofa")]
+position = Vector2(240,108)
+color_variant = 1
+[node name="sofa_2" parent="." instance=ExtResource("sofa")]
+position = Vector2(400,108)
+color_variant = 2
+[node name="Label1" type="Label" parent="."]
+offset_top = 130.0
+text = "living_room / armchair"
+[node name="armchair_0" parent="." instance=ExtResource("armchair")]
+position = Vector2(80,238)
+color_variant = 0
+[node name="armchair_1" parent="." instance=ExtResource("armchair")]
+position = Vector2(240,238)
+color_variant = 1
+[node name="armchair_2" parent="." instance=ExtResource("armchair")]
+position = Vector2(400,238)
+color_variant = 2
+[node name="Label2" type="Label" parent="."]
+offset_top = 260.0
+text = "living_room / coffee_table"
+[node name="coffee_table_0" parent="." instance=ExtResource("coffee_table")]
+position = Vector2(80,368)
+color_variant = 0
+[node name="coffee_table_1" parent="." instance=ExtResource("coffee_table")]
+position = Vector2(240,368)
+color_variant = 1
+[node name="coffee_table_2" parent="." instance=ExtResource("coffee_table")]
+position = Vector2(400,368)
+color_variant = 2
+[node name="Label3" type="Label" parent="."]
+offset_top = 390.0
+text = "living_room / dining_table"
+[node name="dining_table_0" parent="." instance=ExtResource("dining_table")]
+position = Vector2(80,498)
+color_variant = 0
+[node name="dining_table_1" parent="." instance=ExtResource("dining_table")]
+position = Vector2(240,498)
+color_variant = 1
+[node name="dining_table_2" parent="." instance=ExtResource("dining_table")]
+position = Vector2(400,498)
+color_variant = 2
+[node name="Label4" type="Label" parent="."]
+offset_top = 520.0
+text = "living_room / dining_chair"
+[node name="dining_chair_0" parent="." instance=ExtResource("dining_chair")]
+position = Vector2(80,628)
+color_variant = 0
+[node name="dining_chair_1" parent="." instance=ExtResource("dining_chair")]
+position = Vector2(240,628)
+color_variant = 1
+[node name="dining_chair_2" parent="." instance=ExtResource("dining_chair")]
+position = Vector2(400,628)
+color_variant = 2
+[node name="Label5" type="Label" parent="."]
+offset_top = 650.0
+text = "living_room / bookcase"
+[node name="bookcase_0" parent="." instance=ExtResource("bookcase")]
+position = Vector2(80,758)
+color_variant = 0
+[node name="bookcase_1" parent="." instance=ExtResource("bookcase")]
+position = Vector2(240,758)
+color_variant = 1
+[node name="bookcase_2" parent="." instance=ExtResource("bookcase")]
+position = Vector2(400,758)
+color_variant = 2
+[node name="Label6" type="Label" parent="."]
+offset_top = 780.0
+text = "living_room / sideboard"
+[node name="sideboard_0" parent="." instance=ExtResource("sideboard")]
+position = Vector2(80,888)
+color_variant = 0
+[node name="sideboard_1" parent="." instance=ExtResource("sideboard")]
+position = Vector2(240,888)
+color_variant = 1
+[node name="sideboard_2" parent="." instance=ExtResource("sideboard")]
+position = Vector2(400,888)
+color_variant = 2
+[node name="Label7" type="Label" parent="."]
+offset_top = 910.0
+text = "kitchen / base_cabinet"
+[node name="base_cabinet_0" parent="." instance=ExtResource("base_cabinet")]
+position = Vector2(80,1018)
+color_variant = 0
+[node name="base_cabinet_1" parent="." instance=ExtResource("base_cabinet")]
+position = Vector2(240,1018)
+color_variant = 1
+[node name="base_cabinet_2" parent="." instance=ExtResource("base_cabinet")]
+position = Vector2(400,1018)
+color_variant = 2
+[node name="Label8" type="Label" parent="."]
+offset_top = 1040.0
+text = "kitchen / wall_cabinet"
+[node name="wall_cabinet_0" parent="." instance=ExtResource("wall_cabinet")]
+position = Vector2(80,1072)
+color_variant = 0
+[node name="wall_cabinet_1" parent="." instance=ExtResource("wall_cabinet")]
+position = Vector2(240,1072)
+color_variant = 1
+[node name="wall_cabinet_2" parent="." instance=ExtResource("wall_cabinet")]
+position = Vector2(400,1072)
+color_variant = 2
+[node name="Label9" type="Label" parent="."]
+offset_top = 1170.0
+text = "kitchen / sink_cabinet"
+[node name="sink_cabinet_0" parent="." instance=ExtResource("sink_cabinet")]
+position = Vector2(80,1278)
+color_variant = 0
+[node name="sink_cabinet_1" parent="." instance=ExtResource("sink_cabinet")]
+position = Vector2(240,1278)
+color_variant = 1
+[node name="sink_cabinet_2" parent="." instance=ExtResource("sink_cabinet")]
+position = Vector2(400,1278)
+color_variant = 2
+[node name="Label10" type="Label" parent="."]
+offset_top = 1300.0
+text = "kitchen / stove"
+[node name="stove_0" parent="." instance=ExtResource("stove")]
+position = Vector2(80,1408)
+color_variant = 0
+[node name="stove_1" parent="." instance=ExtResource("stove")]
+position = Vector2(240,1408)
+color_variant = 1
+[node name="stove_2" parent="." instance=ExtResource("stove")]
+position = Vector2(400,1408)
+color_variant = 2
+[node name="Label11" type="Label" parent="."]
+offset_top = 1430.0
+text = "kitchen / fridge"
+[node name="fridge_0" parent="." instance=ExtResource("fridge")]
+position = Vector2(80,1538)
+color_variant = 0
+[node name="fridge_1" parent="." instance=ExtResource("fridge")]
+position = Vector2(240,1538)
+color_variant = 1
+[node name="fridge_2" parent="." instance=ExtResource("fridge")]
+position = Vector2(400,1538)
+color_variant = 2
+[node name="Label12" type="Label" parent="."]
+offset_top = 1560.0
+text = "bathroom / bathtub"
+[node name="bathtub_0" parent="." instance=ExtResource("bathtub")]
+position = Vector2(80,1668)
+color_variant = 0
+[node name="bathtub_1" parent="." instance=ExtResource("bathtub")]
+position = Vector2(240,1668)
+color_variant = 1
+[node name="bathtub_2" parent="." instance=ExtResource("bathtub")]
+position = Vector2(400,1668)
+color_variant = 2
+[node name="Label13" type="Label" parent="."]
+offset_top = 1690.0
+text = "bathroom / toilet"
+[node name="toilet_0" parent="." instance=ExtResource("toilet")]
+position = Vector2(80,1798)
+color_variant = 0
+[node name="toilet_1" parent="." instance=ExtResource("toilet")]
+position = Vector2(240,1798)
+color_variant = 1
+[node name="toilet_2" parent="." instance=ExtResource("toilet")]
+position = Vector2(400,1798)
+color_variant = 2
+[node name="Label14" type="Label" parent="."]
+offset_top = 1820.0
+text = "bathroom / pedestal_sink"
+[node name="pedestal_sink_0" parent="." instance=ExtResource("pedestal_sink")]
+position = Vector2(80,1928)
+color_variant = 0
+[node name="pedestal_sink_1" parent="." instance=ExtResource("pedestal_sink")]
+position = Vector2(240,1928)
+color_variant = 1
+[node name="pedestal_sink_2" parent="." instance=ExtResource("pedestal_sink")]
+position = Vector2(400,1928)
+color_variant = 2
+[node name="Label15" type="Label" parent="."]
+offset_top = 1950.0
+text = "bathroom / medicine_cabinet"
+[node name="medicine_cabinet_0" parent="." instance=ExtResource("medicine_cabinet")]
+position = Vector2(80,1982)
+color_variant = 0
+[node name="medicine_cabinet_1" parent="." instance=ExtResource("medicine_cabinet")]
+position = Vector2(240,1982)
+color_variant = 1
+[node name="medicine_cabinet_2" parent="." instance=ExtResource("medicine_cabinet")]
+position = Vector2(400,1982)
+color_variant = 2
+[node name="Label16" type="Label" parent="."]
+offset_top = 2080.0
+text = "bathroom / shower"
+[node name="shower_0" parent="." instance=ExtResource("shower")]
+position = Vector2(80,2188)
+color_variant = 0
+[node name="shower_1" parent="." instance=ExtResource("shower")]
+position = Vector2(240,2188)
+color_variant = 1
+[node name="shower_2" parent="." instance=ExtResource("shower")]
+position = Vector2(400,2188)
+color_variant = 2
+[node name="Label17" type="Label" parent="."]
+offset_top = 2210.0
+text = "bedroom / bed"
+[node name="bed_0" parent="." instance=ExtResource("bed")]
+position = Vector2(80,2318)
+color_variant = 0
+[node name="bed_1" parent="." instance=ExtResource("bed")]
+position = Vector2(240,2318)
+color_variant = 1
+[node name="bed_2" parent="." instance=ExtResource("bed")]
+position = Vector2(400,2318)
+color_variant = 2
+[node name="Label18" type="Label" parent="."]
+offset_top = 2340.0
+text = "bedroom / nightstand"
+[node name="nightstand_0" parent="." instance=ExtResource("nightstand")]
+position = Vector2(80,2448)
+color_variant = 0
+[node name="nightstand_1" parent="." instance=ExtResource("nightstand")]
+position = Vector2(240,2448)
+color_variant = 1
+[node name="nightstand_2" parent="." instance=ExtResource("nightstand")]
+position = Vector2(400,2448)
+color_variant = 2
+[node name="Label19" type="Label" parent="."]
+offset_top = 2470.0
+text = "bedroom / wardrobe"
+[node name="wardrobe_0" parent="." instance=ExtResource("wardrobe")]
+position = Vector2(80,2578)
+color_variant = 0
+[node name="wardrobe_1" parent="." instance=ExtResource("wardrobe")]
+position = Vector2(240,2578)
+color_variant = 1
+[node name="wardrobe_2" parent="." instance=ExtResource("wardrobe")]
+position = Vector2(400,2578)
+color_variant = 2
+[node name="Label20" type="Label" parent="."]
+offset_top = 2600.0
+text = "lighting / table_lamp"
+[node name="table_lamp_0" parent="." instance=ExtResource("table_lamp")]
+position = Vector2(80,2708)
+color_variant = 0
+light_enabled = false
+[node name="table_lamp_1" parent="." instance=ExtResource("table_lamp")]
+position = Vector2(240,2708)
+color_variant = 1
+light_enabled = false
+[node name="table_lamp_2" parent="." instance=ExtResource("table_lamp")]
+position = Vector2(400,2708)
+color_variant = 2
+light_enabled = false
+[node name="Label21" type="Label" parent="."]
+offset_top = 2730.0
+text = "lighting / floor_lamp"
+[node name="floor_lamp_0" parent="." instance=ExtResource("floor_lamp")]
+position = Vector2(80,2838)
+color_variant = 0
+light_enabled = false
+[node name="floor_lamp_1" parent="." instance=ExtResource("floor_lamp")]
+position = Vector2(240,2838)
+color_variant = 1
+light_enabled = false
+[node name="floor_lamp_2" parent="." instance=ExtResource("floor_lamp")]
+position = Vector2(400,2838)
+color_variant = 2
+light_enabled = false
+[node name="Label22" type="Label" parent="."]
+offset_top = 2860.0
+text = "lighting / ceiling_lamp"
+[node name="ceiling_lamp_0" parent="." instance=ExtResource("ceiling_lamp")]
+position = Vector2(80,2892)
+color_variant = 0
+light_enabled = false
+[node name="ceiling_lamp_1" parent="." instance=ExtResource("ceiling_lamp")]
+position = Vector2(240,2892)
+color_variant = 1
+light_enabled = false
+[node name="ceiling_lamp_2" parent="." instance=ExtResource("ceiling_lamp")]
+position = Vector2(400,2892)
+color_variant = 2
+light_enabled = false
+[node name="Label23" type="Label" parent="."]
+offset_top = 2990.0
+text = "lighting / wall_lamp"
+[node name="wall_lamp_0" parent="." instance=ExtResource("wall_lamp")]
+position = Vector2(80,3022)
+color_variant = 0
+light_enabled = false
+[node name="wall_lamp_1" parent="." instance=ExtResource("wall_lamp")]
+position = Vector2(240,3022)
+color_variant = 1
+light_enabled = false
+[node name="wall_lamp_2" parent="." instance=ExtResource("wall_lamp")]
+position = Vector2(400,3022)
+color_variant = 2
+light_enabled = false
+[node name="StairLabel0" type="Label" parent="."]
+offset_top = 3120.0
+text = "stairs_right"
+[node name="stairs_right_0" parent="." instance=ExtResource("stairs_right")]
+position = Vector2(0,3288)
+color_variant = 0
+[node name="stairs_right_1" parent="." instance=ExtResource("stairs_right")]
+position = Vector2(240,3288)
+color_variant = 1
+[node name="stairs_right_2" parent="." instance=ExtResource("stairs_right")]
+position = Vector2(480,3288)
+color_variant = 2
+[node name="StairLabel1" type="Label" parent="."]
+offset_top = 3320.0
+text = "stairs_left"
+[node name="stairs_left_0" parent="." instance=ExtResource("stairs_left")]
+position = Vector2(0,3488)
+color_variant = 0
+[node name="stairs_left_1" parent="." instance=ExtResource("stairs_left")]
+position = Vector2(240,3488)
+color_variant = 1
+[node name="stairs_left_2" parent="." instance=ExtResource("stairs_left")]
+position = Vector2(480,3488)
+color_variant = 2
+[node name="StairLabel2" type="Label" parent="."]
+offset_top = 3520.0
+text = "stairs_half_right"
+[node name="stairs_half_right_0" parent="." instance=ExtResource("stairs_half_right")]
+position = Vector2(0,3688)
+color_variant = 0
+[node name="stairs_half_right_1" parent="." instance=ExtResource("stairs_half_right")]
+position = Vector2(240,3688)
+color_variant = 1
+[node name="stairs_half_right_2" parent="." instance=ExtResource("stairs_half_right")]
+position = Vector2(480,3688)
+color_variant = 2
+[node name="StairLabel3" type="Label" parent="."]
+offset_top = 3720.0
+text = "stairs_half_left"
+[node name="stairs_half_left_0" parent="." instance=ExtResource("stairs_half_left")]
+position = Vector2(0,3888)
+color_variant = 0
+[node name="stairs_half_left_1" parent="." instance=ExtResource("stairs_half_left")]
+position = Vector2(240,3888)
+color_variant = 1
+[node name="stairs_half_left_2" parent="." instance=ExtResource("stairs_half_left")]
+position = Vector2(480,3888)
+color_variant = 2
