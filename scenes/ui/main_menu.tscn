@@ -68,15 +68,6 @@ offset_bottom = 506.0
 text = "Quit"
 focus_mode = 2
 
-[node name="Controls" type="Label" parent="."]
-offset_left = 68.0
-offset_top = 540.0
-offset_right = 1108.0
-offset_bottom = 610.0
-theme_override_font_sizes/font_size = 15
-text = "A/D · Move    Space/W · Jump    Right mouse · Aim    Left mouse · Fire    R · Reload    Q · Melee\nAlt · Dodge (0.5s invulnerable)    E · Use    F · Flashlight    I/Tab · Inventory    Esc · Pause\nSave manually at bicycles. Four independent save slots."
-mouse_filter = 2
-
 [node name="TownName" type="Label" parent="Station"]
 offset_left = -164.0
 offset_top = -65.0

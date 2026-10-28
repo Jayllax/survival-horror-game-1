@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3]
+[ext_resource type="Script" path="res://scripts/narrative/narrative_interactable.gd" id="script"]
+[ext_resource type="Texture2D" path="res://art/pixel/notice.png" id="art"]
+[ext_resource type="Resource" path="res://data/narrative/example_note.tres" id="document"]
+[node name="Note" type="Area2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("script")
+document = ExtResource("document")
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("art")

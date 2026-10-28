@@ -1,0 +1,199 @@
+{
+  "native_frame": [
+    32,
+    40
+  ],
+  "columns": 6,
+  "facing": "right",
+  "floor_boundary_y": 40,
+  "lowest_foot_pixel_y": 39,
+  "pelvis_center_x": 16,
+  "player_sheet": [
+    192,
+    560
+  ],
+  "enemy_sheet": [
+    192,
+    280
+  ],
+  "drawing_layer": "DRAW HERE",
+  "guide_layer": "GUIDES - HIDE FOR EXPORT",
+  "marker_layer": "MARKERS - OPTIONAL - HIDE FOR EXPORT",
+  "marker_colors": {
+    "00ffff": "flashlight hand",
+    "ff00ff": "chest / aiming pivot",
+    "ffff00": "pelvis / horizontal root"
+  },
+  "player_rows": [
+    {
+      "row": 1,
+      "animation": "idle",
+      "frames": 6,
+      "preview_frame_ms": 250,
+      "game_playback": "loop",
+      "note": "Breathing / standing"
+    },
+    {
+      "row": 2,
+      "animation": "walk",
+      "frames": 6,
+      "preview_frame_ms": 125,
+      "game_playback": "loop",
+      "note": "Step R / down / pass / step L / down / pass"
+    },
+    {
+      "row": 3,
+      "animation": "sprint",
+      "frames": 6,
+      "preview_frame_ms": 83,
+      "game_playback": "loop",
+      "note": "Run: contact / push / flight, then opposite leg"
+    },
+    {
+      "row": 4,
+      "animation": "crouch_idle",
+      "frames": 6,
+      "preview_frame_ms": 250,
+      "game_playback": "loop",
+      "note": "Hold a low bent-knee pose"
+    },
+    {
+      "row": 5,
+      "animation": "crouch_walk",
+      "frames": 6,
+      "preview_frame_ms": 167,
+      "game_playback": "loop",
+      "note": "Quiet low steps, R then L"
+    },
+    {
+      "row": 6,
+      "animation": "jump",
+      "frames": 6,
+      "preview_frame_ms": 80,
+      "game_playback": "once",
+      "note": "Already airborne: rise / tuck"
+    },
+    {
+      "row": 7,
+      "animation": "fall",
+      "frames": 6,
+      "preview_frame_ms": 100,
+      "game_playback": "once",
+      "note": "Descending / legs ready for landing"
+    },
+    {
+      "row": 8,
+      "animation": "dodge",
+      "frames": 6,
+      "preview_frame_ms": 30,
+      "game_playback": "once",
+      "note": "Short low evasive step; 0.18 s total"
+    },
+    {
+      "row": 9,
+      "animation": "aim_idle",
+      "frames": 6,
+      "preview_frame_ms": 250,
+      "game_playback": "loop",
+      "note": "Head / torso / legs only; omit arms and weapon"
+    },
+    {
+      "row": 10,
+      "animation": "aim_walk",
+      "frames": 6,
+      "preview_frame_ms": 125,
+      "game_playback": "loop",
+      "note": "Walk while aiming; omit arms and weapon"
+    },
+    {
+      "row": 11,
+      "animation": "crouch_aim_idle",
+      "frames": 6,
+      "preview_frame_ms": 250,
+      "game_playback": "loop",
+      "note": "Crouch torso / legs; omit arms and weapon"
+    },
+    {
+      "row": 12,
+      "animation": "crouch_aim_walk",
+      "frames": 6,
+      "preview_frame_ms": 167,
+      "game_playback": "loop",
+      "note": "Crouch walk torso / legs; omit arms and weapon"
+    },
+    {
+      "row": 13,
+      "animation": "aim_jump",
+      "frames": 6,
+      "preview_frame_ms": 80,
+      "game_playback": "once",
+      "note": "Rising body; omit arms and weapon"
+    },
+    {
+      "row": 14,
+      "animation": "aim_fall",
+      "frames": 6,
+      "preview_frame_ms": 100,
+      "game_playback": "once",
+      "note": "Falling body; omit arms and weapon"
+    }
+  ],
+  "enemy_rows": [
+    {
+      "row": 1,
+      "animation": "idle",
+      "frames": 6,
+      "preview_frame_ms": 250,
+      "game_playback": "loop",
+      "note": "Subtle breathing"
+    },
+    {
+      "row": 2,
+      "animation": "walk",
+      "frames": 6,
+      "preview_frame_ms": 167,
+      "game_playback": "loop",
+      "note": "Slow walking, R then L"
+    },
+    {
+      "row": 3,
+      "animation": "sleep",
+      "frames": 6,
+      "preview_frame_ms": 400,
+      "game_playback": "loop",
+      "note": "Resting / sleeping pose"
+    },
+    {
+      "row": 4,
+      "animation": "wake",
+      "frames": 6,
+      "preview_frame_ms": 83,
+      "game_playback": "once",
+      "note": "Rise from sleep to alert"
+    },
+    {
+      "row": 5,
+      "animation": "attack",
+      "frames": 6,
+      "preview_frame_ms": 167,
+      "game_playback": "once",
+      "note": "Frames 1-2 warning, 3-4 strike, 5-6 recovery"
+    },
+    {
+      "row": 6,
+      "animation": "hit",
+      "frames": 6,
+      "preview_frame_ms": 30,
+      "game_playback": "once",
+      "note": "Flinch / recoil / recover; 0.18 s total"
+    },
+    {
+      "row": 7,
+      "animation": "death",
+      "frames": 6,
+      "preview_frame_ms": 100,
+      "game_playback": "once",
+      "note": "Collapse; last frame stays on ground"
+    }
+  ]
+}

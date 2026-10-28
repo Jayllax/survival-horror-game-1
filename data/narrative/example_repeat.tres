@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DialogueSequence" load_steps=5 format=3]
+[ext_resource type="Script" path="res://scripts/narrative/dialogue_sequence.gd" id="sequence"]
+[ext_resource type="Script" path="res://scripts/narrative/dialogue_line.gd" id="line"]
+[ext_resource type="Resource" path="res://data/narrative/speakers/example_npc.tres" id="npc"]
+[sub_resource type="Resource" id="repeat"]
+script = ExtResource("line")
+speaker = ExtResource("npc")
+text = "This is the repeat conversation. You can replace it or leave Repeat Dialogue empty to replay the original."
+[resource]
+script = ExtResource("sequence")
+lines = Array[ExtResource("line")]([SubResource("repeat")])

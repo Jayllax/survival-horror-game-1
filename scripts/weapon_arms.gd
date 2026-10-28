@@ -1,0 +1,105 @@
+extends Node2D
+## Two simple articulated sleeves/hands follow the weapon's grip points.
+## Colors, grip points, shoulder points and segment lengths remain editor-editable.
+@export var attachment_profile: CharacterAttachmentProfile
+## Local barrel position while the equipped weapon is drawn. Y mirrors with the gun.
+@export var barrel_flashlight_offset := Vector2(14,4)
+## Small forward offset from the animated hand while the gun is holstered.
+@export var handheld_flashlight_offset := Vector2(2,0)
+@export var near_shoulder := Vector2(-3,-10)
+@export var far_shoulder := Vector2(1,-12)
+@export var crouch_shoulder_offset := Vector2(0,22)
+@export var near_grip := Vector2(-4,4)
+@export var far_grip := Vector2(-1,2)
+@export var upper_arm_length: float = 12.0
+@export var forearm_length: float = 12.0
+@onready var player: CharacterBody2D = get_parent()
+@onready var gun: Sprite2D = player.get_node("Aim/Gun")
+@onready var body: CharacterVisuals = player.get_node("Body")
+@onready var light: PointLight2D = gun.get_node("Flashlight")
+var body_origin := Vector2.ZERO
+
+func _ready() -> void:
+    body_origin = body.position
+    body.frame_changed.connect(on_pose_changed)
+    body.animation_changed.connect(on_pose_changed)
+
+func on_pose_changed() -> void:
+    # Child nodes become ready before the player's cached transforms are initialized.
+    if player.is_node_ready():
+        update_pose()
+
+func _process(_delta: float) -> void:
+    update_pose()
+
+func update_pose() -> void:
+    var shoulder_offset := update_attachments()
+    visible = player.is_aiming() and gun.texture != null and player.dodge_remaining <= 0 and Game.health > 0
+    if not visible:
+        return
+    var mirror := Vector2(player.facing,1)
+    # Sprite2D.flip_v mirrors pixels, not child transforms or coordinates.
+    var grip_mirror := Vector2(1,-1 if gun.flip_v else 1)
+    pose_arm($Far,far_shoulder*mirror+shoulder_offset,to_local(gun.to_global(far_grip*grip_mirror)),player.facing)
+    pose_arm($Near,near_shoulder*mirror+shoulder_offset,to_local(gun.to_global(near_grip*grip_mirror)),player.facing)
+
+func frame_point_world(point: Vector2) -> Vector2:
+    var texture := body.sprite_frames.get_frame_texture(body.animation,body.frame)
+    var local := point-texture.get_size()/2 if body.centered else point
+    local *= Vector2(-1 if body.flip_h else 1,-1 if body.flip_v else 1)
+    return body.to_global(local+body.offset)
+
+func update_attachments() -> Vector2:
+    var track := attachment_profile.track_for(body.animation) if attachment_profile else null
+    body.position = body_origin
+    if track and not track.body_centers.is_empty():
+        var texture := body.sprite_frames.get_frame_texture(body.animation,body.frame)
+        var center := track.body_centers[clampi(body.frame,0,track.body_centers.size()-1)]
+        var half_width := texture.get_width()/2.0 if body.centered else 0.0
+        body.position.x -= (center-half_width)*body.scale.x*(-1 if body.flip_h else 1)
+    var lowered: float = (player.standing_shape.height-player.body_collision.shape.height)/2 if player.standing_shape else 0.0
+    var shoulder_offset := crouch_shoulder_offset if player.is_crouching else Vector2.ZERO
+    player.aim.position = player.standing_aim_position+Vector2(0,lowered)
+    if track and not track.aim_origins.is_empty():
+        var chest := frame_point_world(track.point_at(track.aim_origins,body.frame))
+        shoulder_offset = player.to_local(chest)-attachment_profile.reference_aim_position
+        player.aim.position = player.standing_aim_position+shoulder_offset
+    # Animation affects the origin only. Cursor direction remains exclusive to held aim.
+    player.aim.rotation = (player.get_global_mouse_position()-player.aim.global_position).angle() if Input.is_action_pressed("aim") else (PI if player.facing<0 else 0.0)
+    gun.flip_v = cos(player.aim.rotation)<0
+    if player.is_aiming() and gun.texture != null and player.dodge_remaining<=0:
+        light.position = barrel_flashlight_offset*Vector2(1,-1 if gun.flip_v else 1)
+    else:
+        var hand: Vector2 = player.aim.global_position
+        if track and not track.flashlight_hands.is_empty():
+            hand = frame_point_world(track.point_at(track.flashlight_hands,body.frame))
+        var light_origin := hand+Vector2(handheld_flashlight_offset.x*player.facing,handheld_flashlight_offset.y)
+        if Input.is_action_pressed("aim"):
+            # With no drawn weapon, aim from the actual handheld emitter.
+            player.aim.position = player.to_local(light_origin)
+            player.aim.rotation = (player.get_global_mouse_position()-light_origin).angle()
+            gun.flip_v = cos(player.aim.rotation)<0
+        light.global_position = light_origin
+    return shoulder_offset
+
+func pose_arm(arm: Node2D, shoulder: Vector2, hand: Vector2, facing: float) -> void:
+    var offset := hand-shoulder
+    var distance := maxf(offset.length(),0.001)
+    var upper := maxf(upper_arm_length,1.0)
+    var lower := maxf(forearm_length,1.0)
+    # At extreme grip/weapon sizes, stretch just enough to keep the hand attached.
+    var stretch := maxf(1.0,distance/(upper+lower-0.01))
+    upper *= stretch
+    lower *= stretch
+    var along := (upper*upper-lower*lower+distance*distance)/(2*distance)
+    var height := sqrt(maxf(0,upper*upper-along*along))
+    var axis := offset/distance
+    var elbow := shoulder+axis*along+Vector2(-axis.y,axis.x)*height*facing
+    pose_segment(arm.get_node("Upper"),shoulder,elbow)
+    pose_segment(arm.get_node("Lower"),elbow,hand)
+    arm.get_node("Hand").position = hand
+
+func pose_segment(segment: Polygon2D, start: Vector2, finish: Vector2) -> void:
+    segment.position = start
+    segment.rotation = (finish-start).angle()
+    segment.scale.x = start.distance_to(finish)

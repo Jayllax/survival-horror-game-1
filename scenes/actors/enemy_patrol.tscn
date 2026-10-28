@@ -1,0 +1,4 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="PackedScene" path="res://scenes/actors/enemy.tscn" id="enemy"]
+[node name="PatrolEnemy" instance=ExtResource("enemy")]
+initial_behaviour = 2

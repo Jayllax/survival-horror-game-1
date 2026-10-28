@@ -1,10 +1,18 @@
 # Ignotum / designer guide
 
+For reusable wire/solid fences in broad and end views, see [FENCE_GUIDE.md](docs/guides/FENCE_GUIDE.md). Try `scenes/levels/fence_sandbox.tscn` with F6.
+
+For sleeping enemies, crouch bypasses, directional sight/hearing, patrol/search behaviour, and the attack animation/hitbox, see [ENEMY_AI_GUIDE.md](docs/guides/ENEMY_AI_GUIDE.md).
+
+For player/enemy SpriteFrames, crouch, sprint, short dodge, and gun-only combat, see [CHARACTER_GUIDE.md](docs/guides/CHARACTER_GUIDE.md). Open `scenes/levels/combat_sandbox.tscn` with F6 to try them.
+
+For editable environmental notes, colored speakers, and NPC conversations, see [NARRATIVE_GUIDE.md](docs/guides/NARRATIVE_GUIDE.md). Open `scenes/levels/story_sandbox.tscn` and press F6 to try the framework without changing your town.
+
 ## Your starting point
 
-Import `project.godot` with Godot 4.4+ Standard, open `scenes/levels/town.tscn`, choose **2D**, and press **F6** to test. **F5** starts the main menu. Stop with F8 before editing. The game has no story progression requirement or ending. You own the writing and campaign structure.
+Import `project.godot` with Godot 4.7.2 Standard, open `scenes/levels/town.tscn`, choose **2D**, and press **F6** to test. **F5** starts the main menu. Stop with F8 before editing. The game has no story progression requirement or ending. You own the writing and campaign structure.
 
-The supplied first street links to a small ground-floor interior and service alley to demonstrate entrances. The alley includes one enemy for testing combat; delete its instance if you want a peaceful blockout. All objects are visible in the editor, including every destination and spawn marker.
+The supplied first street links to a small ground-floor interior and service alley to demonstrate entrances. Your uploaded alley is a blockout; use the separate combat/stealth sandbox scenes to test enemies, then place them where your levels need them. All objects are visible in the editor, including every destination and spawn marker.
 
 ## Move and duplicate
 
@@ -51,19 +59,19 @@ New Game loads `town.tscn`. To replace the starting location without programming
 
 ## Tune movement and combat
 
-Select Player for Move Speed, Acceleration, Jump Velocity, Gravity, Coyote Seconds, Jump Buffer Seconds, Magazine Size, Bullet Damage, Shot Interval, Reload Seconds, Melee Damage, Melee Reach, and Dodge Speed.
+Select Player for movement, sprint/crouch, and short dodge settings. Firearm stats come from the equipped weapon definition. See docs/guides/CHARACTER_GUIDE.md for all animation names and Inspector defaults.
 
-Jump Velocity must be negative; other tuning values should be positive. Dodge invulnerability stays exactly **0.5 seconds**, with a 1.05-second reuse interval. The gun starts with six loaded rounds, clamped to Magazine Size, plus twelve reserve rounds. Character walk frames advance automatically. Movement accelerates smoothly; a short coyote window and jump buffer make platforming forgiving.
+Jump Velocity must be negative; other tuning values should be positive. The short grounded dodge defaults to **0.18 seconds of motion** and **0.12 seconds of invulnerability**, with a 0.65-second cooldown between starts. All three values are exported. The gun starts with six loaded rounds, clamped to Magazine Size; reserve ammunition comes from your inventory settings. Character states play named SpriteFrames animations automatically. Movement accelerates smoothly; a short coyote window and jump buffer make platforming forgiving.
 
-The flashlight is `Player/Aim/Gun/Flashlight`. It inherits aim and gun recoil. **Offset = (256, 0)** places its beam in front of the barrel. Energy/Color/Texture Scale change its illumination. Do not use `texture_offset`; that is not a Godot PointLight2D property. F toggles it, and its state persists between locations. It never occupies an inventory slot.
+The flashlight is `Player/Aim/Gun/Flashlight`. It follows the cursor only while right mouse is held; otherwise it points in the last walking direction. The gun is holstered when right mouse is released. The Gun node stays active so its light children keep working. Its origin follows the animated hand when holstered, or the pistol barrel and recoil when drawn. Select **Player/WeaponArms → Attachment Profile** for per-frame hand/chest points; see [the character guide](docs/guides/CHARACTER_GUIDE.md). It still points horizontally in facing direction without held aim. **Offset = (256, 0)** places its beam in front of the barrel. **Transform → Scale (0.85,1.25)** gives the current slightly shorter, broader beam. Increase Y for a wider cone or X for longer reach; Energy/Color/Texture Scale change its illumination. Keep Offset (256,0) when using the supplied beam texture so the apex remains attached. Do not use `texture_offset`; that is not a Godot PointLight2D property. F toggles it, and its state persists between locations. It never occupies an inventory slot.
 
-Enemies expose Max Health, Speed, Detection Radius, Damage, Attack Interval, Patrol Width. They walk and chase on flat ground, do not navigate jumps, and disappear persistently after defeat. The default enemy takes three handgun hits. Place them on reachable flat surfaces. Their live partial health is not persisted across scene changes.
+Enemies expose Max Health, Speed, Detection Radius, Damage, Attack Interval, Patrol Width. They sleep or guard/patrol, hear noisy actions, use directional vision, investigate/search, react to hits, and perform committed attacks with an editable hitbox. They move on flat ground and do not navigate jumps. They play a death animation before removal. Their defeat is persistent. The default enemy takes three handgun hits. Place them on reachable flat surfaces. Their live partial health is not persisted across scene changes.
 
 ## Quiet interface and inspectable items
 
-The world view has no permanent HUD bars, location/title labels, controls strip, pickup names, or floating item markers. A nearby object's generic action appears above it: Take, Examine, Use, Open, or Enter. Override **Action Label** for a different short verb, without revealing item identity. **Prompt Offset** positions the prompt relative to the object in world pixels; Interaction Radius controls proximity. Saving is manual and only available at placed bicycles.
+The world view has no permanent HUD bars, location/title labels, controls strip, pickup names, or floating item markers. A nearby object's generic action appears above it: Take, Examine, Use, Open, Enter, Read, or Talk, without a keyboard hint. Override **Action Label** for a different short verb, without revealing item identity. **Prompt Offset** positions the prompt relative to the object in world pixels; Interaction Radius controls proximity. Saving is manual and only available at placed bicycles.
 
-Health appears briefly after damage, staying visible only at critical health. Select the HUD root to tune Health Feedback Seconds, Pickup Hint Seconds, Message Seconds, or turn Show Pickup Hint off. Select Player to tune Combat Feedback Seconds and Aiming Move Multiplier. Holding right mouse enables careful aiming movement and a small crosshair/ammo readout. Recent shots and reloading also show ammunition temporarily. Inspect exact condition and weapon status in the inventory. The flashlight remains equipped outside the inventory. Controls are under Pause → Controls.
+Health appears briefly after damage, staying visible only at critical health. Select the HUD root to tune Health Feedback Seconds, Pickup Hint Seconds, Message Seconds, or turn Show Pickup Hint off. Select Player to tune Combat Feedback Seconds and Aiming Move Multiplier. Holding right mouse enables careful aiming movement and a small crosshair/ammo readout. Left click fires only while right mouse is held. Recent shots and reloading also show ammunition temporarily; the crosshair disappears as soon as right mouse is released. Inspect exact condition and weapon status in the inventory. The flashlight remains equipped outside the inventory. In-game control legends and key hints have been removed for your tutorial.
 
 Open I and click an item icon, or move focus with arrow keys. Its name, large artwork, category, quantity, and description appear beside the grid. **Use** applies compatible supplies, **Combine** asks for a second item, and selection itself examines the item. Use is disabled at full health for medical items. A failed combination or an output that cannot fit consumes nothing. Drag items within the grid to move them. See the grid inventory section below for rotation and equipment. Discarding items is not implemented.
 
@@ -97,7 +105,7 @@ The starting inventory is an **8-column × 4-row grid (32 cells)**. Press **I or
 
 - **Left-drag** an item to a clear area and release to place it. Grab any occupied cell of a large item.
 - Press **R while dragging** to rotate the preview by 90°. Red means it cannot fit; an invalid drop leaves the original item completely unchanged.
-- Select an item and press **R**, or click **Rotate [R]**, to rotate in place when there is room.
+- Select an item and press **R**, or click **Rotate**, to rotate in place when there is room.
 - **Escape** cancels an active drag first. Escape again closes the inventory; I/Tab also close it and cancel the drag.
 - Drag an ammo stack onto another matching stack to merge. **20 + 2 becomes 22**, freeing a cell. **20 + 10 becomes 24 + 6**. Overflow is never discarded.
 - The **Combine** button still supports recipes: select the first material, press Combine, then click the second. Moving focus never consumes items.
@@ -105,7 +113,7 @@ The starting inventory is an **8-column × 4-row grid (32 cells)**. Press **I or
 
 ### Equip weapons
 
-Select the handgun and click **Unequip** to put it away; select it and click **Equip** to use it again. Equipped weapons still occupy their grid cells. An **E** marker on the item identifies the equipped weapon. Unequipped weapons cannot fire or reload, and aiming feedback is hidden. Switching weapons cancels an unfinished reload; loaded rounds stay in their original weapon. Q remains the melee attack. The flashlight stays available while unarmed and consumes no cells.
+Select the handgun and click **Unequip** to put it away; select it and click **Equip** to use it again. Equipped weapons still occupy their grid cells. An **E** marker on the item identifies the equipped weapon. Unequipped weapons cannot fire or reload, and aiming feedback is hidden. Switching weapons cancels an unfinished reload; loaded rounds stay in their original weapon. Player melee is removed. The flashlight stays available while unarmed and consumes no cells.
 
 ### Configure capacity and item sizes
 
@@ -124,7 +132,7 @@ A future upgrade can call **`Game.expand_inventory(columns, rows)`**. This only 
 5. Duplicate a pickup scene and assign the new **Item Definition**; update its child Sprite2D texture for the editor preview. Place it where you want the weapon to be discovered.
 6. Collect it, arrange it, and select **Equip**. Multiple weapons, including duplicate weapons of the same type, have independent magazines and stable instance IDs. New weapon pickups start unloaded; the starting weapon begins loaded.
 
-These definitions currently drive the existing **hitscan firearm** behavior. Shotgun spread, alternate fire modes and distinct weapon animations require later gameplay additions. Five or six definitions do not require five or six player scripts. Define a new ammunition item and match its ID for a different ammunition type. Existing Player movement, melee and dodge settings remain on the Player; firearm stats now come from the equipped definition.
+These definitions currently drive the existing **hitscan firearm** behavior. Shotgun spread, alternate fire modes and distinct weapon animations require later gameplay additions. Five or six definitions do not require five or six player scripts. Define a new ammunition item and match its ID for a different ammunition type. Existing Player movement and dodge settings remain on the Player; firearm stats now come from the equipped definition.
 
 Reuse `ammo.tscn`, `fuse.tscn`, or `key.tscn`. Assign **Item Definition**, set **Quantity** and optional **Action Label**, and update child Sprite2D Texture for the editor preview. Arbitrary item IDs work as keys or circuit inputs; names default to a readable capitalization. Built-ins have friendlier labels.
 
@@ -168,7 +176,7 @@ In Godot, choose **Project → Open User Data Folder** to find **`save_1.json` t
 
 ## Art and interface
 
-See **ART_STYLE_GUIDE.md** and **art/pixel/STYLE_SHEET.png** for the palette and editable source sizes. Older pixel assets have a native source and a ready-to-use 2× texture. The bicycle uses one native PNG and scales its Sprite2D instead. The new houses are 96×128 native pixels and the shop is 128×128; their placed baselines have already been adjusted. Do not stretch them to the old building bounds. Player and ammo files are preserved. `STYLE_SHEET.png` now shows actual production PNGs, not the earlier illustration. Place `building_house.tscn`, `building_shop.tscn`, or `building_station.tscn`, and decorate with reusable props under `scenes/objects/`.
+See [the art guide](docs/guides/ART_STYLE_GUIDE.md) for native sizes and palette rules. New player/enemy atlases, houses, bicycle and fences use single native PNGs at Sprite scale 2×. Older scenery/item source/export pairs remain in place. The current palette is `art/pixel/ignotum.gpl`; editable `.pixil` files remain in `art/pixlart/`. Place reusable scenery under `scenes/objects/` and keep its native pixel scale.
 
 CanvasModulate sets ambient darkness. Lamps and the flashlight add real light. Fog sprites are authored transparent layers. The scene's ambient audio loops; replace its Stream with your own WAV. The pause and inventory panels are laid out in `scenes/ui/hud.tscn`; its `Grid` Control draws the saved item footprints; button styles are shared through `art/ui_theme.tres`. Menu Options changes volume/fullscreen and stores settings.
 
@@ -176,4 +184,4 @@ CanvasModulate sets ambient darkness. Lamps and the flashlight add real light. F
 
 Play from New Game, enter the building, collect ammo, return, revisit, and confirm it stays collected. Enter the alley, test combat, return to the bicycle, save to a slot, go to the menu, choose Load game, and verify state. Try the other slots and cancel an overwrite. Save A, collect several items and finish a puzzle, save B, then repeatedly load A/B and check the differences. Try moving, rotating and unequipping the handgun before saving. Try an empty magazine, full pockets, a wrong puzzle answer, locked entrances, death, and retry. Physical sound and standalone exports still need testing on your computer.
 
-`bash tools/check.sh` imports resources and runs gameplay, interface, asset, manual-save and grid-input integration suites. Each suite uses a separate test data directory so your normal saves are not overwritten. `tests/capture.tscn` is an optional graphical screenshot helper for Linux. Tests reference the supplied scene/node names, so update the tests if your intentional design changes rename them.
+`bash tools/check.sh` imports resources and runs gameplay, interface, asset, manual-save, grid-input, aiming, narrative, combat, and stealth integration suites. Each suite uses a separate test data directory so your normal saves are not overwritten. `bash tools/check.sh aiming narrative combat stealth` selects the newer feature suites, which work with your current item settings. Older tests still assert original example item values and layouts; intentional designer changes can require updating those test expectations. `tests/capture.tscn` is an optional graphical screenshot helper for Linux. Tests reference the supplied scene/node names, so update the tests if your intentional design changes rename them.

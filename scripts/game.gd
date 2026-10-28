@@ -4,6 +4,8 @@ signal changed
 signal message(text: String)
 signal item_collected(id: String)
 signal save_written(slot_index: int)
+## Gameplay hearing event; independent of audio volume or audio playback.
+signal noise_emitted(origin: Vector2, radius: float, source: Node)
 var item_catalog: Dictionary = {}
 var recipes: Array[InventoryRecipe] = []
 var last_combined_id := ""
@@ -32,6 +34,10 @@ const SAVE_SLOT_COUNT := 4
 const SAVE_VERSION := 3
 var pending_restore: Dictionary = {}
 var play_seconds := 0.0
+
+func emit_noise(origin: Vector2, radius: float, source: Node = null) -> void:
+    if radius > 0 and health > 0 and not transitioning and not get_tree().paused:
+        noise_emitted.emit(origin,radius,source)
 
 func _ready() -> void:
     load_item_catalog()

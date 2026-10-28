@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="Texture2D" path="res://art/pixel/fence_reinforced_side.png" id="art"]
+[sub_resource type="RectangleShape2D" id="barrier"]
+size = Vector2(12,64)
+[node name="ReinforcedFenceSide" type="StaticBody2D"]
+texture_filter = 1
+collision_layer = 1
+collision_mask = 2
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0,-32)
+scale = Vector2(2,2)
+texture = ExtResource("art")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0,-32)
+shape = SubResource("barrier")

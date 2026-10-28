@@ -44,7 +44,7 @@ func run() -> void:
                 var bulb: Vector2 = post.global_position + Vector2(4,-72)
                 check(light.global_position.distance_to(bulb) <= 1, name + ": lamp light is attached to new bulb / " + object.name)
         var player: CharacterBody2D = scene.get_node("Actors/Player")
-        check(player.get_node("Body").hframes == 6 and player.get_node("Body").texture.get_height() == 72, name + ": existing player animation dimensions remain valid")
+        check(player.get_node("Body").sprite_frames.get_frame_count("walk") == 6 and player.get_node("Body").sprite_frames.get_frame_texture("walk",0).get_height() == 72, name + ": existing player animation dimensions remain valid")
         scene.queue_free()
         get_tree().current_scene = null
         await get_tree().process_frame

@@ -1,0 +1,37 @@
+# Workspace layout
+
+| Folder/file | Contents |
+| --- | --- |
+| `project.godot` | Open this in Godot 4.7.2 Standard |
+| `DESIGNER_GUIDE.md` | Beginner level-building entry point |
+| `scenes/levels/` | Your authored levels and separate demonstration scenes |
+| `scenes/actors/` | Player, enemy, NPC and reusable aiming-arm component |
+| `scenes/objects/` | Drag-and-drop props, entrances, fences, pickups and bicycle |
+| `scenes/ui/` | Menus, inventory, dialogue, fades and saves |
+| `scripts/` | Gameplay behavior; you can design through the exported Inspector fields |
+| `data/` | Editable item definitions, inventory settings, SpriteFrames and narrative resources |
+| `art/pixel/` | Game PNGs; new motion atlases and fences are single native files |
+| `art/pixel/source/` | Preserved older native source drawings, including the original character reference |
+| `art/pixlart/` | Your editable `.pixil` working files |
+| `art/templates/characters/` | Blank layered Pixilart animation templates, excluded from runtime import |
+| `docs/downloads/` | Blank templates and completed editable player/NPC/enemy animation packs |
+| `art/pixel/ignotum.gpl` | Current Sparkle's palette from your house source |
+| `audio/` | Sound files |
+| `docs/guides/` | Focused art, characters, fences, AI, narrative and house guides |
+| `docs/previews/` | Reference screenshots; docs are excluded from Godot importing |
+| `tests/` | Development checks, separate from normal game scenes |
+| `tools/check.sh` | Optional automated validation runner |
+
+## This cleanup
+
+The detailed guides were grouped under `docs/guides/`, with links updated. README and DESIGNER_GUIDE remain easy to find at the root.
+
+Removed the obsolete generated redesign illustration (about 1.4 MB), its old production contact sheet/metadata, the old asset and bicycle generators, and their obsolete checker. Those tools used historical art/palettes and could overwrite later hand edits. Superseded exploration/inventory/save-menu screenshots were replaced with current aiming/strike previews. Documentation image-import sidecars were removed and `docs/.gdignore` prevents Godot importing documentation as game assets. Duplicate palette files were consolidated into the current `art/pixel/ignotum.gpl`.
+
+Your editable PNG sources, `.pixil` files, scenery/prop kit, audio, levels and font license remain. The original six-frame character PNGs remain as references alongside their native sources; current player/enemy scenes use the new `*_motion.png` atlases. Old source/export pairs for other assets were retained because existing scenes/item resources use those exports and you may still edit their sources. This is not a blanket deletion of assets that happen to be absent from today's town.
+
+Godot's `.png.import`, `.tres`, `.tscn`, and `.gd.uid` files are useful project metadata/resources, not duplicate artwork. Keep them with the associated files. `.godot/` is an ignored generated cache and is not committed. Removed historical generated references remain recoverable from Git history.
+
+The current completed player artwork and untouched uploaded reference are in [art/pixlart/player_animation](../art/pixlart/player_animation/README.md). The [editable animation pack](downloads/Ignotum-completed-player-animations.zip) includes all fourteen player clips.
+
+NPC and enemy editable sources are in [art/pixlart/cast_animation](../art/pixlart/cast_animation/README.md), using the same native character design. [Download their animation pack](downloads/Ignotum-NPC-enemy-animations.zip).

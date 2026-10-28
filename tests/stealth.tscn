@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3]
+[ext_resource type="Script" path="res://tests/stealth.gd" id="script"]
+[sub_resource type="RectangleShape2D" id="wall"]
+size = Vector2(24,240)
+[sub_resource type="RectangleShape2D" id="ledge"]
+size = Vector2(120,24)
+[node name="StealthTests" type="Node"]
+process_mode = 3
+script = ExtResource("script")
+[node name="SightWall" type="StaticBody2D" parent="."]
+position = Vector2(1050,500)
+[node name="Shape" type="CollisionShape2D" parent="SightWall"]
+shape = SubResource("wall")
+disabled = true
+[node name="SmallLedge" type="StaticBody2D" parent="."]
+position = Vector2(2000,632)
+[node name="Shape" type="CollisionShape2D" parent="SmallLedge"]
+shape = SubResource("ledge")
