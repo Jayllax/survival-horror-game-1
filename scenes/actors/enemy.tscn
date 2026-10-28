@@ -1,10 +1,12 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1"]
 [ext_resource type="SpriteFrames" path="res://data/animations/enemy_frames.tres" id="2"]
 [ext_resource type="Script" path="res://scripts/character_visuals.gd" id="visuals"]
 [sub_resource type="CapsuleShape2D" id="shape"]
 radius = 12.0
 height = 64.0
+[sub_resource type="RectangleShape2D" id="attack_shape"]
+size = Vector2(76,44)
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 1
@@ -17,3 +19,11 @@ animation = &"idle"
 position = Vector2(0, 32)
 offset = Vector2(0, -36)
 script = ExtResource("visuals")
+[node name="AttackPivot" type="Node2D" parent="."]
+[node name="Hitbox" type="Area2D" parent="AttackPivot"]
+position = Vector2(38,-6)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackPivot/Hitbox"]
+shape = SubResource("attack_shape")

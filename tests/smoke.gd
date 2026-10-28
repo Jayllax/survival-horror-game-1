@@ -173,8 +173,8 @@ func run() -> void:
     check(enemy.health == 26, "Second handgun shot replaces melee combat")
     enemy.attack_cooldown = 0
     enemy.set_physics_process(true)
-    await frames(20)
-    check(Game.health < 90, "Enemy attacks after hit recovery")
+    await frames(55)
+    check(Game.health < 90, "Enemy lands a committed attack after hit recovery and wind-up")
     enemy.take_damage(100)
     await frames(3)
     check(get_tree().get_nodes_in_group("enemy").is_empty(), "Enemy defeat")

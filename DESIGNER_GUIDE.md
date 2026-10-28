@@ -1,5 +1,7 @@
 # Ignotum / designer guide
 
+For sleeping enemies, crouch bypasses, directional sight/hearing, patrol/search behaviour, and the attack animation/hitbox, see [ENEMY_AI_GUIDE.md](ENEMY_AI_GUIDE.md).
+
 For player/enemy SpriteFrames, crouch, sprint, short dodge, and gun-only combat, see [CHARACTER_GUIDE.md](CHARACTER_GUIDE.md). Open `scenes/levels/combat_sandbox.tscn` with F6 to try them.
 
 For editable environmental notes, colored speakers, and NPC conversations, see [NARRATIVE_GUIDE.md](NARRATIVE_GUIDE.md). Open `scenes/levels/story_sandbox.tscn` and press F6 to try the framework without changing your town.
@@ -61,7 +63,7 @@ Jump Velocity must be negative; other tuning values should be positive. The shor
 
 The flashlight is `Player/Aim/Gun/Flashlight`. It follows the cursor only while right mouse is held; otherwise it points in the last walking direction. The gun is holstered when right mouse is released. The Gun node stays active so its light children keep working. It inherits aim and gun recoil. **Offset = (256, 0)** places its beam in front of the barrel. Energy/Color/Texture Scale change its illumination. Do not use `texture_offset`; that is not a Godot PointLight2D property. F toggles it, and its state persists between locations. It never occupies an inventory slot.
 
-Enemies expose Max Health, Speed, Detection Radius, Damage, Attack Interval, Patrol Width. They walk and chase on flat ground, do not navigate jumps, react to hits, and play a death animation before removal. Their defeat is persistent. The default enemy takes three handgun hits. Place them on reachable flat surfaces. Their live partial health is not persisted across scene changes.
+Enemies expose Max Health, Speed, Detection Radius, Damage, Attack Interval, Patrol Width. They sleep or guard/patrol, hear noisy actions, use directional vision, investigate/search, react to hits, and perform committed attacks with an editable hitbox. They move on flat ground and do not navigate jumps. They play a death animation before removal. Their defeat is persistent. The default enemy takes three handgun hits. Place them on reachable flat surfaces. Their live partial health is not persisted across scene changes.
 
 ## Quiet interface and inspectable items
 
@@ -180,4 +182,4 @@ CanvasModulate sets ambient darkness. Lamps and the flashlight add real light. F
 
 Play from New Game, enter the building, collect ammo, return, revisit, and confirm it stays collected. Enter the alley, test combat, return to the bicycle, save to a slot, go to the menu, choose Load game, and verify state. Try the other slots and cancel an overwrite. Save A, collect several items and finish a puzzle, save B, then repeatedly load A/B and check the differences. Try moving, rotating and unequipping the handgun before saving. Try an empty magazine, full pockets, a wrong puzzle answer, locked entrances, death, and retry. Physical sound and standalone exports still need testing on your computer.
 
-`bash tools/check.sh` imports resources and runs gameplay, interface, asset, manual-save, grid-input, aiming, narrative, and combat integration suites. Each suite uses a separate test data directory so your normal saves are not overwritten. `bash tools/check.sh aiming narrative combat` selects the newer feature suites, which work with your current item settings. Older tests still assert original example item values and layouts; intentional designer changes can require updating those test expectations. `tests/capture.tscn` is an optional graphical screenshot helper for Linux. Tests reference the supplied scene/node names, so update the tests if your intentional design changes rename them.
+`bash tools/check.sh` imports resources and runs gameplay, interface, asset, manual-save, grid-input, aiming, narrative, combat, and stealth integration suites. Each suite uses a separate test data directory so your normal saves are not overwritten. `bash tools/check.sh aiming narrative combat stealth` selects the newer feature suites, which work with your current item settings. Older tests still assert original example item values and layouts; intentional designer changes can require updating those test expectations. `tests/capture.tscn` is an optional graphical screenshot helper for Linux. Tests reference the supplied scene/node names, so update the tests if your intentional design changes rename them.

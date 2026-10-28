@@ -20,6 +20,9 @@ atlas = ExtResource("sheet")
 region = Rect2(200, 0, 40, 72)
 [resource]
 animations = [
+{"frames": [{"duration": 1.0, "texture": SubResource("frame_0")}], "loop": true, "name": &"sleep", "speed": 1.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("frame_0")}, {"duration": 1.0, "texture": SubResource("frame_1")}], "loop": false, "name": &"wake", "speed": 4.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("frame_0")}, {"duration": 1.0, "texture": SubResource("frame_1")}, {"duration": 1.0, "texture": SubResource("frame_2")}, {"duration": 1.0, "texture": SubResource("frame_1")}, {"duration": 1.0, "texture": SubResource("frame_0")}], "loop": false, "name": &"attack", "speed": 5.0},
 {"frames": [{"duration": 1.0, "texture": SubResource("frame_0")}], "loop": true, "name": &"idle", "speed": 1.0},
 {"frames": [{"duration": 1.0, "texture": SubResource("frame_0")}, {"duration": 1.0, "texture": SubResource("frame_1")}, {"duration": 1.0, "texture": SubResource("frame_2")}, {"duration": 1.0, "texture": SubResource("frame_3")}, {"duration": 1.0, "texture": SubResource("frame_4")}, {"duration": 1.0, "texture": SubResource("frame_5")}], "loop": true, "name": &"walk", "speed": 7.0},
 {"frames": [{"duration": 1.0, "texture": SubResource("frame_2")}, {"duration": 1.0, "texture": SubResource("frame_0")}], "loop": false, "name": &"hit", "speed": 11.111111},

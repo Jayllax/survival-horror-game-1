@@ -1,5 +1,7 @@
 # Character animation and gun combat
 
+For sleeping enemies, stealth, hearing, sight, searching, and timed enemy attacks, see [ENEMY_AI_GUIDE.md](ENEMY_AI_GUIDE.md).
+
 Open `scenes/levels/combat_sandbox.tscn` and press **F6** to try the framework in Godot **4.7.2 Standard**. It contains a flat street, ammunition, a low passage for crouching, an enemy, and a save bicycle. All objects are authored editor nodes. F5 still starts the existing main menu and town.
 
 The enemy is now an exact palette swap of your player's six walking frames: pale sage skin, plum shirt, charcoal hat, and the same blue trousers. No eyes, claws, extra detail, or silhouette changes were added. The player's artwork is preserved.
@@ -56,15 +58,15 @@ The dodge is a short grounded step of approximately **47 world pixels**, rather 
 
 ## Enemy hit and death animations
 
-The enemy Body has `idle`, `walk`, `hit`, and `death` animations. Keep idle/walk looping; keep hit/death non-looping. Replace frames through the same SpriteFrames editor.
+The enemy Body has `idle`, `walk`, `sleep`, `wake`, `attack`, `hit`, and `death` animations. Keep idle/walk/sleep looping; keep wake/attack/hit/death non-looping. Replace frames through the same SpriteFrames editor.
 
-On the **Enemy root → Hit and Death**, **Hit Reaction Seconds** (0.18) briefly stops movement and attacks after nonlethal gun damage. A second hit restarts the reaction. The `hit` clip is fitted to that duration. The sample uses existing poses and brief color feedback until you add hit artwork.
+On the **Enemy root → Hit and Death**, **Hit Reaction Seconds** (0.18) briefly stops movement and attacks after nonlethal gun damage. A second hit interrupts only when Stagger Cooldown Seconds has expired; damage still applies. See ENEMY_AI_GUIDE.md for attack interruption rules. The `hit` clip is fitted to that duration. The sample uses existing poses and brief color feedback until you add hit artwork.
 
 **Death Seconds** (0.6) controls the death clip duration. **Corpse Linger Seconds** (0.35) holds its last frame before removal. Enable **Leave Corpse** to keep that last pose in the current location. The placeholder death compresses existing art toward the feet; turn that option off when adding a real death animation.
 
 A dying enemy immediately stops attacking, stops taking further damage, and no longer blocks gun rays. Its defeat is recorded immediately, even while its animation is still playing. Bicycle saves include that world flag: a later save restores it as defeated, while an earlier save can restore it alive. Corpses are not restored separately when revisiting a defeated enemy's location. Missing hit/death clips safely use the idle fallback and cannot prevent cleanup.
 
-Enemies still patrol, chase, and deal contact damage on flat ground. They do not navigate jumps. Player melee damage, its arc graphic, and the Q binding have been removed; player combat now uses equipped firearms only.
+Enemies can sleep, patrol, investigate, chase, search, and perform timed attacks on flat ground. Automatic contact damage is removed. They do not navigate jumps. Player melee damage, its arc graphic, and the Q binding have been removed; player combat now uses equipped firearms only.
 
 ## Controls for your tutorial
 
@@ -76,4 +78,4 @@ There are no in-game control lists or keyboard hints on buttons. Nearby world in
 
 Test standing, moving, sprinting, jumping/falling, crouching in and out of the low passage, and a dodge beside a wall. Then shoot the enemy, observe hit/death playback, and save before/after defeat in different bicycle slots. Test entering your actual levels too; their existing camera setups are preserved.
 
-`GODOT_BIN=/path/to/godot bash tools/check.sh aiming narrative combat` runs the current feature suites in isolated save directories. The original five suites still assume the original item settings and layouts; see README's validation notes before running those against designer-edited content.
+`GODOT_BIN=/path/to/godot bash tools/check.sh aiming narrative combat stealth` runs the current feature suites in isolated save directories. The original five suites still assume the original item settings and layouts; see README's validation notes before running those against designer-edited content.

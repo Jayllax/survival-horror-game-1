@@ -23,6 +23,15 @@ extends CharacterBody2D
 ## Disable these once your crouch/dodge frames contain the real poses.
 @export var use_crouch_placeholder_pose: bool = true
 @export var use_dodge_placeholder_pose: bool = true
+@export_group("Stealth Noise")
+@export var walking_noise_radius: float = 135.0
+@export var sprinting_noise_radius: float = 255.0
+@export var crouch_noise_radius: float = 0.0
+@export var landing_noise_radius: float = 200.0
+@export var jump_noise_radius: float = 160.0
+@export var dodge_noise_radius: float = 180.0
+@export var gunshot_noise_radius: float = 850.0
+@export var reload_noise_radius: float = 70.0
 @export_group("")
 var invulnerable_remaining: float = 0.0
 var dodge_remaining: float = 0.0
@@ -35,6 +44,7 @@ var nearest: Area2D
 var feedback_time := 0.0
 var is_crouching := false
 var is_sprinting := false
+var footstep_remaining := 0.0
 var standing_shape: CapsuleShape2D
 var standing_collision_position := Vector2.ZERO
 var standing_aim_position := Vector2.ZERO
@@ -97,6 +107,7 @@ func _physics_process(delta: float) -> void:
     dodge_cooldown = maxf(0.0, dodge_cooldown - delta)
     shot_cooldown = maxf(0.0, shot_cooldown - delta)
     feedback_time = maxf(0.0, feedback_time - delta)
+    footstep_remaining = maxf(0,footstep_remaining-delta)
     body_art.modulate = Color(1.5, 0.6, 0.5) if feedback_time > 0 else Color.WHITE
     muzzle.energy = maxf(0.0, muzzle.energy - delta * 30.0)
     if Game.health <= 0 or Game.transitioning:
@@ -123,6 +134,7 @@ func _physics_process(delta: float) -> void:
     jump_buffer = jump_buffer_seconds if Input.is_action_just_pressed("jump") and not story_jump_held else maxf(0, jump_buffer - delta)
     if jump_buffer > 0 and coyote_remaining > 0 and dodge_remaining <= 0 and not is_crouching:
         velocity.y = jump_velocity
+        Game.emit_noise(global_position,jump_noise_radius,self)
         jump_buffer = 0
         coyote_remaining = 0
     if Input.is_action_just_pressed("dodge"):
@@ -130,7 +142,15 @@ func _physics_process(delta: float) -> void:
     is_sprinting = Input.is_action_pressed("sprint") and direction != 0 and not is_crouching and not Input.is_action_pressed("aim") and dodge_remaining <= 0
     var speed_multiplier := crouch_speed_multiplier if is_crouching else (aiming_move_multiplier if is_aiming() else (sprint_multiplier if is_sprinting else 1.0))
     velocity.x = dodge_direction * dodge_speed if dodge_remaining > 0 else move_toward(velocity.x, direction * move_speed * speed_multiplier, acceleration * delta)
+    var was_grounded := is_on_floor()
+    var fall_speed := velocity.y
     move_and_slide()
+    if not was_grounded and is_on_floor() and fall_speed > 100:
+        Game.emit_noise(global_position,landing_noise_radius,self)
+    if is_on_floor() and absf(get_real_velocity().x) > 10 and footstep_remaining <= 0 and dodge_remaining <= 0:
+        var noise_radius := crouch_noise_radius if is_crouching else (sprinting_noise_radius if is_sprinting else walking_noise_radius)
+        Game.emit_noise(global_position,noise_radius,self)
+        footstep_remaining = 0.5 if is_crouching else (0.2 if is_sprinting else 0.32)
     update_animation()
     if Input.is_action_just_pressed("flashlight"):
         flashlight_light.enabled = not flashlight_light.enabled
@@ -205,6 +225,7 @@ func begin_dodge(direction: float) -> bool:
     invulnerable_remaining = clampf(dodge_invulnerability_seconds,0,dodge_seconds)
     dodge_cooldown = dodge_cooldown_seconds
     jump_buffer = 0
+    Game.emit_noise(global_position,dodge_noise_radius,self)
     return true
 
 func shoot() -> void:
@@ -217,6 +238,7 @@ func shoot() -> void:
     combat_remaining = combat_feedback_seconds
     Game.magazine -= 1
     Game.changed.emit()
+    Game.emit_noise(global_position,gunshot_noise_radius,self)
     $ShotSound.play()
     muzzle.energy = 2.5
     $Aim/Gun.position.x = 15.0
@@ -246,6 +268,7 @@ func reload_weapon() -> void:
         return
     reload_remaining = reload_seconds
     combat_remaining = reload_seconds + 1.0
+    Game.emit_noise(global_position,reload_noise_radius,self)
 
 func take_damage(amount: int) -> void:
     if invulnerable_remaining > 0 or Game.health <= 0 or Game.transitioning:
