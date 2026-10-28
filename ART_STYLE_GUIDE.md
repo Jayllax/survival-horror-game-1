@@ -1,5 +1,7 @@
 # Ignotum / simplified production assets
 
+The newer [house variants](HOUSE_VARIANTS.md) use the current house and its embedded **Sparkle's palette**, with exactly mirrored façades, single side chimneys, and three chimney-free options. They each have one native PNG and a reusable scene that applies 2× scale; the older duplicated source/export convention below does not apply to those new files.
+
 The redesign is now implemented as **individual PNGs used by the game**. `art/pixel/STYLE_SHEET.png` is a contact sheet made from those actual files. The earlier illustration in `art/redesign/` remains a design reference, not the runtime texture atlas.
 
 ## Files to edit
