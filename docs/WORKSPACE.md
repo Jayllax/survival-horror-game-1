@@ -31,3 +31,5 @@ Removed the obsolete generated redesign illustration (about 1.4 MB), its old pro
 Your editable PNG sources, `.pixil` files, scenery/prop kit, audio, levels and font license remain. The original six-frame character PNGs remain as references alongside their native sources; current player/enemy scenes use the new `*_motion.png` atlases. Old source/export pairs for other assets were retained because existing scenes/item resources use those exports and you may still edit their sources. This is not a blanket deletion of assets that happen to be absent from today's town.
 
 Godot's `.png.import`, `.tres`, `.tscn`, and `.gd.uid` files are useful project metadata/resources, not duplicate artwork. Keep them with the associated files. `.godot/` is an ignored generated cache and is not committed. Removed historical generated references remain recoverable from Git history.
+
+The current completed player artwork and untouched uploaded reference are in [art/pixlart/player_animation](../art/pixlart/player_animation/README.md). The [editable animation pack](downloads/Ignotum-completed-player-animations.zip) includes all fourteen player clips.

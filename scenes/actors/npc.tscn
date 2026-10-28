@@ -5,7 +5,7 @@
 [ext_resource type="Resource" path="res://data/narrative/example_repeat.tres" id="repeat"]
 [sub_resource type="AtlasTexture" id="idle"]
 atlas = ExtResource("art")
-region = Rect2(0,200,32,40)
+region = Rect2(0,0,32,40)
 [node name="NPC" type="Area2D"]
 collision_layer = 0
 collision_mask = 0

@@ -1,32 +1,44 @@
 # Character animation and gun combat
 
-For blank native Pixilart projects with frame/ground guides, start with the [animation templates](../../art/templates/characters/README.md). Send back your layered files for integration; the authoring master sheets have one row per animation and are not direct replacements for the current packed atlases.
+For the completed editable player project based on your drawings, open [player_animation/player_motion.pixil](../../art/pixlart/player_animation/player_motion.pixil). The [animation pack](../downloads/Ignotum-completed-player-animations.zip) includes individual Pixilart timeline projects and PNG strips. The [blank animation templates](../../art/templates/characters/README.md) remain available for new drawings.
 
 Open `scenes/levels/combat_sandbox.tscn` with **F6** in Godot **4.7.2 Standard**. Player and enemy use matching simple pixel art, distinct movement/reaction poses and editor-editable **Body → Sprite Frames** resources. F5 starts your main menu and town.
 
 ## Edit the supplied animation atlases
 
-`art/pixel/player_motion.png` and `enemy_motion.png` are each **192×240 native pixels**, arranged **6 columns × 6 rows**, with **32×40 pixels per frame**. They are single editable PNGs, not enlarged export pairs. Keep the padded frame canvas and align feet to its bottom. Body uses **Position (0,32)**, **Offset (0,-20)** and **Scale (2,2)**. One native pixel is two world pixels.
+`art/pixel/player_motion.png` is **192×560 native pixels**, arranged **6 columns × 14 rows**, with **32×40 pixels per frame**. It matches the completed Pixilart master. The enemy remains **192×240**, **6×6**, with the same cell size. These are single native PNGs. Body uses **Position (0,32)**, **Offset (0,-20)** and **Scale (2,2)**; one native pixel is two world pixels.
 
-| Row (top to bottom) | Player atlas | Enemy atlas |
-| --- | --- | --- |
-| 1 | Walk, six frames | Walk, six frames |
-| 2 | Run, six frames | Sleep frames 1–2; wake frames 2–6 |
-| 3 | Crouch walk, six frames | Attack, six frames |
-| 4 | Aim walk torso/legs, arms omitted | Hit reaction, six frames |
-| 5 | Crouch aim walk, arms omitted | Death, six frames |
-| 6 | Idle; crouch idle; jump; fall; dodge; aim idle | Idle breathing, six frames |
+| Player row | Animation |
+| --- | --- |
+| 1 | Idle |
+| 2 | Walk |
+| 3 | Sprint |
+| 4 | Crouch idle |
+| 5 | Crouch walk |
+| 6 | Jump |
+| 7 | Fall |
+| 8 | Dodge |
+| 9 | Aim idle |
+| 10 | Aim walk |
+| 11 | Crouch aim idle |
+| 12 | Crouch aim walk |
+| 13 | Aim jump |
+| 14 | Aim fall |
+
+All player rows have six frames. The initial idle/walk/run drawings and jump/fall entry poses come from your uploaded file, preserved separately in [player_animation/animations-human-made.pixil](../../art/pixlart/player_animation/animations-human-made.pixil). Grounded feet were moved down one native pixel to the frame boundary; the deepest idle bob uses a neighboring authored pose, and the repeated walk/run loop-ending frame has a shorter duration. New poses reuse your hair/face shape, proportions and simple clothing colors. See the [animated preview](../previews/player-animation-review.gif).
+
+Enemy rows are unchanged: walk; sleep/wake; attack; hit; death; idle. The sample NPC atlas region now points to player row 1.
 
 The player has brown **hair**, no hat, and a flat face without a protruding nose. The enemy matches its proportions with green skin and a burgundy shirt. Crouch and death are drawn poses; all temporary pose-compression options are disabled in the supplied scenes.
 
 1. Open `scenes/actors/player.tscn` or `enemy.tscn`, select **Body**, and click **Sprite Frames**.
-2. Select an animation by name. Replace its frames with individual PNGs or **Add frames from a sprite sheet** (6 horizontal, 6 vertical for these atlases).
+2. Select an animation by name. Replace its frames with individual PNGs or **Add frames from a sprite sheet** (6 horizontal × 14 vertical for the player, 6 × 6 for the enemy).
 3. Keep the animation names. Set FPS and Loop, then save the shared `.tres` resource. To vary one enemy, use **Make Unique → Save As** first.
 4. Keep native replacement frames 32×40 if using the supplied Body transform. For already-enlarged 64×80 frames, use Body Scale (1,1) and Offset (0,-40) instead. Keep feet at the bottom.
 
 ## Player states
 
-`idle`, `walk`, `sprint`, `crouch_idle`, `crouch_walk`, `jump`, `fall`, `dodge` are selected by gameplay. Walk, run and crouch use distinct six-frame drawings. Jump, fall and the short dodge currently have dedicated single-pose drawings; add more frames through SpriteFrames for fuller airborne/evasion animation.
+`idle`, `walk`, `sprint`, `crouch_idle`, `crouch_walk`, `jump`, `fall`, `dodge` are selected by gameplay. Walk, run and crouch use distinct six-frame drawings. Jump, fall and the short dodge each have six-frame sequences. Air clips play once and hold; the dodge clip fits the existing action duration.
 
 Aiming uses `aim_idle`, `aim_walk`, `crouch_aim_idle`, `crouch_aim_walk`, `aim_jump`, `aim_fall` when those clips exist. These bodies omit dangling arms so the aim rig can supply them. Missing optional aim clips fall back to their normal state; other missing states fall back to idle. Keep idle present.
 
@@ -46,7 +58,7 @@ The existing gun and flashlight node paths remain `Aim/Gun`, `Aim/Gun/Flashlight
 
 The flashlight **points horizontally in facing direction unless right mouse is held**. Holding right mouse alone enables cursor aim, including when the pistol is unequipped. Animation changes its attachment position, not this direction rule. Its toggle and saved state remain unchanged.
 
-During ordinary movement the beam starts at the drawn hand, following walk/run/crouch/jump/dodge poses. During armed aim it starts beside the pistol barrel and follows recoil. The gun, shoulders and aiming arms follow the animated chest. The supplied sheet also contains sideways drift between frame drawings; per-frame pelvis centers keep the visible body over its physical collider without changing movement or collision.
+During ordinary movement the beam starts at the drawn hand, following walk/run/crouch/jump/dodge poses. During armed aim it starts beside the pistol barrel and follows recoil. The gun, shoulders and aiming arms follow the animated chest. Per-frame attachment tracks have been replaced for the new artwork. Pelvis centers keep the visible body over its physical collider without changing movement or collision.
 
 **Player → WeaponArms → Attachment Profile** references `data/animations/player_attachments.tres`. Open that resource and expand **Tracks**. Each track identifies an animation name and holds native image coordinates measured from the **top-left of a 32×40 frame**:
 
