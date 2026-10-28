@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3]
+[ext_resource type="Script" path="res://scripts/narrative/narrative_interactable.gd" id="script"]
+[ext_resource type="Texture2D" path="res://art/pixel/player.png" id="art"]
+[ext_resource type="Resource" path="res://data/narrative/example_conversation.tres" id="dialogue"]
+[ext_resource type="Resource" path="res://data/narrative/example_repeat.tres" id="repeat"]
+[node name="NPC" type="Area2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("script")
+kind = 1
+dialogue = ExtResource("dialogue")
+repeat_dialogue = ExtResource("repeat")
+prompt_offset = Vector2(0, -62)
+[node name="Body" type="Sprite2D" parent="."]
+position = Vector2(0, -3)
+modulate = Color(0.72, 0.86, 0.90, 1)
+texture = ExtResource("art")
+hframes = 6

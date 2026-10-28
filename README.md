@@ -4,7 +4,7 @@ A desktop Godot 4 side-view survival-horror foundation with original pixel art. 
 
 ## Open and play
 
-Use **Godot 4.4+ Standard edition** (validated on 4.4.1 and 4.6.3). Import `project.godot` and press **F5**. No plugins or .NET installation required.
+Use **Godot 4.7.2 Standard edition**. Import `project.godot` and press **F5**. No plugins or .NET installation required.
 
 | Control | Action |
 | --- | --- |
@@ -32,6 +32,8 @@ The redesign is implemented as **29 individual production sprite PNGs**: 28 scen
 `art/pixel/STYLE_SHEET.png` shows the actual assets now used by the project. See [ART_STYLE_GUIDE.md](ART_STYLE_GUIDE.md) for native sizes and the exact 2× pixel workflow. The earlier illustrated sheet is only an art reference.
 
 ## Exploration and inventory
+
+Environmental notes and NPC dialogue are available as reusable editor scenes. Try `scenes/levels/story_sandbox.tscn` with F6; see [NARRATIVE_GUIDE.md](NARRATIVE_GUIDE.md) for writing notes, selecting colored speakers, creating conversations, and replacing the NPC stand-in art. The existing town and main menu remain the normal starting point.
 
 Exploration has no fixed HUD panels, logo, controls strip, or permanent crosshair. Health briefly appears after damage (and remains subtly visible when critical). Hold right mouse to draw the equipped gun, aim with the cursor, and move carefully; left click fires while aiming. Release right mouse to holster the gun and point the flashlight in the last walking direction. The crosshair appears only while aiming; ammunition also appears briefly after firing or during reload. Controls are available from Pause → Controls.
 
@@ -71,6 +73,8 @@ Bicycle save menu:
 bash tools/check.sh
 ```
 
-This imports resources and runs five integration suites in isolated user-data folders. Gameplay checks cover movement, combat, exact 0.5-second dodge, puzzles, persistent world state, and transitions. Interface checks cover quiet HUD, inspection, healing and recipes. Asset checks cover imported textures. Manual-save checks repeatedly switch between files containing different actual pickups, puzzle completion, gates, enemy state, health, layout, capacity and equipment. Grid checks use real mouse/key events for drag, rotation, canceled/invalid drops, stack merging and equipment; they also cover fragmentation, independent weapon magazines, snapshot validation and upgrade hooks. All suites must finish with zero failures; script/resource errors are failures even if Godot returns zero.
+This imports resources and runs seven integration suites in isolated user-data folders. Gameplay checks cover movement, combat, exact 0.5-second dodge, puzzles, persistent world state, and transitions. Interface checks cover quiet HUD, inspection, healing and recipes. Asset checks cover imported textures. Manual-save checks repeatedly switch between files containing different actual pickups, puzzle completion, gates, enemy state, health, layout, capacity and equipment. Grid checks use real mouse/key events for drag, rotation, canceled/invalid drops, stack merging and equipment; they also cover fragmentation, independent weapon magazines, snapshot validation and upgrade hooks. Aiming checks cover holstering and flashlight direction. Narrative checks cover notes, colored speakers, reveal/advance/cancel controls, repeat dialogue, and independent saved progress. All suites must finish with zero failures; script/resource errors are failures even if Godot returns zero.
+
+The original five suites assume the original template's item names, starting ammunition, stack sizes, and example layouts. Your later designer settings intentionally differ. The narrative and aiming suites work with the current settings: run `bash tools/check.sh aiming narrative` to check these features without changing your item data. The full original regression suite was also checked separately with its original test settings.
 
 With a graphical display, `godot --path . res://tests/capture.tscn` writes screenshots to `/tmp/ignotum-*.png`. The example layouts now include your revisions from `human-changes`. Physical audio output, standalone exports, and other operating systems have not been tested. The Silkscreen UI font is distributed under its included OFL license in `art/fonts/`; game artwork and sounds were created for this project.

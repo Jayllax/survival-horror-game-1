@@ -29,6 +29,9 @@ var coyote_remaining := 0.0
 var jump_buffer := 0.0
 var combat_remaining := 0.0
 var weapon_uid := -2
+var story_interact_held := false
+var story_shoot_held := false
+var story_jump_held := false
 @export var combat_feedback_seconds: float = 1.8
 @export_range(0.1, 1.0) var aiming_move_multiplier: float = 0.55
 @onready var body_art: Sprite2D = $Body
@@ -60,6 +63,12 @@ func sync_weapon() -> void:
         reload_seconds = definition.reload_seconds
 
 func _physics_process(delta: float) -> void:
+    if not Input.is_action_pressed("interact"):
+        story_interact_held = false
+    if not Input.is_action_pressed("shoot"):
+        story_shoot_held = false
+    if not Input.is_action_pressed("jump"):
+        story_jump_held = false
     combat_remaining = maxf(0, combat_remaining - delta)
     invulnerable_remaining = maxf(0.0, invulnerable_remaining - delta)
     dodge_remaining = maxf(0.0, dodge_remaining - delta)
@@ -94,7 +103,7 @@ func _physics_process(delta: float) -> void:
     if not is_on_floor():
         velocity.y += gravity * delta
     coyote_remaining = coyote_seconds if is_on_floor() else maxf(0, coyote_remaining - delta)
-    jump_buffer = jump_buffer_seconds if Input.is_action_just_pressed("jump") else maxf(0, jump_buffer - delta)
+    jump_buffer = jump_buffer_seconds if Input.is_action_just_pressed("jump") and not story_jump_held else maxf(0, jump_buffer - delta)
     if jump_buffer > 0 and coyote_remaining > 0 and dodge_remaining <= 0:
         velocity.y = jump_velocity
         jump_buffer = 0
@@ -115,8 +124,13 @@ func _physics_process(delta: float) -> void:
     if Input.is_action_just_pressed("melee"):
         melee()
     update_interaction()
-    if Input.is_action_just_pressed("interact") and is_instance_valid(nearest):
+    if Input.is_action_just_pressed("interact") and not story_interact_held and is_instance_valid(nearest):
         nearest.interact(self)
+
+func suppress_story_exit_input() -> void:
+    story_interact_held = Input.is_action_pressed("interact")
+    story_shoot_held = Input.is_action_pressed("shoot")
+    story_jump_held = Input.is_action_pressed("jump")
 
 func update_aim(direction: float) -> void:
     # Keep the Gun node active: its light children also work while holstered.
@@ -137,7 +151,7 @@ func begin_dodge(direction: float) -> void:
     dodge_cooldown = 1.05
 
 func shoot() -> void:
-    if not Input.is_action_pressed("aim") or not Game.has_equipped_weapon() or shot_cooldown > 0 or reload_remaining > 0 or dodge_remaining > 0:
+    if story_shoot_held or not Input.is_action_pressed("aim") or not Game.has_equipped_weapon() or shot_cooldown > 0 or reload_remaining > 0 or dodge_remaining > 0:
         return
     shot_cooldown = shot_interval
     if Game.magazine <= 0:

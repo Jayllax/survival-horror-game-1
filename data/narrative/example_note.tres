@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="NoteDocument" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/narrative/note_document.gd" id="script"]
+[resource]
+script = ExtResource("script")
+title = "NOTE TEMPLATE"
+text = "Write your note here.
+
+This resource is placeholder content for the note reader. Replace the title and text in the Inspector. Notes can contain multiple paragraphs; scroll to read longer documents."

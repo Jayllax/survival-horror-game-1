@@ -15,6 +15,7 @@ var interaction_target: Area2D
 var puzzle_target: Area2D
 var dials := Vector3i(1, 1, 1)
 @onready var root: Control = $Root
+@onready var story_ui: Control = $StoryUI
 
 func _ready() -> void:
     process_mode = Node.PROCESS_MODE_ALWAYS
@@ -26,6 +27,7 @@ func _ready() -> void:
     $Root/PausePanel/Resume.pressed.connect(toggle_pause)
     $Root/PausePanel/Retry.pressed.connect(open_load_menu)
     $SaveMenu.closed.connect(on_save_menu_closed)
+    story_ui.closed.connect(on_story_closed)
     $Root/PausePanel/Menu.pressed.connect(back_to_menu)
     $Root/InventoryPanel/Use.pressed.connect(use_selected)
     $Root/InventoryPanel/Combine.pressed.connect(begin_combine)
@@ -49,7 +51,7 @@ func _exit_tree() -> void:
 func _process(delta: float) -> void:
     var playing: bool = not get_tree().paused and not Game.transitioning
     Input.mouse_mode = Input.MOUSE_MODE_HIDDEN if playing else Input.MOUSE_MODE_VISIBLE
-    $Root/Backdrop.visible = any_panel_open()
+    $Root/Backdrop.visible = any_panel_open() and not story_ui.is_dialogue()
     var player := get_tree().get_first_node_in_group("player")
     var combat: bool = playing and player != null and player.is_showing_combat_feedback()
     $Root/Crosshair.visible = playing and player != null and player.is_aiming()
@@ -72,6 +74,9 @@ func _process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
     if Game.transitioning or $SaveMenu.is_open():
+        return
+    if story_ui.is_open():
+        story_ui.handle_input(event)
         return
     if event.is_echo():
         if $Root/InventoryPanel.visible and event.is_action("inventory"):
@@ -97,6 +102,8 @@ func _input(event: InputEvent) -> void:
         get_viewport().set_input_as_handled()
 
 func any_panel_open() -> bool:
+    if story_ui.is_open():
+        return true
     for path in ["PausePanel", "InventoryPanel", "NotePanel", "PuzzlePanel", "ControlsPanel"]:
         if root.get_node(path).visible:
             return true
@@ -105,6 +112,7 @@ func any_panel_open() -> bool:
 func close_panels() -> void:
     if Game.health <= 0:
         return
+    story_ui.close()
     combining_uid = -1
     $Root/InventoryPanel/Grid.combining = false
     $Root/InventoryPanel/Grid.cancel_drag()
@@ -214,6 +222,7 @@ func refresh() -> void:
         selected_uid = int(Game.inventory.entries[0]["uid"]) if not Game.inventory.entries.is_empty() else -1
     update_selection()
     if Game.health <= 0:
+        story_ui.close()
         for path in ["InventoryPanel", "NotePanel", "PuzzlePanel", "ControlsPanel"]:
             root.get_node(path).hide()
         $Root/PausePanel.show()
@@ -267,6 +276,23 @@ func show_note(text: String) -> void:
     $Root/NotePanel/Text.text = text
     $Root/NotePanel.show()
     get_tree().paused = true
+
+func show_story_note(document: NoteDocument, source: Node) -> bool:
+    if any_panel_open() or $SaveMenu.is_open():
+        return false
+    return story_ui.open_note(document, source)
+
+func show_dialogue(sequence: DialogueSequence, source: Node) -> bool:
+    if any_panel_open() or $SaveMenu.is_open():
+        return false
+    return story_ui.open_dialogue(sequence, source)
+
+func on_story_closed() -> void:
+    # A closing E/click must not reach the resumed player's polled actions.
+    var player := get_tree().get_first_node_in_group("player")
+    if player:
+        player.suppress_story_exit_input()
+    set_interaction(null)
 
 func show_puzzle(target: Area2D) -> void:
     puzzle_target = target

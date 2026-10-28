@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="DialogueSpeaker" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/narrative/dialogue_speaker.gd" id="script"]
+[resource]
+script = ExtResource("script")
+display_name = "Player"
+text_color = Color(0.8, 0.73, 0.60, 1)

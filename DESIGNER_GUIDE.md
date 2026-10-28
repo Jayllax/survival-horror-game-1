@@ -1,8 +1,10 @@
 # Ignotum / designer guide
 
+For editable environmental notes, colored speakers, and NPC conversations, see [NARRATIVE_GUIDE.md](NARRATIVE_GUIDE.md). Open `scenes/levels/story_sandbox.tscn` and press F6 to try the framework without changing your town.
+
 ## Your starting point
 
-Import `project.godot` with Godot 4.4+ Standard, open `scenes/levels/town.tscn`, choose **2D**, and press **F6** to test. **F5** starts the main menu. Stop with F8 before editing. The game has no story progression requirement or ending. You own the writing and campaign structure.
+Import `project.godot` with Godot 4.7.2 Standard, open `scenes/levels/town.tscn`, choose **2D**, and press **F6** to test. **F5** starts the main menu. Stop with F8 before editing. The game has no story progression requirement or ending. You own the writing and campaign structure.
 
 The supplied first street links to a small ground-floor interior and service alley to demonstrate entrances. The alley includes one enemy for testing combat; delete its instance if you want a peaceful blockout. All objects are visible in the editor, including every destination and spawn marker.
 
@@ -176,4 +178,4 @@ CanvasModulate sets ambient darkness. Lamps and the flashlight add real light. F
 
 Play from New Game, enter the building, collect ammo, return, revisit, and confirm it stays collected. Enter the alley, test combat, return to the bicycle, save to a slot, go to the menu, choose Load game, and verify state. Try the other slots and cancel an overwrite. Save A, collect several items and finish a puzzle, save B, then repeatedly load A/B and check the differences. Try moving, rotating and unequipping the handgun before saving. Try an empty magazine, full pockets, a wrong puzzle answer, locked entrances, death, and retry. Physical sound and standalone exports still need testing on your computer.
 
-`bash tools/check.sh` imports resources and runs gameplay, interface, asset, manual-save and grid-input integration suites. Each suite uses a separate test data directory so your normal saves are not overwritten. `tests/capture.tscn` is an optional graphical screenshot helper for Linux. Tests reference the supplied scene/node names, so update the tests if your intentional design changes rename them.
+`bash tools/check.sh` imports resources and runs gameplay, interface, asset, manual-save, grid-input, aiming, and narrative integration suites. Each suite uses a separate test data directory so your normal saves are not overwritten. `bash tools/check.sh aiming narrative` selects the newer feature suites, which work with your current item settings. Older tests still assert original example item values and layouts; intentional designer changes can require updating those test expectations. `tests/capture.tscn` is an optional graphical screenshot helper for Linux. Tests reference the supplied scene/node names, so update the tests if your intentional design changes rename them.
