@@ -1,5 +1,7 @@
 # Character animation and gun combat
 
+For blank native Pixilart projects with frame/ground guides, start with the [animation templates](../../art/templates/characters/README.md). Send back your layered files for integration; the authoring master sheets have one row per animation and are not direct replacements for the current packed atlases.
+
 Open `scenes/levels/combat_sandbox.tscn` with **F6** in Godot **4.7.2 Standard**. Player and enemy use matching simple pixel art, distinct movement/reaction poses and editor-editable **Body → Sprite Frames** resources. F5 starts your main menu and town.
 
 ## Edit the supplied animation atlases

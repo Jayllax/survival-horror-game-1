@@ -6,6 +6,8 @@ Your October 28 upload's alley, interiors, player speed/jump, camera, lighting a
 
 ## Start here
 
+Drawing your own animations? Use the [Pixilart templates and instructions](art/templates/characters/README.md), or [download the template pack](docs/downloads/Ignotum-animation-templates.zip). These are blank authoring files; current game artwork is unchanged.
+
 - [DESIGNER_GUIDE.md](DESIGNER_GUIDE.md): build levels, connect entrances, place items, puzzles and bicycle saves.
 - [Character guide](docs/guides/CHARACTER_GUIDE.md): native atlas rows, animation names, aiming arms and movement settings.
 - [Fence guide](docs/guides/FENCE_GUIDE.md): tool-gated paths, permanent barriers, both viewpoints and saved openings.

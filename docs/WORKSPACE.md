@@ -13,6 +13,8 @@
 | `art/pixel/` | Game PNGs; new motion atlases and fences are single native files |
 | `art/pixel/source/` | Preserved older native source drawings, including the original character reference |
 | `art/pixlart/` | Your editable `.pixil` working files |
+| `art/templates/characters/` | Blank layered Pixilart animation templates, excluded from runtime import |
+| `docs/downloads/` | Downloadable animation-template pack |
 | `art/pixel/ignotum.gpl` | Current Sparkle's palette from your house source |
 | `audio/` | Sound files |
 | `docs/guides/` | Focused art, characters, fences, AI, narrative and house guides |
