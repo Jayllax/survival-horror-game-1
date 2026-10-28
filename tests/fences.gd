@@ -104,6 +104,9 @@ func run() -> void:
     await frames(ceili(side.cut_seconds*60)+5)
     check(side.opened and side.get_node("Barrier/CollisionShape2D").disabled and is_equal_approx(side.get_node("LeftPanel").rotation,PI/2),"End-view fence folds down and opens with the same reusable tool")
     player.shot_cooldown=0
+    # Physics is intentionally frozen in this ray fixture; restore its horizontal
+    # shot after the render-time aim rig followed the cursor during the cut.
+    player.aim.rotation=0
     player.shoot()
     check(foe.health==foe.max_health-player.bullet_damage and Game.magazine==0,"The same shot can reach its target after the narrow fence is cut")
     Input.action_release("aim")

@@ -30,7 +30,7 @@ These are separate demonstrations; they do not overwrite your levels. New fence 
 
 ## Existing systems
 
-Hold right mouse to draw and aim an equipped gun; release to holster. The independent flashlight follows aim while held, and walking direction otherwise. The arms follow the grip points in both standing and crouched aim. Gunshots stop at fences/walls even if the barrel visually extends past a thin obstruction.
+Hold right mouse to draw and aim an equipped gun; release to holster. The independent flashlight follows aim while held, and walking direction otherwise. The arms follow the grip points in both standing and crouched aim. Frame-specific attachments keep the handheld flashlight aligned during walk/run/crouch poses and place it at the barrel during armed aim; body frame alignment keeps the hips over the collider. Gunshots stop at fences/walls even if the barrel visually extends past a thin obstruction.
 
 The 8×4 inventory supports dragging, rotation, stacking, equipping and per-weapon magazines. Larger item footprints and future inventory upgrades are supported. Starting item quantities and definitions retain your settings. UI stays quiet; world pickups show only a nearby generic action, and item identity is read in the inventory. No control legends were added to the game.
 

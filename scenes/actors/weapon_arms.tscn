@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 [ext_resource type="Script" path="res://scripts/weapon_arms.gd" id="script"]
+[ext_resource type="Resource" path="res://data/animations/player_attachments.tres" id="attachments"]
 [node name="WeaponArms" type="Node2D"]
 visible = false
 script = ExtResource("script")
+attachment_profile = ExtResource("attachments")
 [node name="Far" type="Node2D" parent="."]
 [node name="Upper" type="Polygon2D" parent="Far"]
 polygon = PackedVector2Array(0,-2,1,-2,1,2,0,2)

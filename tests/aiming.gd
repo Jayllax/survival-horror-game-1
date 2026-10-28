@@ -93,6 +93,8 @@ func run() -> void:
     target_angle = (player.get_global_mouse_position() - player.aim.global_position).angle()
     check(not Game.has_equipped_weapon() and gun.texture == null and is_equal_approx(player.aim.rotation, target_angle), "Unarmed right mouse still aims the flashlight without drawing a weapon")
     check(not hud.get_node("Root/Crosshair").visible, "Unarmed flashlight aiming does not show weapon feedback")
+    var beam_direction := Vector2.RIGHT.rotated(light.global_rotation)
+    check(beam_direction.distance_to((player.get_global_mouse_position()-light.global_position).normalized())<0.001, "Unarmed flashlight aims at the cursor from its animated hand, rather than the old chest position")
     var was_enabled := light.enabled
     Input.action_press("flashlight")
     await frames(2)

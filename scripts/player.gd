@@ -215,18 +215,19 @@ func update_animation() -> void:
     elif dodge_remaining > 0 and use_dodge_placeholder_pose:
         pose_scale = 0.8
     body_art.scale.y = standing_art_scale.y * pose_scale
+    $WeaponArms.update_pose()
 
 func update_aim(_direction: float) -> void:
     # Keep the Gun node active: its light children also work while holstered.
     var aiming := Input.is_action_pressed("aim")
     aim.rotation = (get_global_mouse_position() - aim.global_position).angle() if aiming else (PI if facing < 0 else 0.0)
     $Aim/Gun.flip_v = cos(aim.rotation) < 0
-    flashlight_light.position.y = -4 if $Aim/Gun.flip_v else 4
     if aiming:
         facing = -1.0 if cos(aim.rotation) < 0 else 1.0
     body_art.flip_h = facing < 0
     var definition := Game.active_weapon()
     $Aim/Gun.texture = definition.weapon_texture if definition and aiming and dodge_remaining <= 0 else null
+    $WeaponArms.update_pose()
 
 func begin_dodge(direction: float) -> bool:
     if not is_on_floor() or is_crouching or dodge_cooldown > 0 or dodge_remaining > 0 or Game.health <= 0 or Game.transitioning:

@@ -40,6 +40,24 @@ Select **WeaponArms** to tune **Near/Far Shoulder**, **Crouch Shoulder Offset**,
 
 The existing gun and flashlight node paths remain `Aim/Gun`, `Aim/Gun/Flashlight` and `Aim/Gun/Muzzle`, preserving firing and Godot lighting. The Gun node remains active when its texture is hidden so its light children still work. The arm rig only changes presentation, not ammunition or damage.
 
+## Keep the flashlight and arms aligned with new frames
+
+The flashlight **points horizontally in facing direction unless right mouse is held**. Holding right mouse alone enables cursor aim, including when the pistol is unequipped. Animation changes its attachment position, not this direction rule. Its toggle and saved state remain unchanged.
+
+During ordinary movement the beam starts at the drawn hand, following walk/run/crouch/jump/dodge poses. During armed aim it starts beside the pistol barrel and follows recoil. The gun, shoulders and aiming arms follow the animated chest. The supplied sheet also contains sideways drift between frame drawings; per-frame pelvis centers keep the visible body over its physical collider without changing movement or collision.
+
+**Player → WeaponArms → Attachment Profile** references `data/animations/player_attachments.tres`. Open that resource and expand **Tracks**. Each track identifies an animation name and holds native image coordinates measured from the **top-left of a 32×40 frame**:
+
+- **Body Centers**: horizontal pelvis center for each frame. This aligns the drawing over the collider; feet retain the authored vertical baseline.
+- **Aim Origins**: chest points for each frame. These position the aim pivot and shoulder rig together.
+- **Flashlight Hands**: hand points for holstered/unarmed frames. Armed torso clips omit these because the light follows the gun barrel instead.
+
+The profile's **Reference Aim Position** is the original player-local baseline (0,-9); keep it unless intentionally recalibrating the rig. Entry 0 belongs to frame 0 in that animation's SpriteFrames list, regardless of where its texture sits in the atlas. The profile updates immediately as animation frames change and mirrors the coordinates automatically when facing left. Do not create separate left-facing tracks. If an animation has more frames than its point list, it safely holds the last entry; add matching entries when authoring the new poses. Missing tracks use the original fixed attachment fallback.
+
+To tune a future redraw, change these point lists while keeping the animation names. **Body Position (0,32)** remains the editor base; runtime alignment adjusts its X per frame. Keep character artwork and attachment data together when sharing changes. No PNG editing or automatic color-based detection happens during gameplay.
+
+On WeaponArms, **Handheld Flashlight Offset** adds a small world-pixel offset from the hand, default (2,0), mirrored by facing. **Barrel Flashlight Offset** is gun-local, default (14,4), mirrored vertically with the drawn gun. Those fields control the light's position during play; manually moving the PointLight2D position alone will be superseded. Its Energy, Color, Texture, Texture Scale and forward beam texture Offset are still ordinary Godot lighting settings.
+
 ## Movement tuning
 
 Your uploaded player scene retains **Move Speed 125**, **Jump Velocity -200**, camera offset **(0,-110)**, zoom **(1.4,1.4)** and your camera limit settings. These can be overridden per scene as before. Other root settings include acceleration, gravity, jump buffering and coyote time.

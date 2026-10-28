@@ -37,6 +37,7 @@ func run() -> void:
     var idle_image: Image=sprite_frames.get_frame_texture(&"idle",0).get_image()
     check(crouch_image.get_used_rect().size.y<idle_image.get_used_rect().size.y,"Crouch has an actual lower drawn pose without shrinking the head via scale")
     player.set_physics_process(false)
+    verify_motion_attachments(player)
     Input.action_press("aim")
     for crouched in [false,true]:
         player.is_crouching=crouched
@@ -95,3 +96,79 @@ func run() -> void:
     await frames(6)
     print("IGNOTUM CHARACTER ART: %d checks, %d failures" % [checks,failures])
     get_tree().quit(0 if failures==0 else 1)
+
+# Check the actual rendered pixels, not just equality with the attachment data.
+func native_pixel(body: AnimatedSprite2D, world_point: Vector2) -> Color:
+    var texture := body.sprite_frames.get_frame_texture(body.animation,body.frame)
+    var point := body.to_local(world_point)-body.offset
+    point *= Vector2(-1 if body.flip_h else 1,-1 if body.flip_v else 1)
+    if body.centered:
+        point += texture.get_size()/2
+    var pixel := Vector2i(floori(point.x),floori(point.y))
+    if pixel.x<0 or pixel.y<0 or pixel.x>=texture.get_width() or pixel.y>=texture.get_height():
+        return Color.TRANSPARENT
+    return texture.get_image().get_pixelv(pixel)
+
+func verify_motion_attachments(player: CharacterBody2D) -> void:
+    var body: AnimatedSprite2D=player.get_node("Body")
+    var rig: Node2D=player.get_node("WeaponArms")
+    var light: PointLight2D=player.get_node("Aim/Gun/Flashlight")
+    var gun: Sprite2D=player.get_node("Aim/Gun")
+    var original_position:=player.position
+    var original_collision: Vector2=player.get_node("CollisionShape2D").position
+    for facing in [1.0,-1.0]:
+        player.facing=facing
+        body.flip_h=facing<0
+        rig.update_pose()
+        for clip in [&"idle",&"walk",&"sprint",&"crouch_idle",&"crouch_walk",&"jump",&"fall",&"dodge"]:
+            body.play_state(clip)
+            body.pause()
+            var hand_aligned:=true
+            var direction_correct:=true
+            for frame in body.sprite_frames.get_frame_count(clip):
+                body.frame=frame
+                # Frame signals update attachment transforms synchronously, even with physics stopped.
+                var hand_world: Vector2=light.global_position-Vector2(rig.handheld_flashlight_offset.x*facing,rig.handheld_flashlight_offset.y)
+                var pixel:=native_pixel(body,hand_world)
+                hand_aligned=hand_aligned and (pixel.is_equal_approx(Color("ccbb98")) or pixel.is_equal_approx(Color("b0866c")))
+                var direction:=Vector2.RIGHT.rotated(light.global_rotation)
+                direction_correct=direction_correct and direction.distance_to(Vector2(facing,0))<0.001
+            check(hand_aligned and direction_correct,"Every %s frame keeps the light on a drawn hand and facing horizontally (%s)" % [clip,facing])
+    check(player.position==original_position and player.get_node("CollisionShape2D").position==original_collision,"Animation attachment alignment never moves the physics body or collision")
+    Input.action_press("aim")
+    player.sync_weapon()
+    var shoulders_aligned:=true
+    var barrel_aligned:=true
+    var hands_aligned:=true
+    for facing in [1.0,-1.0]:
+        player.facing=facing
+        body.flip_h=facing<0
+        # Supply actual cursor events for both sides while the clips advance.
+        var event:=InputEventMouseMotion.new()
+        event.position=get_viewport().get_canvas_transform()*(player.global_position+Vector2(180*facing,-100))
+        event.global_position=event.position
+        Input.parse_input_event(event)
+        rig.update_pose()
+        for clip in [&"aim_idle",&"aim_walk",&"crouch_aim_idle",&"crouch_aim_walk",&"aim_jump",&"aim_fall"]:
+            body.play_state(clip)
+            body.pause()
+            for frame in body.sprite_frames.get_frame_count(clip):
+                body.frame=frame
+                rig.update_pose()
+                for arm_name in ["Near","Far"]:
+                    var shoulder: Vector2=rig.get_node(arm_name+"/Upper").global_position
+                    shoulders_aligned=shoulders_aligned and native_pixel(body,shoulder).is_equal_approx(Color("8f6c61"))
+                var mirror:=Vector2(1,-1 if gun.flip_v else 1)
+                barrel_aligned=barrel_aligned and light.global_position.distance_to(gun.to_global(Vector2(14,4)*mirror))<0.01
+                hands_aligned=hands_aligned and rig.get_node("Near/Hand").global_position.distance_to(gun.to_global(rig.near_grip*mirror))<0.01
+    check(shoulders_aligned,"Aiming arms attach to drawn shirt pixels throughout every armed animation")
+    check(barrel_aligned and hands_aligned,"Moving aimed poses keep both the beam on the barrel and hand on the grip")
+    var profile: CharacterAttachmentProfile=rig.attachment_profile
+    rig.attachment_profile=null
+    rig.update_pose()
+    check(light.global_position.is_finite() and player.aim.position.is_finite(),"Custom art without an attachment profile keeps a safe fixed-position fallback")
+    rig.attachment_profile=profile
+    player.facing=1
+    body.flip_h=false
+    Input.action_release("aim")
+    player.update_aim(0)

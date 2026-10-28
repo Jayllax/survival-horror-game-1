@@ -1,0 +1,84 @@
+[gd_resource type="Resource" script_class="CharacterAttachmentProfile" format=3]
+[ext_resource type="Script" path="res://scripts/animation/character_attachment_profile.gd" id="profile"]
+[ext_resource type="Script" path="res://scripts/animation/character_attachment_track.gd" id="track"]
+[sub_resource type="Resource" id="idle"]
+script = ExtResource("track")
+animation = &"idle"
+body_centers = PackedFloat32Array(15.5)
+aim_origins = PackedVector2Array(15.5, 20.5)
+flashlight_hands = PackedVector2Array(20.5, 27.5)
+[sub_resource type="Resource" id="walk"]
+script = ExtResource("track")
+animation = &"walk"
+body_centers = PackedFloat32Array(15.5, 13.5, 12.5, 9.5, 8.5, 7.5)
+aim_origins = PackedVector2Array(14.5, 22.5, 13.0, 21.5, 11.0, 21.5, 9.5, 20.5, 7.0, 20.5, 6.0, 21.5)
+flashlight_hands = PackedVector2Array(22.5, 27.5, 18.5, 27.5, 7.5, 26.5, 16.5, 26.5, 13.5, 25.5, 2.5, 27.5)
+[sub_resource type="Resource" id="sprint"]
+script = ExtResource("track")
+animation = &"sprint"
+body_centers = PackedFloat32Array(16.0, 17.5, 16.0, 13.0, 11.5, 11.5)
+aim_origins = PackedVector2Array(18.0, 20.5, 19.5, 20.5, 18.0, 19.5, 15.0, 19.5, 14.5, 21.5, 13.5, 19.5)
+flashlight_hands = PackedVector2Array(25.5, 22.5, 26.5, 22.5, 25.5, 21.5, 22.5, 23.5, 21.5, 22.5, 23.5, 21.5)
+[sub_resource type="Resource" id="crouch_idle"]
+script = ExtResource("track")
+animation = &"crouch_idle"
+body_centers = PackedFloat32Array(13.5)
+aim_origins = PackedVector2Array(16.0, 29.5)
+flashlight_hands = PackedVector2Array(21.5, 31.5)
+[sub_resource type="Resource" id="crouch_walk"]
+script = ExtResource("track")
+animation = &"crouch_walk"
+body_centers = PackedFloat32Array(16.0, 15.5, 13.5, 12.5, 11.5, 11.5)
+aim_origins = PackedVector2Array(17.5, 27.5, 16.5, 27.5, 15.5, 27.5, 14.5, 27.5, 13.0, 26.5, 13.0, 27.5)
+flashlight_hands = PackedVector2Array(23.5, 29.5, 22.5, 29.5, 21.5, 29.5, 20.5, 29.5, 19.5, 28.5, 19.5, 29.5)
+[sub_resource type="Resource" id="jump"]
+script = ExtResource("track")
+animation = &"jump"
+body_centers = PackedFloat32Array(15.0)
+aim_origins = PackedVector2Array(13.0, 21.5)
+flashlight_hands = PackedVector2Array(7.5, 28.5)
+[sub_resource type="Resource" id="fall"]
+script = ExtResource("track")
+animation = &"fall"
+body_centers = PackedFloat32Array(12.0)
+aim_origins = PackedVector2Array(10.0, 20.5)
+flashlight_hands = PackedVector2Array(30.5, 35.5)
+[sub_resource type="Resource" id="dodge"]
+script = ExtResource("track")
+animation = &"dodge"
+body_centers = PackedFloat32Array(15.5)
+aim_origins = PackedVector2Array(5.0, 29.5)
+flashlight_hands = PackedVector2Array(0.5, 35.5)
+[sub_resource type="Resource" id="aim_idle"]
+script = ExtResource("track")
+animation = &"aim_idle"
+body_centers = PackedFloat32Array(10.5)
+aim_origins = PackedVector2Array(9.5, 17.5)
+[sub_resource type="Resource" id="aim_walk"]
+script = ExtResource("track")
+animation = &"aim_walk"
+body_centers = PackedFloat32Array(15.5, 14.5, 12.5, 12.5, 12.5, 12.5)
+aim_origins = PackedVector2Array(15.5, 21.5, 12.5, 21.5, 11.5, 21.5, 13.0, 21.5, 12.0, 20.5, 10.5, 22.5)
+[sub_resource type="Resource" id="crouch_aim_idle"]
+script = ExtResource("track")
+animation = &"crouch_aim_idle"
+body_centers = PackedFloat32Array(15.5)
+aim_origins = PackedVector2Array(17.5, 28.5)
+[sub_resource type="Resource" id="crouch_aim_walk"]
+script = ExtResource("track")
+animation = &"crouch_aim_walk"
+body_centers = PackedFloat32Array(15.5, 13.5, 13.5, 12.5, 11.0, 10.5)
+aim_origins = PackedVector2Array(17.5, 28.5, 16.0, 27.5, 16.0, 27.5, 15.0, 26.5, 13.0, 26.5, 12.5, 27.5)
+[sub_resource type="Resource" id="aim_jump"]
+script = ExtResource("track")
+animation = &"aim_jump"
+body_centers = PackedFloat32Array(12.5)
+aim_origins = PackedVector2Array(11.5, 21.5)
+[sub_resource type="Resource" id="aim_fall"]
+script = ExtResource("track")
+animation = &"aim_fall"
+body_centers = PackedFloat32Array(12.5)
+aim_origins = PackedVector2Array(12.0, 20.5)
+[resource]
+script = ExtResource("profile")
+tracks = Array[ExtResource("track")]([SubResource("idle"), SubResource("walk"), SubResource("sprint"), SubResource("crouch_idle"), SubResource("crouch_walk"), SubResource("jump"), SubResource("fall"), SubResource("dodge"), SubResource("aim_idle"), SubResource("aim_walk"), SubResource("crouch_aim_idle"), SubResource("crouch_aim_walk"), SubResource("aim_jump"), SubResource("aim_fall")])
