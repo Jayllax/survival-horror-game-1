@@ -11,7 +11,8 @@ Use **Godot 4.7.2 Standard edition**. Import `project.godot` and press **F5**. N
 | A/D or arrows | Move |
 | Space / W | Jump (buffered, with coyote time) |
 | Right mouse / left click | Hold to aim / fire while aiming |
-| R / Q / Alt | Reload / melee / dodge |
+| R / Alt | Reload / short dodge |
+| Shift / Ctrl, S, Down | Sprint / hold to crouch |
 | E | Collect, examine, operate, or enter |
 | F | Flashlight (also works while unarmed) |
 | Drag / R in inventory | Move / rotate items |
@@ -31,13 +32,17 @@ The redesign is implemented as **29 individual production sprite PNGs**: 28 scen
 
 `art/pixel/STYLE_SHEET.png` shows the actual assets now used by the project. See [ART_STYLE_GUIDE.md](ART_STYLE_GUIDE.md) for native sizes and the exact 2× pixel workflow. The earlier illustrated sheet is only an art reference.
 
+## Character movement and combat
+
+Player combat uses equipped guns; melee and its arc are removed. Sprint, crouch, and the short grounded dodge have Inspector settings. Both player and enemy use editable named SpriteFrames animations, including player jump/fall/crouch/dodge and enemy hit/death. The enemy artwork is an exact player palette swap with sage skin and plum clothing. See [CHARACTER_GUIDE.md](CHARACTER_GUIDE.md); test `scenes/levels/combat_sandbox.tscn` with F6.
+
 ## Exploration and inventory
 
 Environmental notes and NPC dialogue are available as reusable editor scenes. Try `scenes/levels/story_sandbox.tscn` with F6; see [NARRATIVE_GUIDE.md](NARRATIVE_GUIDE.md) for writing notes, selecting colored speakers, creating conversations, and replacing the NPC stand-in art. The existing town and main menu remain the normal starting point.
 
-Exploration has no fixed HUD panels, logo, controls strip, or permanent crosshair. Health briefly appears after damage (and remains subtly visible when critical). Hold right mouse to draw the equipped gun, aim with the cursor, and move carefully; left click fires while aiming. Release right mouse to holster the gun and point the flashlight in the last walking direction. The crosshair appears only while aiming; ammunition also appears briefly after firing or during reload. Controls are available from Pause → Controls.
+Exploration has no fixed HUD panels, logo, controls strip, or permanent crosshair. Health briefly appears after damage (and remains subtly visible when critical). Hold right mouse to draw the equipped gun, aim with the cursor, and move carefully; left click fires while aiming. Release right mouse to holster the gun and point the flashlight in the last walking direction. The crosshair appears only while aiming; ammunition also appears briefly after firing or during reload. Control legends and keyboard hints are removed from the game for your tutorial.
 
-Pickups are just their artwork. A nearby **[E] Take** prompt identifies an action, not the item. Collecting does not announce its name. Open I or Tab, drag items to arrange them, press R to rotate, and select an icon with the mouse or keyboard, and read its name, description, category, quantity, and artwork. Medical supplies can be **Used**; select **Combine** on a material, then select its partner. Cloth + antiseptic creates a field dressing that heals 30. Matching stacks can also be combined: 20 + 2 rounds becomes 22; 20 + 10 becomes 24 + 6. Full-health use and failed combinations waste nothing.
+Pickups are just their artwork. A nearby **Take** prompt identifies an action, not the item. Collecting does not announce its name. Open I or Tab, drag items to arrange them, press R to rotate, and select an icon with the mouse or keyboard, and read its name, description, category, quantity, and artwork. Medical supplies can be **Used**; select **Combine** on a material, then select its partner. Cloth + antiseptic creates a field dressing that heals 30. Matching stacks can also be combined: 20 + 2 rounds becomes 22; 20 + 10 becomes 24 + 6. Full-health use and failed combinations waste nothing.
 
 The building contains bolt cutters. Carry them to the alley's chained gate to permanently open access to a medical supply. All additions are authored scene instances with editable item resources and recipe resources, not a mandatory quest. No story or ending is attached.
 
@@ -73,8 +78,8 @@ Bicycle save menu:
 bash tools/check.sh
 ```
 
-This imports resources and runs seven integration suites in isolated user-data folders. Gameplay checks cover movement, combat, exact 0.5-second dodge, puzzles, persistent world state, and transitions. Interface checks cover quiet HUD, inspection, healing and recipes. Asset checks cover imported textures. Manual-save checks repeatedly switch between files containing different actual pickups, puzzle completion, gates, enemy state, health, layout, capacity and equipment. Grid checks use real mouse/key events for drag, rotation, canceled/invalid drops, stack merging and equipment; they also cover fragmentation, independent weapon magazines, snapshot validation and upgrade hooks. Aiming checks cover holstering and flashlight direction. Narrative checks cover notes, colored speakers, reveal/advance/cancel controls, repeat dialogue, and independent saved progress. All suites must finish with zero failures; script/resource errors are failures even if Godot returns zero.
+This imports resources and runs eight integration suites in isolated user-data folders. Gameplay checks cover movement, combat, short dodge timing, puzzles, persistent world state, and transitions. Interface checks cover quiet HUD, inspection, healing and recipes. Asset checks cover imported textures. Manual-save checks repeatedly switch between files containing different actual pickups, puzzle completion, gates, enemy state, health, layout, capacity and equipment. Grid checks use real mouse/key events for drag, rotation, canceled/invalid drops, stack merging and equipment; they also cover fragmentation, independent weapon magazines, snapshot validation and upgrade hooks. Aiming checks cover holstering and flashlight direction. Narrative checks cover notes, colored speakers, reveal/advance/cancel controls, repeat dialogue, and independent saved progress. Combat checks cover named character animations, sprint, crouch clearance, short dodge collision/invulnerability, gun reactions, death playback and saved defeat. All suites must finish with zero failures; script/resource errors are failures even if Godot returns zero.
 
-The original five suites assume the original template's item names, starting ammunition, stack sizes, and example layouts. Your later designer settings intentionally differ. The narrative and aiming suites work with the current settings: run `bash tools/check.sh aiming narrative` to check these features without changing your item data. The full original regression suite was also checked separately with its original test settings.
+The original five suites assume the original template's item names, starting ammunition, stack sizes, and example layouts. Your later designer settings intentionally differ. The narrative, aiming, and combat suites work with the current settings: run `bash tools/check.sh aiming narrative combat` to check these features without changing your item data. The full original regression suite was also checked separately with its original test settings.
 
 With a graphical display, `godot --path . res://tests/capture.tscn` writes screenshots to `/tmp/ignotum-*.png`. The example layouts now include your revisions from `human-changes`. Physical audio output, standalone exports, and other operating systems have not been tested. The Silkscreen UI font is distributed under its included OFL license in `art/fonts/`; game artwork and sounds were created for this project.

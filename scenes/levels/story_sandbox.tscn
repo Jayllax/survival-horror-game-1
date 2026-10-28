@@ -60,7 +60,7 @@ station_name = "Framework test bicycle"
 [node name="Actors" type="Node2D" parent="."]
 [node name="Player" parent="Actors" instance=ExtResource("player")]
 position = Vector2(200, 588)
-[node name="Camera2D" parent="Actors/Player" index="4"]
+[node name="Camera2D" parent="Actors/Player" index="3"]
 enabled = false
 [node name="NPC" parent="Actors" instance=ExtResource("npc")]
 position = Vector2(620, 588)

@@ -31,10 +31,6 @@ func _ready() -> void:
     $Root/PausePanel/Menu.pressed.connect(back_to_menu)
     $Root/InventoryPanel/Use.pressed.connect(use_selected)
     $Root/InventoryPanel/Combine.pressed.connect(begin_combine)
-    $Root/PausePanel/Controls.pressed.connect(show_controls)
-    $Root/ControlsPanel/Close.pressed.connect(func():
-        $Root/ControlsPanel.hide()
-        $Root/PausePanel.show())
     for path in ["InventoryPanel", "NotePanel", "PuzzlePanel"]:
         root.get_node(path + "/Close").pressed.connect(close_panels)
     $Root/InventoryPanel/Grid.item_selected.connect(select_item)
@@ -104,7 +100,7 @@ func _input(event: InputEvent) -> void:
 func any_panel_open() -> bool:
     if story_ui.is_open():
         return true
-    for path in ["PausePanel", "InventoryPanel", "NotePanel", "PuzzlePanel", "ControlsPanel"]:
+    for path in ["PausePanel", "InventoryPanel", "NotePanel", "PuzzlePanel"]:
         if root.get_node(path).visible:
             return true
     return false
@@ -116,7 +112,7 @@ func close_panels() -> void:
     combining_uid = -1
     $Root/InventoryPanel/Grid.combining = false
     $Root/InventoryPanel/Grid.cancel_drag()
-    for path in ["PausePanel", "InventoryPanel", "NotePanel", "PuzzlePanel", "ControlsPanel"]:
+    for path in ["PausePanel", "InventoryPanel", "NotePanel", "PuzzlePanel"]:
         root.get_node(path).hide()
     get_tree().paused = false
 
@@ -130,7 +126,7 @@ func toggle_pause() -> void:
     get_tree().paused = should_open
 
 func open_inventory() -> void:
-    inventory_feedback("Drag items to move · R to rotate · Esc cancels a drag")
+    inventory_feedback("")
     $Root/InventoryPanel.show()
     get_tree().paused = true
     refresh()
@@ -223,7 +219,7 @@ func refresh() -> void:
     update_selection()
     if Game.health <= 0:
         story_ui.close()
-        for path in ["InventoryPanel", "NotePanel", "PuzzlePanel", "ControlsPanel"]:
+        for path in ["InventoryPanel", "NotePanel", "PuzzlePanel"]:
             root.get_node(path).hide()
         $Root/PausePanel.show()
         get_tree().paused = true
@@ -235,7 +231,7 @@ func refresh() -> void:
 func set_interaction(target: Area2D) -> void:
     interaction_target = target
     if is_instance_valid(target):
-        $Root/Prompt.text = "[E]  " + target.interaction_action()
+        $Root/Prompt.text = target.interaction_action()
     else:
         $Root/Prompt.text = ""
         $Root/Prompt.hide()
@@ -266,11 +262,6 @@ func show_message(text: String) -> void:
     message_remaining = message_seconds
     if $Root/PausePanel.visible:
         $Root/PausePanel/Subtitle.text = text
-
-func show_controls() -> void:
-    $Root/PausePanel.hide()
-    $Root/ControlsPanel.show()
-    get_tree().paused = true
 
 func show_note(text: String) -> void:
     $Root/NotePanel/Text.text = text

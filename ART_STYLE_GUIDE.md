@@ -2,6 +2,8 @@
 
 The newer [house variants](HOUSE_VARIANTS.md) use the current house and its embedded **Sparkle's palette**, with exactly mirrored façades, single side chimneys, and three chimney-free options. They each have one native PNG and a reusable scene that applies 2× scale; the older duplicated source/export convention below does not apply to those new files.
 
+The current enemy is a deliberately simple, exact palette swap of the player's six-frame sheet, with sage skin and plum clothing. Its native sheet remains 120×36 and its game export 240×72, matching the player. Do not regenerate it with the older asset generator. Both characters now use editable named SpriteFrames animations; see [CHARACTER_GUIDE.md](CHARACTER_GUIDE.md) for inserting your own animation art and disabling temporary pose compression.
+
 The redesign is now implemented as **individual PNGs used by the game**. `art/pixel/STYLE_SHEET.png` is a contact sheet made from those actual files. The earlier illustration in `art/redesign/` remains a design reference, not the runtime texture atlas.
 
 ## Files to edit

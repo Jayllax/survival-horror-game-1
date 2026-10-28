@@ -10,21 +10,34 @@ extends CharacterBody2D
 @export var bullet_damage: int = 26
 @export var shot_interval: float = 0.28
 @export var reload_seconds: float = 1.35
-@export var melee_damage: int = 34
-@export var melee_reach: float = 76.0
-@export var dodge_speed: float = 440.0
-const DODGE_INVULNERABILITY := 0.5
+@export_group("Sprint and Crouch")
+@export_range(1.0, 3.0) var sprint_multiplier: float = 1.55
+@export_range(0.1, 1.0) var crouch_speed_multiplier: float = 0.45
+@export var crouch_height: float = 36.0
+@export_group("Short Dodge")
+@export var dodge_speed: float = 260.0
+@export_range(0.05, 1.0) var dodge_seconds: float = 0.18
+@export_range(0.0, 1.0) var dodge_invulnerability_seconds: float = 0.12
+@export var dodge_cooldown_seconds: float = 0.65
+@export_group("Animation Placeholders")
+## Disable these once your crouch/dodge frames contain the real poses.
+@export var use_crouch_placeholder_pose: bool = true
+@export var use_dodge_placeholder_pose: bool = true
+@export_group("")
 var invulnerable_remaining: float = 0.0
 var dodge_remaining: float = 0.0
 var dodge_cooldown: float = 0.0
 var shot_cooldown: float = 0.0
-var melee_cooldown: float = 0.0
 var reload_remaining: float = 0.0
 var facing := 1.0
 var dodge_direction := 1.0
 var nearest: Area2D
 var feedback_time := 0.0
-var animation_time := 0.0
+var is_crouching := false
+var is_sprinting := false
+var standing_shape: CapsuleShape2D
+var standing_collision_position := Vector2.ZERO
+var standing_aim_position := Vector2.ZERO
 var coyote_remaining := 0.0
 var jump_buffer := 0.0
 var combat_remaining := 0.0
@@ -34,13 +47,19 @@ var story_shoot_held := false
 var story_jump_held := false
 @export var combat_feedback_seconds: float = 1.8
 @export_range(0.1, 1.0) var aiming_move_multiplier: float = 0.55
-@onready var body_art: Sprite2D = $Body
+@onready var body_art: CharacterVisuals = $Body
+@onready var body_collision: CollisionShape2D = $CollisionShape2D
 @onready var aim: Node2D = $Aim
 @onready var flashlight_light: PointLight2D = $Aim/Gun/Flashlight
 @onready var muzzle: PointLight2D = $Aim/Gun/Muzzle
 
 func _ready() -> void:
     add_to_group("player")
+    standing_shape = body_collision.shape.duplicate() as CapsuleShape2D
+    body_collision.shape = standing_shape.duplicate()
+    standing_collision_position = body_collision.position
+    standing_aim_position = aim.position
+    update_animation()
     Game.changed.connect(sync_weapon)
     sync_weapon()
     Game.magazine = mini(Game.magazine, magazine_size)
@@ -71,14 +90,14 @@ func _physics_process(delta: float) -> void:
         story_jump_held = false
     combat_remaining = maxf(0, combat_remaining - delta)
     invulnerable_remaining = maxf(0.0, invulnerable_remaining - delta)
+    var was_dodging := dodge_remaining > 0
     dodge_remaining = maxf(0.0, dodge_remaining - delta)
+    if was_dodging and dodge_remaining <= 0:
+        velocity.x = 0.0
     dodge_cooldown = maxf(0.0, dodge_cooldown - delta)
     shot_cooldown = maxf(0.0, shot_cooldown - delta)
-    melee_cooldown = maxf(0.0, melee_cooldown - delta)
     feedback_time = maxf(0.0, feedback_time - delta)
     body_art.modulate = Color(1.5, 0.6, 0.5) if feedback_time > 0 else Color.WHITE
-    if dodge_remaining > 0:
-        body_art.modulate = Color(0.5, 0.8, 1.1, 0.6)
     muzzle.energy = maxf(0.0, muzzle.energy - delta * 30.0)
     if Game.health <= 0 or Game.transitioning:
         velocity = Vector2.ZERO
@@ -96,24 +115,23 @@ func _physics_process(delta: float) -> void:
     var direction := Input.get_axis("move_left", "move_right")
     if direction != 0:
         facing = direction
-    animation_time += delta
-    body_art.frame = (int(animation_time * 10.0) % 6) if absf(velocity.x) > 5.0 else 0
-    body_art.position.y = -3.0 + (sin(animation_time * 2.0) * 0.5 if absf(velocity.x) < 5.0 else 0.0)
+    update_crouch()
     update_aim(direction)
     if not is_on_floor():
         velocity.y += gravity * delta
     coyote_remaining = coyote_seconds if is_on_floor() else maxf(0, coyote_remaining - delta)
     jump_buffer = jump_buffer_seconds if Input.is_action_just_pressed("jump") and not story_jump_held else maxf(0, jump_buffer - delta)
-    if jump_buffer > 0 and coyote_remaining > 0 and dodge_remaining <= 0:
+    if jump_buffer > 0 and coyote_remaining > 0 and dodge_remaining <= 0 and not is_crouching:
         velocity.y = jump_velocity
         jump_buffer = 0
         coyote_remaining = 0
-    if Input.is_action_just_pressed("dodge") and dodge_cooldown <= 0:
+    if Input.is_action_just_pressed("dodge"):
         begin_dodge(direction if direction != 0 else facing)
-    velocity.x = dodge_direction * dodge_speed if dodge_remaining > 0 else move_toward(velocity.x, direction * move_speed, acceleration * delta)
-    if Game.has_equipped_weapon() and Input.is_action_pressed("aim") and dodge_remaining <= 0:
-        velocity.x = move_toward(velocity.x, direction * move_speed * aiming_move_multiplier, acceleration * delta)
+    is_sprinting = Input.is_action_pressed("sprint") and direction != 0 and not is_crouching and not Input.is_action_pressed("aim") and dodge_remaining <= 0
+    var speed_multiplier := crouch_speed_multiplier if is_crouching else (aiming_move_multiplier if is_aiming() else (sprint_multiplier if is_sprinting else 1.0))
+    velocity.x = dodge_direction * dodge_speed if dodge_remaining > 0 else move_toward(velocity.x, direction * move_speed * speed_multiplier, acceleration * delta)
     move_and_slide()
+    update_animation()
     if Input.is_action_just_pressed("flashlight"):
         flashlight_light.enabled = not flashlight_light.enabled
         Game.flashlight_on = flashlight_light.enabled
@@ -121,8 +139,6 @@ func _physics_process(delta: float) -> void:
         shoot()
     if Input.is_action_just_pressed("reload"):
         reload_weapon()
-    if Input.is_action_just_pressed("melee"):
-        melee()
     update_interaction()
     if Input.is_action_just_pressed("interact") and not story_interact_held and is_instance_valid(nearest):
         nearest.interact(self)
@@ -131,6 +147,43 @@ func suppress_story_exit_input() -> void:
     story_interact_held = Input.is_action_pressed("interact")
     story_shoot_held = Input.is_action_pressed("shoot")
     story_jump_held = Input.is_action_pressed("jump")
+
+func can_stand() -> bool:
+    var query := PhysicsShapeQueryParameters2D.new()
+    query.shape = standing_shape
+    query.transform = global_transform * Transform2D(0.0, standing_collision_position + Vector2(0,-0.1))
+    query.collision_mask = collision_mask
+    query.exclude = [get_rid()]
+    return get_world_2d().direct_space_state.intersect_shape(query,1).is_empty()
+
+func update_crouch() -> void:
+    var wants_crouch := Input.is_action_pressed("crouch") and is_on_floor() and dodge_remaining <= 0
+    if is_crouching and not wants_crouch and not can_stand():
+        wants_crouch = true
+    is_crouching = wants_crouch
+    var height := clampf(crouch_height,standing_shape.radius*2,standing_shape.height) if is_crouching else standing_shape.height
+    (body_collision.shape as CapsuleShape2D).height = height
+    var lowered := (standing_shape.height-height)/2.0
+    body_collision.position = standing_collision_position + Vector2(0,lowered)
+    aim.position = standing_aim_position + Vector2(0,lowered)
+
+func update_animation() -> void:
+    var state: StringName = &"idle"
+    if dodge_remaining > 0:
+        state = &"dodge"
+    elif not is_on_floor():
+        state = &"jump" if velocity.y < 0 else &"fall"
+    elif is_crouching:
+        state = &"crouch_walk" if absf(velocity.x) > 5 else &"crouch_idle"
+    elif absf(velocity.x) > 5:
+        state = &"sprint" if is_sprinting else &"walk"
+    body_art.play_state(state,dodge_seconds if state == &"dodge" else 0.0)
+    var pose_scale := 1.0
+    if standing_shape and is_crouching and use_crouch_placeholder_pose:
+        pose_scale = clampf(crouch_height/standing_shape.height,0.1,1.0)
+    elif dodge_remaining > 0 and use_dodge_placeholder_pose:
+        pose_scale = 0.8
+    body_art.scale.y = pose_scale
 
 func update_aim(direction: float) -> void:
     # Keep the Gun node active: its light children also work while holstered.
@@ -144,11 +197,15 @@ func update_aim(direction: float) -> void:
     var definition := Game.active_weapon()
     $Aim/Gun.texture = definition.weapon_texture if definition and aiming else null
 
-func begin_dodge(direction: float) -> void:
-    dodge_direction = direction
-    dodge_remaining = DODGE_INVULNERABILITY
-    invulnerable_remaining = DODGE_INVULNERABILITY
-    dodge_cooldown = 1.05
+func begin_dodge(direction: float) -> bool:
+    if not is_on_floor() or is_crouching or dodge_cooldown > 0 or dodge_remaining > 0 or Game.health <= 0 or Game.transitioning:
+        return false
+    dodge_direction = -1.0 if direction < 0 else 1.0
+    dodge_remaining = dodge_seconds
+    invulnerable_remaining = clampf(dodge_invulnerability_seconds,0,dodge_seconds)
+    dodge_cooldown = dodge_cooldown_seconds
+    jump_buffer = 0
+    return true
 
 func shoot() -> void:
     if story_shoot_held or not Input.is_action_pressed("aim") or not Game.has_equipped_weapon() or shot_cooldown > 0 or reload_remaining > 0 or dodge_remaining > 0:
@@ -189,20 +246,6 @@ func reload_weapon() -> void:
         return
     reload_remaining = reload_seconds
     combat_remaining = reload_seconds + 1.0
-
-func melee() -> void:
-    if melee_cooldown > 0 or dodge_remaining > 0:
-        return
-    melee_cooldown = 0.65
-    $MeleeArc.scale.x = facing
-    $MeleeArc.visible = true
-    get_tree().create_timer(0.14).timeout.connect(func(): $MeleeArc.visible = false)
-    for enemy in get_tree().get_nodes_in_group("enemy"):
-        var offset: Vector2 = enemy.global_position - global_position
-        if offset.length() <= melee_reach and offset.x * facing >= -8:
-            var query := PhysicsRayQueryParameters2D.create(global_position, enemy.global_position, 1)
-            if get_world_2d().direct_space_state.intersect_ray(query).is_empty():
-                enemy.take_damage(melee_damage)
 
 func take_damage(amount: int) -> void:
     if invulnerable_remaining > 0 or Game.health <= 0 or Game.transitioning:

@@ -97,7 +97,6 @@ station_name = "Street bicycle"
 [node name="Player" parent="Actors" unique_id=1065848384 instance=ExtResource("2")]
 position = Vector2(200, 588)
 move_speed = 200.0
-dodge_speed = 275.0
 
 [node name="Spawns" type="Node2D" parent="." unique_id=1790161343]
 

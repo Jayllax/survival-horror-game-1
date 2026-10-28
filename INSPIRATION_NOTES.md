@@ -17,7 +17,7 @@ The Steam description explicitly emphasizes fighting **or avoiding** enemies, sc
 | Use / Combine / Examine | Examination through selection, medical item Use, and designer-authored two-item recipes |
 | Resource scarcity / limited space | Finite authored pickups, ammo stacks, rectangular storage capacity, medical supplies consumed on use, atomic crafting when space is full |
 | Tools opening access | Bolt cutters found in the interior open a chained alley gate; the tool is reusable and the route stays open across visits/manual saves |
-| Fight or avoid | Existing free movement, melee, fixed 0.5-second invulnerable dodge, finite ammunition, and a held aiming stance with reduced movement |
+| Fight or avoid | Existing free movement, sprint/crouch, short grounded dodge with adjustable brief invulnerability, finite ammunition, and a held aiming stance with reduced movement |
 
 The user's explicit request supplies the additional rule that world pickups reveal **no item title**: only a generic nearby action appears, and identity is read in inventory. Pickups do not announce their names in a toast. Saving happens only at a bicycle station; successful collection briefly shows only an inventory hint. The bell interaction and four-slot bicycle save system are the user's requested design, implemented with original artwork and sound.
 
@@ -26,3 +26,5 @@ Right-mouse aiming, exact HUD visibility timing, 30-point healing, recipe inputs
 The later grid iteration adds original implementations of spatial inventory placement and 90-degree rotation, plus independent weapon instances. It uses existing original artwork and does not reproduce another game’s inventory graphics or campaign content.
 
 The narrative framework adds the user's requested environmental note reader and a visual-novel-style bottom dialogue box, with Inspector-authored speakers and text colors. Official Steam/Team17 pages were consulted again on 28 October 2026; exact dialogue controls, typewriter timing, completion flags, and repeat conversation rules here are Ignotum implementation choices. All writing is replaceable instructional placeholder text. The sample NPC reuses the existing player sheet with a tint; no Silver Pines characters, writing, or artwork are included.
+
+The character iteration removes player melee and control legends. Default dodge motion is 0.18 seconds at 260 world pixels/second, with 0.12 seconds of invulnerability; these are adjustable Ignotum settings. The enemy uses the player’s exact pixel geometry with skin/clothing color replacements, following the user’s request to simplify the initial monster concept. Named SpriteFrames resources provide editable character states without copying another game’s animations.

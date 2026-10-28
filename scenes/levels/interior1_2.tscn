@@ -106,7 +106,7 @@ destination_scene = "uid://i4sef51ugq0j"
 [node name="Player" parent="Actors" instance=ExtResource("10_1tw8c")]
 position = Vector2(511, 587)
 
-[node name="Camera2D" parent="Actors/Player" index="4"]
+[node name="Camera2D" parent="Actors/Player" index="3"]
 visible = false
 enabled = false
 

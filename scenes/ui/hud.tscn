@@ -112,7 +112,7 @@ offset_top = 610.0
 offset_right = 1120.0
 offset_bottom = 632.0
 theme_override_font_sizes/font_size = 13
-text = "I  +"
+text = "+"
 mouse_filter = 2
 visible = false
 horizontal_alignment = 2
@@ -181,7 +181,7 @@ offset_top = 125.0
 offset_right = 588.0
 offset_bottom = 154.0
 theme_override_font_sizes/font_size = 12
-text = "Drag items to move · R to rotate · Esc cancels a drag"
+text = ""
 autowrap_mode = 2
 mouse_filter = 2
 [node name="Equipment" type="Label" parent="Root/InventoryPanel"]
@@ -249,7 +249,7 @@ offset_left = 28.0
 offset_top = 504.0
 offset_right = 588.0
 offset_bottom = 540.0
-text = "Close   [I / Tab / Esc]"
+text = "Close"
 [node name="PausePanel" type="Panel" parent="Root"]
 offset_left = 246.0
 offset_top = 116.0
@@ -340,7 +340,7 @@ offset_left = 30.0
 offset_top = 350.0
 offset_right = 630.0
 offset_bottom = 394.0
-text = "Close [Esc]"
+text = "Close"
 focus_mode = 2
 
 [node name="Title" type="Label" parent="Root/PuzzlePanel"]
@@ -358,7 +358,7 @@ offset_top = 63.0
 offset_right = 630.0
 offset_bottom = 113.0
 theme_override_font_sizes/font_size = 16
-text = "West → east. Click each dial to change it.\nRequires a ceramic fuse. Set the reference sequence."
+text = "West → east. Requires a ceramic fuse. Set the reference sequence."
 mouse_filter = 2
 
 [node name="Dial1" type="Button" parent="Root/PuzzlePanel"]
@@ -408,50 +408,8 @@ offset_left = 30.0
 offset_top = 352.0
 offset_right = 630.0
 offset_bottom = 396.0
-text = "Step away [Esc]"
+text = "Step away"
 focus_mode = 2
-
-[node name="Controls" type="Button" parent="Root/PausePanel"]
-offset_left = 35.0
-offset_top = 216.0
-offset_right = 625.0
-offset_bottom = 260.0
-text = "Controls"
-
-[node name="ControlsPanel" type="Panel" parent="Root"]
-offset_left = 246.0
-offset_top = 96.0
-offset_right = 906.0
-offset_bottom = 552.0
-visible = false
-theme_override_styles/panel = SubResource("panel")
-
-[node name="Title" type="Label" parent="Root/ControlsPanel"]
-offset_left = 30.0
-offset_top = 24.0
-offset_right = 630.0
-offset_bottom = 64.0
-theme_override_font_sizes/font_size = 24
-text = "CONTROLS"
-mouse_filter = 2
-
-
-[node name="Text" type="Label" parent="Root/ControlsPanel"]
-offset_left = 30.0
-offset_top = 86.0
-offset_right = 630.0
-offset_bottom = 366.0
-theme_override_font_sizes/font_size = 18
-text = "A / D or arrows    Move\nSpace / W    Jump\nRight mouse    Aim / careful movement\nLeft mouse    Shoot (while aiming)\nR    Reload     Q    Melee     Alt    Dodge\nE    Interact with nearby object\nF    Flashlight\nI / Tab    Inventory / inspect     Esc    Pause"
-mouse_filter = 2
-
-
-[node name="Close" type="Button" parent="Root/ControlsPanel"]
-offset_left = 30.0
-offset_top = 386.0
-offset_right = 630.0
-offset_bottom = 430.0
-text = "Back"
 
 [node name="Use" type="Button" parent="Root/InventoryPanel"]
 offset_left = 640.0
@@ -482,4 +440,4 @@ offset_left = 640.0
 offset_top = 456.0
 offset_right = 1012.0
 offset_bottom = 492.0
-text = "Rotate [R]"
+text = "Rotate"

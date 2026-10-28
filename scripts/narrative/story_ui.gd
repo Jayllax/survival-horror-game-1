@@ -80,7 +80,7 @@ func _process(delta: float) -> void:
         update_continue()
 
 func update_continue() -> void:
-    $DialoguePanel/Continue.text = "Reveal [E]" if body.visible_characters >= 0 else ("Finish [E]" if line_index == dialogue_lines.size() - 1 else "Continue [E]")
+    $DialoguePanel/Continue.text = "Reveal" if body.visible_characters >= 0 else ("Finish" if line_index == dialogue_lines.size() - 1 else "Continue")
 
 func advance() -> void:
     if not is_dialogue():

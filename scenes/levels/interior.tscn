@@ -131,7 +131,7 @@ position = Vector2(352, 468)
 [node name="Player" parent="Actors" instance=ExtResource("2")]
 position = Vector2(63, 587)
 
-[node name="Camera2D" parent="Actors/Player" index="4"]
+[node name="Camera2D" parent="Actors/Player" index="3"]
 enabled = false
 
 [node name="Spawns" type="Node2D" parent="."]

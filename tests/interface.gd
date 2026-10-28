@@ -79,7 +79,7 @@ func run() -> void:
     check(not pickup.has_node("EditorLabel") and not pickup.has_node("Indicator"), "Pickup is just its artwork: no title or floating marker")
     player.global_position = pickup.global_position + Vector2(0,20)
     await frames(1)
-    check(hud.get_node("Root/Prompt").visible and hud.get_node("Root/Prompt").text == "[E]  Take", "Nearby pickup offers a generic action without revealing identity")
+    check(hud.get_node("Root/Prompt").visible and hud.get_node("Root/Prompt").text == "Take", "Nearby pickup offers a generic action without revealing identity")
     var prompt_position: Vector2 = hud.get_node("Root/Prompt").position
     check(prompt_position.x >= 0 and prompt_position.y >= 0 and prompt_position.x < get_viewport().get_visible_rect().size.x and prompt_position.y < get_viewport().get_visible_rect().size.y, "Prompt stays on screen with the designer's fixed zoom camera")
     await press("interact")
@@ -139,8 +139,7 @@ func run() -> void:
     check(gate.opened and gate.get_node("Barrier/CollisionShape2D").disabled, "Tool-opened route remains open after loading")
     check(Game.item_name("bolt_cutters") == "Bolt cutters" and Game.item_icon("bolt_cutters") != null, "Saved item definitions restore inventory inspection metadata")
     alley.get_node("HUD").toggle_pause()
-    alley.get_node("HUD/Root/PausePanel/Controls").pressed.emit()
-    check(get_tree().paused and alley.get_node("HUD/Root/ControlsPanel").visible, "Controls remain available in pause menu")
+    check(get_tree().paused and alley.get_node("HUD/Root/PausePanel").visible and not alley.has_node("HUD/Root/ControlsPanel"), "Pause remains available without the removed controls tutorial")
     alley.get_node("HUD").close_panels()
     # Allow the audio server to resume before stopping its playback during teardown.
     await frames(3)

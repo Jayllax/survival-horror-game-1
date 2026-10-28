@@ -72,7 +72,7 @@ offset_left = 32.0
 offset_top = -65.0
 offset_right = -32.0
 offset_bottom = -23.0
-text = "Close [E / Esc]"
+text = "Close"
 
 [node name="DialoguePanel" type="Panel" parent="."]
 visible = false
@@ -115,7 +115,7 @@ offset_top = -48.0
 offset_right = 240.0
 offset_bottom = -12.0
 theme_override_font_sizes/font_size = 14
-text = "Leave [Esc]"
+text = "Leave"
 
 [node name="Continue" type="Button" parent="DialoguePanel"]
 anchor_left = 1.0
@@ -127,4 +127,4 @@ offset_top = -48.0
 offset_right = -28.0
 offset_bottom = -12.0
 theme_override_font_sizes/font_size = 14
-text = "Continue [E]"
+text = "Continue"
