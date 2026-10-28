@@ -1,0 +1,129 @@
+[gd_scene format=3 uid="uid://dyo3etebfk0vw"]
+
+[ext_resource type="Script" uid="uid://6ac0fiq4jtxt" path="res://scripts/location.gd" id="1_brq61"]
+[ext_resource type="PackedScene" path="res://scenes/objects/fence_cuttable_side.tscn" id="2_04x8t"]
+[ext_resource type="PackedScene" uid="uid://dfitvfrdt4ym7" path="res://scenes/objects/streetlamp.tscn" id="2_asx42"]
+[ext_resource type="PackedScene" path="res://scenes/objects/note.tscn" id="3_qxsnt"]
+[ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="4_asx42"]
+[ext_resource type="Script" uid="uid://ct1jqn7k4e0md" path="res://scripts/narrative/note_document.gd" id="4_qxsnt"]
+[ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="5_04x8t"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_gxonl"]
+[ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="6_cgomg"]
+[ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="7_imbqn"]
+
+[sub_resource type="RectangleShape2D" id="floor"]
+size = Vector2(2774, 120)
+
+[sub_resource type="RectangleShape2D" id="wall"]
+size = Vector2(40, 720)
+
+[sub_resource type="Resource" id="Resource_asx42"]
+script = ExtResource("4_qxsnt")
+title = "Note from stranger"
+text = "Stay out of town. It's not what it used to be.
+
+- Pete"
+
+[node name="Location" type="Node2D" unique_id=653106688]
+script = ExtResource("1_brq61")
+camera_bounds = Rect2i(0, 0, 2200, 720)
+
+[node name="AmbientTint" type="CanvasModulate" parent="." unique_id=857491603]
+color = Color(0.038397163, 0.038397174, 0.038397145, 1)
+
+[node name="Buildings" type="Node2D" parent="." unique_id=1653355476]
+
+[node name="AlleyMouth2" type="Polygon2D" parent="Buildings" unique_id=1027169608]
+z_index = -9
+position = Vector2(-150.33441, 394.00015)
+scale = Vector2(0.32898647, 0.3645157)
+color = Color(0.08627451, 0.12941177, 0.15686275, 0.26666668)
+polygon = PackedVector2Array(1150, 310, 1244.9397, 310.99933, 1340, 312, 1340, 463.84204, 1340, 620, 1150, 620, 1149.9999, 464.1112)
+
+[node name="Geometry" type="Node2D" parent="." unique_id=491046715]
+
+[node name="Ground" type="StaticBody2D" parent="Geometry" unique_id=1806807780]
+position = Vector2(1100, 680)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Ground" unique_id=1794584501]
+position = Vector2(-13, 0)
+shape = SubResource("floor")
+
+[node name="Streetlamp" parent="Geometry/Ground" unique_id=714982314 instance=ExtResource("2_asx42")]
+position = Vector2(-579, -60)
+
+[node name="Curb" type="Polygon2D" parent="Geometry" unique_id=1824508447]
+position = Vector2(-718, -13329.9)
+scale = Vector2(1.3359091, 22.4998)
+color = Color(0.38545707, 0.28626725, 0.2282412, 1)
+polygon = PackedVector2Array(0, 620, 2200, 620, 2200, 622.93976, 2200, 626, 1100.73, 626, 0, 626)
+
+[node name="Curb2" type="Polygon2D" parent="Geometry" unique_id=1298752734]
+position = Vector2(2218, -13329.999)
+scale = Vector2(1.3359091, 22.4998)
+color = Color(0.4509804, 0.4392157, 0.47843137, 1)
+polygon = PackedVector2Array(0, 620, 2200, 620, 2200, 622.93976, 2200, 626, 1100.73, 626, 0, 626)
+
+[node name="WestBoundary" type="StaticBody2D" parent="Geometry" unique_id=1159423724]
+position = Vector2(-266, 360)
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/WestBoundary" unique_id=1114114445]
+shape = SubResource("wall")
+
+[node name="EastBoundary" type="StaticBody2D" parent="Geometry" unique_id=722109662]
+position = Vector2(2220, 360)
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/EastBoundary" unique_id=524093992]
+shape = SubResource("wall")
+
+[node name="Background" type="Polygon2D" parent="Geometry" unique_id=162884734]
+z_index = -10
+position = Vector2(-718, -76157.5)
+scale = Vector2(1.8763634, 122.833)
+color = Color(0.184572, 0.180707, 0.200034, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 626, 1101, 626, 0, 626)
+
+[node name="Props" type="Node2D" parent="." unique_id=1527274168]
+
+[node name="Interactables" type="Node2D" parent="." unique_id=1337389834]
+
+[node name="CuttableFenceSide" parent="Interactables" unique_id=1318221223 instance=ExtResource("2_04x8t")]
+position = Vector2(521, 620)
+scale = Vector2(1.5, 1.5)
+
+[node name="Note" parent="Interactables" unique_id=489710493 instance=ExtResource("3_qxsnt")]
+position = Vector2(476, 618)
+rotation = 0.20943952
+scale = Vector2(0.3, 0.3)
+skew = 1.2758356
+document = SubResource("Resource_asx42")
+
+[node name="Actors" type="Node2D" parent="." unique_id=1189311552]
+
+[node name="Player" parent="Actors" unique_id=1065848384 instance=ExtResource("4_asx42")]
+position = Vector2(-198, 588)
+
+[node name="Spawns" type="Node2D" parent="." unique_id=1790161343]
+
+[node name="default" type="Marker2D" parent="Spawns" unique_id=835030279]
+position = Vector2(-197, 588)
+
+[node name="from_area_2" type="Marker2D" parent="Spawns" unique_id=129397878]
+position = Vector2(260, 588)
+
+[node name="Entrance" parent="Spawns" unique_id=166180848 instance=ExtResource("5_04x8t")]
+position = Vector2(260, 556)
+destination_scene = "uid://d22fnxrmc8sh3"
+
+[node name="Facade" parent="Spawns/Entrance" index="0" unique_id=1815167978]
+visible = false
+
+[node name="HUD" parent="." unique_id=296689736 instance=ExtResource("5_gxonl")]
+
+[node name="AmbientSound" type="AudioStreamPlayer" parent="." unique_id=722606247]
+stream = ExtResource("6_cgomg")
+volume_db = -16.0
+autoplay = true
+script = ExtResource("7_imbqn")
+
+[editable path="Spawns/Entrance"]

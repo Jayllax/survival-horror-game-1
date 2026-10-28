@@ -16,7 +16,7 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/save_bicycle.tscn" id="save_bicycle"]
 
 [sub_resource type="RectangleShape2D" id="floor"]
-size = Vector2(2200, 120)
+size = Vector2(2492, 120)
 
 [sub_resource type="RectangleShape2D" id="wall"]
 size = Vector2(40, 720)
@@ -66,16 +66,17 @@ visible = false
 position = Vector2(1100, 680)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Street" unique_id=1794584501]
+position = Vector2(-135, 0)
 shape = SubResource("floor")
 
 [node name="Curb" type="Polygon2D" parent="Geometry" unique_id=1824508447]
-position = Vector2(0, -13329.9)
-scale = Vector2(1, 22.4998)
+position = Vector2(-718, -13329.9)
+scale = Vector2(1.3263637, 22.4998)
 color = Color(0.45, 0.44, 0.48, 1)
 polygon = PackedVector2Array(0, 620, 2200, 620, 2200, 626, 1100.73, 626, 0, 626)
 
 [node name="WestBoundary" type="StaticBody2D" parent="Geometry" unique_id=1159423724]
-position = Vector2(-20, 360)
+position = Vector2(-262, 360)
 
 [node name="Shape" type="CollisionShape2D" parent="Geometry/WestBoundary" unique_id=1114114445]
 shape = SubResource("wall")
@@ -88,8 +89,8 @@ shape = SubResource("wall")
 
 [node name="Background" type="Polygon2D" parent="Geometry" unique_id=162884734]
 z_index = -10
-position = Vector2(0, -76157.5)
-scale = Vector2(1.17544, 122.833)
+position = Vector2(-718, -76157.5)
+scale = Vector2(1.3399998, 122.833)
 color = Color(0.184572, 0.180707, 0.200034, 1)
 polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 626, 1101, 626, 0, 626)
 
@@ -119,7 +120,7 @@ position = Vector2(524, 556)
 destination_scene = "res://scenes/levels/alley.tscn"
 destination_spawn = "from_street"
 
-[node name="Facade" parent="Interactables/AlleyEntrance" index="0"]
+[node name="Facade" parent="Interactables/AlleyEntrance" index="0" unique_id=1815167978]
 visible = false
 
 [node name="SaveBicycle" parent="Interactables" unique_id=52212124 instance=ExtResource("save_bicycle")]
@@ -129,12 +130,12 @@ station_name = "Street bicycle"
 [node name="Actors" type="Node2D" parent="." unique_id=1189311552]
 
 [node name="Player" parent="Actors" unique_id=1065848384 instance=ExtResource("2")]
-position = Vector2(200, 588)
+position = Vector2(-198, 588)
 
 [node name="Spawns" type="Node2D" parent="." unique_id=1790161343]
 
 [node name="default" type="Marker2D" parent="Spawns" unique_id=835030279]
-position = Vector2(92, 588)
+position = Vector2(-197, 588)
 
 [node name="from_shop" type="Marker2D" parent="Spawns" unique_id=1936546829]
 position = Vector2(306, 588)
