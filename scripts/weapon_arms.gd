@@ -4,6 +4,9 @@ extends Node2D
 @export var attachment_profile: CharacterAttachmentProfile
 ## Missing tracks use the calibrated reference; custom nonempty tracks take priority.
 @export var fallback_attachment_profile: CharacterAttachmentProfile = preload("res://data/animations/player_attachment_defaults.tres")
+## Last resort for the current artwork if both exported profiles have empty lists.
+@export var use_calibrated_reference_when_empty: bool = true
+var calibrated_reference: CharacterAttachmentProfile = preload("res://scripts/animation/player_attachment_reference.gd").create_profile()
 ## Local barrel position while the equipped weapon is drawn. Y mirrors with the gun.
 @export var barrel_flashlight_offset := Vector2(14,4)
 ## Small forward offset from the animated hand while the gun is holstered.
@@ -57,9 +60,11 @@ func frame_point_world(point: Vector2) -> Vector2:
 func update_attachments() -> Vector2:
     var track := attachment_profile.track_for(body.animation) if attachment_profile else null
     var fallback := fallback_attachment_profile.track_for(body.animation) if fallback_attachment_profile else null
-    var center_track := track if track and not track.body_centers.is_empty() else fallback
-    var aim_track := track if track and not track.aim_origins.is_empty() else fallback
-    var hand_track := track if track and not track.flashlight_hands.is_empty() else fallback
+    var reference := calibrated_reference.track_for(body.animation) if use_calibrated_reference_when_empty else null
+    var candidates: Array[CharacterAttachmentTrack] = [track, fallback, reference]
+    var center_track := track_with_points(candidates, &"body_centers")
+    var aim_track := track_with_points(candidates, &"aim_origins")
+    var hand_track := track_with_points(candidates, &"flashlight_hands")
     body.position = body_origin
     if center_track and not center_track.body_centers.is_empty():
         var texture := body.sprite_frames.get_frame_texture(body.animation,body.frame)
@@ -71,8 +76,12 @@ func update_attachments() -> Vector2:
     player.aim.position = player.standing_aim_position+Vector2(0,lowered)
     if aim_track and not aim_track.aim_origins.is_empty():
         var chest := frame_point_world(aim_track.point_at(aim_track.aim_origins,body.frame))
-        var reference := attachment_profile.reference_aim_position if attachment_profile else fallback_attachment_profile.reference_aim_position
-        shoulder_offset = player.to_local(chest)-reference
+        var baseline := Vector2(0,-9)
+        if attachment_profile:
+            baseline = attachment_profile.reference_aim_position
+        elif fallback_attachment_profile:
+            baseline = fallback_attachment_profile.reference_aim_position
+        shoulder_offset = player.to_local(chest)-baseline
         player.aim.position = player.standing_aim_position+shoulder_offset
     # Animation affects the origin only. Cursor direction remains exclusive to held aim.
     player.aim.rotation = (player.get_global_mouse_position()-player.aim.global_position).angle() if Input.is_action_pressed("aim") else (PI if player.facing<0 else 0.0)
@@ -96,6 +105,12 @@ func update_attachments() -> Vector2:
             gun.flip_v = cos(player.aim.rotation)<0
         light.global_position = light_origin
     return shoulder_offset
+
+func track_with_points(candidates: Array[CharacterAttachmentTrack], field: StringName) -> CharacterAttachmentTrack:
+    for candidate in candidates:
+        if candidate and not candidate.get(field).is_empty():
+            return candidate
+    return null
 
 func pose_arm(arm: Node2D, shoulder: Vector2, hand: Vector2, facing: float) -> void:
     var offset := hand-shoulder

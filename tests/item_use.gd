@@ -162,6 +162,11 @@ func fence(id: String, x: float = 400) -> Area2D:
     result.cut_seconds = 0.06
     room.get_node("Interactables").add_child(result)
     return result
+func wait_for_cut(gate: Area2D) -> void:
+    for i in 120:
+        if not gate.cutting:return
+        await frames(1)
+
 func verify_cutters_and_saves() -> void:
     reset()
     room = load("res://tests/fixtures/weapon_workbench.tscn").instantiate()
@@ -188,7 +193,7 @@ func verify_cutters_and_saves() -> void:
     gate.interact(player)
     gate.interact(player)
     check(gate.cutting and Game.count_item("bolt_cutters_single_use") == 2, "Starting or repeating an unfinished cut does not spend the tool early")
-    await get_tree().create_timer(0.12).timeout
+    await wait_for_cut(gate)
     check(gate.opened and Game.count_item("bolt_cutters_single_use") == 1 and Game.inventory.entry(used).is_empty(), "A completed cut removes exactly the tool instance selected for that action")
     check(Game.inventory.entry(remaining["uid"]) == remaining, "Another disposable cutter retains its identity and complete instance state")
     gate.interact(player)
@@ -211,7 +216,8 @@ func verify_cutters_and_saves() -> void:
     player.position = Vector2(410, 588)
     a.interact(player)
     b.interact(player)
-    await get_tree().create_timer(0.14).timeout
+    await wait_for_cut(a)
+    await wait_for_cut(b)
     check(a.opened != b.opened and Game.count_item("bolt_cutters_single_use") == 0, "Overlapping cuts cannot open two fences with one disposable tool")
     var failed := b if a.opened else a
     check(not failed.cutting and not failed.get_node("Barrier/CollisionShape2D").disabled and failed.get_node("LeftPanel").rotation == 0, "The losing cut restores closed artwork and collision")
@@ -221,7 +227,7 @@ func verify_cutters_and_saves() -> void:
     a = fence("test_reusable_cut")
     player.position = Vector2(400, 588)
     a.interact(player)
-    await get_tree().create_timer(0.12).timeout
+    await wait_for_cut(a)
     check(a.opened and Game.count_item("bolt_cutters") == 1, "Existing reusable cutters still survive a completed cut")
 
 func entrance(id: String, path: String) -> Area2D:

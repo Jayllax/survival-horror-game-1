@@ -31,6 +31,13 @@ func run() -> void:
     get_tree().quit(0 if failures == 0 else 1)
 
 func verify_inventory() -> void:
+    for old_path in LocationPaths.RENAMED:
+        var current := LocationPaths.resolve(old_path)
+        check(current == LocationPaths.RENAMED[old_path] and ResourceLoader.exists(current), "Renamed designer location resolves: " + old_path)
+    var old_world := {"res://scenes/levels/town.tscn:Interactables/Item": true, "power:street": true, "my_explicit_id": false}
+    var mapped_world := LocationPaths.resolve_world(old_world)
+    check(mapped_world.get("res://scenes/levels/town_01.tscn:Interactables/Item", false) and mapped_world["power:street"] and not mapped_world["my_explicit_id"], "Old location-prefixed progress migrates while explicit IDs and puzzle flags stay intact")
+    check(old_world.has("res://scenes/levels/town.tscn:Interactables/Item") and LocationPaths.resolve_world(mapped_world) == mapped_world, "Location migration leaves the input untouched and is safe to apply again")
     Game.reset_run()
     var settings: InventorySettings = load("res://data/inventory_settings.tres")
     check(Game.count_item("pistol") == 0 and not Game.has_equipped_weapon() and settings.starting_weapon.is_empty(), "Designer starts new games unarmed")
@@ -363,3 +370,12 @@ func verify_saves() -> void:
     room = get_tree().current_scene
     player = room.get_node("Actors/Player")
     check(Game.has_equipped_weapon() and Game.magazine == 4 and Game.count_item("ammo") == 6 and player.bullet_damage == 26, "Legacy implicit handgun migrates independently of the new unarmed starting loadout")
+    data["scene"] = "res://scenes/levels/town.tscn"
+    data["world"] = {"res://scenes/levels/town.tscn:Interactables/Item": true}
+    var renamed_file := FileAccess.open(Game.slot_path(3), FileAccess.WRITE)
+    var saved_text := JSON.stringify(data)
+    renamed_file.store_string(saved_text)
+    renamed_file.close()
+    var migrated: Dictionary = Game._read_slot(3)
+    check(migrated["scene"] == "res://scenes/levels/town_01.tscn" and Game._save_error(migrated).is_empty() and migrated["world"].has("res://scenes/levels/town_01.tscn:Interactables/Item"), "Reading an older save resolves the renamed scene and its collected/opened object IDs")
+    check(FileAccess.get_file_as_string(Game.slot_path(3)) == saved_text, "Previewing an older renamed-location save never rewrites the user's file")

@@ -2,7 +2,7 @@
 
 Editable Godot **4.7.2 Standard** 2D survival-horror foundation. Import `project.godot` in Godot, then press **F5** for your configured introduction scene. The reusable main menu is `scenes/ui/main_menu.tscn`. All level geometry, props, characters and interactables are authored scene nodes.
 
-Your October 29 upload's levels, movement, camera, Z ordering, interaction ranges and startup scene are preserved. New games now start unarmed, as requested. This iteration adds a buckshot shotgun and consumable per-item size/damage upgrades. The grid stays at your chosen capacity; your story and level design remain yours to build.
+Your latest October 29 upload's renamed town/alley/house scenes, layouts, movement, camera, flashlight brightness, Z ordering, interaction ranges and startup scene are preserved. New games now start unarmed, as requested. This iteration adds a buckshot shotgun and consumable per-item size/damage upgrades. The grid stays at your chosen capacity; your story and level design remain yours to build.
 
 ## Start here
 
@@ -63,3 +63,5 @@ Forest scenery is ready to place from `scenes/objects/forest/`. See the [forest 
 Change **Columns/Rows** and **Starting Weapon** in `data/inventory_settings.tres`. These affect new games; existing slots keep their own saved capacity and loadout. Place the new handgun/shotgun/ammunition/kit scenes from `scenes/objects/equipment/` wherever your levels need them.
 
 Item definitions expose **Use Behavior → Remove After Use**. Existing defaults are retained; a separate disposable cutter pickup is ready under `scenes/objects/equipment/`. Keys, tools and puzzle inputs are removed only when the corresponding action succeeds, and unlocked entrances remain usable for backtracking.
+
+Older town/alley/interior scene paths are redirected to their new names when reading save files, including scene-prefixed collected/opened-object state. Existing files are not rewritten during previews. The uploaded empty animation point lists remain intact; a built-in reference keeps the current character’s attachments aligned when both saved profiles are empty.

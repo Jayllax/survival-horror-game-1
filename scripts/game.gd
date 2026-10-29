@@ -284,7 +284,13 @@ func _read_slot(index: int) -> Variant:
     var parser := JSON.new()
     if parser.parse(FileAccess.get_file_as_string(slot_path(index))) != OK:
         return null
-    return parser.data
+    var data: Variant = parser.data
+    if data is Dictionary:
+        if data.get("scene") is String:
+            data["scene"] = LocationPaths.resolve(data["scene"])
+        if data.get("world") is Dictionary:
+            data["world"] = LocationPaths.resolve_world(data["world"])
+    return data
 
 func _saved_catalog(data: Dictionary) -> Dictionary:
     var catalog := item_catalog.duplicate()
@@ -473,4 +479,4 @@ func finish_location_load() -> void:
 func start_game() -> void:
     get_tree().paused = false
     reset_run()
-    get_tree().change_scene_to_file("res://scenes/levels/town.tscn")
+    get_tree().change_scene_to_file("res://scenes/levels/town_01.tscn")

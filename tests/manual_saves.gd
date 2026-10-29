@@ -53,7 +53,7 @@ func run() -> void:
     picker.confirmation.hide()
     picker.close()
     # Collect actual placed objects, not just manually assigned inventory dictionaries.
-    await travel("res://scenes/levels/interior.tscn", "from_street")
+    await travel("res://scenes/levels/house_01.tscn", "from_street")
     var room: Node2D = get_tree().current_scene
     check(not room.get_node("Actors/Player/Camera2D").enabled and room.get_node("Camera2D").zoom == Vector2(2.1,2.1), "Fixed interior camera survives inventory/save changes")
     for name in ["Cloth", "Antiseptic", "BoltCutters"]:
@@ -65,12 +65,12 @@ func run() -> void:
     board.power_channel = "save_test"
     room.get_node("Interactables").add_child(board)
     check(board.solve_puzzle(board.puzzle_solution), "A real puzzle records its completed circuit state")
-    await travel("res://scenes/levels/alley.tscn")
+    await travel("res://scenes/levels/alleyway_01.tscn")
     var alley: Node2D = get_tree().current_scene
     alley.get_node("Interactables/ToolGate").open_door()
     alley.get_node("Actors/Enemy").take_damage(100)
     await frames(2)
-    await travel("res://scenes/levels/town.tscn")
+    await travel("res://scenes/levels/town_01.tscn")
     town = get_tree().current_scene
     player = town.get_node("Actors/Player")
     bike = town.get_node("Interactables/SaveBicycle")
@@ -115,16 +115,16 @@ func run() -> void:
         bike = get_tree().current_scene.get_node("Interactables/SaveBicycle")
         check(player.global_position.distance_to(bike.get_node("SaveSpawn").global_position) < 2, "Loading returns beside the saved bicycle")
     check(file_text(0)==first_file and file_text(1)==second_file, "Repeated loading and inspection never rewrites either save")
-    await travel("res://scenes/levels/interior.tscn")
+    await travel("res://scenes/levels/house_01.tscn")
     check(not get_tree().current_scene.has_node("Interactables/Cloth"), "Collected object is absent after loading the later slot")
-    await travel("res://scenes/levels/alley.tscn")
+    await travel("res://scenes/levels/alleyway_01.tscn")
     alley = get_tree().current_scene
     check(alley.get_node("Interactables/ToolGate").opened and not alley.has_node("Actors/Enemy"), "Later slot restores the open gate and defeated enemy in the actual scene")
     Game.load_slot(0)
     await frames()
-    await travel("res://scenes/levels/interior.tscn")
+    await travel("res://scenes/levels/house_01.tscn")
     check(get_tree().current_scene.has_node("Interactables/Cloth"), "The same object is restored by the earlier slot")
-    await travel("res://scenes/levels/alley.tscn")
+    await travel("res://scenes/levels/alleyway_01.tscn")
     alley = get_tree().current_scene
     check(not alley.get_node("Interactables/ToolGate").opened and alley.has_node("Actors/Enemy"), "Earlier slot restores the locked gate and living enemy")
     Game.load_slot(1)

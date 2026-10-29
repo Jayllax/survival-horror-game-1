@@ -23,6 +23,8 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/forest/rocks/rock_small.tscn" id="13_vr7e3"]
 [ext_resource type="PackedScene" uid="uid://bhxdbv4sgb00j" path="res://scenes/objects/bolt_cutters.tscn" id="15_tv0fq"]
 [ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/stump_large.tscn" id="17_us4dc"]
+[ext_resource type="Texture2D" uid="uid://bgu1iar6rpv4a" path="res://art/pixel/bolt_cutters.png" id="19_nt1bl"]
+[ext_resource type="Script" uid="uid://ysok34dxqtu8" path="res://scripts/item_definition.gd" id="20_6qbk5"]
 
 [sub_resource type="RectangleShape2D" id="floor"]
 size = Vector2(2774, 120)
@@ -36,6 +38,16 @@ title = "Note from stranger"
 text = "Your health is is important. Look out for yourself.
 
 - Pete"
+
+[sub_resource type="Resource" id="Resource_e0tjl"]
+script = ExtResource("20_6qbk5")
+id = "bolt_cutters_01"
+display_name = "Bolt cutters"
+category = "Tool"
+description = "Bolt cutters in bad condition."
+icon = ExtResource("19_nt1bl")
+grid_size = Vector2i(3, 1)
+compact_grid_size = Vector2i(2, 1)
 
 [node name="Location" type="Node2D" unique_id=653106688]
 script = ExtResource("1_hq8ni")
@@ -416,6 +428,10 @@ modulate = Color(0.103743516, 0.10374353, 0.103743516, 1)
 z_index = -5
 position = Vector2(1768, 620)
 
+[node name="Streetlamp3" parent="Props" unique_id=983204508 instance=ExtResource("2_wxw3f")]
+z_index = -1
+position = Vector2(1646, 620)
+
 [node name="Interactables" type="Node2D" parent="." unique_id=1337389834]
 
 [node name="Note" parent="Interactables" unique_id=489710493 instance=ExtResource("3_sh5d3")]
@@ -443,6 +459,9 @@ scale = Vector2(1.2, 1.2)
 position = Vector2(1531.0001, 602.00006)
 rotation = -1.701696
 scale = Vector2(0.2, 0.2)
+item_definition = SubResource("Resource_e0tjl")
+requires_power = false
+consume_key = true
 
 [node name="Entrance" parent="Interactables" unique_id=166180848 instance=ExtResource("6_lw1bj")]
 position = Vector2(260, 556)

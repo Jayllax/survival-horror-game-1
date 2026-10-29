@@ -70,7 +70,7 @@ func run() -> void:
     check(hud.get_node("Root/HealthBrief").visible, "Critical health remains legible")
     Game.health = 100
     Game.changed.emit()
-    Transition.travel("res://scenes/levels/interior.tscn", "from_street")
+    Transition.travel("res://scenes/levels/house_01.tscn", "from_street")
     await get_tree().create_timer(1.2).timeout
     var room: Node2D = get_tree().current_scene
     hud = room.get_node("HUD")
@@ -110,7 +110,7 @@ func run() -> void:
     check(hud.get_node("Root/InventoryPanel/ItemName").text == "Field dressing", "Combination result is selected for immediate inspection")
     hud.close_panels()
     check(not get_tree().paused, "Inventory closes back to exploration")
-    Transition.travel("res://scenes/levels/alley.tscn", "from_street")
+    Transition.travel("res://scenes/levels/alleyway_01.tscn", "from_street")
     await get_tree().create_timer(1.2).timeout
     var alley: Node2D = get_tree().current_scene
     player = alley.get_node("Actors/Player")

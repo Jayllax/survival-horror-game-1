@@ -5,6 +5,7 @@ var busy := false
 func travel(path: String, destination_spawn: String, item_use_uid: int = -1, unlock_state_key: String = "", force_remove: bool = false) -> void:
     if busy or Game.health <= 0:
         return
+    path = LocationPaths.resolve(path)
     if not ResourceLoader.exists(path):
         Game.message.emit("Destination scene is missing. Check this entrance in the Inspector.")
         return

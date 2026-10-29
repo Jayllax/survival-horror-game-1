@@ -10,7 +10,7 @@ For editable environmental notes, colored speakers, and NPC conversations, see [
 
 ## Your starting point
 
-Import `project.godot` with Godot 4.7.2 Standard, open `scenes/levels/town.tscn`, choose **2D**, and press **F6** to test. **F5** starts the main menu. Stop with F8 before editing. The game has no story progression requirement or ending. You own the writing and campaign structure.
+Import `project.godot` with Godot 4.7.2 Standard, open `scenes/levels/town_01.tscn`, choose **2D**, and press **F6** to test. **F5** starts the main menu. Stop with F8 before editing. The game has no story progression requirement or ending. You own the writing and campaign structure.
 
 The supplied first street links to a small ground-floor interior and service alley to demonstrate entrances. Your uploaded alley is a blockout; use the separate combat/stealth sandbox scenes to test enemies, then place them where your levels need them. All objects are visible in the editor, including every destination and spawn marker.
 
@@ -34,7 +34,7 @@ Decorative façades and most street props do not block movement. Platforms, phys
 
 1. Drag `scenes/objects/entrance.tscn` into `Interactables`.
 2. Select its root. Set **Action Label**, such as “Enter”.
-3. Set **Destination Scene** with the file picker, such as `scenes/levels/interior.tscn`.
+3. Set **Destination Scene** with the file picker, such as `scenes/levels/house_01.tscn`.
 4. Set **Destination Spawn** to a Marker2D name in that location's `Spawns` branch, such as `from_street`.
 5. Keep **Required Key** empty and **Requires Power** off for an unlocked entrance.
 6. In the destination, place a return entrance that targets the original scene and a different return marker.

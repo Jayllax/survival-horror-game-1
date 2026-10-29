@@ -93,7 +93,7 @@ Version-4 bicycle saves store installed upgrade IDs, actual item layout, per-wea
 
 Keep item IDs and saved resource paths stable after release. Changing a compact footprint or deleting an upgrade definition can make a saved layout invalid; test old saves when deliberately changing those definitions.
 
-Your uploaded `player_attachments.tres` is preserved, including its empty point lists. The aiming rig now has **Fallback Attachment Profile**, using the previous calibrated points in `data/animations/player_attachment_defaults.tres`. Nonempty custom point lists take priority. This keeps the current character aligned without changing your movement, camera, lighting or animation artwork. For a new character shape, supply your own points, or replace/clear the fallback on WeaponArms deliberately.
+Your uploaded `player_attachments.tres` is preserved, including its empty point lists. The aiming rig now has **Fallback Attachment Profile**, using the previous calibrated points in `data/animations/player_attachment_defaults.tres`. Nonempty custom point lists take priority. This keeps the current character aligned without changing your movement, camera, lighting or animation artwork. If both saved profiles have empty point lists, **Use Calibrated Reference When Empty** supplies the existing character’s built-in calibration without modifying either resource. For unrelated character artwork, supply your own points or turn that final fallback off deliberately.
 
 ## Test separately from your town
 

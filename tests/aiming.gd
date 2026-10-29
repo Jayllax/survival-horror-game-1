@@ -39,7 +39,7 @@ func _ready() -> void:
 func run() -> void:
     Game.reset_run()
     preload("res://tests/support/loadout.gd").handgun()
-    var room: Node2D = load("res://scenes/levels/interior.tscn").instantiate()
+    var room: Node2D = load("res://scenes/levels/house_01.tscn").instantiate()
     room.get_node("AmbientSound").autoplay = false
     get_tree().root.add_child(room)
     get_tree().current_scene = room

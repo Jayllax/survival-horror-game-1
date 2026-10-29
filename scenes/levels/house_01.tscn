@@ -112,7 +112,7 @@ quantity = 12
 [node name="ExitToStreet" parent="Interactables" unique_id=1321858251 instance=ExtResource("4")]
 visible = false
 position = Vector2(61, 556)
-destination_scene = "res://scenes/levels/town.tscn"
+destination_scene = "res://scenes/levels/town_01.tscn"
 destination_spawn = "from_shop"
 
 [node name="ExitToStreet2" parent="Interactables" unique_id=928311053 instance=ExtResource("4")]
