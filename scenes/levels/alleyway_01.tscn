@@ -7,6 +7,11 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_terracotta_no_chimney.tscn" id="3_flp4d"]
 [ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_cream_left.tscn" id="4_pcyv7"]
+[ext_resource type="PackedScene" path="res://scenes/objects/lighting/alley_light.tscn" id="5_pcyv7"]
+[ext_resource type="PackedScene" path="res://scenes/objects/fence_reinforced_side.tscn" id="6_gle4b"]
+[ext_resource type="PackedScene" uid="uid://mdei23004fri" path="res://scenes/objects/ammo.tscn" id="7_q8qeu"]
+[ext_resource type="PackedScene" uid="uid://mxytf2yx5cvc" path="res://scenes/objects/key.tscn" id="11_wbtbr"]
+[ext_resource type="PackedScene" path="res://scenes/objects/bench.tscn" id="13_ff76r"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="21"]
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="22"]
 
@@ -22,16 +27,37 @@ display_name = "Service alley"
 camera_bounds = Rect2i(0, 0, 1500, 720)
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=1634872600]
-visible = false
 color = Color(0.039215688, 0.039215688, 0.039215688, 1)
 
 [node name="Buildings" type="Node2D" parent="." unique_id=1244740229]
+
+[node name="AlleyMouth2" type="Polygon2D" parent="Buildings" unique_id=715405124]
+z_index = -9
+position = Vector2(-746, 266.00003)
+scale = Vector2(0.91052496, 0.570968)
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(1150, 310, 1244.4807, 309.99997, 1340, 309.99997, 1340, 463.84204, 1340, 620, 1244.8208, 620.00006, 1150, 620, 1149.9999, 464.1112)
+
+[node name="AlleyLight" parent="Buildings/AlleyMouth2" unique_id=1652369006 instance=ExtResource("5_pcyv7")]
+position = Vector2(1245.9845, 463.6861)
+scale = Vector2(1.5581672, 2.5559664)
+
+[node name="AlleyMouth1" type="Polygon2D" parent="Buildings" unique_id=1783951528]
+z_index = -9
+position = Vector2(337, 266)
+scale = Vector2(0.5052623, 0.570968)
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(1150, 310, 1244.4807, 309.99997, 1340, 309.99997, 1340, 463.84204, 1340, 620, 1244.8208, 620.00006, 1150, 620, 1149.9999, 464.1112)
+
+[node name="AlleyLight" parent="Buildings/AlleyMouth1" unique_id=191838136 instance=ExtResource("5_pcyv7")]
+position = Vector2(1245.9845, 463.6861)
+scale = Vector2(1.5581672, 2.5559664)
 
 [node name="HouseSilo" parent="Buildings" unique_id=1936693580 instance=ExtResource("2_lb3ar")]
 modulate = Color(0, 0, 0, 1)
 self_modulate = Color(0, 0, 0, 0.84313726)
 z_index = -10
-position = Vector2(302, 492)
+position = Vector2(654, 492)
 
 [node name="HouseSilo02" parent="Buildings" unique_id=565006089 instance=ExtResource("3_flp4d")]
 modulate = Color(0, 0, 0, 1)
@@ -43,14 +69,37 @@ position = Vector2(126, 492)
 modulate = Color(0, 0, 0, 1)
 self_modulate = Color(0, 0, 0, 0.84313726)
 z_index = -10
+position = Vector2(302, 492)
+
+[node name="HouseSilo04" parent="Buildings" unique_id=1417061233 instance=ExtResource("3_flp4d")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
 position = Vector2(478, 492)
 
-[node name="AlleyMouth2" type="Polygon2D" parent="Buildings" unique_id=715405124]
-z_index = -9
-position = Vector2(-746, 266.00003)
-scale = Vector2(0.91052496, 0.570968)
-color = Color(0.14509805, 0.14509805, 0.14509805, 0)
-polygon = PackedVector2Array(1150, 310, 1244.4807, 309.99997, 1340, 309.99997, 1340, 463.84204, 1340, 620, 1244.8208, 620.00006, 1150, 620, 1149.9999, 464.1112)
+[node name="HouseSilo05" parent="Buildings" unique_id=206577217 instance=ExtResource("3_flp4d")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(-50, 492)
+
+[node name="HouseSilo06" parent="Buildings" unique_id=1413310191 instance=ExtResource("3_flp4d")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(830, 492)
+
+[node name="HouseSilo07" parent="Buildings" unique_id=2061735086 instance=ExtResource("3_flp4d")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(1006, 492)
+
+[node name="HouseSilo08" parent="Buildings" unique_id=1691124307 instance=ExtResource("4_pcyv7")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(1182, 492)
 
 [node name="Geometry" type="Node2D" parent="." unique_id=526838699]
 
@@ -88,6 +137,18 @@ polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 626, 1101, 626,
 
 [node name="Props" type="Node2D" parent="." unique_id=161909125]
 
+[node name="ReinforcedFenceSide" parent="Props" unique_id=312725030 instance=ExtResource("6_gle4b")]
+position = Vector2(243, 620)
+scale = Vector2(1.2, 1.5)
+
+[node name="ReinforcedFenceSide2" parent="Props" unique_id=1061022886 instance=ExtResource("6_gle4b")]
+position = Vector2(653, 620.00006)
+scale = Vector2(1.2, 1.5)
+
+[node name="Bench" parent="Props" unique_id=55595960 instance=ExtResource("13_ff76r")]
+z_index = -1
+position = Vector2(742, 592)
+
 [node name="Interactables" type="Node2D" parent="." unique_id=1114832439]
 
 [node name="StreetExit" parent="Interactables" unique_id=1682660375 instance=ExtResource("4")]
@@ -98,10 +159,19 @@ destination_spawn = "from_alley"
 [node name="Facade" parent="Interactables/StreetExit" index="0" unique_id=1815167978]
 visible = false
 
+[node name="Ammo" parent="Interactables" unique_id=1595936546 instance=ExtResource("7_q8qeu")]
+position = Vector2(722, 593)
+scale = Vector2(0.3, 0.3)
+
 [node name="Actors" type="Node2D" parent="." unique_id=358542406]
 
 [node name="Player" parent="Actors" unique_id=361187446 instance=ExtResource("2")]
 position = Vector2(387, 588)
+
+[node name="Key" parent="Actors" unique_id=808328386 instance=ExtResource("11_wbtbr")]
+position = Vector2(755.00006, 596.00006)
+rotation = -0.65449846
+scale = Vector2(0.3, 0.3)
 
 [node name="Spawns" type="Node2D" parent="." unique_id=480732066]
 

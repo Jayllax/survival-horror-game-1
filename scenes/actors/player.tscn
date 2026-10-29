@@ -60,7 +60,7 @@ texture = ExtResource("5")
 texture_scale = 0.8
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1353766167]
-position = Vector2(0, -80)
+position = Vector2(0, -73)
 zoom = Vector2(2, 2)
 limit_enabled = false
 limit_left = 0

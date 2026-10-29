@@ -11,9 +11,10 @@ position = Vector2(0, -96)
 texture = ExtResource("1")
 
 [node name="WarmLight" type="PointLight2D" parent="." unique_id=547296718]
-position = Vector2(4, -168)
+position = Vector2(1, -166)
 color = Color(1, 0.878431, 0.65098, 1)
+energy = 1.2
 shadow_enabled = true
 texture = ExtResource("2")
-texture_scale = 2.5
+texture_scale = 1.3
 script = ExtResource("3")

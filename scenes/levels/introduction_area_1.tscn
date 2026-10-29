@@ -24,7 +24,7 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/forest/rocks/boulder.tscn" id="14_32qwc"]
 [ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/bush_small.tscn" id="17_7gop2"]
 [ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/stump_small.tscn" id="17_jsfv0"]
-[ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house.tscn" id="18_g3c0m"]
+[ext_resource type="PackedScene" uid="uid://cfoibs7ccueyy" path="res://scenes/objects/houses/building_house.tscn" id="18_g3c0m"]
 
 [sub_resource type="RectangleShape2D" id="floor"]
 size = Vector2(2774, 120)
@@ -519,7 +519,6 @@ position = Vector2(1881, 620)
 [node name="CuttableFenceSide" parent="Interactables" unique_id=1318221223 instance=ExtResource("2_04x8t")]
 position = Vector2(521, 620)
 scale = Vector2(1.5, 1.5)
-required_tool = "bolt_cutters_01"
 
 [node name="Note" parent="Interactables" unique_id=489710493 instance=ExtResource("3_qxsnt")]
 position = Vector2(476, 618)
