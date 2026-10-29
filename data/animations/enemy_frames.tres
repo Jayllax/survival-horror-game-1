@@ -205,10 +205,10 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("death_2")
 }, {
-"duration": 1.0,
+"duration": 6.0,
 "texture": SubResource("death_3")
 }, {
-"duration": 1.0,
+"duration": 8.0,
 "texture": SubResource("death_4")
 }, {
 "duration": 1.0,
@@ -262,7 +262,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"idle",
-"speed": 2.5
+"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -288,10 +288,10 @@ animations = [{
 "speed": 1.5
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 2.0,
 "texture": SubResource("wake_0")
 }, {
-"duration": 1.0,
+"duration": 4.0,
 "texture": SubResource("wake_1")
 }, {
 "duration": 1.0,
@@ -308,7 +308,7 @@ animations = [{
 }],
 "loop": 0,
 "name": &"wake",
-"speed": 8.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -331,5 +331,5 @@ animations = [{
 }],
 "loop": 1,
 "name": &"walk",
-"speed": 6.0
+"speed": 8.0
 }]

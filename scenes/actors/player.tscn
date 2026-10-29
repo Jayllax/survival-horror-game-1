@@ -31,7 +31,9 @@ shape = SubResource("body")
 position = Vector2(0, 32)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("2")
-animation = &"idle"
+animation = &"walk"
+frame = 5
+frame_progress = 0.64503896
 offset = Vector2(0, -20)
 script = ExtResource("visuals")
 

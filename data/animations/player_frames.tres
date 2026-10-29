@@ -146,10 +146,6 @@ region = Rect2(128, 440, 32, 40)
 atlas = ExtResource("sheet")
 region = Rect2(160, 440, 32, 40)
 
-[sub_resource type="AtlasTexture" id="crouch_idle_0"]
-atlas = ExtResource("sheet")
-region = Rect2(0, 120, 32, 40)
-
 [sub_resource type="AtlasTexture" id="crouch_idle_1"]
 atlas = ExtResource("sheet")
 region = Rect2(32, 120, 32, 40)
@@ -165,6 +161,10 @@ region = Rect2(96, 120, 32, 40)
 [sub_resource type="AtlasTexture" id="crouch_idle_4"]
 atlas = ExtResource("sheet")
 region = Rect2(128, 120, 32, 40)
+
+[sub_resource type="AtlasTexture" id="crouch_idle_0"]
+atlas = ExtResource("sheet")
+region = Rect2(0, 120, 32, 40)
 
 [sub_resource type="AtlasTexture" id="crouch_idle_5"]
 atlas = ExtResource("sheet")
@@ -334,10 +334,6 @@ region = Rect2(96, 40, 32, 40)
 atlas = ExtResource("sheet")
 region = Rect2(128, 40, 32, 40)
 
-[sub_resource type="AtlasTexture" id="walk_5"]
-atlas = ExtResource("sheet")
-region = Rect2(160, 40, 32, 40)
-
 [resource]
 animations = [{
 "frames": [{
@@ -384,7 +380,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"aim_idle",
-"speed": 2.5
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -453,7 +449,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"crouch_aim_idle",
-"speed": 2.5
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -480,9 +476,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("crouch_idle_0")
-}, {
-"duration": 1.0,
 "texture": SubResource("crouch_idle_1")
 }, {
 "duration": 1.0,
@@ -495,11 +488,14 @@ animations = [{
 "texture": SubResource("crouch_idle_4")
 }, {
 "duration": 1.0,
+"texture": SubResource("crouch_idle_0")
+}, {
+"duration": 1.0,
 "texture": SubResource("crouch_idle_5")
 }],
 "loop": 1,
 "name": &"crouch_idle",
-"speed": 2.5
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -591,7 +587,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"idle",
-"speed": 2.5
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -656,7 +652,7 @@ animations = [{
 "texture": SubResource("walk_4")
 }, {
 "duration": 0.55,
-"texture": SubResource("walk_5")
+"texture": SubResource("walk_2")
 }],
 "loop": 1,
 "name": &"walk",

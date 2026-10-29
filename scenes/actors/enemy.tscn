@@ -1,33 +1,43 @@
-[gd_scene load_steps=6 format=3]
-[ext_resource type="Script" path="res://scripts/enemy.gd" id="1"]
-[ext_resource type="SpriteFrames" path="res://data/animations/enemy_frames.tres" id="2"]
-[ext_resource type="Script" path="res://scripts/character_visuals.gd" id="visuals"]
+[gd_scene format=3 uid="uid://da5r8bq0hou0w"]
+
+[ext_resource type="Script" uid="uid://bm6o3pu8jmwes" path="res://scripts/enemy.gd" id="1"]
+[ext_resource type="SpriteFrames" uid="uid://dx15p605ogr7w" path="res://data/animations/enemy_frames.tres" id="2"]
+[ext_resource type="Script" uid="uid://battg16dcvdnc" path="res://scripts/character_visuals.gd" id="visuals"]
+
 [sub_resource type="CapsuleShape2D" id="shape"]
 radius = 12.0
 height = 64.0
+
 [sub_resource type="RectangleShape2D" id="attack_shape"]
-size = Vector2(40,44)
-[node name="Enemy" type="CharacterBody2D"]
+size = Vector2(40, 44)
+
+[node name="Enemy" type="CharacterBody2D" unique_id=1751376480]
 collision_layer = 4
-collision_mask = 1
 script = ExtResource("1")
 use_sleep_placeholder_pose = false
 use_attack_placeholder_pose = false
 use_death_placeholder_pose = false
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2121090034]
 shape = SubResource("shape")
-[node name="Body" type="AnimatedSprite2D" parent="."]
-sprite_frames = ExtResource("2")
-animation = &"idle"
+
+[node name="Body" type="AnimatedSprite2D" parent="." unique_id=1798141375]
 position = Vector2(-1, 32)
-offset = Vector2(0, -20)
 scale = Vector2(2, 2)
+sprite_frames = ExtResource("2")
+animation = &"death"
+frame = 5
+frame_progress = 1.0
+offset = Vector2(0, -20)
 script = ExtResource("visuals")
-[node name="AttackPivot" type="Node2D" parent="."]
-[node name="Hitbox" type="Area2D" parent="AttackPivot"]
-position = Vector2(20,-6)
+
+[node name="AttackPivot" type="Node2D" parent="." unique_id=1805949168]
+
+[node name="Hitbox" type="Area2D" parent="AttackPivot" unique_id=1584809443]
+position = Vector2(20, -6)
 collision_layer = 0
 collision_mask = 2
 monitorable = false
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackPivot/Hitbox"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackPivot/Hitbox" unique_id=809636014]
 shape = SubResource("attack_shape")

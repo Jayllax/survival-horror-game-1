@@ -19,7 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="21"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_teal_right.tscn" id="21_mwytw"]
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="22"]
-[ext_resource type="PackedScene" path="res://scenes/actors/enemy.tscn" id="22_w4u1r"]
+[ext_resource type="PackedScene" uid="uid://da5r8bq0hou0w" path="res://scenes/actors/enemy.tscn" id="22_w4u1r"]
 [ext_resource type="PackedScene" uid="uid://mdei23004fri" path="res://scenes/objects/ammo.tscn" id="23_uk0bi"]
 [ext_resource type="PackedScene" uid="uid://db83ujlaupd0k" path="res://scenes/objects/save_bicycle.tscn" id="save_bicycle"]
 
