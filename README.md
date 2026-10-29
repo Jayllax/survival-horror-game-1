@@ -9,6 +9,7 @@ Your October 29 upload's levels, movement, camera, Z ordering, interaction range
 Drawing your own animations? Use the [Pixilart templates and instructions](art/templates/characters/README.md), or [download the template pack](docs/downloads/Ignotum-animation-templates.zip). These are blank authoring files; current game artwork is unchanged.
 
 - [DESIGNER_GUIDE.md](DESIGNER_GUIDE.md): build levels, connect entrances, place items, puzzles and bicycle saves.
+- [Reusable/single-use items](docs/guides/ITEM_USE_GUIDE.md): Remove After Use, tool variants and consumption on successful actions.
 - [Weapons and upgrades](docs/guides/WEAPONS_AND_UPGRADES.md): shotgun, buckshot, compact/damage kits, starting loadout and Inspector settings.
 - [Character guide](docs/guides/CHARACTER_GUIDE.md): native atlas rows, animation names, aiming arms and movement settings.
 - [Fence guide](docs/guides/FENCE_GUIDE.md): tool-gated paths, permanent barriers, both viewpoints and saved openings.
@@ -45,12 +46,12 @@ Four bicycle-only save slots independently store inventory/layout/equipment, amm
 ## Validation
 
 ```sh
-GODOT_BIN=/path/to/godot-4.7.2 bash tools/check.sh equipment grid_inventory aiming narrative combat stealth fences character_art interiors forest
+GODOT_BIN=/path/to/godot-4.7.2 bash tools/check.sh item_use equipment grid_inventory aiming narrative combat stealth fences character_art interiors forest
 ```
 
-This imports the project and runs ten suites against your current settings, with isolated user-data folders. They cover item upgrades, independent upgraded saves, shotgun spread/reloads, grid manipulation, UI/aim, notes/dialogue, movement/combat, stealth, independently saved fence routes, pixel animation states, phased enemy strikes and both hands staying on gun grips across aim angles.
+This imports the project and runs eleven suites against your current settings, with isolated user-data folders. They cover item upgrades, independent upgraded saves, shotgun spread/reloads, grid manipulation, UI/aim, notes/dialogue, movement/combat, stealth, independently saved fence routes, pixel animation states, phased enemy strikes and both hands staying on gun grips across aim angles.
 
-The older four suites (`smoke`, `interface`, `assets`, `manual_saves`) assume historical item names, quantities and example level layouts. Your later designer revisions intentionally differ. The script's no-argument mode includes all fourteen suites; select the ten current suites above for this snapshot. Never change your designer data to satisfy historical fixtures.
+The older four suites (`smoke`, `interface`, `assets`, `manual_saves`) assume historical item names, quantities and example level layouts. Your later designer revisions intentionally differ. The script's no-argument mode includes all fifteen suites; select the eleven current suites above for this snapshot. Never change your designer data to satisfy historical fixtures.
 
 Graphical checks used Linux software OpenGL. Standalone exports, other operating systems and physical audio output have not been tested. Required font license files remain in `art/fonts/`.
 
@@ -59,3 +60,5 @@ Interior furniture, working lamps and walkable stairs are ready to place from `s
 Forest scenery is ready to place from `scenes/objects/forest/`. See the [forest kit guide](docs/guides/FOREST_KIT_GUIDE.md) and [color catalog](docs/previews/forest-kit-catalog.png).
 
 Change **Columns/Rows** and **Starting Weapon** in `data/inventory_settings.tres`. These affect new games; existing slots keep their own saved capacity and loadout. Place the new handgun/shotgun/ammunition/kit scenes from `scenes/objects/equipment/` wherever your levels need them.
+
+Item definitions expose **Use Behavior → Remove After Use**. Existing defaults are retained; a separate disposable cutter pickup is ready under `scenes/objects/equipment/`. Keys, tools and puzzle inputs are removed only when the corresponding action succeeds, and unlocked entrances remain usable for backtracking.

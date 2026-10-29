@@ -29,6 +29,8 @@ Select a kit, press **Combine**, then select its target. Selecting the target fi
 - **Compact saw kit:** consumed once to reduce the target's cell footprint. Handgun **2×1 → 1×1**; shotgun **3×1 → 2×1**; bolt cutters **3×1 → 2×1**. The actual world artwork stays the same size. Loaded rounds, identity, rotation, equipment and damage are preserved.
 - **Damage kit:** consumed once to multiply that weapon's damage by **1.25**, rounded to a whole number per projectile. Handgun **26 → 33**. Shotgun **14 → 18 per pellet**.
 
+The supplied kits have **Use Behavior → Remove After Use** checked. Uncheck it on a kit definition to keep it after successful upgrades; see [item-use settings](ITEM_USE_GUIDE.md).
+
 Each item accepts one upgrade of each effect. A weapon can have both. Repeated or incompatible attempts leave the kit and target unchanged. Shrinking keeps the target at its current grid position and frees the removed cells. It also works when the grid is full. Ammo stacks and one-cell objects cannot be compacted.
 
 The inventory detail panel displays the item's actual footprint, current damage and installed upgrades. Longer descriptions scroll inside their existing panel. Ordinary stack merging and cloth/antiseptic crafting remain available.

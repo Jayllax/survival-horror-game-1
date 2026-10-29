@@ -92,9 +92,21 @@ func use_uid(uid: int) -> bool:
     var definition: InventoryItemDefinition = item_catalog.get(item.get("id", ""))
     if not definition or definition.heal_amount <= 0 or health >= 100 or item.is_empty():
         return false
-    inventory.consume_uid(uid)
+    if not finish_item_use(uid, false):
+        return false
     health = mini(100, health + definition.heal_amount)
     changed.emit()
+    return true
+
+func find_use_uid(required_id: String) -> int:
+    return inventory.find_use_uid(required_id)
+
+func finish_item_use(uid: int, notify: bool = true, force_remove: bool = false) -> bool:
+    if not inventory.finish_use(uid, force_remove):
+        return false
+    _repair_equipment()
+    if notify:
+        changed.emit()
     return true
 
 func can_combine(id: String) -> bool:
@@ -128,7 +140,7 @@ func combine_uids(first_uid: int, second_uid: int) -> bool:
     if not pair.is_empty():
         var trial := inventory.copy()
         var tool := trial.entry(pair["tool"])
-        if not trial.apply_upgrade(pair["target"], tool["id"]) or not trial.consume_uid(pair["tool"]):
+        if not trial.apply_upgrade(pair["target"], tool["id"]) or not trial.finish_use(pair["tool"]):
             return false
         inventory = trial
         last_combined_uid = int(pair["target"])
@@ -139,8 +151,8 @@ func combine_uids(first_uid: int, second_uid: int) -> bool:
         if not ((recipe.input_a == first["id"] and recipe.input_b == second["id"]) or (recipe.input_b == first["id"] and recipe.input_a == second["id"])):
             continue
         var trial := inventory.copy()
-        trial.consume_uid(first_uid)
-        trial.consume_uid(second_uid)
+        trial.finish_use(first_uid)
+        trial.finish_use(second_uid)
         if not trial.add(recipe.output_id, recipe.output_quantity):
             return false
         inventory = trial

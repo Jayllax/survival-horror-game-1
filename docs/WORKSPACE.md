@@ -41,3 +41,5 @@ The [interior kit](guides/INTERIOR_KIT_GUIDE.md) keeps native furniture PNGs und
 The [forest kit](guides/FOREST_KIT_GUIDE.md) keeps 63 native textures in `art/pixel/forest/`, 21 reusable props in `scenes/objects/forest/` and its palette labels in `scripts/forest/`. It shares the interior color/collision controls. Removed old gameplay sandboxes survive only as development fixtures under `tests/fixtures/`, preserving your removal from `scenes/levels/`.
 
 The [weapon and upgrade guide](guides/WEAPONS_AND_UPGRADES.md) covers `data/items/`, `data/upgrades/`, new native artwork in `art/pixel/equipment/` and reusable pickups in `scenes/objects/equipment/`. The authored equipment test room lives in `tests/fixtures/`, outside your gameplay levels.
+
+The [item-use guide](guides/ITEM_USE_GUIDE.md) explains the shared Remove After Use checkbox and disposable tool variants. The single-use cutters reuse the original cutter artwork; no duplicate PNG is needed.

@@ -1,5 +1,5 @@
 extends Area2D
-## Place the root on the floor. Bolt cutters open this route without being consumed.
+## Place the root on the floor. The selected tool's item definition controls reuse.
 @export_group("Interaction")
 @export var required_tool: String = "bolt_cutters"
 @export var interaction_radius: float = 100.0
@@ -37,10 +37,13 @@ func interact(player: Node) -> void:
         return
     if not is_instance_valid(player) or not player is Node2D or global_position.distance_to(player.global_position) >= interaction_radius:
         return
-    if not required_tool.is_empty() and Game.count_item(required_tool) <= 0:
+    var tool_uid := Game.find_use_uid(required_tool) if not required_tool.is_empty() else -1
+    if not required_tool.is_empty() and tool_uid < 0:
         Game.message.emit("Requires " + Game.item_name(required_tool) + ".")
         return
     cutting = true
+    var left_transform: Transform2D = $LeftPanel.transform
+    var right_transform: Transform2D = $RightPanel.transform
     Game.emit_noise(global_position,cutting_noise_radius,self)
     var tween := create_tween().set_parallel(true).set_trans(Tween.TRANS_SINE)
     if edge_on_break:
@@ -51,6 +54,13 @@ func interact(player: Node) -> void:
         tween.tween_property($LeftPanel,"scale:x",folded_panel_scale,maxf(cut_seconds,0.05))
         tween.tween_property($RightPanel,"scale:x",folded_panel_scale,maxf(cut_seconds,0.05))
     await tween.finished
+    # Another interaction may have used this exact disposable tool during the cut.
+    if tool_uid >= 0 and not Game.finish_item_use(tool_uid, false):
+        $LeftPanel.transform = left_transform
+        $RightPanel.transform = right_transform
+        cutting = false
+        Game.message.emit("The required tool is no longer available.")
+        return
     opened = true
     cutting = false
     Game.world[state_key()] = true

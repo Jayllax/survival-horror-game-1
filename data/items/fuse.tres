@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1")
 id = "fuse"
+remove_after_use = true
 display_name = "Ceramic fuse"
 description = "An electrical fuse."
 icon = ExtResource("2")

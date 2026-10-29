@@ -15,7 +15,8 @@
 [ext_resource type="Resource" path="res://data/items/shotgun_shells.tres" id="shells"]
 [ext_resource type="Resource" path="res://data/items/compact_saw.tres" id="compact"]
 [ext_resource type="Resource" path="res://data/items/damage_kit.tres" id="damage"]
+[ext_resource type="Resource" path="res://data/items/bolt_cutters_single_use.tres" id="single_cutters"]
 [resource]
 script = ExtResource("script")
-items = Array[ExtResource("item_type")]([ExtResource("item0"),ExtResource("item1"),ExtResource("item2"),ExtResource("item3"),ExtResource("item4"),ExtResource("item5"),ExtResource("item6"),ExtResource("pistol"),ExtResource("shotgun"),ExtResource("shells"),ExtResource("compact"),ExtResource("damage")])
+items = Array[ExtResource("item_type")]([ExtResource("item0"),ExtResource("item1"),ExtResource("item2"),ExtResource("item3"),ExtResource("item4"),ExtResource("item5"),ExtResource("item6"),ExtResource("pistol"),ExtResource("shotgun"),ExtResource("shells"),ExtResource("compact"),ExtResource("damage"),ExtResource("single_cutters")])
 recipes = Array[ExtResource("recipe_type")]([ExtResource("recipe")])

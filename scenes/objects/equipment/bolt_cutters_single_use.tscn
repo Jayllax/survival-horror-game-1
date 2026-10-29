@@ -1,0 +1,5 @@
+[gd_scene format=3]
+[ext_resource type="PackedScene" path="res://scenes/objects/bolt_cutters.tscn" id="base"]
+[ext_resource type="Resource" path="res://data/items/bolt_cutters_single_use.tres" id="item"]
+[node name="SingleUseBoltCutters" instance=ExtResource("base")]
+item_definition = ExtResource("item")

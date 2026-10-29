@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("script")
 id = "damage_kit"
+remove_after_use = true
 display_name = "Damage kit"
 category = "Material"
 description = "A single-use weapon upgrade. Increases damage by 25%, rounded to a whole number per projectile. Each weapon accepts one damage kit. It can also have a compact upgrade."

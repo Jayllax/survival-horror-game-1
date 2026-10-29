@@ -123,6 +123,30 @@ func consume_uid(uid: int, amount: int = 1) -> bool:
         entries.erase(item)
     return true
 
+func find_use_uid(required_id: String) -> int:
+    if required_id.is_empty():
+        return -1
+    var disposable_uid := -1
+    for item in entries:
+        var definition: InventoryItemDefinition = definitions.get(item["id"])
+        if item["id"] != required_id and (not definition or definition.use_as_item_id != required_id):
+            continue
+        # Permanent equipment avoids wasting a disposable copy of the same tool.
+        if not definition or not definition.remove_after_use:
+            return int(item["uid"])
+        if disposable_uid < 0:
+            disposable_uid = int(item["uid"])
+    return disposable_uid
+
+func finish_use(uid: int, force_remove: bool = false) -> bool:
+    var item := entry(uid)
+    if item.is_empty():
+        return false
+    var definition: InventoryItemDefinition = definitions.get(item["id"])
+    if force_remove or (definition and definition.remove_after_use):
+        return consume_uid(uid)
+    return true
+
 func remove(id: String, amount: int = 1) -> bool:
     if amount <= 0 or count(id) < amount:
         return false

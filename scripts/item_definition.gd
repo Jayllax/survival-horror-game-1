@@ -9,6 +9,13 @@ extends Resource
 @export_range(1, 99) var max_stack: int = 1
 
 @export_range(0, 100) var heal_amount: int = 0
+@export_group("Use behavior")
+## Remove one unit only after successful healing, upgrading, crafting or world use.
+## Equipping, moving and transferring ammunition are not item-use actions.
+@export var remove_after_use: bool = false
+## Optional shared requirement ID. Different item variants can open the same locks.
+## Example: a disposable cutter has its own ID but uses "bolt_cutters" here.
+@export var use_as_item_id: String = ""
 @export_group("Inventory footprint")
 @export var grid_size := Vector2i(1, 1)
 @export var can_rotate := true

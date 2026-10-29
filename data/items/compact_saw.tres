@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("script")
 id = "compact_saw"
+remove_after_use = true
 display_name = "Compact saw kit"
 category = "Tool"
 description = "A single-use conversion kit. Combine with a compatible weapon or tool to reduce its inventory space. Each item can be compacted once. Loaded ammunition and damage are preserved."

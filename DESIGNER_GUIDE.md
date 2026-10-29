@@ -44,7 +44,7 @@ The player presses **E** within Interaction Radius. The scene fades to black, lo
 
 For an alley, enable **Editable Children** on the entrance instance and hide its `Facade` sprite. Put a dark, visible gap in the buildings behind it. The supplied `AlleyEntrance` demonstrates this. Its Area2D rectangle helps selection in the editor; interaction is based on proximity. Avoid placing accessible triggers on opposite sides of a thin wall because the proximity system does not check line of sight.
 
-For a key lock, set Required Key to a pickup's **Item Id**, such as `workshop_key`. The key is reusable. An entrance is a background transition; `door.tscn` is a physical sliding gate that opens on the same side-scrolling plane. Physical gates support **Consume Key** if you deliberately want a one-use key.
+For a key lock, set Required Key to a pickup's **Item Id**, such as `workshop_key`. The key’s **Use Behavior → Remove After Use** checkbox controls consumption. Successfully unlocked entrances stay unlocked for backtracking even when their key is spent. An entrance is a background transition; `door.tscn` is a physical sliding gate on the same side-scrolling plane. See the [item-use guide](docs/guides/ITEM_USE_GUIDE.md) for both key/tool variants and the legacy Consume Key override.
 
 ## Make another location
 
@@ -87,19 +87,19 @@ When Item Definition is assigned it supplies Item Id; change the definition's Id
 
 ### Create a combination recipe
 
-Duplicate `data/recipes/field_dressing.tres`. Set **Input A**, **Input B**, **Output Id**, and **Output Quantity** using item IDs from the catalog. Add it to **Recipes** in `data/catalog.tres`. Input order does not matter. Both inputs are consumed only when the complete result fits; the inventory restores the original items if the result cannot fit. A recipe can require two units of the same item by using the same ID for both inputs.
+Duplicate `data/recipes/field_dressing.tres`. Set **Input A**, **Input B**, **Output Id**, and **Output Quantity** using item IDs from the catalog. Add it to **Recipes** in `data/catalog.tres`. Input order does not matter. Each input follows its own **Remove After Use** checkbox, and the complete result must fit before any change is committed. A recipe can require two units of the same item by using the same ID for both inputs.
 
 The included recipe is clean cloth + antiseptic → field dressing. One dressing restores 30 health, capped at 100. Use never wastes it at full health.
 
 ### Reusable tool gates
 
-`scenes/objects/chained_gate.tscn` uses **Required Key = bolt_cutters** and **Consume Key = Off**. Required Key can represent a tool as well as a traditional key. Change it to any carried item ID for another gate type. Once opened, the gate's collision and state remain open across scene changes and manual saves.
+`scenes/objects/chained_gate.tscn` is an alias to the cuttable fence and uses **Required Tool = bolt_cutters**. Tool/key requirements can accept matching variants through their **Use As Item Id**. Change it to any carried item ID for another gate type. Once opened, the gate's collision and state remain open across scene changes and manual saves.
 
 The supplied building has cloth, antiseptic, and bolt cutters. The alley's chained gate blocks access to a dressing. These are replaceable mechanical examples, not narrative objectives. Remove or rearrange them freely.
 
 ## Pickups, notes, and circuits
 
-The starting inventory is an **8-column × 4-row grid (32 cells)**. Press **I or Tab** to open/close it. Tab is reserved for toggling while inventory is open; it still navigates the other menus. Ammunition stacks to 24 per item instance. The handgun occupies **2×1 cells**, and each handgun is a separate item with its own loaded rounds. Most existing supplies, keys and puzzle objects use one cell until you change their footprint. Full or fragmented grids leave pickups in the world.
+The starting inventory is an **8-column × 4-row grid (32 cells)**. Press **I or Tab** to open/close it. Tab is reserved for toggling while inventory is open; it still navigates the other menus. Current 9mm and buckshot ammunition stack to 12 per item instance; change Max Stack in their item definitions. The handgun occupies **2×1 cells**, and each handgun is a separate item with its own loaded rounds. Most existing supplies, keys and puzzle objects use one cell until you change their footprint. Full or fragmented grids leave pickups in the world.
 
 ### Move, rotate and combine
 
@@ -141,7 +141,7 @@ Reuse `ammo.tscn`, `fuse.tscn`, or `key.tscn`. Assign **Item Definition**, set *
 `switchboard.tscn` is an optional reusable three-dial puzzle; it is not placed in the starting street. Set:
 
 - **Puzzle Solution:** each of three values must be 1–3.
-- **Puzzle Input Item:** an item to consume; leave empty for no requirement.
+- **Puzzle Input Item:** a required item; its Remove After Use setting controls consumption. Leave empty for no requirement.
 - **Puzzle Reward Item:** item awarded; leave empty for no reward.
 - **Require Reference:** optionally require a Clue with the same Power Channel first.
 - **Power Channel:** a unique circuit name, such as `workshop`.
@@ -197,3 +197,7 @@ See the [FOREST_KIT_GUIDE.md](docs/guides/FOREST_KIT_GUIDE.md) for trees, logs, 
 ## Weapons and per-item upgrades
 
 See [WEAPONS_AND_UPGRADES.md](docs/guides/WEAPONS_AND_UPGRADES.md) for the buckshot shotgun, separate ammunition, compact saw and damage kit. All five pickup scenes are under `scenes/objects/equipment/`, including a handgun to place in your town. New games start unarmed; change Starting Weapon in `data/inventory_settings.tres` to configure another loadout. Test the equipment separately with `tests/fixtures/weapon_workbench.tscn` and F6.
+
+## Remove items after use
+
+Open an item `.tres` under `data/items/`, expand **Use Behavior**, and set **Remove After Use**. See [ITEM_USE_GUIDE.md](docs/guides/ITEM_USE_GUIDE.md) for healing, crafting, upgrades, puzzles, doors and fences. Use the ready-made `scenes/objects/equipment/bolt_cutters_single_use.tscn` for disposable cutters; the existing bolt cutter pickup remains reusable. Both work with the same fences.
