@@ -43,3 +43,9 @@ The [forest kit](guides/FOREST_KIT_GUIDE.md) keeps 63 native textures in `art/pi
 The [weapon and upgrade guide](guides/WEAPONS_AND_UPGRADES.md) covers `data/items/`, `data/upgrades/`, new native artwork in `art/pixel/equipment/` and reusable pickups in `scenes/objects/equipment/`. The authored equipment test room lives in `tests/fixtures/`, outside your gameplay levels.
 
 The [item-use guide](guides/ITEM_USE_GUIDE.md) explains the shared Remove After Use checkbox and disposable tool variants. The single-use cutters reuse the original cutter artwork; no duplicate PNG is needed.
+
+Four-digit locks are split into an invisible reusable interaction scene under `scenes/objects/puzzles/`, an editor-authored panel at `scenes/ui/code_lock_ui.tscn`, and scripts under `scripts/puzzles/`. The [code-lock guide](guides/CODE_LOCK_GUIDE.md) explains placement and optional opening effects. Automated instances stay in `tests/code_lock.gd`; your playable levels have no added puzzle examples.
+
+The [light-switch guide](guides/LIGHT_SWITCH_GUIDE.md) covers the reusable `scenes/objects/lighting/light_switch.tscn` and `scripts/lighting/light_switch.gd`. Its simple plate and rocker are editor-visible shapes using the project palette. The interior lamp script exposes a small control method so switches can keep its actual light and Inspector property synchronized. No light-switch instances are added to your levels.
+
+The [loot-container guide](guides/LOOT_CONTAINER_GUIDE.md) covers the invisible `scenes/objects/loot/loot_container.tscn`, the interaction script and the exported `LootEntry` resource under `scripts/loot/`. Contents are configured directly on placed container instances; an empty array makes an intentionally empty drawer. No duplicate item artwork or gameplay examples are added.

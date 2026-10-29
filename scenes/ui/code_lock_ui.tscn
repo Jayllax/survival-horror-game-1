@@ -1,0 +1,215 @@
+[gd_scene load_steps=5 format=3]
+[ext_resource type="Script" path="res://scripts/puzzles/code_lock_ui.gd" id="script"]
+[sub_resource type="StyleBoxFlat" id="panel"]
+bg_color = Color(0.14117648, 0.13333334, 0.18039216, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.41960785, 0.46666667, 0.5568628, 1)
+[sub_resource type="StyleBoxFlat" id="dial"]
+bg_color = Color(0.20784314, 0.18039216, 0.23921569, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.29411766, 0.27450982, 0.34901962, 1)
+[sub_resource type="StyleBoxFlat" id="focus"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.73333335, 0.59607846, 1)
+
+[node name="CodeLockUI" type="Control"]
+visible = false
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("script")
+
+[node name="Shade" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.14117648, 0.13333334, 0.18039216, 0.97)
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Panel" type="PanelContainer" parent="Center"]
+custom_minimum_size = Vector2(680, 430)
+layout_mode = 2
+theme_override_styles/panel = SubResource("panel")
+
+[node name="Margin" type="MarginContainer" parent="Center/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 28
+
+[node name="Content" type="VBoxContainer" parent="Center/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="Title" type="Label" parent="Center/Panel/Margin/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.73333335, 0.59607846, 1)
+theme_override_font_sizes/font_size = 24
+text = "CODE LOCK"
+horizontal_alignment = 1
+
+[node name="Dials" type="HBoxContainer" parent="Center/Panel/Margin/Content"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 16
+
+[node name="Dial1" type="VBoxContainer" parent="Center/Panel/Margin/Content/Dials"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Up" type="Button" parent="Center/Panel/Margin/Content/Dials/Dial1"]
+custom_minimum_size = Vector2(112, 42)
+layout_mode = 2
+focus_mode = 0
+text = "+"
+
+[node name="Digit" type="Button" parent="Center/Panel/Margin/Content/Dials/Dial1"]
+custom_minimum_size = Vector2(112, 120)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.73333335, 0.59607846, 1)
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("dial")
+theme_override_styles/hover = SubResource("dial")
+theme_override_styles/pressed = SubResource("dial")
+theme_override_styles/focus = SubResource("focus")
+text = "0"
+
+[node name="Down" type="Button" parent="Center/Panel/Margin/Content/Dials/Dial1"]
+custom_minimum_size = Vector2(112, 42)
+layout_mode = 2
+focus_mode = 0
+text = "−"
+
+[node name="Dial2" type="VBoxContainer" parent="Center/Panel/Margin/Content/Dials"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Up" type="Button" parent="Center/Panel/Margin/Content/Dials/Dial2"]
+custom_minimum_size = Vector2(112, 42)
+layout_mode = 2
+focus_mode = 0
+text = "+"
+
+[node name="Digit" type="Button" parent="Center/Panel/Margin/Content/Dials/Dial2"]
+custom_minimum_size = Vector2(112, 120)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.73333335, 0.59607846, 1)
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("dial")
+theme_override_styles/hover = SubResource("dial")
+theme_override_styles/pressed = SubResource("dial")
+theme_override_styles/focus = SubResource("focus")
+text = "0"
+
+[node name="Down" type="Button" parent="Center/Panel/Margin/Content/Dials/Dial2"]
+custom_minimum_size = Vector2(112, 42)
+layout_mode = 2
+focus_mode = 0
+text = "−"
+
+[node name="Dial3" type="VBoxContainer" parent="Center/Panel/Margin/Content/Dials"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Up" type="Button" parent="Center/Panel/Margin/Content/Dials/Dial3"]
+custom_minimum_size = Vector2(112, 42)
+layout_mode = 2
+focus_mode = 0
+text = "+"
+
+[node name="Digit" type="Button" parent="Center/Panel/Margin/Content/Dials/Dial3"]
+custom_minimum_size = Vector2(112, 120)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.73333335, 0.59607846, 1)
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("dial")
+theme_override_styles/hover = SubResource("dial")
+theme_override_styles/pressed = SubResource("dial")
+theme_override_styles/focus = SubResource("focus")
+text = "0"
+
+[node name="Down" type="Button" parent="Center/Panel/Margin/Content/Dials/Dial3"]
+custom_minimum_size = Vector2(112, 42)
+layout_mode = 2
+focus_mode = 0
+text = "−"
+
+[node name="Dial4" type="VBoxContainer" parent="Center/Panel/Margin/Content/Dials"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Up" type="Button" parent="Center/Panel/Margin/Content/Dials/Dial4"]
+custom_minimum_size = Vector2(112, 42)
+layout_mode = 2
+focus_mode = 0
+text = "+"
+
+[node name="Digit" type="Button" parent="Center/Panel/Margin/Content/Dials/Dial4"]
+custom_minimum_size = Vector2(112, 120)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.73333335, 0.59607846, 1)
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("dial")
+theme_override_styles/hover = SubResource("dial")
+theme_override_styles/pressed = SubResource("dial")
+theme_override_styles/focus = SubResource("focus")
+text = "0"
+
+[node name="Down" type="Button" parent="Center/Panel/Margin/Content/Dials/Dial4"]
+custom_minimum_size = Vector2(112, 42)
+layout_mode = 2
+focus_mode = 0
+text = "−"
+
+[node name="Feedback" type="Label" parent="Center/Panel/Margin/Content"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6901961, 0.5686275, 0.49019608, 1)
+theme_override_font_sizes/font_size = 15
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Actions" type="HBoxContainer" parent="Center/Panel/Margin/Content"]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="Unlock" type="Button" parent="Center/Panel/Margin/Content/Actions"]
+custom_minimum_size = Vector2(220, 44)
+layout_mode = 2
+focus_mode = 0
+text = "Unlock"
+
+[node name="Close" type="Button" parent="Center/Panel/Margin/Content/Actions"]
+custom_minimum_size = Vector2(220, 44)
+layout_mode = 2
+focus_mode = 0
+text = "Close"

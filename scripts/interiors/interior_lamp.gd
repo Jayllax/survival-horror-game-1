@@ -26,3 +26,10 @@ func refresh_artwork() -> void:
         light.energy = light_energy
         light.color = light_color
         light.texture_scale = light_radius_scale
+
+func set_switch_enabled(value: bool) -> void:
+    # Keep the Inspector-facing property and the real light synchronized.
+    light_enabled = value
+    var light := get_node_or_null("Light") as PointLight2D
+    if light:
+        light.enabled = value

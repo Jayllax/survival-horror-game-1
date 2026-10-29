@@ -11,13 +11,20 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_sage_right.tscn" id="6_otbwl"]
 [ext_resource type="PackedScene" uid="uid://bn4hd6q7bawaj" path="res://scenes/objects/fence_cuttable.tscn" id="7_rklyf"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_slate_blue_left.tscn" id="7_wvt63"]
+[ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_dusty_rose_left.tscn" id="8_biwbp"]
 [ext_resource type="PackedScene" uid="uid://cfoibs7ccueyy" path="res://scenes/objects/houses/building_house.tscn" id="8_n8lao"]
+[ext_resource type="PackedScene" path="res://scenes/objects/fence_reinforced_side.tscn" id="10_le0go"]
+[ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_cream.tscn" id="18_vn4xj"]
+[ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_pale_olive_no_chimney.tscn" id="20_akiom"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="21"]
+[ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_teal_right.tscn" id="21_mwytw"]
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="22"]
+[ext_resource type="PackedScene" path="res://scenes/actors/enemy.tscn" id="22_w4u1r"]
+[ext_resource type="PackedScene" uid="uid://mdei23004fri" path="res://scenes/objects/ammo.tscn" id="23_uk0bi"]
 [ext_resource type="PackedScene" uid="uid://db83ujlaupd0k" path="res://scenes/objects/save_bicycle.tscn" id="save_bicycle"]
 
 [sub_resource type="RectangleShape2D" id="floor"]
-size = Vector2(2492, 120)
+size = Vector2(4731, 120)
 
 [sub_resource type="RectangleShape2D" id="wall"]
 size = Vector2(40, 720)
@@ -31,17 +38,38 @@ color = Color(0.038397163, 0.038397174, 0.038397145, 1)
 
 [node name="Buildings" type="Node2D" parent="." unique_id=1653355476]
 
-[node name="AlleyMouth2" type="Polygon2D" parent="Buildings" unique_id=1408196773]
+[node name="Alleyway_01Mouth" type="Polygon2D" parent="Buildings" unique_id=1408196773]
 z_index = -9
 position = Vector2(-759.1035, 265.99985)
 scale = Vector2(0.91052496, 0.570968)
 color = Color(0, 0, 0, 0.13333334)
 polygon = PackedVector2Array(1150, 310, 1244.4807, 309.99997, 1340, 309.99997, 1340, 463.84204, 1340, 620, 1244.8208, 620.00006, 1150, 620, 1149.9999, 464.1112)
 
-[node name="AlleyMouth3" type="Polygon2D" parent="Buildings" unique_id=756567879]
+[node name="Alleyway_01Mouth2" type="Polygon2D" parent="Buildings" unique_id=756567879]
 z_index = -9
 position = Vector2(232, 256)
 scale = Vector2(0.5052625, 0.5870964)
+color = Color(0, 0, 0, 0.13333334)
+polygon = PackedVector2Array(1150, 310, 1244.9999, 310.0001, 1340.0001, 310.0001, 1340, 463.84204, 1340, 620, 1150, 620, 1149.9999, 464.1112)
+
+[node name="Alleyway_02Mouth1" type="Polygon2D" parent="Buildings" unique_id=1033578857]
+z_index = -9
+position = Vector2(1713, 256)
+scale = Vector2(0.5052625, 0.5870964)
+color = Color(0, 0, 0, 0.13333334)
+polygon = PackedVector2Array(1150, 310, 1244.9999, 310.0001, 1340.0001, 310.0001, 1340, 463.84204, 1340, 620, 1150, 620, 1149.9999, 464.1112)
+
+[node name="Alleyway_02Mouth2" type="Polygon2D" parent="Buildings" unique_id=900464371]
+z_index = -9
+position = Vector2(2337, 256)
+scale = Vector2(0.5052625, 0.5870964)
+color = Color(0, 0, 0, 0.13333334)
+polygon = PackedVector2Array(1150, 310, 1244.9999, 310.0001, 1340.0001, 310.0001, 1340, 463.84204, 1340, 620, 1150, 620, 1149.9999, 464.1112)
+
+[node name="Town_02Mouth" type="Polygon2D" parent="Buildings" unique_id=1644774054]
+z_index = -9
+position = Vector2(709, 256)
+scale = Vector2(0.6581668, 0.5870964)
 color = Color(0, 0, 0, 0.13333334)
 polygon = PackedVector2Array(1150, 310, 1244.9999, 310.0001, 1340.0001, 310.0001, 1340, 463.84204, 1340, 620, 1150, 620, 1149.9999, 464.1112)
 
@@ -62,6 +90,47 @@ position = Vector2(725, 492)
 
 [node name="HouseSlateBlue" parent="Buildings" unique_id=1011688616 instance=ExtResource("7_wvt63")]
 position = Vector2(997, 492)
+
+[node name="House2" parent="Buildings" unique_id=1936693580 instance=ExtResource("8_n8lao")]
+position = Vector2(1377, 492)
+
+[node name="HouseDustyRose" parent="Buildings" unique_id=494179358 instance=ExtResource("8_biwbp")]
+position = Vector2(1678, 492)
+
+[node name="HousePlum2" parent="Buildings" unique_id=1830213861 instance=ExtResource("5_ihmxm")]
+position = Vector2(2030, 492)
+
+[node name="HouseDustyRose2" parent="Buildings" unique_id=448522256 instance=ExtResource("8_biwbp")]
+position = Vector2(2206, 492)
+
+[node name="HouseTerracotta2" parent="Buildings" unique_id=1661619094 instance=ExtResource("5_5ycnk")]
+position = Vector2(1189, 492)
+
+[node name="CreamHouse" parent="Buildings" unique_id=1981102500 instance=ExtResource("18_vn4xj")]
+position = Vector2(1854, 492)
+
+[node name="HouseSage2" parent="Buildings" unique_id=687319272 instance=ExtResource("6_otbwl")]
+position = Vector2(2478, 492)
+
+[node name="HouseTerracotta3" parent="Buildings" unique_id=746764692 instance=ExtResource("5_5ycnk")]
+position = Vector2(2830, 492)
+
+[node name="HousePaleOlive" parent="Buildings" unique_id=1971141480 instance=ExtResource("20_akiom")]
+position = Vector2(3102, 492)
+
+[node name="HouseCream2" parent="Buildings" unique_id=1163749733 instance=ExtResource("2_35lbs")]
+position = Vector2(2654, 492)
+
+[node name="House3" parent="Buildings" unique_id=2112961102 instance=ExtResource("8_n8lao")]
+position = Vector2(3454, 492)
+flip_h = true
+
+[node name="HouseDustyRose3" parent="Buildings" unique_id=623198391 instance=ExtResource("8_biwbp")]
+position = Vector2(3278, 492)
+
+[node name="HouseTeal" parent="Buildings" unique_id=1758763994 instance=ExtResource("21_mwytw")]
+position = Vector2(3630, 492)
+flip_h = true
 
 [node name="Silos" type="Node2D" parent="Buildings" unique_id=1986475710]
 
@@ -96,12 +165,12 @@ visible = false
 position = Vector2(1100, 680)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Street" unique_id=1794584501]
-position = Vector2(-135, 0)
+position = Vector2(984.5, 0)
 shape = SubResource("floor")
 
 [node name="Curb" type="Polygon2D" parent="Geometry" unique_id=1824508447]
-position = Vector2(-718, -13329.9)
-scale = Vector2(1.3263637, 22.4998)
+position = Vector2(-718, -13329.6)
+scale = Vector2(2.1340907, 22.4998)
 color = Color(0.45, 0.44, 0.48, 1)
 polygon = PackedVector2Array(0, 620, 2200, 620, 2200, 626, 1100.73, 626, 0, 626)
 
@@ -112,7 +181,7 @@ position = Vector2(-262, 360)
 shape = SubResource("wall")
 
 [node name="EastBoundary" type="StaticBody2D" parent="Geometry" unique_id=722109662]
-position = Vector2(2220, 360)
+position = Vector2(3507, 360)
 
 [node name="Shape" type="CollisionShape2D" parent="Geometry/EastBoundary" unique_id=524093992]
 shape = SubResource("wall")
@@ -120,25 +189,83 @@ shape = SubResource("wall")
 [node name="Background" type="Polygon2D" parent="Geometry" unique_id=162884734]
 z_index = -100
 position = Vector2(-718, -76157.5)
-scale = Vector2(1.3399998, 122.833)
+scale = Vector2(2.135909, 122.833)
 color = Color(0.101960786, 0.09803922, 0.10980392, 1)
-polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 626, 1101, 626, 0, 626)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 622.9868, 2200, 626, 1101, 626, 0, 626)
+
+[node name="Background3" type="Polygon2D" parent="Geometry" unique_id=1726436325]
+position = Vector2(-775, -53408)
+scale = Vector2(2.1672726, 87.17413)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
 
 [node name="Props" type="Node2D" parent="." unique_id=1527274168]
 
 [node name="Streetlamp" parent="Props" unique_id=892845672 instance=ExtResource("3_ip0dd")]
-position = Vector2(298, 620)
+position = Vector2(637, 620)
 
 [node name="Streetlamp2" parent="Props" unique_id=18078998 instance=ExtResource("3_ip0dd")]
-position = Vector2(1239, 620)
+position = Vector2(1093, 620)
+
+[node name="Streetlamp3" parent="Props" unique_id=714982314 instance=ExtResource("3_ip0dd")]
+position = Vector2(1766, 620)
+
+[node name="Streetlamp4" parent="Props" unique_id=796551848 instance=ExtResource("3_ip0dd")]
+position = Vector2(2118, 620)
+
+[node name="Streetlamp5" parent="Props" unique_id=1175312820 instance=ExtResource("3_ip0dd")]
+position = Vector2(2742, 620)
+
+[node name="WarmLight" parent="Props/Streetlamp5" index="1" unique_id=547296718]
+visible = false
+
+[node name="Streetlamp6" parent="Props" unique_id=747324133 instance=ExtResource("3_ip0dd")]
+z_index = -1
+position = Vector2(3366, 620)
+
+[node name="ReinforcedFenceSide" parent="Props" unique_id=350110703 instance=ExtResource("10_le0go")]
+position = Vector2(2566, 620)
+scale = Vector2(1.2, 1.5)
+
+[node name="ReinforcedFenceSide2" parent="Props" unique_id=1236971713 instance=ExtResource("10_le0go")]
+position = Vector2(3366, 620)
+scale = Vector2(1.2, 1.2)
 
 [node name="Interactables" type="Node2D" parent="." unique_id=1337389834]
 
-[node name="CuttableFence" parent="Interactables" unique_id=1304159414 instance=ExtResource("7_rklyf")]
+[node name="Ammo" parent="Interactables" unique_id=1595936546 instance=ExtResource("23_uk0bi")]
+position = Vector2(3320, 614)
+scale = Vector2(0.4, 0.4)
+
+[node name="Alleyway_01Entrance" parent="Interactables" unique_id=1980432981 instance=ExtResource("4")]
+position = Vector2(374, 556)
+destination_scene = "res://scenes/levels/alleyway_01.tscn"
+destination_spawn = "from_town_01_1"
+
+[node name="Facade" parent="Interactables/Alleyway_01Entrance" index="0" unique_id=1815167978]
+visible = false
+
+[node name="Alleyway_01Entrance2" parent="Interactables" unique_id=1304159414 instance=ExtResource("7_rklyf")]
 position = Vector2(861, 620)
 
-[node name="CollisionShape2D" parent="Interactables/CuttableFence/Barrier" parent_id_path=PackedInt32Array(1304159414, 1311734470) index="0" unique_id=495058167]
+[node name="CollisionShape2D" parent="Interactables/Alleyway_01Entrance2/Barrier" parent_id_path=PackedInt32Array(1304159414, 1311734470) index="0" unique_id=495058167]
 disabled = true
+
+[node name="Alleyway_02Entrance1" parent="Interactables" unique_id=1374870579 instance=ExtResource("4")]
+position = Vector2(2341, 556)
+destination_scene = "uid://rx3cgdiugcyx"
+destination_spawn = "from_town_01_1"
+
+[node name="Facade" parent="Interactables/Alleyway_02Entrance1" index="0" unique_id=1815167978]
+visible = false
+
+[node name="Alleyway_02Entrance2" parent="Interactables" unique_id=166180848 instance=ExtResource("4")]
+position = Vector2(2966, 556)
+destination_scene = "uid://rx3cgdiugcyx"
+destination_spawn = "from_town_01_2"
+
+[node name="Facade" parent="Interactables/Alleyway_02Entrance2" index="0" unique_id=1815167978]
+visible = false
 
 [node name="House_01Entrance" parent="Interactables" unique_id=1065461545 instance=ExtResource("4")]
 position = Vector2(997, 556)
@@ -148,19 +275,41 @@ destination_spawn = "from_street"
 [node name="Facade" parent="Interactables/House_01Entrance" index="0" unique_id=1815167978]
 visible = false
 
-[node name="Alleyway_01Entrance" parent="Interactables" unique_id=1980432981 instance=ExtResource("4")]
-position = Vector2(374, 556)
-destination_scene = "res://scenes/levels/alleyway_01.tscn"
-destination_spawn = "from_street"
+[node name="House_02Entrance2" parent="Interactables" unique_id=798795210 instance=ExtResource("4")]
+position = Vector2(1189, 556)
+description = "Requires house_02_key."
+required_key = "house_key"
+puzzle_input_item = ""
+puzzle_reward_item = ""
 
-[node name="Facade" parent="Interactables/Alleyway_01Entrance" index="0" unique_id=1815167978]
+[node name="Facade" parent="Interactables/House_02Entrance2" index="0" unique_id=1815167978]
 visible = false
+
+[node name="House_04Entrance" parent="Interactables" unique_id=59443969 instance=ExtResource("4")]
+position = Vector2(2654, 556)
+destination_spawn = "from_town_01"
+
+[node name="Facade" parent="Interactables/House_04Entrance" index="0" unique_id=1815167978]
+visible = false
+
+[node name="Town_02Entrance" parent="Interactables" unique_id=1073430740 instance=ExtResource("7_rklyf")]
+z_index = -1
+position = Vector2(1527.9999, 620)
+scale = Vector2(1.3, 1.3)
+
+[node name="CollisionShape2D" parent="Interactables/Town_02Entrance/Barrier" parent_id_path=PackedInt32Array(1073430740, 1311734470) index="0" unique_id=495058167]
+disabled = true
 
 [node name="SaveBicycle" parent="Interactables" unique_id=52212124 instance=ExtResource("save_bicycle")]
 position = Vector2(100, 620)
 station_name = "Street bicycle"
+interaction_radius = 50.0
 
 [node name="Actors" type="Node2D" parent="." unique_id=1189311552]
+
+[node name="Enemy" parent="Actors" unique_id=981298321 instance=ExtResource("22_w4u1r")]
+position = Vector2(2778, 588)
+leave_corpse = true
 
 [node name="Player" parent="Actors" unique_id=1065848384 instance=ExtResource("2")]
 position = Vector2(-198, 588)
@@ -170,11 +319,29 @@ position = Vector2(-198, 588)
 [node name="default" type="Marker2D" parent="Spawns" unique_id=835030279]
 position = Vector2(-197, 588)
 
-[node name="from_shop" type="Marker2D" parent="Spawns" unique_id=1936546829]
+[node name="from_house_01" type="Marker2D" parent="Spawns" unique_id=1936546829]
 position = Vector2(998, 588)
 
-[node name="from_alley" type="Marker2D" parent="Spawns" unique_id=7785010]
+[node name="from_house_02" type="Marker2D" parent="Spawns" unique_id=589164884]
+position = Vector2(1189, 588)
+
+[node name="from_house_03" type="Marker2D" parent="Spawns" unique_id=2075200795]
+position = Vector2(1810, 588)
+
+[node name="from_house_04" type="Marker2D" parent="Spawns" unique_id=123817631]
+position = Vector2(2654, 588)
+
+[node name="from_alleyway_01_1" type="Marker2D" parent="Spawns" unique_id=7785010]
 position = Vector2(374, 588)
+
+[node name="from_alleyway_01_2" type="Marker2D" parent="Spawns" unique_id=1036322264]
+position = Vector2(860, 588)
+
+[node name="from_alleyway_02_1" type="Marker2D" parent="Spawns" unique_id=584459371]
+position = Vector2(2341, 588)
+
+[node name="from_alleyway_02_2" type="Marker2D" parent="Spawns" unique_id=2036310132]
+position = Vector2(2966, 588)
 
 [node name="HUD" parent="." unique_id=296689736 instance=ExtResource("3")]
 
@@ -184,9 +351,12 @@ volume_db = -16.0
 autoplay = true
 script = ExtResource("22")
 
-[node name="HouseTerracotta" parent="." unique_id=1661619094 instance=ExtResource("5_5ycnk")]
-position = Vector2(1189, 492)
-
-[editable path="Interactables/CuttableFence"]
-[editable path="Interactables/House_01Entrance"]
+[editable path="Props/Streetlamp5"]
 [editable path="Interactables/Alleyway_01Entrance"]
+[editable path="Interactables/Alleyway_01Entrance2"]
+[editable path="Interactables/Alleyway_02Entrance1"]
+[editable path="Interactables/Alleyway_02Entrance2"]
+[editable path="Interactables/House_01Entrance"]
+[editable path="Interactables/House_02Entrance2"]
+[editable path="Interactables/House_04Entrance"]
+[editable path="Interactables/Town_02Entrance"]

@@ -17,6 +17,10 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/kitchen/wall_cabinet.tscn" id="13_6kljy"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/kitchen/base_cabinet.tscn" id="14_6p47i"]
 [ext_resource type="Texture2D" uid="uid://doeuaul7l3oue" path="res://art/pixel/floor.png" id="16"]
+[ext_resource type="PackedScene" uid="uid://cb1drcxvonlbw" path="res://scenes/objects/loot/loot_container.tscn" id="17_1wm6w"]
+[ext_resource type="Script" uid="uid://bkj62nwqxumq7" path="res://scripts/loot/loot_entry.gd" id="18_crbd2"]
+[ext_resource type="Resource" uid="uid://i77pedfgvhlr" path="res://data/items/antiseptic.tres" id="19_bmfa7"]
+[ext_resource type="PackedScene" uid="uid://d161ooahnfhd3" path="res://scenes/objects/lighting/light_switch.tscn" id="20_6kljy"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="21"]
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="22"]
 
@@ -25,6 +29,11 @@ size = Vector2(858, 120)
 
 [sub_resource type="RectangleShape2D" id="wall"]
 size = Vector2(40, 720)
+
+[sub_resource type="Resource" id="Resource_1wm6w"]
+script = ExtResource("18_crbd2")
+item = ExtResource("19_bmfa7")
+metadata/_custom_type_script = "uid://bkj62nwqxumq7"
 
 [node name="Location" type="Node2D" unique_id=701534075]
 script = ExtResource("1")
@@ -190,12 +199,42 @@ light_radius_scale = 1.0
 visible = false
 position = Vector2(350, 556)
 destination_scene = "res://scenes/levels/town_01.tscn"
-destination_spawn = "from_shop"
+destination_spawn = "from_house_01"
 
 [node name="EnterHouse_01_2" parent="Interactables" unique_id=928311053 instance=ExtResource("4")]
 visible = false
 position = Vector2(643, 556)
 destination_scene = "uid://m80iahaftwpp"
+
+[node name="LightSwitch" parent="Interactables" unique_id=1648403643 instance=ExtResource("20_6kljy")]
+position = Vector2(318, 575)
+scale = Vector2(0.3, 0.3)
+connected_lights = Array[NodePath]([NodePath("../../Props/CeilingLamp")])
+
+[node name="LightSwitch2" parent="Interactables" unique_id=951179156 instance=ExtResource("20_6kljy")]
+position = Vector2(494.00003, 571)
+scale = Vector2(0.3, 0.3)
+connected_lights = Array[NodePath]([NodePath("../../Props/WallLamp2")])
+
+[node name="LightSwitch3" parent="Interactables" unique_id=2031007313 instance=ExtResource("20_6kljy")]
+position = Vector2(16, 583)
+scale = Vector2(0.2, 0.2)
+connected_lights = Array[NodePath]([NodePath("../../Props/FloorLamp")])
+
+[node name="LightSwitch4" parent="Interactables" unique_id=1574582219 instance=ExtResource("20_6kljy")]
+position = Vector2(672, 571)
+scale = Vector2(0.3, 0.3)
+connected_lights = Array[NodePath]([NodePath("../../Props/WallLamp")])
+
+[node name="LootContainer" parent="Interactables" unique_id=286012595 instance=ExtResource("17_1wm6w")]
+position = Vector2(481, 608)
+
+[node name="LootContainer2" parent="Interactables" unique_id=324764268 instance=ExtResource("17_1wm6w")]
+position = Vector2(576, 608)
+
+[node name="LootContainer3" parent="Interactables" unique_id=659404973 instance=ExtResource("17_1wm6w")]
+position = Vector2(431, 575)
+contents = Array[ExtResource("18_crbd2")]([SubResource("Resource_1wm6w")])
 
 [node name="Actors" type="Node2D" parent="." unique_id=1936203783]
 

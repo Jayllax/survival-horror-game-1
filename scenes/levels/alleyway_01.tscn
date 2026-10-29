@@ -154,7 +154,7 @@ position = Vector2(742, 592)
 [node name="StreetExit" parent="Interactables" unique_id=1682660375 instance=ExtResource("4")]
 position = Vector2(389, 556)
 destination_scene = "res://scenes/levels/town_01.tscn"
-destination_spawn = "from_alley"
+destination_spawn = "from_alleyway_01_1"
 
 [node name="Facade" parent="Interactables/StreetExit" index="0" unique_id=1815167978]
 visible = false
@@ -163,22 +163,22 @@ visible = false
 position = Vector2(722, 593)
 scale = Vector2(0.3, 0.3)
 
+[node name="Key" parent="Interactables" unique_id=808328386 instance=ExtResource("11_wbtbr")]
+position = Vector2(755.00006, 596.00006)
+rotation = -0.65449846
+scale = Vector2(0.3, 0.3)
+
 [node name="Actors" type="Node2D" parent="." unique_id=358542406]
 
 [node name="Player" parent="Actors" unique_id=361187446 instance=ExtResource("2")]
 position = Vector2(387, 588)
-
-[node name="Key" parent="Actors" unique_id=808328386 instance=ExtResource("11_wbtbr")]
-position = Vector2(755.00006, 596.00006)
-rotation = -0.65449846
-scale = Vector2(0.3, 0.3)
 
 [node name="Spawns" type="Node2D" parent="." unique_id=480732066]
 
 [node name="default" type="Marker2D" parent="Spawns" unique_id=540004730]
 position = Vector2(391, 588)
 
-[node name="from_street" type="Marker2D" parent="Spawns" unique_id=501361400]
+[node name="from_town_01_1" type="Marker2D" parent="Spawns" unique_id=501361400]
 position = Vector2(391, 588)
 
 [node name="HUD" parent="." unique_id=1915867905 instance=ExtResource("3")]

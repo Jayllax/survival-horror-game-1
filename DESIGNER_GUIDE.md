@@ -205,3 +205,15 @@ Open an item `.tres` under `data/items/`, expand **Use Behavior**, and set **Rem
 ## Square alleyway lighting
 
 Place `scenes/objects/lighting/alley_light.tscn` for a square light, or assign `art/lights/square_beam.tres` to an existing PointLight2D. Texture Scale controls overall size; Transform Scale X/Y makes it rectangular. See the [alley light guide](docs/guides/ALLEY_LIGHT_GUIDE.md).
+
+## Four-digit code locks
+
+Place `scenes/objects/puzzles/code_lock.tscn` beside or under your furniture. Set **Correct Code** and a unique **Persistent Id** in the Inspector. Optionally assign **Reward Item**, closed/open artwork, a barrier collision shape or an opening animation. Your existing HUD opens the four-dial panel and the bicycle save slots remember completion and unsolved dial positions. See [CODE_LOCK_GUIDE.md](docs/guides/CODE_LOCK_GUIDE.md) for the setup steps. No lock, clue or puzzle content has been placed in your levels.
+
+## Room light switches
+
+Place `scenes/objects/lighting/light_switch.tscn`, assign lights or interior lamp roots in **Connected Lights**, and set **Starting On** and a **Persistent Id**. E toggles those lights. Optional **Reveal When Off** nodes let you show your own clue artwork when the circuit is off. Bicycle saves remember each circuit; matching IDs can link two switches. See [LIGHT_SWITCH_GUIDE.md](docs/guides/LIGHT_SWITCH_GUIDE.md) for setup and dark-room visibility settings.
+
+## Searchable furniture and empty drawers
+
+Place `scenes/objects/loot/loot_container.tscn` beside or under your furniture and give it a unique **Persistent Id**. Leave **Contents** size **0** to show **Empty** once and remove the Search interaction. To add loot, create a **LootEntry** for each item type inside Contents, then assign its **Item** and **Quantity**. All contents must fit before anything is taken. Empty and filled containers keep their searched state in bicycle saves. See [LOOT_CONTAINER_GUIDE.md](docs/guides/LOOT_CONTAINER_GUIDE.md) for Inspector steps and optional opening artwork/animations.

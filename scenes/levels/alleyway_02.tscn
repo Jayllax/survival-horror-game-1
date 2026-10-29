@@ -1,0 +1,262 @@
+[gd_scene format=3 uid="uid://rx3cgdiugcyx"]
+
+[ext_resource type="Script" uid="uid://6ac0fiq4jtxt" path="res://scripts/location.gd" id="1_d1lar"]
+[ext_resource type="PackedScene" path="res://scenes/objects/lighting/alley_light.tscn" id="2_napcb"]
+[ext_resource type="PackedScene" uid="uid://cfoibs7ccueyy" path="res://scenes/objects/houses/building_house.tscn" id="3_bfqbi"]
+[ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_terracotta_no_chimney.tscn" id="4_xd35a"]
+[ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_cream_left.tscn" id="5_fs2yv"]
+[ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="8_in168"]
+[ext_resource type="PackedScene" uid="uid://db83ujlaupd0k" path="res://scenes/objects/save_bicycle.tscn" id="8_qyk84"]
+[ext_resource type="PackedScene" uid="uid://mdei23004fri" path="res://scenes/objects/ammo.tscn" id="9_in5tb"]
+[ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="11_mcqgs"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="12_2rurx"]
+[ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="13_bw6gv"]
+[ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="14_c5ioa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v0ld8"]
+size = Vector2(2912, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d47s1"]
+size = Vector2(13, 720)
+
+[node name="Location" type="Node2D" unique_id=1034484529]
+script = ExtResource("1_d1lar")
+display_name = "Service alley"
+camera_bounds = Rect2i(0, 0, 1500, 720)
+
+[node name="AmbientTint" type="CanvasModulate" parent="." unique_id=1634872600]
+color = Color(0.039215688, 0.039215688, 0.039215688, 1)
+
+[node name="Buildings" type="Node2D" parent="." unique_id=1244740229]
+
+[node name="Town_01Mouth1" type="Polygon2D" parent="Buildings" unique_id=1783951528]
+z_index = -9
+position = Vector2(-151.05157, 265.99994)
+scale = Vector2(0.5052623, 0.570968)
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(1150, 310, 1244.4807, 309.99997, 1340, 309.99997, 1340, 463.84204, 1340, 620, 1244.8208, 620.00006, 1150, 620, 1149.9999, 464.1112)
+
+[node name="AlleyLight" parent="Buildings/Town_01Mouth1" unique_id=191838136 instance=ExtResource("2_napcb")]
+position = Vector2(1247.8667, 489.0816)
+scale = Vector2(1.5709659, 2.2385228)
+
+[node name="Town_01Mouth2" type="Polygon2D" parent="Buildings" unique_id=1270551690]
+z_index = -9
+position = Vector2(553, 266)
+scale = Vector2(0.5052623, 0.570968)
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(1150, 310, 1244.4807, 309.99997, 1340, 309.99997, 1340, 463.84204, 1340, 620, 1244.8208, 620.00006, 1150, 620, 1149.9999, 464.1112)
+
+[node name="AlleyLight" parent="Buildings/Town_01Mouth2" unique_id=1523493835 instance=ExtResource("2_napcb")]
+position = Vector2(1247.8667, 489.0816)
+scale = Vector2(1.5709659, 2.2385228)
+
+[node name="HouseSilo" parent="Buildings" unique_id=1936693580 instance=ExtResource("3_bfqbi")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(654, 492)
+
+[node name="HouseSilo02" parent="Buildings" unique_id=565006089 instance=ExtResource("4_xd35a")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(126, 492)
+
+[node name="HouseSilo03" parent="Buildings" unique_id=2034177237 instance=ExtResource("5_fs2yv")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(302, 492)
+
+[node name="HouseSilo04" parent="Buildings" unique_id=1417061233 instance=ExtResource("4_xd35a")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(478, 492)
+
+[node name="HouseSilo05" parent="Buildings" unique_id=206577217 instance=ExtResource("4_xd35a")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(-50, 492)
+
+[node name="HouseSilo06" parent="Buildings" unique_id=1413310191 instance=ExtResource("4_xd35a")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(830, 492)
+
+[node name="HouseSilo07" parent="Buildings" unique_id=2061735086 instance=ExtResource("4_xd35a")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(1006, 492)
+
+[node name="HouseSilo08" parent="Buildings" unique_id=1691124307 instance=ExtResource("5_fs2yv")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(1182, 492)
+
+[node name="HouseSilo09" parent="Buildings" unique_id=2145651642 instance=ExtResource("4_xd35a")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(1358, 492)
+
+[node name="HouseSilo10" parent="Buildings" unique_id=1979356410 instance=ExtResource("4_xd35a")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(1710, 492)
+
+[node name="HouseSilo11" parent="Buildings" unique_id=459179719 instance=ExtResource("5_fs2yv")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(1886, 492)
+
+[node name="HouseSilo12" parent="Buildings" unique_id=773007285 instance=ExtResource("4_xd35a")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(2062, 492)
+
+[node name="HouseSilo13" parent="Buildings" unique_id=112960699 instance=ExtResource("4_xd35a")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(1534, 492)
+
+[node name="HouseSilo14" parent="Buildings" unique_id=604976632 instance=ExtResource("5_fs2yv")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(-226, 492)
+
+[node name="HouseSilo2" parent="Buildings" unique_id=1083906086 instance=ExtResource("3_bfqbi")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(-402, 492)
+
+[node name="HouseSilo15" parent="Buildings" unique_id=1215781216 instance=ExtResource("4_xd35a")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(-578, 492)
+
+[node name="HouseSilo16" parent="Buildings" unique_id=1183234670 instance=ExtResource("5_fs2yv")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(2590, 492)
+
+[node name="HouseSilo3" parent="Buildings" unique_id=273052215 instance=ExtResource("3_bfqbi")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(2414, 492)
+
+[node name="HouseSilo17" parent="Buildings" unique_id=1893717724 instance=ExtResource("4_xd35a")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(2238, 492)
+
+[node name="Geometry" type="Node2D" parent="." unique_id=526838699]
+
+[node name="Street" type="StaticBody2D" parent="Geometry" unique_id=1991072136]
+position = Vector2(1100, 680)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Street" unique_id=389546633]
+position = Vector2(-356, 0)
+shape = SubResource("RectangleShape2D_v0ld8")
+
+[node name="Curb" type="Polygon2D" parent="Geometry" unique_id=441947215]
+position = Vector2(-994, -13329.9)
+scale = Vector2(1.6754545, 22.4998)
+color = Color(0.45, 0.44, 0.48, 1)
+polygon = PackedVector2Array(0, 620, 2200, 620, 2200, 623.00726, 2200, 626, 1100.73, 626, 0, 626, 0, 623.0968)
+
+[node name="WestBoundary" type="StaticBody2D" parent="Geometry" unique_id=1083661990]
+position = Vector2(-434, 360)
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/WestBoundary" unique_id=1183982727]
+shape = SubResource("RectangleShape2D_d47s1")
+
+[node name="EastBoundary" type="StaticBody2D" parent="Geometry" unique_id=1564435628]
+position = Vector2(2148, 360)
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/EastBoundary" unique_id=1186305126]
+shape = SubResource("RectangleShape2D_d47s1")
+
+[node name="Background" type="Polygon2D" parent="Geometry" unique_id=641202861]
+z_index = -100
+position = Vector2(-995.00006, -76157.5)
+scale = Vector2(1.6709088, 122.833)
+color = Color(0.184572, 0.180707, 0.200034, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200.0002, 623.0074, 2200, 626, 1101, 626, 0, 626, 0, 623.0261)
+
+[node name="Background3" type="Polygon2D" parent="Geometry" unique_id=535386433]
+position = Vector2(-1362, -53408)
+scale = Vector2(1.855, 87.17413)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
+
+[node name="Props" type="Node2D" parent="." unique_id=161909125]
+
+[node name="Interactables" type="Node2D" parent="." unique_id=1114832439]
+
+[node name="Alleyway_02Exit1" parent="Interactables" unique_id=1682660375 instance=ExtResource("8_in168")]
+position = Vector2(478.94843, 555.99994)
+destination_scene = "res://scenes/levels/town_01.tscn"
+destination_spawn = "from_alleyway_02_1"
+
+[node name="Facade" parent="Interactables/Alleyway_02Exit1" index="0" unique_id=1815167978]
+visible = false
+
+[node name="Alleyway_02Exit2" parent="Interactables" unique_id=166180848 instance=ExtResource("8_in168")]
+position = Vector2(1183, 556)
+destination_scene = "res://scenes/levels/town_01.tscn"
+destination_spawn = "from_alleyway_02_2"
+
+[node name="Facade" parent="Interactables/Alleyway_02Exit2" index="0" unique_id=1815167978]
+visible = false
+
+[node name="Ammo" parent="Interactables" unique_id=1595936546 instance=ExtResource("9_in5tb")]
+position = Vector2(1090, 614)
+scale = Vector2(0.4, 0.4)
+
+[node name="SaveBicycle" parent="Interactables" unique_id=161983407 instance=ExtResource("8_qyk84")]
+position = Vector2(1053, 620)
+station_name = "Street bicycle"
+interaction_radius = 50.0
+
+[node name="Actors" type="Node2D" parent="." unique_id=358542406]
+
+[node name="Player" parent="Actors" unique_id=361187446 instance=ExtResource("11_mcqgs")]
+position = Vector2(478.94843, 587.99994)
+
+[node name="Spawns" type="Node2D" parent="." unique_id=480732066]
+
+[node name="default" type="Marker2D" parent="Spawns" unique_id=540004730]
+position = Vector2(478.94843, 587.99994)
+
+[node name="from_town_01_1" type="Marker2D" parent="Spawns" unique_id=501361400]
+position = Vector2(478.94843, 587.99994)
+
+[node name="from_town_01_2" type="Marker2D" parent="Spawns" unique_id=58507107]
+position = Vector2(1183, 588)
+
+[node name="HUD" parent="." unique_id=1915867905 instance=ExtResource("12_2rurx")]
+
+[node name="AmbientSound" type="AudioStreamPlayer" parent="." unique_id=1830869886]
+stream = ExtResource("13_bw6gv")
+volume_db = -16.0
+autoplay = true
+script = ExtResource("14_c5ioa")
+
+[editable path="Interactables/Alleyway_02Exit1"]
+[editable path="Interactables/Alleyway_02Exit2"]
