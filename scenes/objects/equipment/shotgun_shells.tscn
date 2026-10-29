@@ -1,0 +1,15 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://scripts/interactable.gd" id="script"]
+[ext_resource type="Resource" path="res://data/items/shotgun_shells.tres" id="item"]
+[ext_resource type="Texture2D" path="res://art/pixel/equipment/shotgun_shells.png" id="art"]
+[node name="ShotgunShells" type="Area2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("script")
+interaction_radius = 50.0
+item_definition = ExtResource("item")
+quantity = 4
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("art")

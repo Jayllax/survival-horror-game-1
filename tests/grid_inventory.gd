@@ -85,13 +85,18 @@ func run() -> void:
     var weapon_uids: Array[int] = []
     for item in collection.entries: weapon_uids.append(item["uid"])
     check(weapon_uids.size()==6 and collection.next_uid==7, "Weapons of the same type still have unique stable identities")
-    Game.start_game()
+    Game.reset_run()
+    check(not Game.has_equipped_weapon() and Game.count_item("pistol")==0, "New games respect the designer's unarmed starting loadout")
+    preload("res://tests/support/loadout.gd").handgun()
+    var fixture=load("res://tests/fixtures/combat_sandbox.tscn").instantiate()
+    get_tree().root.add_child(fixture)
+    get_tree().current_scene=fixture
     await frames(6)
     var scene: Node2D = get_tree().current_scene
     var hud: CanvasLayer = scene.get_node("HUD")
     var player: CharacterBody2D = scene.get_node("Actors/Player")
     var pistol_uid := Game.inventory.first_uid("pistol")
-    check(Game.equipped_uid==pistol_uid and Game.magazine==6, "New game carries and equips the actual handgun item")
+    check(Game.equipped_uid==pistol_uid and Game.magazine==6, "Combat fixture explicitly carries and equips the actual handgun item")
     await key(KEY_TAB)
     check(get_tree().paused and hud.get_node("Root/InventoryPanel").visible, "Tab opens the grid inventory")
     var grid: Control = hud.get_node("Root/InventoryPanel/Grid")
@@ -156,8 +161,9 @@ func run() -> void:
     Game.equip_weapon(pistol_uid)
     check(Game.magazine==6 and Game.inventory.entry(other_uid)["magazine"]==8, "Switching weapons never transfers loaded rounds between instances")
     check(not Game.equip_weapon(Game.inventory.first_uid("ammo")), "Ammunition cannot be equipped as a weapon")
-    Game.take_item("ammo",12)
-    Game.add_item("ammo",26)
+    if Game.count_item("ammo") > 0:Game.take_item("ammo", Game.count_item("ammo"))
+    var stack_limit := Game.stack_limit("ammo")
+    Game.add_item("ammo", stack_limit + 2)
     var stacks := Game.inventory.entries.filter(func(entry): return entry["id"]=="ammo")
     var full_target: int = stacks[0]["uid"]
     var small_source: int = stacks[1]["uid"]
@@ -167,19 +173,19 @@ func run() -> void:
     await mouse(point(grid,Vector2i(from["x"],from["y"])),true)
     await motion(point(grid,Vector2i(into["x"],into["y"])))
     await mouse(point(grid,Vector2i(into["x"],into["y"])),false)
-    check(Game.inventory.entry(full_target)["count"]==22 and Game.inventory.entry(small_source).is_empty(), "Dropping an ammo stack onto another merges 20 plus 2 and frees its cell")
-    Game.take_item("ammo",22)
-    Game.add_item("ammo",26)
+    check(Game.inventory.entry(full_target)["count"]==stack_limit-2 and Game.inventory.entry(small_source).is_empty(), "Dropping ammunition onto another stack merges within the designer's current stack limit")
+    Game.take_item("ammo", Game.count_item("ammo"))
+    Game.add_item("ammo", stack_limit + 2)
     stacks = Game.inventory.entries.filter(func(entry): return entry["id"]=="ammo")
     var target_uid: int = stacks[1]["uid"]
     var source_uid: int = stacks[0]["uid"]
-    check(Game.merge_items(target_uid,source_uid) and Game.inventory.entry(target_uid)["count"]==24 and Game.inventory.entry(source_uid)["count"]==2, "Stack merging preserves overflow across selected instances")
+    check(Game.merge_items(target_uid,source_uid) and Game.inventory.entry(target_uid)["count"]==stack_limit and Game.inventory.entry(source_uid)["count"]==2, "Stack merging preserves overflow across selected instances")
     var size_before := Vector2i(Game.inventory.columns,Game.inventory.rows)
     check(not Game.expand_inventory(4,2) and Vector2i(Game.inventory.columns,Game.inventory.rows)==size_before, "Inventory upgrades cannot accidentally shrink occupied storage")
     check(Game.expand_inventory(10,5), "Upgrade hook increases usable capacity without moving or deleting items")
     hud.close_panels()
     await frames(3)
-    scene.get_node("AmbientSound").stop()
+    if scene.has_node("AmbientSound"): scene.get_node("AmbientSound").stop()
     await frames(3)
     scene.queue_free()
     get_tree().current_scene = null

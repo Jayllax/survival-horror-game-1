@@ -121,7 +121,7 @@ Open **`data/inventory_settings.tres`** in the Inspector. **Columns/Rows** set t
 
 Open any item definition `.tres` and edit **Inventory Footprint → Grid Size**: X is columns, Y is rows. For example, use **(3, 2)** for a large puzzle object or **(4, 1)** for a long weapon. **Can Rotate** controls rotation. Keep dimensions positive and no larger than the supported grid. Change **Max Stack** independently; a whole stack uses that item's footprint. Automatic pickups try the natural orientation, then the rotated orientation, without moving existing items.
 
-A future upgrade can call **`Game.expand_inventory(columns, rows)`**. This only enlarges the current run's grid; coordinates and items remain intact, and each manual save retains its own upgraded size. The foundation includes this hook, not an authored backpack-upgrade pickup.
+Size upgrades now shrink individual compatible items instead of growing the grid. See [Weapons and item upgrades](docs/guides/WEAPONS_AND_UPGRADES.md). The older `Game.expand_inventory` hook remains for compatibility, but no capacity-upgrade pickup is supplied.
 
 ### Add future weapons without changing player code
 
@@ -132,7 +132,7 @@ A future upgrade can call **`Game.expand_inventory(columns, rows)`**. This only 
 5. Duplicate a pickup scene and assign the new **Item Definition**; update its child Sprite2D texture for the editor preview. Place it where you want the weapon to be discovered.
 6. Collect it, arrange it, and select **Equip**. Multiple weapons, including duplicate weapons of the same type, have independent magazines and stable instance IDs. New weapon pickups start unloaded; the starting weapon begins loaded.
 
-These definitions currently drive the existing **hitscan firearm** behavior. Shotgun spread, alternate fire modes and distinct weapon animations require later gameplay additions. Five or six definitions do not require five or six player scripts. Define a new ammunition item and match its ID for a different ammunition type. Existing Player movement and dodge settings remain on the Player; firearm stats now come from the equipped definition.
+These definitions drive **hitscan firearms**, including shotgun pellet count, spread, range, shell-by-shell reload and per-weapon hand/muzzle offsets. Alternate fire modes and distinct weapon animations would require further additions. Five or six definitions do not require five or six player scripts. Define a new ammunition item and match its ID for a different ammunition type. Existing Player movement and dodge settings remain on the Player; firearm stats now come from the equipped definition.
 
 Reuse `ammo.tscn`, `fuse.tscn`, or `key.tscn`. Assign **Item Definition**, set **Quantity** and optional **Action Label**, and update child Sprite2D Texture for the editor preview. Arbitrary item IDs work as keys or circuit inputs; names default to a readable capitalization. Built-ins have friendlier labels.
 
@@ -164,7 +164,7 @@ An example bicycle is placed at **(200, 620)** on the street. The front-facing a
 
 ### What each slot remembers
 
-Each independent file records the location, bicycle's return position, the grid dimensions, every item instance (ID, quantity, coordinates and rotation), equipped weapon, health, each weapon’s loaded magazine, flashlight state, circuit/reference flags, collected pickups, opened gates, defeated enemies, and elapsed play time. The slot menu shows location, station name, local save date/time, played hours/minutes, and health. Saving does not heal the player or refill ammunition. Partly injured living enemies, their patrol positions, and active animations reset when a scene reloads.
+Each independent file records the location, bicycle's return position, the grid dimensions, every item instance (ID, quantity, coordinates, rotation and installed upgrades), equipped weapon, health, each weapon’s loaded magazine, flashlight state, circuit/reference flags, collected pickups, opened gates, defeated enemies, and elapsed play time. The slot menu shows location, station name, local save date/time, played hours/minutes, and health. Saving does not heal the player or refill ammunition. Partly injured living enemies, their patrol positions, and active animations reset when a scene reloads.
 
 **Main menu → Load game** and **Pause → Load game** both open the four-slot picker. The death menu also loads a selected file. Loading returns to the recorded **SaveSpawn position**, not the last entrance. **New game** starts fresh in memory and preserves all four files. A player can later overwrite a slot only by saving at a bicycle and confirming.
 
@@ -172,7 +172,7 @@ The scene must use `scripts/location.gd`, as the supplied locations do. Keep its
 
 State IDs default to `scene file path + node path`. Renaming a persistent object changes its identity. Give interactables a unique **Persistent Id** before release if you intend to rename them. Do not duplicate explicit IDs. Enemy identities currently use their scene/node paths. Back up saves before changing scene paths, item IDs, or geometry around saved return positions.
 
-In Godot, choose **Project → Open User Data Folder** to find **`save_1.json` through `save_4.json`**, plus `settings.cfg`. Files are written to a temporary file first, then committed. Save previews include the stored item count, grid capacity and whether a weapon is equipped. Loading validates the entire snapshot before changing scenes and applies it as one state change; it never merges the loaded inventory or progress with the current run. Every slot reads its own file; opening another slot’s preview does not change the run. Unavailable/corrupt saves are marked in the picker and cannot be loaded; they can be replaced after confirmation. The old `checkpoint.json` remains unused. Previous **version-2 bicycle saves** are read without rewriting them: the eight pockets are placed in an 8×4 grid and the formerly implicit handgun becomes an equipped 2-cell item with its saved ammunition. Saving at a bicycle writes the new version-3 format only to the chosen slot.
+In Godot, choose **Project → Open User Data Folder** to find **`save_1.json` through `save_4.json`**, plus `settings.cfg`. Files are written to a temporary file first, then committed. Save previews include the stored item count, grid capacity and whether a weapon is equipped. Loading validates the entire snapshot before changing scenes and applies it as one state change; it never merges the loaded inventory or progress with the current run. Every slot reads its own file; opening another slot’s preview does not change the run. Unavailable/corrupt saves are marked in the picker and cannot be loaded; they can be replaced after confirmation. The old `checkpoint.json` remains unused. Previous **version-2 bicycle saves** are read without rewriting them: the eight pockets are placed in an 8×4 grid and the formerly implicit handgun becomes an equipped 2-cell item with its saved ammunition. Saving at a bicycle writes the new version-4 format, including installed item upgrades, only to the chosen slot.
 
 ## Art and interface
 
@@ -188,8 +188,12 @@ Play from New Game, enter the building, collect ammo, return, revisit, and confi
 
 ## Interior furniture and stairs
 
-Start with [INTERIOR_KIT_GUIDE.md](docs/guides/INTERIOR_KIT_GUIDE.md). Drag scenes from `scenes/objects/interiors/` into a room and choose Color Variant in the Inspector. The kit includes 24 furniture/lamp objects in three colors, plus walkable full/half stairs in both directions. Try `scenes/levels/interior_kit_showroom.tscn` with F6, or open `interior_kit_catalog.tscn` to see every variant in the editor.
+Start with [INTERIOR_KIT_GUIDE.md](docs/guides/INTERIOR_KIT_GUIDE.md). Drag scenes from `scenes/objects/interiors/` into a room and choose Color Variant in the Inspector. The kit includes 24 furniture/lamp objects in three colors, plus walkable full/half stairs in both directions. Your latest snapshot removes the separate showroom/catalog scenes; the guide and PNG preview remain available.
 
 ## Forest scenery
 
-See the [FOREST_KIT_GUIDE.md](docs/guides/FOREST_KIT_GUIDE.md) for trees, logs, stumps, bushes, ferns, rocks and smaller ground props. Drag scenes from `scenes/objects/forest/`, choose one of three color variants, and enable Solid only where you want to block the player. Try `scenes/levels/forest_kit_showroom.tscn` with F6, or compare all variants in `forest_kit_catalog.tscn`.
+See the [FOREST_KIT_GUIDE.md](docs/guides/FOREST_KIT_GUIDE.md) for trees, logs, stumps, bushes, ferns, rocks and smaller ground props. Drag scenes from `scenes/objects/forest/`, choose one of three color variants, and enable Solid only where you want to block the player. Your latest snapshot removes the separate showroom/catalog scenes; compare the colors in the guide’s PNG preview.
+
+## Weapons and per-item upgrades
+
+See [WEAPONS_AND_UPGRADES.md](docs/guides/WEAPONS_AND_UPGRADES.md) for the buckshot shotgun, separate ammunition, compact saw and damage kit. All five pickup scenes are under `scenes/objects/equipment/`, including a handgun to place in your town. New games start unarmed; change Starting Weapon in `data/inventory_settings.tres` to configure another loadout. Test the equipment separately with `tests/fixtures/weapon_workbench.tscn` and F6.

@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource("script")
+starting_weapon = ""
 starting_ammo = 0

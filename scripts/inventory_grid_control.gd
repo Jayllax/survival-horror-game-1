@@ -24,7 +24,7 @@ func cell_at(point: Vector2) -> Vector2i:
     return Vector2i(floori(point.x / cell_size()), floori(point.y / cell_size()))
 
 func item_rect(item: Dictionary) -> Rect2:
-    return Rect2(Vector2(item["x"], item["y"]) * cell_size() + Vector2(2,2), Vector2(Game.inventory.dimensions(item["id"], item["rotated"])) * cell_size() - Vector2(4,4))
+    return Rect2(Vector2(item["x"], item["y"]) * cell_size() + Vector2(2,2), Vector2(Game.inventory.item_dimensions(item)) * cell_size() - Vector2(4,4))
 
 func _draw() -> void:
     if not Game.inventory:
@@ -45,10 +45,11 @@ func _draw() -> void:
             item["x"] = place.x
             item["y"] = place.y
             item["rotated"] = held_rotated
-            var valid := Game.inventory.can_place(item["id"], place, held_rotated, held_uid)
+            var valid := Game.inventory.can_place_entry(item, place, held_rotated)
             var target := Game.inventory.entry(Game.inventory.item_at(pointer_cell))
             var merge: bool = not target.is_empty() and target["uid"] != held_uid and target["id"] == item["id"] and Game.stack_limit(item["id"]) > int(target["count"])
-            draw_item(item, item_rect(item), Color(0.55,0.85,0.65,0.9) if valid or merge else Color(0.95,0.4,0.4,0.9))
+            var upgrade := not target.is_empty() and not Game.upgrade_pair(held_uid, int(target["uid"])).is_empty()
+            draw_item(item, item_rect(item), Color(0.55,0.85,0.65,0.9) if valid or merge or upgrade else Color(0.95,0.4,0.4,0.9))
     if has_focus():
         draw_rect(Rect2(Vector2(keyboard_cell) * step + Vector2(2,2), Vector2.ONE * (step-4)), Color("ccbb98"), false, 1)
 
@@ -89,8 +90,14 @@ func drop_at(cell: Vector2i) -> bool:
     var other := Game.inventory.entry(target)
     held_uid = -1
     var success := false
+    var upgraded := false
     if not item.is_empty():
-        if target != uid and not other.is_empty() and item["id"] == other["id"]:
+        if target != uid and not other.is_empty() and not Game.upgrade_pair(uid, target).is_empty():
+            success = Game.combine_uids(uid, target)
+            upgraded = success
+            if success:
+                selected_uid = Game.last_combined_uid
+        elif target != uid and not other.is_empty() and item["id"] == other["id"]:
             success = Game.merge_items(target, uid)
             if success:
                 selected_uid = target
@@ -99,7 +106,7 @@ func drop_at(cell: Vector2i) -> bool:
     if not success:
         feedback.emit("That item does not fit there. Its original position is unchanged.")
     if success:
-        feedback.emit("Item placed." if target == uid or other.is_empty() else "Stacks combined.")
+        feedback.emit("Upgrade applied." if upgraded else ("Item placed." if target == uid or other.is_empty() else "Stacks combined."))
     item_selected.emit(selected_uid)
     queue_redraw()
     return success
@@ -117,7 +124,7 @@ func rotate_item() -> void:
     if item.is_empty() or (definition and not definition.can_rotate):
         return
     if held_uid >= 0:
-        var old_size := Game.inventory.dimensions(item["id"], held_rotated)
+        var old_size := Game.inventory.item_dimensions(item, held_rotated)
         grab_offset = Vector2i(grab_offset.y, old_size.x - 1 - grab_offset.x)
         held_rotated = not held_rotated
     elif not Game.move_item(uid, Vector2i(item["x"], item["y"]), not item["rotated"]):

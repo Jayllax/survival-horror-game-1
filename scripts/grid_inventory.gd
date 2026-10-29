@@ -31,13 +31,20 @@ func first_uid(id: String) -> int:
             return int(item["uid"])
     return -1
 
-func dimensions(id: String, rotated: bool = false) -> Vector2i:
+func dimensions(id: String, rotated: bool = false, upgrades: Array = []) -> Vector2i:
     var definition: InventoryItemDefinition = definitions.get(id)
     var size := definition.grid_size if definition else Vector2i.ONE
+    for upgrade_id in upgrades:
+        var kit: InventoryItemDefinition = definitions.get(upgrade_id)
+        if kit and kit.upgrade and kit.upgrade.effect == InventoryUpgrade.Effect.COMPACT and kit.upgrade.accepts(definition):
+            size = definition.compact_grid_size
     return Vector2i(size.y, size.x) if rotated else size
 
+func item_dimensions(item: Dictionary, rotated: Variant = null) -> Vector2i:
+    return dimensions(item["id"], item["rotated"] if rotated == null else bool(rotated), item.get("upgrades", []))
+
 func bounds(item: Dictionary) -> Rect2i:
-    return Rect2i(Vector2i(item["x"], item["y"]), dimensions(item["id"], item["rotated"]))
+    return Rect2i(Vector2i(item["x"], item["y"]), item_dimensions(item))
 
 func item_at(cell: Vector2i) -> int:
     for item in entries:
@@ -45,17 +52,20 @@ func item_at(cell: Vector2i) -> int:
             return int(item["uid"])
     return -1
 
-func can_place(id: String, cell: Vector2i, rotated: bool = false, ignore_uid: int = -1) -> bool:
+func can_place(id: String, cell: Vector2i, rotated: bool = false, ignore_uid: int = -1, upgrades: Array = []) -> bool:
     var definition: InventoryItemDefinition = definitions.get(id)
     if rotated and definition and not definition.can_rotate:
         return false
-    var rect := Rect2i(cell, dimensions(id, rotated))
+    var rect := Rect2i(cell, dimensions(id, rotated, upgrades))
     if rect.size.x < 1 or rect.size.y < 1 or not Rect2i(0, 0, columns, rows).encloses(rect):
         return false
     for item in entries:
         if item["uid"] != ignore_uid and bounds(item).intersects(rect):
             return false
     return true
+
+func can_place_entry(item: Dictionary, cell: Vector2i, rotated: bool) -> bool:
+    return can_place(item["id"], cell, rotated, item["uid"], item.get("upgrades", []))
 
 func find_space(id: String) -> Dictionary:
     var definition: InventoryItemDefinition = definitions.get(id)
@@ -86,7 +96,7 @@ func add(id: String, amount: int = 1) -> bool:
     var old_uid := next_uid
     var remaining := amount
     for item in entries:
-        if item["id"] == id:
+        if item["id"] == id and item.get("upgrades", []).is_empty():
             var added := mini(remaining, limit(id) - int(item["count"]))
             item["count"] += added
             remaining -= added
@@ -98,7 +108,7 @@ func add(id: String, amount: int = 1) -> bool:
             return false
         var added := mini(remaining, limit(id))
         var item := {"uid": next_uid, "id": id, "count": added,
-            "x": place["x"], "y": place["y"], "rotated": place["rotated"], "magazine": 0}
+            "x": place["x"], "y": place["y"], "rotated": place["rotated"], "magazine": 0, "upgrades": []}
         entries.append(item)
         next_uid += 1
         remaining -= added
@@ -128,7 +138,7 @@ func remove(id: String, amount: int = 1) -> bool:
 
 func move(uid: int, cell: Vector2i, rotated: bool) -> bool:
     var item := entry(uid)
-    if item.is_empty() or not can_place(item["id"], cell, rotated, uid):
+    if item.is_empty() or not can_place_entry(item, cell, rotated):
         return false
     item["x"] = cell.x
     item["y"] = cell.y
@@ -138,13 +148,46 @@ func move(uid: int, cell: Vector2i, rotated: bool) -> bool:
 func merge(target_uid: int, source_uid: int) -> bool:
     var target := entry(target_uid)
     var source := entry(source_uid)
-    if target_uid == source_uid or target.is_empty() or source.is_empty() or target["id"] != source["id"]:
+    if target_uid == source_uid or target.is_empty() or source.is_empty() or target["id"] != source["id"] or target.get("upgrades", []) != source.get("upgrades", []):
         return false
     var amount := mini(int(source["count"]), limit(target["id"]) - int(target["count"]))
     if amount <= 0:
         return false
     target["count"] += amount
     return consume_uid(source_uid, amount)
+
+func can_apply_upgrade(uid: int, upgrade_id: String) -> bool:
+    var target := entry(uid)
+    var kit: InventoryItemDefinition = definitions.get(upgrade_id)
+    var definition: InventoryItemDefinition = definitions.get(target.get("id", ""))
+    if target.is_empty() or int(target["count"]) != 1 or not kit or not kit.upgrade or not kit.upgrade.accepts(definition):
+        return false
+    for installed_id in target.get("upgrades", []):
+        var installed: InventoryItemDefinition = definitions.get(installed_id)
+        if not installed or not installed.upgrade or installed.upgrade.effect == kit.upgrade.effect:
+            return false
+    return true
+
+func apply_upgrade(uid: int, upgrade_id: String) -> bool:
+    if not can_apply_upgrade(uid, upgrade_id):
+        return false
+    var target := entry(uid)
+    var installed: Array = target.get("upgrades", []).duplicate()
+    installed.append(upgrade_id)
+    target["upgrades"] = installed
+    return true
+
+func weapon_damage(uid: int) -> int:
+    var item := entry(uid)
+    var definition: InventoryItemDefinition = definitions.get(item.get("id", ""))
+    if not definition or not definition.is_weapon:
+        return 0
+    var damage := float(definition.bullet_damage)
+    for upgrade_id in item.get("upgrades", []):
+        var kit: InventoryItemDefinition = definitions.get(upgrade_id)
+        if kit and kit.upgrade and kit.upgrade.effect == InventoryUpgrade.Effect.DAMAGE:
+            damage *= kit.upgrade.damage_multiplier
+    return maxi(1, roundi(damage))
 
 func snapshot() -> Dictionary:
     return {"columns": columns, "rows": rows, "next_uid": next_uid, "items": entries.duplicate(true)}
@@ -163,7 +206,17 @@ static func restore(data: Variant, catalog: Dictionary) -> GridInventory:
         if not whole(raw.get("count"), 1, result.limit(raw["id"])) or not whole(raw.get("x"), 0, 11) or not whole(raw.get("y"), 0, 7) or not raw.get("rotated") is bool:
             return null
         var uid := int(raw["uid"])
-        if not result.entry(uid).is_empty() or not result.can_place(raw["id"], Vector2i(raw["x"],raw["y"]), raw["rotated"]):
+        var upgrades: Variant = raw.get("upgrades", [])
+        if not upgrades is Array:
+            return null
+        var candidate := {"uid": uid, "id": raw["id"], "count": int(raw["count"]), "upgrades": []}
+        # Validate metadata before using its smaller footprint to check placement.
+        result.entries.append(candidate)
+        for upgrade_id in upgrades:
+            if not upgrade_id is String or not result.apply_upgrade(uid, upgrade_id):
+                return null
+        result.entries.erase(candidate)
+        if not result.entry(uid).is_empty() or not result.can_place(raw["id"], Vector2i(raw["x"],raw["y"]), raw["rotated"], -1, upgrades):
             return null
         var definition: InventoryItemDefinition = catalog.get(raw["id"])
         var maximum := definition.magazine_size if definition and definition.is_weapon else 0

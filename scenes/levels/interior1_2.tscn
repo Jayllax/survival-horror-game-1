@@ -126,6 +126,9 @@ position = Vector2(512, 588)
 [node name="from_street" type="Marker2D" parent="Spawns" unique_id=604153934]
 position = Vector2(511, 588)
 
+[node name="from_shop" type="Marker2D" parent="Spawns"]
+position = Vector2(512, 588)
+
 [node name="HUD" parent="." unique_id=1994340315 instance=ExtResource("11_72pcd")]
 
 [node name="AmbientSound" type="AudioStreamPlayer" parent="." unique_id=786650196]

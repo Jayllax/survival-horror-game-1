@@ -24,6 +24,7 @@ func run() -> void:
         if FileAccess.file_exists(Game.slot_path(index)):
             DirAccess.remove_absolute(ProjectSettings.globalize_path(Game.slot_path(index)))
     Game.reset_run()
+    preload("res://tests/support/loadout.gd").handgun()
     var level: Node2D = load("res://tests/fixtures/combat_sandbox.tscn").instantiate()
     get_tree().root.add_child(level)
     get_tree().current_scene = level
@@ -41,7 +42,7 @@ func run() -> void:
     check(body.animation == &"idle" and player.is_on_floor(), "Player lands in the idle animation")
     Input.action_press("move_right")
     await frames(18)
-    check(body.animation == &"walk" and player.velocity.x > 100, "Movement plays the walk animation")
+    check(body.animation == &"walk" and is_equal_approx(player.velocity.x,player.move_speed), "Movement plays the walk animation")
     Input.action_press("sprint")
     await frames(24)
     check(player.is_sprinting and body.animation == &"sprint" and is_equal_approx(player.velocity.x,player.move_speed*player.sprint_multiplier), "Held sprint increases speed and selects sprint animation")

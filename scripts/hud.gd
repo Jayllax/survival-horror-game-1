@@ -146,8 +146,7 @@ func select_item(uid: int) -> void:
         $Root/InventoryPanel/Grid.combining = false
         selected_uid = first
         if Game.combine_uids(first, uid):
-            if Game.inventory.entry(first).get("id", "") != Game.last_combined_id:
-                selected_uid = Game.inventory.first_uid(Game.last_combined_id)
+            selected_uid = Game.last_combined_uid
             inventory_feedback("Items combined.")
         else:
             inventory_feedback("These items cannot combine, or there is no room for the result.")
@@ -181,9 +180,22 @@ func update_selection() -> void:
     $Root/InventoryPanel/Portrait.texture = Game.item_icon(id)
     $Root/InventoryPanel/ItemName.text = Game.item_name(id)
     $Root/InventoryPanel/Category.text = Game.item_category(id).to_upper() + (" · EQUIPPED" if Game.equipped_uid == selected_uid else "")
-    $Root/InventoryPanel/Description.text = Game.item_description(id)
+    var detail_lines: Array[String] = []
+    if weapon:
+        var damage := Game.inventory.weapon_damage(selected_uid)
+        var stats := "DAMAGE %d" % damage
+        if definition.pellets_per_shot > 1:
+            stats += " × %d pellets" % definition.pellets_per_shot
+        detail_lines.append(stats)
+    var upgrade_names: Array[String] = []
+    for upgrade_id in item.get("upgrades", []):
+        upgrade_names.append(Game.item_name(upgrade_id))
+    if not upgrade_names.is_empty():
+        detail_lines.append("UPGRADES: " + ", ".join(upgrade_names))
+    detail_lines.append(Game.item_description(id))
+    $Root/InventoryPanel/Description.text = "\n\n".join(detail_lines)
     $Root/InventoryPanel/Quantity.text = "LOADED %d / %d" % [item["magazine"], definition.magazine_size] if weapon else "QUANTITY  %d" % item["count"]
-    var footprint := Game.inventory.dimensions(id, item["rotated"])
+    var footprint := Game.inventory.item_dimensions(item)
     $Root/InventoryPanel/Footprint.text = "%d × %d CELLS%s" % [footprint.x, footprint.y, " · ROTATED" if item["rotated"] else ""]
 
 func use_selected() -> void:

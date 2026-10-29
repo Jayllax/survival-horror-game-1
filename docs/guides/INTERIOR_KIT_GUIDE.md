@@ -46,16 +46,13 @@ Every stair scene has the same three color choices. Furniture is horizontally sy
 
 Example: a right-rising full flight at **(400,620)** ends at **(592,492)**. Start the upper floor at X=592 with its top at Y=492. For a left-rising full flight at (400,620), the low entry is (592,620), while the high exit is (400,492). A half flight rises 64 world pixels instead of 128; combine aligned half flights or use them with lower raised platforms.
 
-The player scene now has **Floor Snap Length = 8** so descending slopes stays grounded. Movement speed, jump settings, inputs and animation artwork are unchanged. The uploaded snapshot had empty player attachment point lists; their previous calibrated values have also been restored so the flashlight continues following the animated hand. When adapting the stairs for another CharacterBody2D, use a floor angle above the flight's approximately 34° slope and a similar floor snap length. Keep the WalkSurface collision active and one-way; the furniture Solid checkbox does not apply to stairs.
+The player scene now has **Floor Snap Length = 8** so descending slopes stays grounded. Movement speed, jump settings, inputs and animation artwork are unchanged. The latest uploaded attachment lists remain unchanged; the aiming rig now uses the previous calibrated values as a fallback so the flashlight continues following the animated hand. When adapting the stairs for another CharacterBody2D, use a floor angle above the flight's approximately 34° slope and a similar floor snap length. Keep the WalkSurface collision active and one-way; the furniture Solid checkbox does not apply to stairs.
 
 ## See the kit in context
 
-- **`scenes/levels/interior_kit_showroom.tscn`**: press F6 for a separate playable furnished showroom, including a bedroom on a walkable upper floor. It uses your existing player/HUD and is not linked to the campaign or main menu.
-- **`scenes/levels/interior_kit_catalog.tscn`**: open in the 2D editor for all three colors of every object and all stair layouts. This is an editor catalog, not a playable level. Lamps are off there to make the paint colors easy to compare.
+Your latest designer snapshot removes the separate interior showroom and catalog scenes from the gameplay level folder. Those removals are preserved. The reusable furniture, lamps and stairs remain available to place in your own interiors.
 
-[Showroom screenshot](../previews/interior-kit-showroom.png) · [Stairs in game](../previews/interior-kit-stairs.png)
-
-Both scenes contain placed nodes and scene instances in their `.tscn` files. Your town, alley and existing house interiors have not been refurnished by this kit.
+[Color catalog](../previews/interior-kit-catalog.png) · [Previous showroom screenshot](../previews/interior-kit-showroom.png) · [Stairs in game](../previews/interior-kit-stairs.png)
 
 ## Edit artwork in Pixilart
 
@@ -78,4 +75,4 @@ Stairs use one shared native 96×64 PNG per color. Changing one updates full, ha
 | `scenes/objects/interiors/` | Reusable scenes, grouped into the same categories |
 | `scripts/interiors/` | Editor color/collision/light controls; no level generation |
 
-The download archive contains these assets/scenes/scripts, the required shared light texture, the guide and the catalog image. Copy its `art/`, `scenes/` and `scripts/` folders into a Godot project while keeping their paths. The playable showroom remains in the full Ignotum project because it uses your player and HUD.
+The download archive contains these assets/scenes/scripts, the required shared light texture, the guide and the catalog image. Copy its `art/`, `scenes/` and `scripts/` folders into a Godot project while keeping their paths. The former playable showroom remains available in Git history; your current project retains its removal.

@@ -75,6 +75,7 @@ func _ready() -> void:
 
 func run() -> void:
     Game.reset_run()
+    preload("res://tests/support/loadout.gd").handgun()
     level = load("res://tests/fixtures/combat_sandbox.tscn").instantiate()
     get_tree().root.add_child(level)
     get_tree().current_scene = level

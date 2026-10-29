@@ -11,5 +11,6 @@ category = "Weapon"
 description = "A six-round handgun. Holds 9mm rounds."
 icon = ExtResource("art")
 grid_size = Vector2i(2, 1)
+compact_grid_size = Vector2i(1, 1)
 is_weapon = true
 weapon_texture = ExtResource("art")

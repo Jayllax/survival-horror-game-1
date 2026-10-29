@@ -12,7 +12,7 @@ Use Godot **4.7.2 Standard**. This kit has **21 objects in three colors**: Deep 
 4. Objects are passable by default, so the player can walk in front of them. Turn on **Solid** only when an object should block the walking plane. Tree collision covers a narrow trunk, rather than the whole canopy. Enable Debug → Visible Collision Shapes during play to inspect it.
 5. If you redraw an object, enable Editable Children and adjust its `Solid/Shape` rectangle if necessary. Enable collision deliberately: a log behind the path should remain passable; a log blocking the path can be Solid.
 
-Trees start at Z Index -3 and smaller props at -1. Your player keeps Z Index **5**. For foreground foliage that should cover the player, set the placed root's Z Index to **6 or higher**. This changes draw order, not collision. Leave the Artwork child at its supplied scale to keep pixels consistent.
+Most supplied trees start at Z Index -3 and smaller props at -1; your edited tall pine keeps Z Index 5. Your uploaded player now uses Z Index **0**, and the flashlight affects objects up to Z Index **1**. For foreground foliage that covers the player and is excluded from the flashlight, use an effective Z Index of **2 or higher**. Parent Z values also count when Z As Relative is enabled. This changes draw order, not collision. Leave the Artwork child at its supplied scale to keep pixels consistent.
 
 These are scenery objects, not new interactions or AI rules. Decorative bushes do not automatically hide the player. Existing enemy sight checks can be blocked by enabled world collision, such as a solid trunk or boulder. No tree-cutting, gathering, climbing or new story is attached.
 
@@ -33,12 +33,9 @@ These are scenery objects, not new interactions or AI rules. Decorative bushes d
 
 The standing character is about 33 native pixels tall. Trees are taller objects drawn with the same size pixels, rather than denser textures. Duplicate different sizes/colors to form a woodland; combine grass, logs and bushes in small groups under a Node2D and save that branch as a reusable arrangement.
 
-## Preview without changing your levels
+## Preview the colors
 
-- Open **`scenes/levels/forest_kit_showroom.tscn`** and press F6 for a separate playable strip with all object types, three color groups and your existing player/HUD.
-- Open **`scenes/levels/forest_kit_catalog.tscn`** in the editor to compare all 63 variants. This is an editor catalog, not a playable level.
-
-Both contain authored nodes in `.tscn` files. The kit is not linked into your town or introduction scenes; place it wherever your level design needs it. The interior kit remains available separately.
+Your latest designer snapshot removes the separate forest showroom/catalog scenes from the gameplay level folder. Those removals are preserved. Use the linked PNG catalog and in-game screenshots to compare sizes and colors, then place reusable objects in your own levels. The portable download still includes its editor catalog as a reference snapshot.
 
 ## Redraw in Pixilart
 
@@ -50,4 +47,4 @@ Keep the bottom-center ground contact when redrawing. All variants of one object
 
 Artwork lives in `art/pixel/forest/`; reusable objects in `scenes/objects/forest/`. The small `scripts/forest/forest_prop.gd` script reuses the interior kit's existing color/collision controls and supplies forest palette names. It does not generate objects or levels.
 
-The download includes the 63 PNGs, 21 object scenes, editor catalog, palette, guide and required scripts. Copy its **art**, **scenes** and **scripts** folders into another Godot project while keeping paths. Keep both shared `scripts/interiors/interior_variant.gd` and `interior_prop.gd`; they are included because the forest scenes depend on them. The playable showroom stays in the full Ignotum project because it uses your player and HUD.
+The download includes the 63 PNGs, 21 object scenes, editor catalog, palette, guide and required scripts. Copy its **art**, **scenes** and **scripts** folders into another Godot project while keeping paths. Keep both shared `scripts/interiors/interior_variant.gd` and `interior_prop.gd`; they are included because the forest scenes depend on them. The former playable showroom is available in Git history; your current project retains its removal.

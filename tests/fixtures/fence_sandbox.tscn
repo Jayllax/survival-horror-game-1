@@ -31,6 +31,7 @@ polygon = PackedVector2Array(0,620,1200,620,1200,720,0,720)
 position = Vector2(250,592)
 [node name="CuttableFence" parent="Interactables" instance=ExtResource("cut")]
 position = Vector2(460,620)
+interaction_radius = 100.0
 [node name="SaveBicycle" parent="Interactables" instance=ExtResource("save")]
 position = Vector2(330,620)
 station_name = "Fence test bicycle"
