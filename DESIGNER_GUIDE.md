@@ -197,3 +197,7 @@ See the [FOREST_KIT_GUIDE.md](docs/guides/FOREST_KIT_GUIDE.md) for trees, logs, 
 ## Weapons and per-item upgrades
 
 See [WEAPONS_AND_UPGRADES.md](docs/guides/WEAPONS_AND_UPGRADES.md) for the buckshot shotgun, separate ammunition, compact saw and damage kit. All five pickup scenes are under `scenes/objects/equipment/`, including a handgun to place in your town. New games start unarmed; change Starting Weapon in `data/inventory_settings.tres` to configure another loadout. Test the equipment separately with `tests/fixtures/weapon_workbench.tscn` and F6.
+
+## Square alleyway lighting
+
+Place `scenes/objects/lighting/alley_light.tscn` for a square light, or assign `art/lights/square_beam.tres` to an existing PointLight2D. Texture Scale controls overall size; Transform Scale X/Y makes it rectangular. See the [alley light guide](docs/guides/ALLEY_LIGHT_GUIDE.md).
