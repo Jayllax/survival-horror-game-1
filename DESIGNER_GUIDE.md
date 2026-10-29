@@ -205,3 +205,7 @@ Open an item `.tres` under `data/items/`, expand **Use Behavior**, and set **Rem
 ## Square alleyway lighting
 
 Place `scenes/objects/lighting/alley_light.tscn` for a square light, or assign `art/lights/square_beam.tres` to an existing PointLight2D. Texture Scale controls overall size; Transform Scale X/Y makes it rectangular. See the [alley light guide](docs/guides/ALLEY_LIGHT_GUIDE.md).
+
+## Four-digit code locks
+
+Place `scenes/objects/puzzles/code_lock.tscn` beside or under your furniture. Set **Correct Code** and a unique **Persistent Id** in the Inspector. Optionally assign **Reward Item**, closed/open artwork, a barrier collision shape or an opening animation. Your existing HUD opens the four-dial panel and the bicycle save slots remember completion and unsolved dial positions. See [CODE_LOCK_GUIDE.md](docs/guides/CODE_LOCK_GUIDE.md) for the setup steps. No lock, clue or puzzle content has been placed in your levels.

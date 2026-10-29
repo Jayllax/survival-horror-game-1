@@ -16,6 +16,7 @@ var puzzle_target: Area2D
 var dials := Vector3i(1, 1, 1)
 @onready var root: Control = $Root
 @onready var story_ui: Control = $StoryUI
+@onready var code_lock_ui: Control = $CodeLockUI
 
 func _ready() -> void:
     process_mode = Node.PROCESS_MODE_ALWAYS
@@ -28,6 +29,7 @@ func _ready() -> void:
     $Root/PausePanel/Retry.pressed.connect(open_load_menu)
     $SaveMenu.closed.connect(on_save_menu_closed)
     story_ui.closed.connect(on_story_closed)
+    code_lock_ui.closed.connect(on_story_closed)
     $Root/PausePanel/Menu.pressed.connect(back_to_menu)
     $Root/InventoryPanel/Use.pressed.connect(use_selected)
     $Root/InventoryPanel/Combine.pressed.connect(begin_combine)
@@ -47,7 +49,7 @@ func _exit_tree() -> void:
 func _process(delta: float) -> void:
     var playing: bool = not get_tree().paused and not Game.transitioning
     Input.mouse_mode = Input.MOUSE_MODE_HIDDEN if playing else Input.MOUSE_MODE_VISIBLE
-    $Root/Backdrop.visible = any_panel_open() and not story_ui.is_dialogue()
+    $Root/Backdrop.visible = any_panel_open() and not story_ui.is_dialogue() and not code_lock_ui.is_open()
     var player := get_tree().get_first_node_in_group("player")
     var combat: bool = playing and player != null and player.is_showing_combat_feedback()
     $Root/Crosshair.visible = playing and player != null and player.is_aiming()
@@ -70,6 +72,9 @@ func _process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
     if Game.transitioning or $SaveMenu.is_open():
+        return
+    if code_lock_ui.is_open():
+        code_lock_ui.handle_input(event)
         return
     if story_ui.is_open():
         story_ui.handle_input(event)
@@ -98,7 +103,7 @@ func _input(event: InputEvent) -> void:
         get_viewport().set_input_as_handled()
 
 func any_panel_open() -> bool:
-    if story_ui.is_open():
+    if story_ui.is_open() or code_lock_ui.is_open():
         return true
     for path in ["PausePanel", "InventoryPanel", "NotePanel", "PuzzlePanel"]:
         if root.get_node(path).visible:
@@ -109,6 +114,7 @@ func close_panels() -> void:
     if Game.health <= 0:
         return
     story_ui.close()
+    code_lock_ui.close()
     combining_uid = -1
     $Root/InventoryPanel/Grid.combining = false
     $Root/InventoryPanel/Grid.cancel_drag()
@@ -231,6 +237,7 @@ func refresh() -> void:
     update_selection()
     if Game.health <= 0:
         story_ui.close()
+        code_lock_ui.close()
         for path in ["InventoryPanel", "NotePanel", "PuzzlePanel"]:
             root.get_node(path).hide()
         $Root/PausePanel.show()
@@ -289,6 +296,11 @@ func show_dialogue(sequence: DialogueSequence, source: Node) -> bool:
     if any_panel_open() or $SaveMenu.is_open():
         return false
     return story_ui.open_dialogue(sequence, source)
+
+func show_code_lock(target: CodeLock) -> bool:
+    if any_panel_open() or $SaveMenu.is_open():
+        return false
+    return code_lock_ui.open_lock(target)
 
 func on_story_closed() -> void:
     # A closing E/click must not reach the resumed player's polled actions.

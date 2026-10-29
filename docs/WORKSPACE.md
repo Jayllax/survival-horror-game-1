@@ -43,3 +43,5 @@ The [forest kit](guides/FOREST_KIT_GUIDE.md) keeps 63 native textures in `art/pi
 The [weapon and upgrade guide](guides/WEAPONS_AND_UPGRADES.md) covers `data/items/`, `data/upgrades/`, new native artwork in `art/pixel/equipment/` and reusable pickups in `scenes/objects/equipment/`. The authored equipment test room lives in `tests/fixtures/`, outside your gameplay levels.
 
 The [item-use guide](guides/ITEM_USE_GUIDE.md) explains the shared Remove After Use checkbox and disposable tool variants. The single-use cutters reuse the original cutter artwork; no duplicate PNG is needed.
+
+Four-digit locks are split into an invisible reusable interaction scene under `scenes/objects/puzzles/`, an editor-authored panel at `scenes/ui/code_lock_ui.tscn`, and scripts under `scripts/puzzles/`. The [code-lock guide](guides/CODE_LOCK_GUIDE.md) explains placement and optional opening effects. Automated instances stay in `tests/code_lock.gd`; your playable levels have no added puzzle examples.

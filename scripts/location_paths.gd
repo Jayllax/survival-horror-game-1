@@ -5,7 +5,8 @@ const RENAMED := {
     "res://scenes/levels/town.tscn": "res://scenes/levels/town_01.tscn",
     "res://scenes/levels/alley.tscn": "res://scenes/levels/alleyway_01.tscn",
     "res://scenes/levels/interior.tscn": "res://scenes/levels/house_01.tscn",
-    "res://scenes/levels/interior1_2.tscn": "res://scenes/levels/house_01_02.tscn",
+    "res://scenes/levels/interior1_2.tscn": "res://scenes/levels/house_01_2.tscn",
+    "res://scenes/levels/house_01_02.tscn": "res://scenes/levels/house_01_2.tscn",
 }
 
 static func resolve(path: String) -> String:
