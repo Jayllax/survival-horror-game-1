@@ -209,3 +209,7 @@ Place `scenes/objects/lighting/alley_light.tscn` for a square light, or assign `
 ## Four-digit code locks
 
 Place `scenes/objects/puzzles/code_lock.tscn` beside or under your furniture. Set **Correct Code** and a unique **Persistent Id** in the Inspector. Optionally assign **Reward Item**, closed/open artwork, a barrier collision shape or an opening animation. Your existing HUD opens the four-dial panel and the bicycle save slots remember completion and unsolved dial positions. See [CODE_LOCK_GUIDE.md](docs/guides/CODE_LOCK_GUIDE.md) for the setup steps. No lock, clue or puzzle content has been placed in your levels.
+
+## Room light switches
+
+Place `scenes/objects/lighting/light_switch.tscn`, assign lights or interior lamp roots in **Connected Lights**, and set **Starting On** and a **Persistent Id**. E toggles those lights. Optional **Reveal When Off** nodes let you show your own clue artwork when the circuit is off. Bicycle saves remember each circuit; matching IDs can link two switches. See [LIGHT_SWITCH_GUIDE.md](docs/guides/LIGHT_SWITCH_GUIDE.md) for setup and dark-room visibility settings.

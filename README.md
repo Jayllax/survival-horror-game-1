@@ -2,6 +2,8 @@
 
 Reusable four-digit dial locks are available in `scenes/objects/puzzles/code_lock.tscn`. Add one beside your own furniture or doors and configure it in the Inspector; see the [code-lock guide](docs/guides/CODE_LOCK_GUIDE.md). No puzzle instances or clues have been added to your levels.
 
+Reusable [room light switches](docs/guides/LIGHT_SWITCH_GUIDE.md) are available in `scenes/objects/lighting/light_switch.tscn`. Assign connected lights in the Inspector, optionally reveal your own clue artwork when off, and preserve each circuit in bicycle save slots.
+
 Editable Godot **4.7.2 Standard** 2D survival-horror foundation. Import `project.godot` in Godot, then press **F5** for your configured introduction scene. The reusable main menu is `scenes/ui/main_menu.tscn`. All level geometry, props, characters and interactables are authored scene nodes.
 
 Your latest October 29 upload's renamed town/alley/house scenes, layouts, movement, camera, flashlight brightness, Z ordering, interaction ranges and startup scene are preserved. New games now start unarmed, as requested. This iteration adds a buckshot shotgun and consumable per-item size/damage upgrades. The grid stays at your chosen capacity; your story and level design remain yours to build.
@@ -49,12 +51,12 @@ Four bicycle-only save slots independently store inventory/layout/equipment, amm
 ## Validation
 
 ```sh
-GODOT_BIN=/path/to/godot-4.7.2 bash tools/check.sh code_lock item_use equipment grid_inventory aiming narrative combat stealth fences character_art interiors forest
+GODOT_BIN=/path/to/godot-4.7.2 bash tools/check.sh light_switch code_lock item_use equipment grid_inventory aiming narrative combat stealth fences character_art interiors forest
 ```
 
-This imports the project and runs twelve suites against your current settings, with isolated user-data folders. They cover four-digit locks and independent puzzle saves, item upgrades, independent upgraded saves, shotgun spread/reloads, grid manipulation, UI/aim, notes/dialogue, movement/combat, stealth, independently saved fence routes, pixel animation states, phased enemy strikes and both hands staying on gun grips across aim angles.
+This imports the project and runs thirteen suites against your current settings, with isolated user-data folders. They cover room lighting and independent circuit saves, four-digit locks and independent puzzle saves, item upgrades, independent upgraded saves, shotgun spread/reloads, grid manipulation, UI/aim, notes/dialogue, movement/combat, stealth, independently saved fence routes, pixel animation states, phased enemy strikes and both hands staying on gun grips across aim angles.
 
-The older four suites (`smoke`, `interface`, `assets`, `manual_saves`) assume historical item names, quantities and example level layouts. Your later designer revisions intentionally differ. The script's no-argument mode includes all sixteen suites; select the twelve current suites above for this snapshot. Never change your designer data to satisfy historical fixtures.
+The older four suites (`smoke`, `interface`, `assets`, `manual_saves`) assume historical item names, quantities and example level layouts. Your later designer revisions intentionally differ. The script's no-argument mode includes all seventeen suites; select the thirteen current suites above for this snapshot. Never change your designer data to satisfy historical fixtures.
 
 Graphical checks used Linux software OpenGL. Standalone exports, other operating systems and physical audio output have not been tested. Required font license files remain in `art/fonts/`.
 
