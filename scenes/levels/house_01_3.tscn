@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/bathroom/pedestal_sink.tscn" id="4_3ageq"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/bathroom/medicine_cabinet.tscn" id="5_h2pl4"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/bathroom/shower.tscn" id="6_jre5a"]
+[ext_resource type="PackedScene" uid="uid://cvrfunpo8lblp" path="res://scenes/objects/antiseptic.tscn" id="9_8doii"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/ceiling_lamp.tscn" id="9_h8ip3"]
 [ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="11_s1spc"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="12_k2gw4"]
@@ -131,6 +132,14 @@ position = Vector2(643, 556)
 destination_scene = "uid://m80iahaftwpp"
 destination_spawn = "from_bathroom"
 
+[node name="Pickup" parent="Interactables" unique_id=954311762 instance=ExtResource("9_8doii")]
+position = Vector2(587, 553)
+scale = Vector2(0.545, 0.545)
+action_label = "Loot cabinet"
+
+[node name="Sprite2D" parent="Interactables/Pickup" index="0" unique_id=1270962096]
+visible = false
+
 [node name="Actors" type="Node2D" parent="." unique_id=1936203783]
 
 [node name="Player" parent="Actors" unique_id=1545454888 instance=ExtResource("12_k2gw4")]
@@ -148,3 +157,5 @@ stream = ExtResource("14_cs77p")
 volume_db = -16.0
 autoplay = true
 script = ExtResource("15_k6sy1")
+
+[editable path="Interactables/Pickup"]

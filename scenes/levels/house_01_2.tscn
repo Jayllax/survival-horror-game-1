@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://6ac0fiq4jtxt" path="res://scripts/location.gd" id="1_2kgsg"]
 [ext_resource type="Texture2D" uid="uid://doeuaul7l3oue" path="res://art/pixel/floor.png" id="2_c6hel"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/bedroom/nightstand.tscn" id="3_6q1nt"]
+[ext_resource type="PackedScene" path="res://scenes/objects/puzzles/code_lock.tscn" id="3_bwf31"]
+[ext_resource type="Resource" uid="uid://et2nquwup3rj" path="res://data/items/pistol.tres" id="4_ay8je"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/bedroom/wardrobe.tscn" id="5_0dox0"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/bedroom/bed.tscn" id="5_1nxfd"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/table_lamp.tscn" id="6_ubtef"]
@@ -10,6 +12,8 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/bookcase.tscn" id="8_pm6jb"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/ceiling_lamp.tscn" id="8_rynyu"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/wall_lamp.tscn" id="9_mning"]
+[ext_resource type="PackedScene" uid="uid://cs51u64blnw6m" path="res://scenes/objects/note.tscn" id="14_2kgsg"]
+[ext_resource type="Script" uid="uid://ct1jqn7k4e0md" path="res://scripts/narrative/note_document.gd" id="15_c6hel"]
 [ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="15_f0p1h"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="16_b7koq"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="17_r0csf"]
@@ -21,6 +25,18 @@ size = Vector2(858, 120)
 
 [sub_resource type="RectangleShape2D" id="wall"]
 size = Vector2(40, 720)
+
+[sub_resource type="Resource" id="Resource_2kgsg"]
+script = ExtResource("15_c6hel")
+title = "Note written by a Pete"
+text = "Please don't look for the code. Just turn back.
+
+- Pete"
+
+[sub_resource type="Resource" id="Resource_c6hel"]
+script = ExtResource("15_c6hel")
+title = "Angrily written note"
+text = "Why has someone changed the fucking code? We all knew it, it worked, why? I don't get it. Change it back!"
 
 [node name="Location" type="Node2D" unique_id=701534075]
 script = ExtResource("1_2kgsg")
@@ -140,11 +156,11 @@ light_energy = 1.2
 light_radius_scale = 1.0
 
 [node name="Sideboard" parent="Props" unique_id=540134005 instance=ExtResource("7_tf2dk")]
-position = Vector2(575, 622)
+position = Vector2(569, 622)
 
 [node name="Bookcase" parent="Props" unique_id=11051384 instance=ExtResource("8_pm6jb")]
 z_index = -2
-position = Vector2(509, 622)
+position = Vector2(487, 622)
 
 [node name="CeilingLamp" parent="Props" unique_id=2113481216 instance=ExtResource("8_rynyu")]
 position = Vector2(418, 447)
@@ -170,6 +186,29 @@ destination_scene = "uid://i4sef51ugq0j"
 visible = false
 position = Vector2(418, 556)
 destination_scene = "uid://chl2o2r7b3fjd"
+
+[node name="CodeLock" parent="Interactables" unique_id=320575340 instance=ExtResource("3_bwf31")]
+position = Vector2(174, 601)
+correct_code = "2512"
+starting_code = "6381"
+action_label = "Examine nightstand"
+interaction_radius = 50.0
+reward_item = ExtResource("4_ay8je")
+
+[node name="Note" parent="Interactables" unique_id=1645172902 instance=ExtResource("14_2kgsg")]
+modulate = Color(0.8439394, 1, 1, 1)
+position = Vector2(51.999878, 591)
+rotation = 0.19198622
+scale = Vector2(0.3, 0.3)
+skew = 1.2758356
+document = SubResource("Resource_2kgsg")
+
+[node name="Note2" parent="Interactables" unique_id=1834164669 instance=ExtResource("14_2kgsg")]
+position = Vector2(562.99994, 580)
+rotation = 0.13962634
+scale = Vector2(0.3, 0.3)
+skew = 1.3543755
+document = SubResource("Resource_c6hel")
 
 [node name="Actors" type="Node2D" parent="." unique_id=1936203783]
 
