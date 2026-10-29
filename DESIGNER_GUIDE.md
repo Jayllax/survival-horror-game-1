@@ -201,3 +201,7 @@ See [WEAPONS_AND_UPGRADES.md](docs/guides/WEAPONS_AND_UPGRADES.md) for the bucks
 ## Remove items after use
 
 Open an item `.tres` under `data/items/`, expand **Use Behavior**, and set **Remove After Use**. See [ITEM_USE_GUIDE.md](docs/guides/ITEM_USE_GUIDE.md) for healing, crafting, upgrades, puzzles, doors and fences. Use the ready-made `scenes/objects/equipment/bolt_cutters_single_use.tscn` for disposable cutters; the existing bolt cutter pickup remains reusable. Both work with the same fences.
+
+## Square alleyway lighting
+
+Place `scenes/objects/lighting/alley_light.tscn` for a square light, or assign `art/lights/square_beam.tres` to an existing PointLight2D. Texture Scale controls overall size; Transform Scale X/Y makes it rectangular. See the [alley light guide](docs/guides/ALLEY_LIGHT_GUIDE.md).

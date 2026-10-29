@@ -15,6 +15,7 @@ Drawing your own animations? Use the [Pixilart templates and instructions](art/t
 - [Fence guide](docs/guides/FENCE_GUIDE.md): tool-gated paths, permanent barriers, both viewpoints and saved openings.
 - [Enemy AI guide](docs/guides/ENEMY_AI_GUIDE.md): sleeping enemies, quiet crouch bypasses, sight/hearing, searching and timed attacks.
 - [Narrative guide](docs/guides/NARRATIVE_GUIDE.md): notes, NPCs, colored speakers and conversations.
+- [Square alleyway light](docs/guides/ALLEY_LIGHT_GUIDE.md): an editable square/rectangular Godot light for openings.
 - [Interior kit](docs/guides/INTERIOR_KIT_GUIDE.md): furniture, lamps and walkable stairs in three colors.
 - [Forest kit](docs/guides/FOREST_KIT_GUIDE.md): 21 matching objects in three colors, with optional collision.
 - [Art guide](docs/guides/ART_STYLE_GUIDE.md) and [house variants](docs/guides/HOUSE_VARIANTS.md): palette, pixel size and editing assets.
