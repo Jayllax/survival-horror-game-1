@@ -3,18 +3,26 @@
 [ext_resource type="Script" uid="uid://6ac0fiq4jtxt" path="res://scripts/location.gd" id="1_hq8ni"]
 [ext_resource type="PackedScene" path="res://scenes/objects/bin.tscn" id="2_o6ti5"]
 [ext_resource type="PackedScene" uid="uid://dfitvfrdt4ym7" path="res://scenes/objects/streetlamp.tscn" id="2_wxw3f"]
-[ext_resource type="PackedScene" path="res://scenes/objects/bolt_cutters.tscn" id="3_2rmq6"]
-[ext_resource type="PackedScene" path="res://scenes/objects/antiseptic.tscn" id="3_mo1ix"]
-[ext_resource type="PackedScene" path="res://scenes/objects/platform.tscn" id="3_ptwdc"]
-[ext_resource type="PackedScene" path="res://scenes/objects/note.tscn" id="3_sh5d3"]
-[ext_resource type="PackedScene" path="res://scenes/objects/cloth.tscn" id="4_sh5d3"]
+[ext_resource type="PackedScene" uid="uid://c1o1nweldmdet" path="res://scenes/objects/forest/trees/pine_tall.tscn" id="2_ynkaq"]
+[ext_resource type="PackedScene" path="res://scenes/objects/fence_reinforced_side.tscn" id="3_2rmq6"]
+[ext_resource type="PackedScene" uid="uid://cs51u64blnw6m" path="res://scenes/objects/note.tscn" id="3_sh5d3"]
+[ext_resource type="PackedScene" uid="uid://b1w32h180ysmo" path="res://scenes/objects/cloth.tscn" id="4_sh5d3"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="4_wxw3f"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_ptwdc"]
 [ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="6_lw1bj"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="6_o6ti5"]
 [ext_resource type="PackedScene" path="res://scenes/objects/bench.tscn" id="7_hq8ni"]
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="7_lw1bj"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/fallen_log.tscn" id="7_unngc"]
 [ext_resource type="Script" uid="uid://ct1jqn7k4e0md" path="res://scripts/narrative/note_document.gd" id="8_ynkaq"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/mossy_log.tscn" id="9_us4dc"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/stump_small.tscn" id="10_a6d5s"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/bush_small.tscn" id="11_5c2tr"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/fern.tscn" id="11_hwf2n"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/grass_tuft.tscn" id="12_orixr"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/rocks/rock_small.tscn" id="13_vr7e3"]
+[ext_resource type="PackedScene" uid="uid://bhxdbv4sgb00j" path="res://scenes/objects/bolt_cutters.tscn" id="15_tv0fq"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/stump_large.tscn" id="17_us4dc"]
 
 [sub_resource type="RectangleShape2D" id="floor"]
 size = Vector2(2774, 120)
@@ -38,12 +46,143 @@ color = Color(0.038397163, 0.038397174, 0.038397145, 1)
 
 [node name="Buildings" type="Node2D" parent="." unique_id=1653355476]
 
-[node name="AlleyMouth2" type="Polygon2D" parent="Buildings" unique_id=1027169608]
+[node name="PineTallSilo" parent="Buildings" unique_id=239378493 instance=ExtResource("2_ynkaq")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(77, 620)
+
+[node name="PineTallSilo2" parent="Buildings" unique_id=822846228 instance=ExtResource("2_ynkaq")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(-114, 620)
+
+[node name="PineTallSilo3" parent="Buildings" unique_id=742051871 instance=ExtResource("2_ynkaq")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(453, 620)
+
+[node name="PineTallSilo4" parent="Buildings" unique_id=1950649299 instance=ExtResource("2_ynkaq")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(669, 620)
+
+[node name="PineTallSilo5" parent="Buildings" unique_id=1871310024 instance=ExtResource("2_ynkaq")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(771, 620)
+
+[node name="PineTallSilo6" parent="Buildings" unique_id=2066061525 instance=ExtResource("2_ynkaq")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(873, 620)
+
+[node name="PineTallSilo7" parent="Buildings" unique_id=1571774248 instance=ExtResource("2_ynkaq")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(-210, 620)
+
+[node name="PineTallSilo8" parent="Buildings" unique_id=120370694 instance=ExtResource("2_ynkaq")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(-306, 620)
+
+[node name="PineTallSilo9" parent="Buildings" unique_id=142727647 instance=ExtResource("2_ynkaq")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(508, 620)
+
+[node name="PineTallSilo10" parent="Buildings" unique_id=1010120967 instance=ExtResource("2_ynkaq")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(398, 620)
+
+[node name="PineTallSilo11" parent="Buildings" unique_id=584945497 instance=ExtResource("2_ynkaq")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(1065, 620)
+
+[node name="PineTallSilo12" parent="Buildings" unique_id=247937471 instance=ExtResource("2_ynkaq")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(1160, 620)
+
+[node name="PineTallSilo13" parent="Buildings" unique_id=1994988270 instance=ExtResource("2_ynkaq")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(1256, 620)
+
+[node name="PineTallSilo14" parent="Buildings" unique_id=1747654952 instance=ExtResource("2_ynkaq")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(1424, 620)
+
+[node name="PineTallSilo15" parent="Buildings" unique_id=1173749662 instance=ExtResource("2_ynkaq")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(1495, 620)
+
+[node name="PineTallSilo16" parent="Buildings" unique_id=2096396023 instance=ExtResource("2_ynkaq")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(-471, 620)
+
+[node name="PineTallSilo17" parent="Buildings" unique_id=489642601 instance=ExtResource("2_ynkaq")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(1645, 620)
+
+[node name="PineTallSilo18" parent="Buildings" unique_id=314973158 instance=ExtResource("2_ynkaq")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(1792, 620)
+
+[node name="PineTallSilo19" parent="Buildings" unique_id=1591428055 instance=ExtResource("2_ynkaq")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(1927, 620)
+
+[node name="PineTall" parent="Buildings" unique_id=1178759807 instance=ExtResource("2_ynkaq")]
+position = Vector2(174, 620)
+
+[node name="PineTall2" parent="Buildings" unique_id=1997649864 instance=ExtResource("2_ynkaq")]
+position = Vector2(345, 620)
+
+[node name="PineTall3" parent="Buildings" unique_id=958162240 instance=ExtResource("2_ynkaq")]
+position = Vector2(-18, 620)
+
+[node name="PineTall4" parent="Buildings" unique_id=644500728 instance=ExtResource("2_ynkaq")]
+position = Vector2(561, 620)
+
+[node name="PineTall5" parent="Buildings" unique_id=77085628 instance=ExtResource("2_ynkaq")]
+position = Vector2(969, 620)
+
+[node name="PineTall6" parent="Buildings" unique_id=1220230026 instance=ExtResource("2_ynkaq")]
+position = Vector2(-391, 620)
+
+[node name="PineTall7" parent="Buildings" unique_id=365696937 instance=ExtResource("2_ynkaq")]
+position = Vector2(1353, 620)
+
+[node name="PineTall8" parent="Buildings" unique_id=478336110 instance=ExtResource("2_ynkaq")]
+position = Vector2(1567, 620)
+
+[node name="PineTall9" parent="Buildings" unique_id=153799454 instance=ExtResource("2_ynkaq")]
+position = Vector2(1113, 620)
+
+[node name="PineTall10" parent="Buildings" unique_id=1931357151 instance=ExtResource("2_ynkaq")]
+position = Vector2(-536, 620)
+
+[node name="PineTall11" parent="Buildings" unique_id=2082848798 instance=ExtResource("2_ynkaq")]
+position = Vector2(1728, 620)
+
+[node name="PineTall12" parent="Buildings" unique_id=995136789 instance=ExtResource("2_ynkaq")]
+position = Vector2(1856, 620)
+
+[node name="AlleyMouth3" type="Polygon2D" parent="Buildings" unique_id=1292539931]
 z_index = -9
-position = Vector2(-150.33441, 394.00015)
-scale = Vector2(0.32898647, 0.3645157)
+position = Vector2(-913.41846, 143.99994)
+scale = Vector2(0.9421031, 0.7677421)
 color = Color(0.08627451, 0.12941177, 0.15686275, 0.26666668)
-polygon = PackedVector2Array(1150, 310, 1244.9397, 310.99933, 1340, 312, 1340, 463.84204, 1340, 620, 1150, 620, 1149.9999, 464.1112)
+polygon = PackedVector2Array(1150, 310, 1244.4695, 310, 1340.0001, 310, 1340, 463.84204, 1340, 620, 1150, 620, 1149.9999, 464.1112)
 
 [node name="Geometry" type="Node2D" parent="." unique_id=491046715]
 
@@ -51,17 +190,18 @@ polygon = PackedVector2Array(1150, 310, 1244.9397, 310.99933, 1340, 312, 1340, 4
 position = Vector2(1100, 680)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Ground" unique_id=1794584501]
-position = Vector2(-274, 1)
+position = Vector2(-274, 0)
 shape = SubResource("floor")
 
 [node name="Curb" type="Polygon2D" parent="Geometry" unique_id=1824508447]
-position = Vector2(-718, -13329.9)
-scale = Vector2(1.3359091, 22.4998)
+z_index = 100
+position = Vector2(-631, -13329.9)
+scale = Vector2(1.2963636, 22.4998)
 color = Color(0.38545707, 0.28626725, 0.2282412, 1)
-polygon = PackedVector2Array(0, 620, 2200, 620, 2200, 622.93976, 2200, 626, 1100.73, 626, 0, 626)
+polygon = PackedVector2Array(0, 620, 2200, 620, 2200, 622.93976, 2200, 626, 1100.73, 626, 0, 626, 0, 623.06)
 
 [node name="WestBoundary" type="StaticBody2D" parent="Geometry" unique_id=1159423724]
-position = Vector2(-266, 360)
+position = Vector2(-235, 360)
 
 [node name="Shape" type="CollisionShape2D" parent="Geometry/WestBoundary" unique_id=1114114445]
 shape = SubResource("wall")
@@ -74,79 +214,243 @@ shape = SubResource("wall")
 
 [node name="Background" type="Polygon2D" parent="Geometry" unique_id=162884734]
 z_index = -10
-position = Vector2(-718, -76157.5)
-scale = Vector2(1.333182, 122.833)
-color = Color(0.184572, 0.180707, 0.200034, 1)
+position = Vector2(-629, -76157.5)
+scale = Vector2(1.2927275, 122.833)
+color = Color(0.101960786, 0.09803922, 0.10980392, 1)
 polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 626, 1101, 626, 0, 626)
-
-[node name="Platform" parent="Geometry" unique_id=2139491061 instance=ExtResource("3_ptwdc")]
-position = Vector2(1076, 612)
-scale = Vector2(0.8, 0.8)
-
-[node name="Platform2" parent="Geometry" unique_id=563036951 instance=ExtResource("3_ptwdc")]
-position = Vector2(1153, 607.00006)
-scale = Vector2(1.3, 1.3)
-
-[node name="Platform3" parent="Geometry" unique_id=167607111 instance=ExtResource("3_ptwdc")]
-position = Vector2(1321, 612)
-scale = Vector2(0.8, 0.8)
-
-[node name="Platform4" parent="Geometry" unique_id=1472417184 instance=ExtResource("3_ptwdc")]
-position = Vector2(1896, 511)
-scale = Vector2(3, 3)
-platform_size = Vector2(409.755, 20)
-
-[node name="Platform5" parent="Geometry" unique_id=827102903 instance=ExtResource("3_ptwdc")]
-position = Vector2(2024, 558)
-rotation = 1.5707964
-scale = Vector2(0.8, 0.8)
-platform_size = Vector2(154, 1000)
-
-[node name="Pickup" parent="Geometry" unique_id=1921340829 instance=ExtResource("3_2rmq6")]
-position = Vector2(1577, 613)
-rotation = 1.727876
-scale = Vector2(0.5, 0.5)
 
 [node name="Props" type="Node2D" parent="." unique_id=1527274168]
 
 [node name="Streetlamp" parent="Props" unique_id=714982314 instance=ExtResource("2_wxw3f")]
-position = Vector2(811, 620)
+z_index = -1
+position = Vector2(822, 620)
 
 [node name="Bench" parent="Props" unique_id=1828626849 instance=ExtResource("7_hq8ni")]
 position = Vector2(748, 592)
 
 [node name="Bin" parent="Props" unique_id=1001212981 instance=ExtResource("2_o6ti5")]
-position = Vector2(664, 584)
+position = Vector2(663, 584)
 
-[node name="Entrance" parent="Props" unique_id=166180848 instance=ExtResource("6_lw1bj")]
-position = Vector2(260, 556)
-destination_scene = "uid://dyo3etebfk0vw"
-destination_spawn = "from_area_2"
+[node name="Streetlamp2" parent="Props" unique_id=2129999662 instance=ExtResource("2_wxw3f")]
+z_index = -1
+position = Vector2(-258, 620)
 
-[node name="Facade" parent="Props/Entrance" index="0" unique_id=1815167978]
-visible = false
+[node name="FallenLog" parent="Props" unique_id=2028059875 instance=ExtResource("7_unngc")]
+z_index = 0
+position = Vector2(1104, 620)
+solid = true
+
+[node name="StumpLarge" parent="Props" unique_id=1130895986 instance=ExtResource("17_us4dc")]
+position = Vector2(1208, 626)
+
+[node name="MossyLog" parent="Props" unique_id=2078440970 instance=ExtResource("9_us4dc")]
+z_index = 0
+position = Vector2(1340, 620)
+solid = true
+
+[node name="FallenLog2" parent="Props" unique_id=1940395643 instance=ExtResource("7_unngc")]
+z_index = 0
+position = Vector2(1386, 596)
+solid = true
+
+[node name="FallenLog3" parent="Props" unique_id=1524841151 instance=ExtResource("7_unngc")]
+z_index = 0
+position = Vector2(1418, 620)
+solid = true
+
+[node name="StumpSmall" parent="Props" unique_id=1622627414 instance=ExtResource("10_a6d5s")]
+position = Vector2(1532, 626)
+
+[node name="Fern" parent="Props" unique_id=1933584549 instance=ExtResource("11_hwf2n")]
+z_index = 2
+position = Vector2(127, 620)
+
+[node name="Fern2" parent="Props" unique_id=960684970 instance=ExtResource("11_hwf2n")]
+z_index = 2
+position = Vector2(-158, 620)
+
+[node name="Fern3" parent="Props" unique_id=620130275 instance=ExtResource("11_hwf2n")]
+z_index = 2
+position = Vector2(919, 620)
+
+[node name="BushSmall" parent="Props" unique_id=736726644 instance=ExtResource("11_5c2tr")]
+position = Vector2(610, 620)
+
+[node name="GrassTuft" parent="Props" unique_id=1145678400 instance=ExtResource("12_orixr")]
+z_index = 2
+position = Vector2(-68, 620)
+
+[node name="GrassTuft2" parent="Props" unique_id=1016315238 instance=ExtResource("12_orixr")]
+z_index = 2
+position = Vector2(439, 620)
+
+[node name="GrassTuft3" parent="Props" unique_id=1961501170 instance=ExtResource("12_orixr")]
+z_index = 2
+position = Vector2(1269, 620)
+
+[node name="GrassTuft4" parent="Props" unique_id=486663531 instance=ExtResource("12_orixr")]
+z_index = 2
+position = Vector2(1709, 620)
+
+[node name="RockSmall" parent="Props" unique_id=1516366146 instance=ExtResource("13_vr7e3")]
+position = Vector2(31, 620)
+
+[node name="RockSmall2" parent="Props" unique_id=169519199 instance=ExtResource("13_vr7e3")]
+position = Vector2(-343, 620)
+
+[node name="RockSmall3" parent="Props" unique_id=519400167 instance=ExtResource("13_vr7e3")]
+position = Vector2(1584, 620)
+
+[node name="FallenLogSilo" parent="Props" unique_id=445814553 instance=ExtResource("7_unngc")]
+modulate = Color(0.13319641, 0.13319641, 0.13319638, 1)
+z_index = -3
+position = Vector2(1413, 604)
+
+[node name="FallenLogSilo2" parent="Props" unique_id=2101823777 instance=ExtResource("7_unngc")]
+modulate = Color(0.13319641, 0.13319641, 0.13319638, 1)
+z_index = -3
+position = Vector2(1351, 609)
+
+[node name="FallenLogSilo3" parent="Props" unique_id=265779163 instance=ExtResource("7_unngc")]
+modulate = Color(0.13319641, 0.13319641, 0.13319638, 1)
+z_index = -3
+position = Vector2(806, 620)
+
+[node name="FallenLogSilo4" parent="Props" unique_id=1046793750 instance=ExtResource("7_unngc")]
+modulate = Color(0.13319641, 0.13319641, 0.13319638, 1)
+z_index = -3
+position = Vector2(-428, 620)
+
+[node name="FernSilo" parent="Props" unique_id=1410826903 instance=ExtResource("11_hwf2n")]
+modulate = Color(0.08468992, 0.08468992, 0.08468992, 1)
+z_index = -2
+position = Vector2(199, 620)
+
+[node name="FernSilo2" parent="Props" unique_id=1370756569 instance=ExtResource("11_hwf2n")]
+modulate = Color(0.08468992, 0.08468992, 0.08468992, 1)
+z_index = -2
+position = Vector2(-82, 620)
+
+[node name="FernSilo3" parent="Props" unique_id=687025474 instance=ExtResource("11_hwf2n")]
+modulate = Color(0.08468992, 0.08468992, 0.08468992, 1)
+z_index = -2
+position = Vector2(-520, 620)
+
+[node name="FernSilo4" parent="Props" unique_id=254703950 instance=ExtResource("11_hwf2n")]
+modulate = Color(0.08468992, 0.08468992, 0.08468992, 1)
+z_index = -2
+position = Vector2(531, 620)
+
+[node name="FernSilo5" parent="Props" unique_id=2093271564 instance=ExtResource("11_hwf2n")]
+modulate = Color(0.08468992, 0.08468992, 0.08468992, 1)
+z_index = -2
+position = Vector2(708, 620)
+
+[node name="FernSilo6" parent="Props" unique_id=218350153 instance=ExtResource("11_hwf2n")]
+modulate = Color(0.08468992, 0.08468992, 0.08468992, 1)
+z_index = -2
+position = Vector2(1477, 620)
+
+[node name="FernSilo7" parent="Props" unique_id=731079036 instance=ExtResource("11_hwf2n")]
+modulate = Color(0.08468992, 0.08468992, 0.08468992, 1)
+z_index = -2
+position = Vector2(1834, 620)
+
+[node name="GrassTuftSilo" parent="Props" unique_id=447928225 instance=ExtResource("12_orixr")]
+modulate = Color(0.11858138, 0.11858138, 0.11858138, 1)
+z_index = -4
+position = Vector2(-360, 620)
+
+[node name="GrassTuftSilo2" parent="Props" unique_id=863541315 instance=ExtResource("12_orixr")]
+modulate = Color(0.11858138, 0.11858138, 0.11858138, 1)
+z_index = -4
+position = Vector2(-275, 620)
+
+[node name="GrassTuftSilo3" parent="Props" unique_id=523548024 instance=ExtResource("12_orixr")]
+modulate = Color(0.11858138, 0.11858138, 0.11858138, 1)
+z_index = -4
+position = Vector2(294, 620)
+
+[node name="GrassTuftSilo4" parent="Props" unique_id=761783580 instance=ExtResource("12_orixr")]
+modulate = Color(0.11858138, 0.11858138, 0.11858138, 1)
+z_index = -4
+position = Vector2(486, 620)
+
+[node name="GrassTuftSilo5" parent="Props" unique_id=1742026436 instance=ExtResource("12_orixr")]
+modulate = Color(0.11858138, 0.11858138, 0.11858138, 1)
+z_index = -4
+position = Vector2(1005, 620)
+
+[node name="GrassTuftSilo6" parent="Props" unique_id=567070248 instance=ExtResource("12_orixr")]
+modulate = Color(0.11858138, 0.11858138, 0.11858138, 1)
+z_index = -4
+position = Vector2(1028, 620)
+
+[node name="GrassTuftSilo7" parent="Props" unique_id=264306158 instance=ExtResource("12_orixr")]
+modulate = Color(0.11858138, 0.11858138, 0.11858138, 1)
+z_index = -4
+position = Vector2(1549, 620)
+
+[node name="GrassTuftSilo8" parent="Props" unique_id=1599214769 instance=ExtResource("12_orixr")]
+modulate = Color(0.11858138, 0.11858138, 0.11858138, 1)
+z_index = -4
+position = Vector2(1891, 620)
+
+[node name="RockSmallSilo" parent="Props" unique_id=1063119849 instance=ExtResource("13_vr7e3")]
+modulate = Color(0.103743516, 0.10374353, 0.103743516, 1)
+z_index = -5
+position = Vector2(-558, 620)
+
+[node name="RockSmallSilo2" parent="Props" unique_id=1445040467 instance=ExtResource("13_vr7e3")]
+modulate = Color(0.103743516, 0.10374353, 0.103743516, 1)
+z_index = -5
+position = Vector2(353, 620)
+
+[node name="RockSmallSilo3" parent="Props" unique_id=1757524282 instance=ExtResource("13_vr7e3")]
+modulate = Color(0.103743516, 0.10374353, 0.103743516, 1)
+z_index = -5
+position = Vector2(1682, 620)
+
+[node name="RockSmallSilo4" parent="Props" unique_id=1873083584 instance=ExtResource("13_vr7e3")]
+modulate = Color(0.103743516, 0.10374353, 0.103743516, 1)
+z_index = -5
+position = Vector2(1768, 620)
 
 [node name="Interactables" type="Node2D" parent="." unique_id=1337389834]
 
 [node name="Note" parent="Interactables" unique_id=489710493 instance=ExtResource("3_sh5d3")]
-z_index = 1
 position = Vector2(712.00006, 596)
 rotation = 0.20943952
 scale = Vector2(0.3, 0.3)
 skew = 1.2758356
 document = SubResource("Resource_2rmq6")
 
-[node name="Pickup" parent="Interactables" unique_id=525940370 instance=ExtResource("3_mo1ix")]
-z_index = 1
-position = Vector2(783, 589)
-scale = Vector2(0.4, 0.4)
-
 [node name="Pickup2" parent="Interactables" unique_id=757723452 instance=ExtResource("4_sh5d3")]
-z_index = 1
 position = Vector2(766.00006, 594)
 rotation = 0.65449846
 scale = Vector2(0.4, 0.4)
 skew = 0.32637656
+
+[node name="ReinforcedFenceSide" parent="Interactables" unique_id=1451298879 instance=ExtResource("3_2rmq6")]
+position = Vector2(-207, 620)
+scale = Vector2(1.2, 1.2)
+
+[node name="ReinforcedFenceSide2" parent="Interactables" unique_id=228909135 instance=ExtResource("3_2rmq6")]
+position = Vector2(1615, 620)
+scale = Vector2(1.2, 1.2)
+
+[node name="Pickup3" parent="Interactables" unique_id=1513320068 instance=ExtResource("15_tv0fq")]
+position = Vector2(1531.0001, 602.00006)
+rotation = -1.701696
+scale = Vector2(0.2, 0.2)
+
+[node name="Entrance" parent="Interactables" unique_id=166180848 instance=ExtResource("6_lw1bj")]
+position = Vector2(260, 556)
+destination_scene = "uid://dyo3etebfk0vw"
+destination_spawn = "from_area_2"
+
+[node name="Facade" parent="Interactables/Entrance" index="0" unique_id=1815167978]
+visible = false
 
 [node name="Actors" type="Node2D" parent="." unique_id=1189311552]
 
@@ -166,4 +470,4 @@ volume_db = -16.0
 autoplay = true
 script = ExtResource("7_lw1bj")
 
-[editable path="Props/Entrance"]
+[editable path="Interactables/Entrance"]

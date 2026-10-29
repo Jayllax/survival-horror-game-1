@@ -9,11 +9,11 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_terracotta_no_chimney.tscn" id="5_5ycnk"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_plum_no_chimney.tscn" id="5_ihmxm"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_sage_right.tscn" id="6_otbwl"]
-[ext_resource type="PackedScene" path="res://scenes/objects/fence_cuttable.tscn" id="7_rklyf"]
+[ext_resource type="PackedScene" uid="uid://bn4hd6q7bawaj" path="res://scenes/objects/fence_cuttable.tscn" id="7_rklyf"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house.tscn" id="8_n8lao"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="21"]
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="22"]
-[ext_resource type="PackedScene" path="res://scenes/objects/save_bicycle.tscn" id="save_bicycle"]
+[ext_resource type="PackedScene" uid="uid://db83ujlaupd0k" path="res://scenes/objects/save_bicycle.tscn" id="save_bicycle"]
 
 [sub_resource type="RectangleShape2D" id="floor"]
 size = Vector2(2492, 120)
@@ -26,6 +26,7 @@ script = ExtResource("1")
 camera_bounds = Rect2i(0, 0, 2200, 720)
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=857491603]
+visible = false
 color = Color(0.038397163, 0.038397174, 0.038397145, 1)
 
 [node name="Buildings" type="Node2D" parent="." unique_id=1653355476]
@@ -91,7 +92,7 @@ shape = SubResource("wall")
 z_index = -10
 position = Vector2(-718, -76157.5)
 scale = Vector2(1.3399998, 122.833)
-color = Color(0.184572, 0.180707, 0.200034, 1)
+color = Color(0.101960786, 0.09803922, 0.10980392, 1)
 polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 626, 1101, 626, 0, 626)
 
 [node name="Streetlamp" parent="Geometry" unique_id=892845672 instance=ExtResource("3_ip0dd")]
@@ -103,7 +104,7 @@ position = Vector2(962, 620)
 [node name="CuttableFence" parent="Geometry" unique_id=1304159414 instance=ExtResource("7_rklyf")]
 position = Vector2(1186, 620)
 
-[node name="CollisionShape2D" parent="Geometry/CuttableFence/Barrier" index="0"]
+[node name="CollisionShape2D" parent="Geometry/CuttableFence/Barrier" parent_id_path=PackedInt32Array(1304159414, 1311734470) index="0" unique_id=495058167]
 disabled = true
 
 [node name="Props" type="Node2D" parent="." unique_id=1527274168]

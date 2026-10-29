@@ -5,94 +5,58 @@
 
 [sub_resource type="Resource" id="idle"]
 script = ExtResource("track")
-body_centers = PackedFloat32Array(16.5, 16.5, 16.5, 16.5, 16.5, 16.5)
-aim_origins = PackedVector2Array(16.5, 19.5, 16.5, 20.5, 16.5, 20.5, 16.5, 20.5, 16.5, 20.5, 16.5, 19.5)
-flashlight_hands = PackedVector2Array(22.5, 25.5, 22.5, 26.5, 22.5, 26.5, 22.5, 26.5, 22.5, 26.5, 22.5, 25.5)
 
 [sub_resource type="Resource" id="walk"]
 script = ExtResource("track")
 animation = &"walk"
-body_centers = PackedFloat32Array(16.5, 16.5, 16.5, 16.5, 16.5, 16.5)
-aim_origins = PackedVector2Array(16.5, 19.5, 16.5, 20.5, 16.5, 19.5, 16.5, 19.5, 16.5, 20.5, 16.5, 19.5)
-flashlight_hands = PackedVector2Array(22.5, 25.5, 22.5, 26.5, 22.5, 25.5, 22.5, 25.5, 22.5, 26.5, 22.5, 25.5)
 
 [sub_resource type="Resource" id="sprint"]
 script = ExtResource("track")
 animation = &"sprint"
-body_centers = PackedFloat32Array(16.5, 16.5, 16.5, 16.5, 16.5, 16.5)
-aim_origins = PackedVector2Array(16.5, 19.5, 16.5, 19.5, 16.5, 19.5, 16.5, 19.5, 16.5, 19.5, 16.5, 19.5)
-flashlight_hands = PackedVector2Array(22.5, 22.5, 22.5, 23.5, 22.5, 24.5, 22.5, 25.5, 22.5, 24.5, 22.5, 24.5)
 
 [sub_resource type="Resource" id="crouch_idle"]
 script = ExtResource("track")
 animation = &"crouch_idle"
-body_centers = PackedFloat32Array(16.5, 16.5, 16.5, 16.5, 16.5, 16.5)
-aim_origins = PackedVector2Array(16.5, 29.5, 16.5, 29.5, 16.5, 30.5, 16.5, 30.5, 16.5, 29.5, 16.5, 29.5)
-flashlight_hands = PackedVector2Array(23.5, 32.5, 23.5, 32.5, 23.5, 33.5, 23.5, 33.5, 23.5, 32.5, 23.5, 32.5)
 
 [sub_resource type="Resource" id="crouch_walk"]
 script = ExtResource("track")
 animation = &"crouch_walk"
-body_centers = PackedFloat32Array(16.5, 16.5, 16.5, 16.5, 16.5, 16.5)
-aim_origins = PackedVector2Array(16.5, 29.5, 16.5, 30.5, 16.5, 29.5, 16.5, 29.5, 16.5, 30.5, 16.5, 29.5)
-flashlight_hands = PackedVector2Array(23.5, 32.5, 24.5, 33.5, 24.5, 32.5, 23.5, 32.5, 23.5, 33.5, 23.5, 32.5)
 
 [sub_resource type="Resource" id="jump"]
 script = ExtResource("track")
 animation = &"jump"
-body_centers = PackedFloat32Array(16.5, 16.5, 16.5, 16.5, 16.5, 16.5)
-aim_origins = PackedVector2Array(16.5, 20.5, 16.5, 20.5, 16.5, 20.5, 16.5, 20.5, 16.5, 20.5, 16.5, 20.5)
-flashlight_hands = PackedVector2Array(23.5, 24.5, 23.5, 22.5, 23.5, 22.5, 23.5, 22.5, 23.5, 22.5, 23.5, 22.5)
 
 [sub_resource type="Resource" id="fall"]
 script = ExtResource("track")
 animation = &"fall"
-body_centers = PackedFloat32Array(16.5, 16.5, 16.5, 16.5, 16.5, 16.5)
-aim_origins = PackedVector2Array(16.5, 20.5, 16.5, 20.5, 16.5, 20.5, 16.5, 20.5, 16.5, 20.5, 16.5, 20.5)
-flashlight_hands = PackedVector2Array(22.5, 25.5, 23.5, 23.5, 23.5, 23.5, 23.5, 23.5, 23.5, 23.5, 23.5, 23.5)
 
 [sub_resource type="Resource" id="dodge"]
 script = ExtResource("track")
 animation = &"dodge"
-body_centers = PackedFloat32Array(16.5, 16.5, 16.5, 16.5, 16.5, 16.5)
-aim_origins = PackedVector2Array(16.5, 19.5, 16.5, 22.5, 16.5, 25.5, 16.5, 25.5, 16.5, 22.5, 16.5, 19.5)
-flashlight_hands = PackedVector2Array(22.5, 25.5, 24.5, 27.5, 25.5, 30.5, 25.5, 30.5, 24.5, 27.5, 22.5, 25.5)
 
 [sub_resource type="Resource" id="aim_idle"]
 script = ExtResource("track")
 animation = &"aim_idle"
-body_centers = PackedFloat32Array(16.5, 16.5, 16.5, 16.5, 16.5, 16.5)
-aim_origins = PackedVector2Array(16.5, 19.5, 16.5, 20.5, 16.5, 20.5, 16.5, 20.5, 16.5, 20.5, 16.5, 19.5)
 
 [sub_resource type="Resource" id="aim_walk"]
 script = ExtResource("track")
 animation = &"aim_walk"
-body_centers = PackedFloat32Array(16.5, 16.5, 16.5, 16.5, 16.5, 16.5)
-aim_origins = PackedVector2Array(16.5, 19.5, 16.5, 20.5, 16.5, 19.5, 16.5, 19.5, 16.5, 20.5, 16.5, 19.5)
 
 [sub_resource type="Resource" id="crouch_aim_idle"]
 script = ExtResource("track")
 animation = &"crouch_aim_idle"
-body_centers = PackedFloat32Array(16.5, 16.5, 16.5, 16.5, 16.5, 16.5)
-aim_origins = PackedVector2Array(16.5, 29.5, 16.5, 29.5, 16.5, 30.5, 16.5, 30.5, 16.5, 29.5, 16.5, 29.5)
 
 [sub_resource type="Resource" id="crouch_aim_walk"]
 script = ExtResource("track")
 animation = &"crouch_aim_walk"
-body_centers = PackedFloat32Array(16.5, 16.5, 16.5, 16.5, 16.5, 16.5)
-aim_origins = PackedVector2Array(16.5, 29.5, 16.5, 30.5, 16.5, 29.5, 16.5, 29.5, 16.5, 30.5, 16.5, 29.5)
 
 [sub_resource type="Resource" id="aim_jump"]
 script = ExtResource("track")
 animation = &"aim_jump"
-body_centers = PackedFloat32Array(16.5, 16.5, 16.5, 16.5, 16.5, 16.5)
-aim_origins = PackedVector2Array(16.5, 20.5, 16.5, 20.5, 16.5, 20.5, 16.5, 20.5, 16.5, 20.5, 16.5, 20.5)
 
 [sub_resource type="Resource" id="aim_fall"]
 script = ExtResource("track")
 animation = &"aim_fall"
-body_centers = PackedFloat32Array(16.5, 16.5, 16.5, 16.5, 16.5, 16.5)
-aim_origins = PackedVector2Array(16.5, 20.5, 16.5, 20.5, 16.5, 20.5, 16.5, 20.5, 16.5, 20.5, 16.5, 20.5)
 
 [resource]
 script = ExtResource("profile")

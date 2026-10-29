@@ -1,13 +1,16 @@
-[gd_scene load_steps=4 format=3]
-[ext_resource type="Script" path="res://scripts/interactable.gd" id="1"]
-[ext_resource type="Texture2D" path="res://art/pixel/bolt_cutters.png" id="2"]
-[ext_resource type="Resource" path="res://data/items/bolt_cutters.tres" id="definition"]
-[node name="Pickup" type="Area2D"]
+[gd_scene format=3 uid="uid://bhxdbv4sgb00j"]
+
+[ext_resource type="Script" uid="uid://7vs0b7ni5urj" path="res://scripts/interactable.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://bgu1iar6rpv4a" path="res://art/pixel/bolt_cutters.png" id="2"]
+[ext_resource type="Resource" uid="uid://cjsma5kp5xyrs" path="res://data/items/bolt_cutters.tres" id="definition"]
+
+[node name="Pickup" type="Area2D" unique_id=1487733980]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1")
-kind = 0
+interaction_radius = 50.0
 item_definition = ExtResource("definition")
 quantity = 1
-[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1673240237]
 texture = ExtResource("2")

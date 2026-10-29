@@ -1,15 +1,17 @@
-[gd_scene load_steps=4 format=3]
-[ext_resource type="Script" path="res://scripts/interactable.gd" id="1"]
-[ext_resource type="Texture2D" path="res://art/pixel/fuse.png" id="2"]
-[ext_resource type="Resource" path="res://data/items/fuse.tres" id="definition"]
-[node name="Fuse" type="Area2D"]
+[gd_scene format=3 uid="uid://cewupshe7b4sg"]
+
+[ext_resource type="Script" uid="uid://7vs0b7ni5urj" path="res://scripts/interactable.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://cbhpijo3s3bnc" path="res://art/pixel/fuse.png" id="2"]
+[ext_resource type="Resource" uid="uid://dypxyyigtqp5t" path="res://data/items/fuse.tres" id="definition"]
+
+[node name="Fuse" type="Area2D" unique_id=1866983833]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1")
-kind = 0
+interaction_radius = 50.0
 item_definition = ExtResource("definition")
 item_id = "fuse"
 quantity = 1
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=512862875]
 texture = ExtResource("2")
