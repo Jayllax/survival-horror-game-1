@@ -10,11 +10,11 @@ test_data_root="${IGNOTUM_TEST_DATA_DIR:-/tmp/ignotum-automated-tests}"
 "$godot_bin" --headless --editor --path . --import --quit
 suites=("$@")
 if (( ${#suites[@]} == 0 )); then
-    suites=(smoke interface assets manual_saves grid_inventory aiming narrative combat stealth fences character_art interiors)
+    suites=(smoke interface assets manual_saves grid_inventory aiming narrative combat stealth fences character_art interiors forest)
 fi
 for suite in "${suites[@]}"; do
     case "$suite" in
-        smoke|interface|assets|manual_saves|grid_inventory|aiming|narrative|combat|stealth|fences|character_art|interiors) ;;
+        smoke|interface|assets|manual_saves|grid_inventory|aiming|narrative|combat|stealth|fences|character_art|interiors|forest) ;;
         *) echo "Unknown test suite: $suite" >&2; exit 2 ;;
     esac
     suite_log="$(mktemp)"

@@ -1,6 +1,6 @@
 # Enemy stealth and attack framework
 
-Open `scenes/levels/stealth_sandbox.tscn` and press **F6** in Godot 4.7.2 Standard. Two enemies start asleep. Crouch past them without using ammunition, or disturb them and try escaping or dodging their swings. The low passage gives the smaller player capsule an escape route. Your town layout and existing enemy artwork are preserved.
+Open `tests/fixtures/stealth_sandbox.tscn` and press **F6** in Godot 4.7.2 Standard. Two enemies start asleep. Crouch past them without using ammunition, or disturb them and try escaping or dodging their swings. The low passage gives the smaller player capsule an escape route. Your town layout and existing enemy artwork are preserved.
 
 ## Behaviour
 

@@ -75,7 +75,7 @@ func _ready() -> void:
 
 func run() -> void:
     Game.reset_run()
-    level = load("res://scenes/levels/combat_sandbox.tscn").instantiate()
+    level = load("res://tests/fixtures/combat_sandbox.tscn").instantiate()
     get_tree().root.add_child(level)
     get_tree().current_scene = level
     await frames(8)

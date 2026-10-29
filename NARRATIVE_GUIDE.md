@@ -4,7 +4,7 @@ Use Godot **4.7.2 Standard**. Everything below is editable in the Inspector; you
 
 ## Try the framework first
 
-Open `scenes/levels/story_sandbox.tscn` and press **F6**. Walk right to the note on the bench, then the NPC, then the save bicycle. The sandbox is separate from your town and contains placeholder writing only. **F5** still starts your existing main menu and town.
+Open `tests/fixtures/story_sandbox.tscn` and press **F6**. Walk right to the note on the bench, then the NPC, then the save bicycle. The sandbox is separate from your town and contains placeholder writing only. **F5** still starts your existing main menu and town.
 
 Nearby objects show only **Read** or **Talk**, without key hints. Reading opens a centered, scrollable note; conversation opens a box at the bottom of the screen. Both pause the player and enemies. Use **E**, **Enter**, or **Space** to reveal/advance dialogue, or click its Continue button. First press finishes revealing the current line; next press advances. **Esc** or Leave cancels. Inventory cannot open over either reader.
 

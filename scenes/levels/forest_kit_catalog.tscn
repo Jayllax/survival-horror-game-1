@@ -1,0 +1,275 @@
+[gd_scene format=3]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/trees/broadleaf_small.tscn" id="broadleaf_small"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/trees/broadleaf_large.tscn" id="broadleaf_large"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/trees/pine_small.tscn" id="pine_small"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/trees/pine_tall.tscn" id="pine_tall"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/trees/birch_small.tscn" id="birch_small"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/trees/birch_tall.tscn" id="birch_tall"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/trees/bare_tree.tscn" id="bare_tree"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/trees/sapling.tscn" id="sapling"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/fallen_log.tscn" id="fallen_log"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/mossy_log.tscn" id="mossy_log"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/stump_small.tscn" id="stump_small"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/stump_large.tscn" id="stump_large"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/bush_small.tscn" id="bush_small"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/bush_large.tscn" id="bush_large"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/fern.tscn" id="fern"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/grass_tuft.tscn" id="grass_tuft"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/rocks/rock_small.tscn" id="rock_small"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/rocks/boulder.tscn" id="boulder"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/exposed_roots.tscn" id="exposed_roots"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/fallen_branch.tscn" id="fallen_branch"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/mushrooms.tscn" id="mushrooms"]
+[node name="ForestKitCatalog" type="Node2D"]
+[node name="Label0" type="Label" parent="."]
+offset_top = 0.0
+text = "trees / broadleaf_small"
+[node name="broadleaf_small_0" parent="." instance=ExtResource("broadleaf_small")]
+position = Vector2(100,270)
+color_variant = 0
+[node name="broadleaf_small_1" parent="." instance=ExtResource("broadleaf_small")]
+position = Vector2(290,270)
+color_variant = 1
+[node name="broadleaf_small_2" parent="." instance=ExtResource("broadleaf_small")]
+position = Vector2(480,270)
+color_variant = 2
+[node name="Label1" type="Label" parent="."]
+offset_top = 290.0
+text = "trees / broadleaf_large"
+[node name="broadleaf_large_0" parent="." instance=ExtResource("broadleaf_large")]
+position = Vector2(100,560)
+color_variant = 0
+[node name="broadleaf_large_1" parent="." instance=ExtResource("broadleaf_large")]
+position = Vector2(290,560)
+color_variant = 1
+[node name="broadleaf_large_2" parent="." instance=ExtResource("broadleaf_large")]
+position = Vector2(480,560)
+color_variant = 2
+[node name="Label2" type="Label" parent="."]
+offset_top = 580.0
+text = "trees / pine_small"
+[node name="pine_small_0" parent="." instance=ExtResource("pine_small")]
+position = Vector2(100,850)
+color_variant = 0
+[node name="pine_small_1" parent="." instance=ExtResource("pine_small")]
+position = Vector2(290,850)
+color_variant = 1
+[node name="pine_small_2" parent="." instance=ExtResource("pine_small")]
+position = Vector2(480,850)
+color_variant = 2
+[node name="Label3" type="Label" parent="."]
+offset_top = 870.0
+text = "trees / pine_tall"
+[node name="pine_tall_0" parent="." instance=ExtResource("pine_tall")]
+position = Vector2(100,1140)
+color_variant = 0
+[node name="pine_tall_1" parent="." instance=ExtResource("pine_tall")]
+position = Vector2(290,1140)
+color_variant = 1
+[node name="pine_tall_2" parent="." instance=ExtResource("pine_tall")]
+position = Vector2(480,1140)
+color_variant = 2
+[node name="Label4" type="Label" parent="."]
+offset_top = 1160.0
+text = "trees / birch_small"
+[node name="birch_small_0" parent="." instance=ExtResource("birch_small")]
+position = Vector2(100,1430)
+color_variant = 0
+[node name="birch_small_1" parent="." instance=ExtResource("birch_small")]
+position = Vector2(290,1430)
+color_variant = 1
+[node name="birch_small_2" parent="." instance=ExtResource("birch_small")]
+position = Vector2(480,1430)
+color_variant = 2
+[node name="Label5" type="Label" parent="."]
+offset_top = 1450.0
+text = "trees / birch_tall"
+[node name="birch_tall_0" parent="." instance=ExtResource("birch_tall")]
+position = Vector2(100,1720)
+color_variant = 0
+[node name="birch_tall_1" parent="." instance=ExtResource("birch_tall")]
+position = Vector2(290,1720)
+color_variant = 1
+[node name="birch_tall_2" parent="." instance=ExtResource("birch_tall")]
+position = Vector2(480,1720)
+color_variant = 2
+[node name="Label6" type="Label" parent="."]
+offset_top = 1740.0
+text = "trees / bare_tree"
+[node name="bare_tree_0" parent="." instance=ExtResource("bare_tree")]
+position = Vector2(100,2010)
+color_variant = 0
+[node name="bare_tree_1" parent="." instance=ExtResource("bare_tree")]
+position = Vector2(290,2010)
+color_variant = 1
+[node name="bare_tree_2" parent="." instance=ExtResource("bare_tree")]
+position = Vector2(480,2010)
+color_variant = 2
+[node name="Label7" type="Label" parent="."]
+offset_top = 2030.0
+text = "trees / sapling"
+[node name="sapling_0" parent="." instance=ExtResource("sapling")]
+position = Vector2(100,2300)
+color_variant = 0
+[node name="sapling_1" parent="." instance=ExtResource("sapling")]
+position = Vector2(290,2300)
+color_variant = 1
+[node name="sapling_2" parent="." instance=ExtResource("sapling")]
+position = Vector2(480,2300)
+color_variant = 2
+[node name="Label8" type="Label" parent="."]
+offset_top = 2320.0
+text = "wood / fallen_log"
+[node name="fallen_log_0" parent="." instance=ExtResource("fallen_log")]
+position = Vector2(100,2590)
+color_variant = 0
+[node name="fallen_log_1" parent="." instance=ExtResource("fallen_log")]
+position = Vector2(290,2590)
+color_variant = 1
+[node name="fallen_log_2" parent="." instance=ExtResource("fallen_log")]
+position = Vector2(480,2590)
+color_variant = 2
+[node name="Label9" type="Label" parent="."]
+offset_top = 2610.0
+text = "wood / mossy_log"
+[node name="mossy_log_0" parent="." instance=ExtResource("mossy_log")]
+position = Vector2(100,2880)
+color_variant = 0
+[node name="mossy_log_1" parent="." instance=ExtResource("mossy_log")]
+position = Vector2(290,2880)
+color_variant = 1
+[node name="mossy_log_2" parent="." instance=ExtResource("mossy_log")]
+position = Vector2(480,2880)
+color_variant = 2
+[node name="Label10" type="Label" parent="."]
+offset_top = 2900.0
+text = "wood / stump_small"
+[node name="stump_small_0" parent="." instance=ExtResource("stump_small")]
+position = Vector2(100,3170)
+color_variant = 0
+[node name="stump_small_1" parent="." instance=ExtResource("stump_small")]
+position = Vector2(290,3170)
+color_variant = 1
+[node name="stump_small_2" parent="." instance=ExtResource("stump_small")]
+position = Vector2(480,3170)
+color_variant = 2
+[node name="Label11" type="Label" parent="."]
+offset_top = 3190.0
+text = "wood / stump_large"
+[node name="stump_large_0" parent="." instance=ExtResource("stump_large")]
+position = Vector2(100,3460)
+color_variant = 0
+[node name="stump_large_1" parent="." instance=ExtResource("stump_large")]
+position = Vector2(290,3460)
+color_variant = 1
+[node name="stump_large_2" parent="." instance=ExtResource("stump_large")]
+position = Vector2(480,3460)
+color_variant = 2
+[node name="Label12" type="Label" parent="."]
+offset_top = 3480.0
+text = "plants / bush_small"
+[node name="bush_small_0" parent="." instance=ExtResource("bush_small")]
+position = Vector2(100,3750)
+color_variant = 0
+[node name="bush_small_1" parent="." instance=ExtResource("bush_small")]
+position = Vector2(290,3750)
+color_variant = 1
+[node name="bush_small_2" parent="." instance=ExtResource("bush_small")]
+position = Vector2(480,3750)
+color_variant = 2
+[node name="Label13" type="Label" parent="."]
+offset_top = 3770.0
+text = "plants / bush_large"
+[node name="bush_large_0" parent="." instance=ExtResource("bush_large")]
+position = Vector2(100,4040)
+color_variant = 0
+[node name="bush_large_1" parent="." instance=ExtResource("bush_large")]
+position = Vector2(290,4040)
+color_variant = 1
+[node name="bush_large_2" parent="." instance=ExtResource("bush_large")]
+position = Vector2(480,4040)
+color_variant = 2
+[node name="Label14" type="Label" parent="."]
+offset_top = 4060.0
+text = "plants / fern"
+[node name="fern_0" parent="." instance=ExtResource("fern")]
+position = Vector2(100,4330)
+color_variant = 0
+[node name="fern_1" parent="." instance=ExtResource("fern")]
+position = Vector2(290,4330)
+color_variant = 1
+[node name="fern_2" parent="." instance=ExtResource("fern")]
+position = Vector2(480,4330)
+color_variant = 2
+[node name="Label15" type="Label" parent="."]
+offset_top = 4350.0
+text = "plants / grass_tuft"
+[node name="grass_tuft_0" parent="." instance=ExtResource("grass_tuft")]
+position = Vector2(100,4620)
+color_variant = 0
+[node name="grass_tuft_1" parent="." instance=ExtResource("grass_tuft")]
+position = Vector2(290,4620)
+color_variant = 1
+[node name="grass_tuft_2" parent="." instance=ExtResource("grass_tuft")]
+position = Vector2(480,4620)
+color_variant = 2
+[node name="Label16" type="Label" parent="."]
+offset_top = 4640.0
+text = "rocks / rock_small"
+[node name="rock_small_0" parent="." instance=ExtResource("rock_small")]
+position = Vector2(100,4910)
+color_variant = 0
+[node name="rock_small_1" parent="." instance=ExtResource("rock_small")]
+position = Vector2(290,4910)
+color_variant = 1
+[node name="rock_small_2" parent="." instance=ExtResource("rock_small")]
+position = Vector2(480,4910)
+color_variant = 2
+[node name="Label17" type="Label" parent="."]
+offset_top = 4930.0
+text = "rocks / boulder"
+[node name="boulder_0" parent="." instance=ExtResource("boulder")]
+position = Vector2(100,5200)
+color_variant = 0
+[node name="boulder_1" parent="." instance=ExtResource("boulder")]
+position = Vector2(290,5200)
+color_variant = 1
+[node name="boulder_2" parent="." instance=ExtResource("boulder")]
+position = Vector2(480,5200)
+color_variant = 2
+[node name="Label18" type="Label" parent="."]
+offset_top = 5220.0
+text = "wood / exposed_roots"
+[node name="exposed_roots_0" parent="." instance=ExtResource("exposed_roots")]
+position = Vector2(100,5490)
+color_variant = 0
+[node name="exposed_roots_1" parent="." instance=ExtResource("exposed_roots")]
+position = Vector2(290,5490)
+color_variant = 1
+[node name="exposed_roots_2" parent="." instance=ExtResource("exposed_roots")]
+position = Vector2(480,5490)
+color_variant = 2
+[node name="Label19" type="Label" parent="."]
+offset_top = 5510.0
+text = "wood / fallen_branch"
+[node name="fallen_branch_0" parent="." instance=ExtResource("fallen_branch")]
+position = Vector2(100,5780)
+color_variant = 0
+[node name="fallen_branch_1" parent="." instance=ExtResource("fallen_branch")]
+position = Vector2(290,5780)
+color_variant = 1
+[node name="fallen_branch_2" parent="." instance=ExtResource("fallen_branch")]
+position = Vector2(480,5780)
+color_variant = 2
+[node name="Label20" type="Label" parent="."]
+offset_top = 5800.0
+text = "plants / mushrooms"
+[node name="mushrooms_0" parent="." instance=ExtResource("mushrooms")]
+position = Vector2(100,6070)
+color_variant = 0
+[node name="mushrooms_1" parent="." instance=ExtResource("mushrooms")]
+position = Vector2(290,6070)
+color_variant = 1
+[node name="mushrooms_2" parent="." instance=ExtResource("mushrooms")]
+position = Vector2(480,6070)
+color_variant = 2

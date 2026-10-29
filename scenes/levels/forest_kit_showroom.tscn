@@ -1,0 +1,140 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://scripts/location.gd" id="location"]
+[ext_resource type="PackedScene" path="res://scenes/actors/player.tscn" id="player"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="hud"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/trees/broadleaf_small.tscn" id="broadleaf_small"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/trees/broadleaf_large.tscn" id="broadleaf_large"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/trees/pine_small.tscn" id="pine_small"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/trees/pine_tall.tscn" id="pine_tall"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/trees/birch_small.tscn" id="birch_small"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/trees/birch_tall.tscn" id="birch_tall"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/trees/bare_tree.tscn" id="bare_tree"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/trees/sapling.tscn" id="sapling"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/fallen_log.tscn" id="fallen_log"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/mossy_log.tscn" id="mossy_log"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/stump_small.tscn" id="stump_small"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/stump_large.tscn" id="stump_large"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/bush_small.tscn" id="bush_small"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/bush_large.tscn" id="bush_large"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/fern.tscn" id="fern"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/grass_tuft.tscn" id="grass_tuft"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/rocks/rock_small.tscn" id="rock_small"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/rocks/boulder.tscn" id="boulder"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/exposed_roots.tscn" id="exposed_roots"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/fallen_branch.tscn" id="fallen_branch"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/mushrooms.tscn" id="mushrooms"]
+[sub_resource type="RectangleShape2D" id="floor"]
+size = Vector2(3400,120)
+[node name="ForestKitShowroom" type="Node2D"]
+script = ExtResource("location")
+display_name = "Forest kit showroom"
+camera_bounds = Rect2i(0,0,3400,720)
+[node name="AmbientTint" type="CanvasModulate" parent="."]
+color = Color(0.72,0.72,0.72,1)
+[node name="Background" type="Polygon2D" parent="."]
+z_index = -10
+color = Color(0.18,0.18,0.23,1)
+polygon = PackedVector2Array(0,0,3400,0,3400,720,0,720)
+[node name="Geometry" type="Node2D" parent="."]
+[node name="Floor" type="StaticBody2D" parent="Geometry"]
+position = Vector2(1700,680)
+[node name="Shape" type="CollisionShape2D" parent="Geometry/Floor"]
+shape = SubResource("floor")
+[node name="FloorArt" type="Polygon2D" parent="Geometry"]
+color = Color(0.23,0.18,0.19,1)
+polygon = PackedVector2Array(0,620,3400,620,3400,720,0,720)
+[node name="Props" type="Node2D" parent="."]
+[node name="BroadleafSmall0" parent="Props" instance=ExtResource("broadleaf_small")]
+position = Vector2(250,620)
+color_variant = 0
+[node name="BroadleafLarge1" parent="Props" instance=ExtResource("broadleaf_large")]
+position = Vector2(500,620)
+color_variant = 0
+[node name="PineSmall2" parent="Props" instance=ExtResource("pine_small")]
+position = Vector2(770,620)
+color_variant = 0
+[node name="PineTall3" parent="Props" instance=ExtResource("pine_tall")]
+position = Vector2(980,620)
+color_variant = 0
+[node name="BirchSmall4" parent="Props" instance=ExtResource("birch_small")]
+position = Vector2(1220,620)
+color_variant = 0
+[node name="BirchTall5" parent="Props" instance=ExtResource("birch_tall")]
+position = Vector2(1430,620)
+color_variant = 0
+[node name="BareTree6" parent="Props" instance=ExtResource("bare_tree")]
+position = Vector2(1650,620)
+color_variant = 0
+[node name="Sapling7" parent="Props" instance=ExtResource("sapling")]
+position = Vector2(1800,620)
+color_variant = 0
+[node name="BroadleafLarge8" parent="Props" instance=ExtResource("broadleaf_large")]
+position = Vector2(2050,620)
+color_variant = 1
+[node name="PineTall9" parent="Props" instance=ExtResource("pine_tall")]
+position = Vector2(2300,620)
+color_variant = 1
+[node name="BirchTall10" parent="Props" instance=ExtResource("birch_tall")]
+position = Vector2(2540,620)
+color_variant = 1
+[node name="BroadleafLarge11" parent="Props" instance=ExtResource("broadleaf_large")]
+position = Vector2(2760,620)
+color_variant = 2
+[node name="PineTall12" parent="Props" instance=ExtResource("pine_tall")]
+position = Vector2(3030,620)
+color_variant = 2
+[node name="BirchTall13" parent="Props" instance=ExtResource("birch_tall")]
+position = Vector2(3250,620)
+color_variant = 2
+[node name="FallenLog14" parent="Props" instance=ExtResource("fallen_log")]
+position = Vector2(350,620)
+color_variant = 0
+[node name="MossyLog15" parent="Props" instance=ExtResource("mossy_log")]
+position = Vector2(650,620)
+color_variant = 0
+[node name="StumpSmall16" parent="Props" instance=ExtResource("stump_small")]
+position = Vector2(850,620)
+color_variant = 0
+[node name="StumpLarge17" parent="Props" instance=ExtResource("stump_large")]
+position = Vector2(1110,620)
+color_variant = 0
+[node name="BushSmall18" parent="Props" instance=ExtResource("bush_small")]
+position = Vector2(1300,620)
+color_variant = 0
+[node name="BushLarge19" parent="Props" instance=ExtResource("bush_large")]
+position = Vector2(1550,620)
+color_variant = 0
+[node name="Fern20" parent="Props" instance=ExtResource("fern")]
+position = Vector2(1740,620)
+color_variant = 0
+[node name="GrassTuft21" parent="Props" instance=ExtResource("grass_tuft")]
+position = Vector2(1850,620)
+color_variant = 0
+[node name="RockSmall22" parent="Props" instance=ExtResource("rock_small")]
+position = Vector2(1930,620)
+color_variant = 1
+[node name="Boulder23" parent="Props" instance=ExtResource("boulder")]
+position = Vector2(2160,620)
+color_variant = 1
+[node name="ExposedRoots24" parent="Props" instance=ExtResource("exposed_roots")]
+position = Vector2(2460,620)
+color_variant = 1
+[node name="FallenBranch25" parent="Props" instance=ExtResource("fallen_branch")]
+position = Vector2(2650,620)
+color_variant = 2
+[node name="Mushrooms26" parent="Props" instance=ExtResource("mushrooms")]
+position = Vector2(2860,620)
+color_variant = 2
+[node name="BushLarge27" parent="Props" instance=ExtResource("bush_large")]
+position = Vector2(3180,620)
+color_variant = 2
+[node name="Fern28" parent="Props" instance=ExtResource("fern")]
+position = Vector2(3330,620)
+color_variant = 2
+[node name="Actors" type="Node2D" parent="."]
+[node name="Player" parent="Actors" instance=ExtResource("player")]
+position = Vector2(120,588)
+[node name="Spawns" type="Node2D" parent="."]
+[node name="default" type="Marker2D" parent="Spawns"]
+position = Vector2(120,588)
+[node name="HUD" parent="." instance=ExtResource("hud")]

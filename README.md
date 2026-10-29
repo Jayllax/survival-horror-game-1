@@ -2,7 +2,7 @@
 
 Editable Godot **4.7.2 Standard** 2D survival-horror foundation. Import `project.godot` in Godot, then press **F5** for the main menu and your town. All level geometry, props, characters and interactables are authored scene nodes.
 
-Your October 28 upload's alley, interiors, player speed/jump, camera, lighting and input changes are preserved. This iteration adds matching simple player/enemy pixel animations, hands that hold the equipped pistol while aiming, and reusable cuttable/permanent fences in both broad and end views. Your story and main level design remain yours to build.
+Your latest uploaded town layout, two introduction areas, player draw order, entrance range and note edits are preserved. The interior kit remains available, and a matching forest kit adds trees, logs, bushes and ground props. Your story and main level design remain yours to build.
 
 ## Start here
 
@@ -13,6 +13,8 @@ Drawing your own animations? Use the [Pixilart templates and instructions](art/t
 - [Fence guide](docs/guides/FENCE_GUIDE.md): tool-gated paths, permanent barriers, both viewpoints and saved openings.
 - [Enemy AI guide](docs/guides/ENEMY_AI_GUIDE.md): sleeping enemies, quiet crouch bypasses, sight/hearing, searching and timed attacks.
 - [Narrative guide](docs/guides/NARRATIVE_GUIDE.md): notes, NPCs, colored speakers and conversations.
+- [Interior kit](docs/guides/INTERIOR_KIT_GUIDE.md): furniture, lamps and walkable stairs in three colors.
+- [Forest kit](docs/guides/FOREST_KIT_GUIDE.md): 21 matching objects in three colors, with optional collision.
 - [Art guide](docs/guides/ART_STYLE_GUIDE.md) and [house variants](docs/guides/HOUSE_VARIANTS.md): palette, pixel size and editing assets.
 - [Workspace layout](docs/WORKSPACE.md): where things live and what was cleaned up.
 - [Inspiration notes](docs/guides/INSPIRATION_NOTES.md): sources and implementation choices; no copied game assets or authored campaign.
@@ -21,14 +23,14 @@ Drawing your own animations? Use the [Pixilart templates and instructions](art/t
 
 Open a scene and press **F6**:
 
-| Scene under `scenes/levels/` | Try |
+| Scene | Try |
 | --- | --- |
-| `fence_sandbox.tscn` | Cutters, bicycle save, broad/end-view wire fences, permanent fences |
-| `combat_sandbox.tscn` | Movement, aim, crouch clearance, short dodge, enemy reactions |
-| `stealth_sandbox.tscn` | Sleeping enemies, quiet bypasses, noisy actions, pursuit |
-| `story_sandbox.tscn` | Note reader and NPC dialogue |
+| `tests/fixtures/fence_sandbox.tscn` | Cutters, bicycle save, broad/end-view wire fences, permanent fences |
+| `tests/fixtures/combat_sandbox.tscn` | Movement, aim, crouch clearance, short dodge, enemy reactions |
+| `tests/fixtures/stealth_sandbox.tscn` | Sleeping enemies, quiet bypasses, noisy actions, pursuit |
+| `tests/fixtures/story_sandbox.tscn` | Note reader and NPC dialogue |
 
-These are separate demonstrations; they do not overwrite your levels. New fence roots sit on the floor, for example Y=620. New character/fence PNGs are native resolution displayed at 2×; edit those PNGs directly.
+These older demonstrations are regression fixtures under `tests/fixtures/`; they remain removed from your gameplay level folder. The playable interior and forest kit showrooms live under `scenes/levels/`. New fence roots sit on the floor, for example Y=620. New character/fence PNGs are native resolution displayed at 2×; edit those PNGs directly.
 
 ## Existing systems
 
@@ -41,13 +43,15 @@ Four bicycle-only save slots independently store inventory/layout/equipment, amm
 ## Validation
 
 ```sh
-GODOT_BIN=/path/to/godot-4.7.2 bash tools/check.sh aiming narrative combat stealth fences character_art
+GODOT_BIN=/path/to/godot-4.7.2 bash tools/check.sh aiming narrative combat stealth fences character_art interiors forest
 ```
 
-This imports the project and runs six suites against your current settings, with isolated user-data folders. They cover UI/aim, notes/dialogue, movement/combat, stealth, independently saved fence routes, pixel animation states, phased enemy strikes and both hands staying on gun grips across aim angles.
+This imports the project and runs eight suites against your current settings, with isolated user-data folders. They cover UI/aim, notes/dialogue, movement/combat, stealth, independently saved fence routes, pixel animation states, phased enemy strikes and both hands staying on gun grips across aim angles.
 
-The older five suites (`smoke`, `interface`, `assets`, `manual_saves`, `grid_inventory`) assume historical item names, quantities and example level layouts. Your later designer revisions intentionally differ. The script's no-argument mode includes all eleven suites; select the six current suites above for this snapshot. Never change your designer data to satisfy historical fixtures.
+The older five suites (`smoke`, `interface`, `assets`, `manual_saves`, `grid_inventory`) assume historical item names, quantities and example level layouts. Your later designer revisions intentionally differ. The script's no-argument mode includes all thirteen suites; select the eight current suites above for this snapshot. Never change your designer data to satisfy historical fixtures.
 
 Graphical checks used Linux software OpenGL. Standalone exports, other operating systems and physical audio output have not been tested. Required font license files remain in `art/fonts/`.
 
 Interior furniture, working lamps and walkable stairs are ready to place from `scenes/objects/interiors/`. See the [interior kit guide](docs/guides/INTERIOR_KIT_GUIDE.md) and [color catalog](docs/previews/interior-kit-catalog.png). Open `scenes/levels/interior_kit_showroom.tscn` with F6 to try them without changing your existing levels.
+
+Forest scenery is ready to place from `scenes/objects/forest/`. See the [forest kit guide](docs/guides/FOREST_KIT_GUIDE.md) and [color catalog](docs/previews/forest-kit-catalog.png). Open `scenes/levels/forest_kit_showroom.tscn` with F6 to check the scale beside your player.

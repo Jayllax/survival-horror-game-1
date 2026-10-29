@@ -1,12 +1,12 @@
 # Ignotum / designer guide
 
-For reusable wire/solid fences in broad and end views, see [FENCE_GUIDE.md](docs/guides/FENCE_GUIDE.md). Try `scenes/levels/fence_sandbox.tscn` with F6.
+For reusable wire/solid fences in broad and end views, see [FENCE_GUIDE.md](docs/guides/FENCE_GUIDE.md). Try `tests/fixtures/fence_sandbox.tscn` with F6.
 
 For sleeping enemies, crouch bypasses, directional sight/hearing, patrol/search behaviour, and the attack animation/hitbox, see [ENEMY_AI_GUIDE.md](docs/guides/ENEMY_AI_GUIDE.md).
 
-For player/enemy SpriteFrames, crouch, sprint, short dodge, and gun-only combat, see [CHARACTER_GUIDE.md](docs/guides/CHARACTER_GUIDE.md). Open `scenes/levels/combat_sandbox.tscn` with F6 to try them.
+For player/enemy SpriteFrames, crouch, sprint, short dodge, and gun-only combat, see [CHARACTER_GUIDE.md](docs/guides/CHARACTER_GUIDE.md). Open `tests/fixtures/combat_sandbox.tscn` with F6 to try them.
 
-For editable environmental notes, colored speakers, and NPC conversations, see [NARRATIVE_GUIDE.md](docs/guides/NARRATIVE_GUIDE.md). Open `scenes/levels/story_sandbox.tscn` and press F6 to try the framework without changing your town.
+For editable environmental notes, colored speakers, and NPC conversations, see [NARRATIVE_GUIDE.md](docs/guides/NARRATIVE_GUIDE.md). Open `tests/fixtures/story_sandbox.tscn` and press F6 to try the framework without changing your town.
 
 ## Your starting point
 
@@ -189,3 +189,7 @@ Play from New Game, enter the building, collect ammo, return, revisit, and confi
 ## Interior furniture and stairs
 
 Start with [INTERIOR_KIT_GUIDE.md](docs/guides/INTERIOR_KIT_GUIDE.md). Drag scenes from `scenes/objects/interiors/` into a room and choose Color Variant in the Inspector. The kit includes 24 furniture/lamp objects in three colors, plus walkable full/half stairs in both directions. Try `scenes/levels/interior_kit_showroom.tscn` with F6, or open `interior_kit_catalog.tscn` to see every variant in the editor.
+
+## Forest scenery
+
+See the [FOREST_KIT_GUIDE.md](docs/guides/FOREST_KIT_GUIDE.md) for trees, logs, stumps, bushes, ferns, rocks and smaller ground props. Drag scenes from `scenes/objects/forest/`, choose one of three color variants, and enable Solid only where you want to block the player. Try `scenes/levels/forest_kit_showroom.tscn` with F6, or compare all variants in `forest_kit_catalog.tscn`.

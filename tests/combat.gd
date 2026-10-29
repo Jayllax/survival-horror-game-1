@@ -24,7 +24,7 @@ func run() -> void:
         if FileAccess.file_exists(Game.slot_path(index)):
             DirAccess.remove_absolute(ProjectSettings.globalize_path(Game.slot_path(index)))
     Game.reset_run()
-    var level: Node2D = load("res://scenes/levels/combat_sandbox.tscn").instantiate()
+    var level: Node2D = load("res://tests/fixtures/combat_sandbox.tscn").instantiate()
     get_tree().root.add_child(level)
     get_tree().current_scene = level
     await frames(8)

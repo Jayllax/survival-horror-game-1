@@ -1,6 +1,6 @@
 # Place fences and tool-gated routes
 
-Try `scenes/levels/fence_sandbox.tscn` with **F6**. It contains a player, cutters, a save bicycle, and both broad-panel and narrow end-view fences. Your town, alley and interiors are unchanged by this demonstration.
+Try `tests/fixtures/fence_sandbox.tscn` with **F6**. It contains a player, cutters, a save bicycle, and both broad-panel and narrow end-view fences. Your town, alley and interiors are unchanged by this demonstration.
 
 ## Choose a reusable scene
 

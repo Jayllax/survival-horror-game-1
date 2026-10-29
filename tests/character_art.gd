@@ -16,7 +16,7 @@ func _ready() -> void:
     run.call_deferred()
 func run() -> void:
     Game.reset_run()
-    var level: Node2D=load("res://scenes/levels/fence_sandbox.tscn").instantiate()
+    var level: Node2D=load("res://tests/fixtures/fence_sandbox.tscn").instantiate()
     get_tree().root.add_child(level)
     get_tree().current_scene=level
     await frames(8)
