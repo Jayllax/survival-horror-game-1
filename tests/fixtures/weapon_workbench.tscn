@@ -1,0 +1,66 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://scripts/location.gd" id="location"]
+[ext_resource type="PackedScene" path="res://scenes/actors/player.tscn" id="player"]
+[ext_resource type="PackedScene" path="res://scenes/actors/enemy.tscn" id="enemy"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="hud"]
+[ext_resource type="PackedScene" path="res://scenes/objects/save_bicycle.tscn" id="bike"]
+[ext_resource type="PackedScene" path="res://scenes/objects/equipment/handgun.tscn" id="handgun"]
+[ext_resource type="PackedScene" path="res://scenes/objects/equipment/shotgun.tscn" id="shotgun"]
+[ext_resource type="PackedScene" path="res://scenes/objects/equipment/shotgun_shells.tscn" id="shells"]
+[ext_resource type="PackedScene" path="res://scenes/objects/equipment/compact_saw.tscn" id="compact"]
+[ext_resource type="PackedScene" path="res://scenes/objects/equipment/damage_kit.tscn" id="damage"]
+[ext_resource type="PackedScene" path="res://scenes/objects/ammo.tscn" id="ammo"]
+[sub_resource type="RectangleShape2D" id="floor"]
+size = Vector2(2800, 120)
+[sub_resource type="RectangleShape2D" id="cover"]
+size = Vector2(12, 220)
+[node name="WeaponWorkbench" type="Node2D"]
+script = ExtResource("location")
+display_name = "Weapon workbench"
+camera_bounds = Rect2i(0, 0, 2800, 720)
+[node name="Background" type="Polygon2D" parent="."]
+z_index = -10
+color = Color(0.141, 0.133, 0.18, 1)
+polygon = PackedVector2Array(0,0,2800,0,2800,720,0,720)
+[node name="AmbientTint" type="CanvasModulate" parent="."]
+color = Color(0.65, 0.65, 0.65, 1)
+[node name="Geometry" type="Node2D" parent="."]
+[node name="Floor" type="StaticBody2D" parent="Geometry"]
+position = Vector2(1400, 680)
+[node name="Shape" type="CollisionShape2D" parent="Geometry/Floor"]
+shape = SubResource("floor")
+[node name="FloorArt" type="Polygon2D" parent="Geometry"]
+color = Color(0.231, 0.176, 0.188, 1)
+polygon = PackedVector2Array(0,620,2800,620,2800,720,0,720)
+[node name="Cover" type="StaticBody2D" parent="Geometry"]
+position = Vector2(1800, 510)
+[node name="Shape" type="CollisionShape2D" parent="Geometry/Cover"]
+shape = SubResource("cover")
+disabled = true
+[node name="Actors" type="Node2D" parent="."]
+[node name="Player" parent="Actors" instance=ExtResource("player")]
+position = Vector2(200, 588)
+[node name="Enemy" parent="Actors" instance=ExtResource("enemy")]
+position = Vector2(2400, 588)
+max_health = 1000
+[node name="Interactables" type="Node2D" parent="."]
+[node name="SaveBicycle" parent="Interactables" instance=ExtResource("bike")]
+position = Vector2(200, 620)
+[node name="Handgun" parent="Interactables" instance=ExtResource("handgun")]
+position = Vector2(380, 610)
+[node name="Shotgun" parent="Interactables" instance=ExtResource("shotgun")]
+position = Vector2(480, 610)
+[node name="Shells" parent="Interactables" instance=ExtResource("shells")]
+position = Vector2(580, 610)
+quantity = 12
+[node name="Ammo" parent="Interactables" instance=ExtResource("ammo")]
+position = Vector2(660, 610)
+quantity = 12
+[node name="CompactSaw" parent="Interactables" instance=ExtResource("compact")]
+position = Vector2(760, 608)
+[node name="DamageKit" parent="Interactables" instance=ExtResource("damage")]
+position = Vector2(860, 606)
+[node name="Spawns" type="Node2D" parent="."]
+[node name="default" type="Marker2D" parent="Spawns"]
+position = Vector2(200, 588)
+[node name="HUD" parent="." instance=ExtResource("hud")]

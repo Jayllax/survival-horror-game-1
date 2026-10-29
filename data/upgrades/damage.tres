@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="InventoryUpgrade" format=3]
+[ext_resource type="Script" path="res://scripts/inventory_upgrade.gd" id="script"]
+[resource]
+script = ExtResource("script")
+effect = 1
+damage_multiplier = 1.25

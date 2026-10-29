@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="InventoryItemDefinition" format=3]
+[ext_resource type="Script" path="res://scripts/item_definition.gd" id="script"]
+[ext_resource type="Texture2D" path="res://art/pixel/equipment/shotgun.png" id="art"]
+[ext_resource type="AudioStream" path="res://audio/shotgun.wav" id="sound"]
+[resource]
+script = ExtResource("script")
+id = "shotgun"
+display_name = "Shotgun"
+category = "Weapon"
+description = "A pump-action shotgun holding four buckshot shells. Fires six pellets in a short-range spread and reloads one shell at a time. Firing with a loaded shell interrupts reloading."
+icon = ExtResource("art")
+grid_size = Vector2i(3, 1)
+compact_grid_size = Vector2i(2, 1)
+is_weapon = true
+weapon_texture = ExtResource("art")
+ammunition_id = "shotgun_shells"
+magazine_size = 4
+bullet_damage = 14
+shot_interval = 0.9
+reload_seconds = 0.7
+pellets_per_shot = 6
+spread_degrees = 14.0
+firing_range = 430.0
+reload_one_at_a_time = true
+shot_sound = ExtResource("sound")
+recoil_distance = 6.0
+weapon_scale = Vector2(2, 2)
+custom_weapon_pose = true
+near_grip = Vector2(-3.5, 2.5)
+far_grip = Vector2(7.5, 0.5)
+muzzle_offset = Vector2(15.5, -2.5)
+flashlight_offset = Vector2(14, -0.5)

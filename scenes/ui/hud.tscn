@@ -224,14 +224,14 @@ text = ""
 mouse_filter = 2
 
 
-[node name="Description" type="Label" parent="Root/InventoryPanel"]
+[node name="Description" type="RichTextLabel" parent="Root/InventoryPanel"]
 offset_left = 640.0
 offset_top = 274.0
 offset_right = 1012.0
 offset_bottom = 396.0
-theme_override_font_sizes/font_size = 15
+theme_override_font_sizes/normal_font_size = 15
 text = ""
-mouse_filter = 2
+mouse_filter = 0
 autowrap_mode = 2
 
 [node name="Quantity" type="Label" parent="Root/InventoryPanel"]

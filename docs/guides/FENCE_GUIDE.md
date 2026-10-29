@@ -1,12 +1,12 @@
 # Place fences and tool-gated routes
 
-Try `scenes/levels/fence_sandbox.tscn` with **F6**. It contains a player, cutters, a save bicycle, and both broad-panel and narrow end-view fences. Your town, alley and interiors are unchanged by this demonstration.
+Try `tests/fixtures/fence_sandbox.tscn` with **F6**. It contains a player, cutters, a save bicycle, and both broad-panel and narrow end-view fences. Your town, alley and interiors are unchanged by this demonstration.
 
 ## Choose a reusable scene
 
 | Scene under `scenes/objects/` | Appearance | Gameplay |
 | --- | --- | --- |
-| `fence_cuttable.tscn` | Broad wire-mesh panel | Cut with reusable bolt cutters |
+| `fence_cuttable.tscn` | Broad wire-mesh panel | Cut with matching bolt cutters |
 | `fence_reinforced.tscn` | Broad solid metal bars | Permanent physical barrier |
 | `fence_cuttable_side.tscn` | Narrow end-on wire/post | Cut and fold onto the floor |
 | `fence_reinforced_side.tscn` | Narrow reinforced end-on post | Permanent physical barrier |
@@ -20,12 +20,12 @@ The broad view shows the whole fence along the screen. The narrow view is for lo
 1. Drag the scene into your level. Put cuttable fences under **Interactables**, and permanent ones under **Props** or **Geometry** for clarity.
 2. Place the root exactly on the floor: for a floor at Y=620, set the root's Y to **620**. Its artwork and collision extend upward from that point.
 3. Leave scale at (1,1). The sprite children already provide the matching 2× art scale. Move or duplicate whole scene roots.
-4. Place a `bolt_cutters.tscn` pickup where you want the player to find the tool. Its existing inventory definition takes 3 cells; the fence does not consume it.
+4. Place a `bolt_cutters.tscn` pickup where you want the player to find the tool. Its existing inventory definition takes 3 cells and remains reusable. For disposable cutters, place `scenes/objects/equipment/bolt_cutters_single_use.tscn` instead; both satisfy the same Required Tool. Removal follows the item’s **Use Behavior → Remove After Use** checkbox.
 5. Test with F6. A nearby cuttable fence offers **Cut fence**, without revealing a title under the world asset. The reinforced fence offers no interaction.
 
 ## Inspector settings on a cuttable fence
 
-- **Required Tool**: inventory item ID, default `bolt_cutters`. Empty means no item required.
+- **Required Tool**: inventory requirement ID, default `bolt_cutters`; item variants may match it through Use As Item Id. Empty means no item required.
 - **Interaction Radius**, **Prompt Offset**, **Action Label**: nearby interaction presentation.
 - **Cut Seconds**: duration of the folding animation, default 0.65.
 - **Folded Panel Scale**: amount of remaining wire at the sides in the broad view.
@@ -38,3 +38,5 @@ The collision remains until cutting finishes. The game then records the open rou
 Both permanent and uncut wire fences block movement and gun rays. Permanent fences have no damage or unlocking script. The wire fence's gameplay collider covers its panel, including visible mesh holes; these are not bullet-through gaps. New enemy hearing events can be emitted by cutting, without needing a sound asset or changing audio volume.
 
 The old `chained_gate.tscn` path is retained as an alias to the new broad cuttable scene. For old custom instances, move their roots to floor height because the old oversized gate used a center anchor. The legacy powered/key gate in `door.tscn` is retained for existing puzzle/test compatibility; use the new fence scenes for new level design.
+
+See [Reusable and single-use items](ITEM_USE_GUIDE.md) for making variants. Cutting commits removal only after completion; failed cuts leave the tool and route unchanged.

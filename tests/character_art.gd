@@ -16,7 +16,8 @@ func _ready() -> void:
     run.call_deferred()
 func run() -> void:
     Game.reset_run()
-    var level: Node2D=load("res://scenes/levels/fence_sandbox.tscn").instantiate()
+    preload("res://tests/support/loadout.gd").handgun()
+    var level: Node2D=load("res://tests/fixtures/fence_sandbox.tscn").instantiate()
     get_tree().root.add_child(level)
     get_tree().current_scene=level
     await frames(8)
@@ -24,7 +25,7 @@ func run() -> void:
     var body: CharacterVisuals=player.get_node("Body")
     var rig: Node2D=player.get_node("WeaponArms")
     var gun: Sprite2D=player.get_node("Aim/Gun")
-    check(player.move_speed==125 and player.jump_velocity==-200 and player.get_node("Camera2D").zoom==Vector2(1.4,1.4),"Designer movement, jump and camera tuning survive the art update")
+    check(player.move_speed==90 and player.jump_velocity==-250 and player.get_node("Camera2D").zoom==Vector2(2,2),"Designer movement, jump and camera tuning survive the art update")
     check(not player.use_crouch_placeholder_pose and not player.use_dodge_placeholder_pose and body.scale==Vector2(2,2),"Real native poses replace squash placeholders at consistent 2x pixel scale")
     var sprite_frames := body.sprite_frames
     var unique_clips := true

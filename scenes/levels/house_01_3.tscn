@@ -1,0 +1,150 @@
+[gd_scene format=3 uid="uid://chl2o2r7b3fjd"]
+
+[ext_resource type="Script" uid="uid://6ac0fiq4jtxt" path="res://scripts/location.gd" id="1_t3iio"]
+[ext_resource type="Texture2D" uid="uid://doeuaul7l3oue" path="res://art/pixel/floor.png" id="2_bi6ye"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bathroom/toilet.tscn" id="3_kkp16"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bathroom/pedestal_sink.tscn" id="4_3ageq"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bathroom/medicine_cabinet.tscn" id="5_h2pl4"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bathroom/shower.tscn" id="6_jre5a"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/ceiling_lamp.tscn" id="9_h8ip3"]
+[ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="11_s1spc"]
+[ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="12_k2gw4"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="13_umwgm"]
+[ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="14_cs77p"]
+[ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="15_k6sy1"]
+
+[sub_resource type="RectangleShape2D" id="floor"]
+size = Vector2(858, 120)
+
+[sub_resource type="RectangleShape2D" id="wall"]
+size = Vector2(40, 720)
+
+[node name="Location" type="Node2D" unique_id=701534075]
+script = ExtResource("1_t3iio")
+display_name = "Building / Ground floor"
+camera_bounds = Rect2i(0, 0, 1152, 720)
+
+[node name="AmbientTint" type="CanvasModulate" parent="." unique_id=758485644]
+color = Color(0.039215688, 0.039215688, 0.039215688, 1)
+
+[node name="Buildings" type="Node2D" parent="." unique_id=199967885]
+
+[node name="House_01_2Mouth" type="Polygon2D" parent="Buildings" unique_id=1334324940]
+position = Vector2(-562, 275)
+color = Color(0.025, 0.045, 0.06, 1)
+polygon = PackedVector2Array(1230, 255, 1230, 345, 1180, 345, 1180, 255)
+
+[node name="Geometry" type="Node2D" parent="." unique_id=50036105]
+
+[node name="Street" type="StaticBody2D" parent="Geometry" unique_id=80617122]
+position = Vector2(576, 680)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Street" unique_id=1585902153]
+position = Vector2(-296, 1)
+shape = SubResource("floor")
+
+[node name="Paving" type="Sprite2D" parent="Geometry/Street" unique_id=1594992477]
+visible = false
+texture_repeat = 2
+texture = ExtResource("2_bi6ye")
+region_enabled = true
+region_rect = Rect2(0, 0, 1152, 120)
+
+[node name="Curb" type="Polygon2D" parent="Geometry" unique_id=713087734]
+position = Vector2(436.99997, -9403.33)
+scale = Vector2(0.22135417, 16.1667)
+color = Color(0.547878, 0.322552, 0.234745, 1)
+polygon = PackedVector2Array(0, 620, 1152, 620, 1151.9999, 623.0512, 1152, 626, 0, 626, 0, 622.90765)
+
+[node name="WestBoundary" type="StaticBody2D" parent="Geometry" unique_id=138952996]
+position = Vector2(412, 360)
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/WestBoundary" unique_id=98058664]
+position = Vector2(5, 0)
+shape = SubResource("wall")
+
+[node name="EastBoundary" type="StaticBody2D" parent="Geometry" unique_id=393032034]
+position = Vector2(1318, 362)
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/EastBoundary" unique_id=1373582522]
+position = Vector2(-606, 0)
+shape = SubResource("wall")
+
+[node name="Background" type="Polygon2D" parent="Geometry" unique_id=264627438]
+z_index = -10
+position = Vector2(364, -20139.414)
+scale = Vector2(0.15318182, 33.17003)
+color = Color(0.138447, 0.184908, 0.262937, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
+
+[node name="Background2" type="Polygon2D" parent="Geometry" unique_id=1514965316]
+z_index = -10
+position = Vector2(-295, -53782)
+scale = Vector2(0.33272728, 87.17413)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
+
+[node name="Background3" type="Polygon2D" parent="Geometry" unique_id=426912759]
+position = Vector2(-6, -53408)
+scale = Vector2(0.33272728, 87.17413)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
+
+[node name="Background4" type="Polygon2D" parent="Geometry" unique_id=1391276875]
+position = Vector2(692, -126461.734)
+scale = Vector2(0.33272728, 203.83345)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
+
+[node name="Background5" type="Polygon2D" parent="Geometry" unique_id=654738761]
+position = Vector2(-40, -54117.004)
+scale = Vector2(0.33272728, 87.17413)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
+
+[node name="Props" type="Node2D" parent="." unique_id=341425996]
+
+[node name="Toilet" parent="Props" unique_id=406352172 instance=ExtResource("3_kkp16")]
+position = Vector2(533, 621)
+
+[node name="PedestalSink" parent="Props" unique_id=11247533 instance=ExtResource("4_3ageq")]
+position = Vector2(587, 621)
+
+[node name="MedicineCabinet" parent="Props" unique_id=70434402 instance=ExtResource("5_h2pl4")]
+position = Vector2(587, 525)
+
+[node name="Shower" parent="Props" unique_id=1830217019 instance=ExtResource("6_jre5a")]
+position = Vector2(467, 622)
+scale = Vector2(1, 1.3)
+color_variant = 2
+
+[node name="CeilingLamp" parent="Props" unique_id=508514395 instance=ExtResource("9_h8ip3")]
+position = Vector2(534, 452)
+light_energy = 2.0
+light_radius_scale = 2.0
+
+[node name="Interactables" type="Node2D" parent="." unique_id=580173129]
+
+[node name="ExitToHouse_01_2" parent="Interactables" unique_id=928311053 instance=ExtResource("11_s1spc")]
+visible = false
+position = Vector2(643, 556)
+destination_scene = "uid://m80iahaftwpp"
+destination_spawn = "from_bathroom"
+
+[node name="Actors" type="Node2D" parent="." unique_id=1936203783]
+
+[node name="Player" parent="Actors" unique_id=1545454888 instance=ExtResource("12_k2gw4")]
+position = Vector2(643, 587)
+
+[node name="Spawns" type="Node2D" parent="." unique_id=1777379054]
+
+[node name="default" type="Marker2D" parent="Spawns" unique_id=229847141]
+position = Vector2(643, 588)
+
+[node name="HUD" parent="." unique_id=570484733 instance=ExtResource("13_umwgm")]
+
+[node name="AmbientSound" type="AudioStreamPlayer" parent="." unique_id=1597499294]
+stream = ExtResource("14_cs77p")
+volume_db = -16.0
+autoplay = true
+script = ExtResource("15_k6sy1")

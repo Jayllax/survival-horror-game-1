@@ -1,21 +1,27 @@
-[gd_scene load_steps=4 format=3]
-[ext_resource type="Script" path="res://scripts/interactable.gd" id="1"]
-[ext_resource type="Texture2D" path="res://art/pixel/gate.png" id="2"]
+[gd_scene format=3 uid="uid://du70awlj68apd"]
+
+[ext_resource type="Script" uid="uid://7vs0b7ni5urj" path="res://scripts/interactable.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://bu6me347qxuav" path="res://art/pixel/gate.png" id="2"]
+
 [sub_resource type="RectangleShape2D" id="shape"]
 size = Vector2(100, 165)
-[node name="Gate" type="Area2D"]
+
+[node name="Gate" type="Area2D" unique_id=223052475]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1")
 kind = 3
-interaction_radius = 130.0
-[node name="Frame" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(-63,-95, 63,-95, 63,87, 54,87, 54,-85, -54,-85, -54,87, -63,87)
+interaction_radius = 50.0
+
+[node name="Frame" type="Polygon2D" parent="." unique_id=1145662396]
 color = Color(0.25, 0.36, 0.35, 1)
-[node name="Leaf" type="Sprite2D" parent="."]
+polygon = PackedVector2Array(-63, -95, 63, -95, 63, 87, 54, 87, 54, -85, -54, -85, -54, 87, -63, 87)
+
+[node name="Leaf" type="Sprite2D" parent="." unique_id=1103737487]
 texture = ExtResource("2")
-[node name="Barrier" type="StaticBody2D" parent="."]
-collision_layer = 1
+
+[node name="Barrier" type="StaticBody2D" parent="." unique_id=165199159]
 collision_mask = 2
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Barrier"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Barrier" unique_id=799124424]
 shape = SubResource("shape")

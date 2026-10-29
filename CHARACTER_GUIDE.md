@@ -2,7 +2,7 @@
 
 For sleeping enemies, stealth, hearing, sight, searching, and timed enemy attacks, see [ENEMY_AI_GUIDE.md](ENEMY_AI_GUIDE.md).
 
-Open `scenes/levels/combat_sandbox.tscn` and press **F6** to try the framework in Godot **4.7.2 Standard**. It contains a flat street, ammunition, a low passage for crouching, an enemy, and a save bicycle. All objects are authored editor nodes. F5 still starts the existing main menu and town.
+Open `tests/fixtures/combat_sandbox.tscn` and press **F6** to try the framework in Godot **4.7.2 Standard**. It contains a flat street, ammunition, a low passage for crouching, an enemy, and a save bicycle. All objects are authored editor nodes. F5 still starts the existing main menu and town.
 
 The enemy is now an exact palette swap of your player's six walking frames: pale sage skin, plum shirt, charcoal hat, and the same blue trousers. No eyes, claws, extra detail, or silhouette changes were added. The player's artwork is preserved.
 

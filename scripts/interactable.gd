@@ -17,10 +17,13 @@ extends Area2D
 @export_file("*.tscn") var destination_scene: String = ""
 @export var destination_spawn: String = "default"
 @export var persistent_id: String = ""
-@export var consume_key: bool = false
 @export var puzzle_solution: Vector3i = Vector3i(3, 1, 2)
 @export var door_animation_seconds: float = 0.8
+@export_group("Legacy compatibility")
+## Old per-door override. Leave off to follow the item's Remove After Use setting.
+@export var consume_key: bool = false
 var opened := false
+var unlocked := false
 
 func _ready() -> void:
 	add_to_group("interactable")
@@ -37,6 +40,8 @@ func _ready() -> void:
 			opened = true
 			$Leaf.position.y = -125
 			$Barrier/CollisionShape2D.set_deferred("disabled", true)
+		elif kind == 5:
+			unlocked = true
 
 func is_powered() -> bool:
 	return bool(Game.world.get("power:" + power_channel, false))
@@ -77,13 +82,16 @@ func interact(_player: Node) -> void:
 		4:
 			get_tree().get_first_node_in_group("hud").show_note(description)
 		5:
-			if not required_key.is_empty() and Game.count_item(required_key) == 0:
-				Game.message.emit("Locked. Requires " + Game.item_name(required_key) + ".")
-				return
 			if requires_power and not is_powered():
 				Game.message.emit("Power required.")
 				return
-			Transition.travel(destination_scene, destination_spawn)
+			var key_uid := -1
+			if not unlocked and not required_key.is_empty():
+				key_uid = Game.find_use_uid(required_key)
+				if key_uid < 0:
+					Game.message.emit("Locked. Requires " + Game.item_name(required_key) + ".")
+					return
+			Transition.travel(destination_scene, destination_spawn, key_uid, state_key() if key_uid >= 0 else "", consume_key)
 
 func solve_puzzle(code: Vector3i) -> bool:
 	if is_powered():
@@ -91,19 +99,22 @@ func solve_puzzle(code: Vector3i) -> bool:
 	if require_reference and not bool(Game.world.get("reference:" + power_channel, false)):
 		Game.message.emit("Read the reference card first.")
 		return false
-	if not puzzle_input_item.is_empty() and Game.count_item(puzzle_input_item) == 0:
+	var input_uid := Game.find_use_uid(puzzle_input_item) if not puzzle_input_item.is_empty() else -1
+	if not puzzle_input_item.is_empty() and input_uid < 0:
 		Game.message.emit("Required: " + Game.item_name(puzzle_input_item))
 		return false
 	if code != puzzle_solution:
 		Game.message.emit("Incorrect sequence.")
 		return false
-	# Consume the fuse first: this frees its pocket for the key, even in a full inventory.
-	if not puzzle_input_item.is_empty():
-		Game.take_item(puzzle_input_item)
-	if not puzzle_reward_item.is_empty() and not Game.add_item(puzzle_reward_item):
-		if not puzzle_input_item.is_empty():
-			Game.add_item(puzzle_input_item)
+	# Trial both the input's use and the reward. Failure preserves exact item state.
+	var trial := Game.inventory.copy()
+	if input_uid >= 0 and not trial.finish_use(input_uid):
 		return false
+	if not puzzle_reward_item.is_empty() and not trial.add(puzzle_reward_item):
+		Game.message.emit("No room in the inventory for the reward.")
+		return false
+	Game.inventory = trial
+	Game._repair_equipment()
 	Game.world["power:" + power_channel] = true
 	Game.changed.emit()
 	Game.message.emit("Circuit activated.")
@@ -115,15 +126,17 @@ func open_door() -> void:
 	if requires_power and not is_powered():
 		Game.message.emit("No power. The switchboard must be restored.")
 		return
-	if not required_key.is_empty() and Game.count_item(required_key) == 0:
+	var key_uid := Game.find_use_uid(required_key) if not required_key.is_empty() else -1
+	if not required_key.is_empty() and key_uid < 0:
 		Game.message.emit("Required key not held.")
 		return
-	if consume_key and not required_key.is_empty():
-		Game.take_item(required_key)
+	if key_uid >= 0 and not Game.finish_item_use(key_uid, false, consume_key):
+		return
 	opened = true
 	Game.world[state_key()] = true
 	Game.message.emit("Door unlocked.")
 	if has_node("Barrier/CollisionShape2D"):
 		$Barrier/CollisionShape2D.set_deferred("disabled", true)
+	Game.changed.emit()
 	var tween := create_tween()
 	tween.tween_property($Leaf, "position:y", -125.0, door_animation_seconds).set_trans(Tween.TRANS_SINE)

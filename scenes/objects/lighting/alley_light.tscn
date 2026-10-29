@@ -1,0 +1,12 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://art/lights/square_beam.tres" id="texture"]
+
+[node name="AlleyLight" type="PointLight2D"]
+texture_filter = 2
+color = Color(1, 0.88, 0.65, 1)
+energy = 0.8
+range_z_max = 1
+shadow_enabled = true
+texture = ExtResource("texture")
+texture_scale = 0.625

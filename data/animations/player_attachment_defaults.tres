@@ -1,0 +1,63 @@
+[gd_resource type="Resource" script_class="CharacterAttachmentProfile" format=3 uid="uid://cp1s1ofwa05dm"]
+
+[ext_resource type="Script" uid="uid://058ppkmjek3j" path="res://scripts/animation/character_attachment_profile.gd" id="profile"]
+[ext_resource type="Script" uid="uid://1sl1rd2pctgi" path="res://scripts/animation/character_attachment_track.gd" id="track"]
+
+[sub_resource type="Resource" id="idle"]
+script = ExtResource("track")
+
+[sub_resource type="Resource" id="walk"]
+script = ExtResource("track")
+animation = &"walk"
+
+[sub_resource type="Resource" id="sprint"]
+script = ExtResource("track")
+animation = &"sprint"
+
+[sub_resource type="Resource" id="crouch_idle"]
+script = ExtResource("track")
+animation = &"crouch_idle"
+
+[sub_resource type="Resource" id="crouch_walk"]
+script = ExtResource("track")
+animation = &"crouch_walk"
+
+[sub_resource type="Resource" id="jump"]
+script = ExtResource("track")
+animation = &"jump"
+
+[sub_resource type="Resource" id="fall"]
+script = ExtResource("track")
+animation = &"fall"
+
+[sub_resource type="Resource" id="dodge"]
+script = ExtResource("track")
+animation = &"dodge"
+
+[sub_resource type="Resource" id="aim_idle"]
+script = ExtResource("track")
+animation = &"aim_idle"
+
+[sub_resource type="Resource" id="aim_walk"]
+script = ExtResource("track")
+animation = &"aim_walk"
+
+[sub_resource type="Resource" id="crouch_aim_idle"]
+script = ExtResource("track")
+animation = &"crouch_aim_idle"
+
+[sub_resource type="Resource" id="crouch_aim_walk"]
+script = ExtResource("track")
+animation = &"crouch_aim_walk"
+
+[sub_resource type="Resource" id="aim_jump"]
+script = ExtResource("track")
+animation = &"aim_jump"
+
+[sub_resource type="Resource" id="aim_fall"]
+script = ExtResource("track")
+animation = &"aim_fall"
+
+[resource]
+script = ExtResource("profile")
+tracks = Array[ExtResource("track")]([SubResource("idle"), SubResource("walk"), SubResource("sprint"), SubResource("crouch_idle"), SubResource("crouch_walk"), SubResource("jump"), SubResource("fall"), SubResource("dodge"), SubResource("aim_idle"), SubResource("aim_walk"), SubResource("crouch_aim_idle"), SubResource("crouch_aim_walk"), SubResource("aim_jump"), SubResource("aim_fall")])

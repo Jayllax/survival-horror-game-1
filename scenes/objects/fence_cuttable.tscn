@@ -1,34 +1,45 @@
-[gd_scene load_steps=6 format=3]
-[ext_resource type="Script" path="res://scripts/cuttable_fence.gd" id="script"]
-[ext_resource type="Texture2D" path="res://art/pixel/fence_cuttable.png" id="art"]
+[gd_scene format=3 uid="uid://bn4hd6q7bawaj"]
+
+[ext_resource type="Texture2D" uid="uid://8idgvstj2a3s" path="res://art/pixel/fence_cuttable.png" id="art"]
+[ext_resource type="Script" uid="uid://duaxrxu5n63hk" path="res://scripts/cuttable_fence.gd" id="script"]
+
 [sub_resource type="AtlasTexture" id="left"]
 atlas = ExtResource("art")
-region = Rect2(0,0,24,32)
+region = Rect2(0, 0, 24, 32)
+
 [sub_resource type="AtlasTexture" id="right"]
 atlas = ExtResource("art")
-region = Rect2(24,0,24,32)
+region = Rect2(24, 0, 24, 32)
+
 [sub_resource type="RectangleShape2D" id="barrier"]
-size = Vector2(96,64)
-[node name="CuttableFence" type="Area2D"]
+size = Vector2(96, 64)
+
+[node name="CuttableFence" type="Area2D" unique_id=1073430740]
 texture_filter = 1
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("script")
-[node name="LeftPanel" type="Node2D" parent="."]
-position = Vector2(-48,0)
-[node name="Sprite2D" type="Sprite2D" parent="LeftPanel"]
-position = Vector2(24,-32)
-scale = Vector2(2,2)
+interaction_radius = 50.0
+
+[node name="LeftPanel" type="Node2D" parent="." unique_id=777802839]
+position = Vector2(-48, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="LeftPanel" unique_id=327305543]
+position = Vector2(24, -32)
+scale = Vector2(2, 2)
 texture = SubResource("left")
-[node name="RightPanel" type="Node2D" parent="."]
-position = Vector2(48,0)
-[node name="Sprite2D" type="Sprite2D" parent="RightPanel"]
-position = Vector2(-24,-32)
-scale = Vector2(2,2)
+
+[node name="RightPanel" type="Node2D" parent="." unique_id=1096825832]
+position = Vector2(48, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="RightPanel" unique_id=395820258]
+position = Vector2(-24, -32)
+scale = Vector2(2, 2)
 texture = SubResource("right")
-[node name="Barrier" type="StaticBody2D" parent="."]
-collision_layer = 1
+
+[node name="Barrier" type="StaticBody2D" parent="." unique_id=1311734470]
 collision_mask = 2
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Barrier"]
-position = Vector2(0,-32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Barrier" unique_id=495058167]
+position = Vector2(0, -32)
 shape = SubResource("barrier")

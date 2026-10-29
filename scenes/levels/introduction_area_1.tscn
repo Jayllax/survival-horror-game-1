@@ -1,0 +1,566 @@
+[gd_scene format=3 uid="uid://dyo3etebfk0vw"]
+
+[ext_resource type="Script" uid="uid://6ac0fiq4jtxt" path="res://scripts/location.gd" id="1_brq61"]
+[ext_resource type="PackedScene" uid="uid://qwm3h0igxrrq" path="res://scenes/objects/fence_cuttable_side.tscn" id="2_04x8t"]
+[ext_resource type="PackedScene" uid="uid://dfitvfrdt4ym7" path="res://scenes/objects/streetlamp.tscn" id="2_asx42"]
+[ext_resource type="PackedScene" uid="uid://cs51u64blnw6m" path="res://scenes/objects/note.tscn" id="3_qxsnt"]
+[ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="4_asx42"]
+[ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_dusty_rose_left.tscn" id="4_qnwl3"]
+[ext_resource type="Script" uid="uid://ct1jqn7k4e0md" path="res://scripts/narrative/note_document.gd" id="4_qxsnt"]
+[ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="5_04x8t"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_gxonl"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/fern.tscn" id="5_imbqn"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/grass_tuft.tscn" id="6_bwqxg"]
+[ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="6_cgomg"]
+[ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="7_imbqn"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/fallen_branch.tscn" id="7_qsj1x"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/rocks/rock_small.tscn" id="8_6ei53"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/fallen_log.tscn" id="8_k00xt"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/exposed_roots.tscn" id="10_7kdg4"]
+[ext_resource type="PackedScene" uid="uid://c1o1nweldmdet" path="res://scenes/objects/forest/trees/pine_tall.tscn" id="11_gxonl"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/mossy_log.tscn" id="12_0ijua"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/mushrooms.tscn" id="12_cgomg"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/bush_large.tscn" id="13_8na5f"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/rocks/boulder.tscn" id="14_32qwc"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/bush_small.tscn" id="17_7gop2"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/stump_small.tscn" id="17_jsfv0"]
+[ext_resource type="PackedScene" uid="uid://cfoibs7ccueyy" path="res://scenes/objects/houses/building_house.tscn" id="18_g3c0m"]
+
+[sub_resource type="RectangleShape2D" id="floor"]
+size = Vector2(2774, 120)
+
+[sub_resource type="RectangleShape2D" id="wall"]
+size = Vector2(40, 720)
+
+[sub_resource type="Resource" id="Resource_asx42"]
+script = ExtResource("4_qxsnt")
+title = "Note from stranger"
+text = "Stay out of town. It's not what it used to be.
+
+- Pete"
+
+[sub_resource type="Resource" id="Resource_7gop2"]
+script = ExtResource("4_qxsnt")
+title = "Note from stranger"
+text = "It's not worth it.
+
+- Pete"
+
+[node name="Location" type="Node2D" unique_id=653106688]
+script = ExtResource("1_brq61")
+camera_bounds = Rect2i(0, 0, 2200, 720)
+
+[node name="AmbientTint" type="CanvasModulate" parent="." unique_id=857491603]
+color = Color(0.038397163, 0.038397174, 0.038397145, 1)
+
+[node name="Buildings" type="Node2D" parent="." unique_id=1653355476]
+
+[node name="AlleyMouth2" type="Polygon2D" parent="Buildings" unique_id=1027169608]
+z_index = -9
+position = Vector2(-913.41846, 143.99994)
+scale = Vector2(0.9421031, 0.7677421)
+color = Color(0.08627451, 0.12941177, 0.15686275, 0.26666668)
+polygon = PackedVector2Array(1150, 310, 1244.9397, 310.99933, 1340.0001, 310, 1340, 463.84204, 1340, 620, 1150, 620, 1149.9999, 464.1112)
+
+[node name="Plains" type="Node2D" parent="Buildings" unique_id=1328712063]
+
+[node name="PineTall" parent="Buildings/Plains" unique_id=29480019 instance=ExtResource("11_gxonl")]
+position = Vector2(-254, 620)
+
+[node name="PineTall2" parent="Buildings/Plains" unique_id=1941184444 instance=ExtResource("11_gxonl")]
+position = Vector2(-55, 620)
+
+[node name="PineTall3" parent="Buildings/Plains" unique_id=1037341216 instance=ExtResource("11_gxonl")]
+position = Vector2(174, 620)
+
+[node name="PineTall4" parent="Buildings/Plains" unique_id=822846228 instance=ExtResource("11_gxonl")]
+position = Vector2(-574, 620)
+
+[node name="PineTall5" parent="Buildings/Plains" unique_id=36040657 instance=ExtResource("11_gxonl")]
+position = Vector2(-360, 620)
+
+[node name="PineTall6" parent="Buildings/Plains" unique_id=2147149991 instance=ExtResource("11_gxonl")]
+position = Vector2(-467, 620)
+
+[node name="PineTall7" parent="Buildings/Plains" unique_id=217752195 instance=ExtResource("11_gxonl")]
+position = Vector2(-682, 620)
+
+[node name="PineTall8" parent="Buildings/Plains" unique_id=2054097585 instance=ExtResource("11_gxonl")]
+position = Vector2(345, 620)
+
+[node name="Plains2" type="Node2D" parent="Buildings" unique_id=832990021]
+position = Vector2(1265, 0)
+
+[node name="PineTall" parent="Buildings/Plains2" unique_id=1044161193 instance=ExtResource("11_gxonl")]
+position = Vector2(-254, 620)
+
+[node name="PineTall2" parent="Buildings/Plains2" unique_id=540453711 instance=ExtResource("11_gxonl")]
+position = Vector2(-55, 620)
+
+[node name="PineTall3" parent="Buildings/Plains2" unique_id=253842394 instance=ExtResource("11_gxonl")]
+position = Vector2(174, 620)
+
+[node name="PineTall4" parent="Buildings/Plains2" unique_id=1810074433 instance=ExtResource("11_gxonl")]
+position = Vector2(-574, 620)
+
+[node name="PineTall5" parent="Buildings/Plains2" unique_id=1152152904 instance=ExtResource("11_gxonl")]
+position = Vector2(-195, 620)
+
+[node name="PineTall6" parent="Buildings/Plains2" unique_id=674740192 instance=ExtResource("11_gxonl")]
+position = Vector2(-467, 620)
+
+[node name="PineTall7" parent="Buildings/Plains2" unique_id=161426437 instance=ExtResource("11_gxonl")]
+position = Vector2(-682, 620)
+
+[node name="PineTall8" parent="Buildings/Plains2" unique_id=177825795 instance=ExtResource("11_gxonl")]
+position = Vector2(345, 620)
+
+[node name="PineTall9" parent="Buildings/Plains2" unique_id=2109719636 instance=ExtResource("11_gxonl")]
+position = Vector2(2, 620)
+
+[node name="PineTall10" parent="Buildings/Plains2" unique_id=1167114733 instance=ExtResource("11_gxonl")]
+position = Vector2(428, 620)
+
+[node name="PineTall11" parent="Buildings/Plains2" unique_id=1997695089 instance=ExtResource("11_gxonl")]
+position = Vector2(510, 620)
+
+[node name="Silos" type="Node2D" parent="Buildings" unique_id=236672605]
+
+[node name="PineTallSilo" parent="Buildings/Silos" unique_id=336688182 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(57, 620)
+
+[node name="PineTallSilo2" parent="Buildings/Silos" unique_id=661230998 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(-306, 620)
+
+[node name="PineTallSilo3" parent="Buildings/Silos" unique_id=471838735 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(-414, 620)
+
+[node name="PineTallSilo4" parent="Buildings/Silos" unique_id=878984059 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(-156, 620)
+
+[node name="PineTallSilo5" parent="Buildings/Silos" unique_id=518866526 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(-522, 620)
+
+[node name="PineTallSilo6" parent="Buildings/Silos" unique_id=1306185382 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(-628, 620)
+
+[node name="PineTallSilo7" parent="Buildings/Silos" unique_id=1848497118 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(452, 620)
+
+[node name="PineTallSilo8" parent="Buildings/Silos" unique_id=1298241498 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -4
+position = Vector2(-23, 620)
+
+[node name="PineTallSilo9" parent="Buildings/Silos" unique_id=833623183 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -4
+position = Vector2(382, 620)
+
+[node name="PineTallSilo10" parent="Buildings/Silos" unique_id=482656507 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -1
+position = Vector2(139, 620)
+
+[node name="Silos2" type="Node2D" parent="Buildings" unique_id=1978560596]
+position = Vector2(1267, 0)
+
+[node name="PineTallSilo" parent="Buildings/Silos2" unique_id=181514417 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(57, 620)
+
+[node name="PineTallSilo2" parent="Buildings/Silos2" unique_id=1901127465 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(-306, 620)
+
+[node name="PineTallSilo3" parent="Buildings/Silos2" unique_id=584970330 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(-414, 620)
+
+[node name="PineTallSilo4" parent="Buildings/Silos2" unique_id=169814565 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(-156, 620)
+
+[node name="PineTallSilo5" parent="Buildings/Silos2" unique_id=192498035 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(-522, 620)
+
+[node name="PineTallSilo6" parent="Buildings/Silos2" unique_id=1527344547 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(-628, 620)
+
+[node name="PineTallSilo7" parent="Buildings/Silos2" unique_id=104465519 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(452, 620)
+
+[node name="PineTallSilo8" parent="Buildings/Silos2" unique_id=1238510816 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -4
+position = Vector2(-23, 620)
+
+[node name="PineTallSilo9" parent="Buildings/Silos2" unique_id=211980289 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -4
+position = Vector2(382, 620)
+
+[node name="PineTallSilo10" parent="Buildings/Silos2" unique_id=332190508 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -1
+position = Vector2(139, 620)
+
+[node name="PineTallSilo11" parent="Buildings/Silos2" unique_id=621374171 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(-209, 620)
+
+[node name="PineTallSilo12" parent="Buildings/Silos2" unique_id=83300450 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(-91, 620)
+
+[node name="PineTallSilo13" parent="Buildings/Silos2" unique_id=888838305 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(227, 620)
+
+[node name="PineTallSilo14" parent="Buildings/Silos2" unique_id=1466310323 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(290, 622)
+
+[node name="PineTallSilo15" parent="Buildings/Silos2" unique_id=1160595327 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(-359, 620)
+
+[node name="House" parent="Buildings" unique_id=468618943 instance=ExtResource("18_g3c0m")]
+modulate = Color(0.047557652, 0.047557652, 0.04755763, 1)
+position = Vector2(1978, 492)
+
+[node name="HouseDustyRose" parent="Buildings" unique_id=1930153907 instance=ExtResource("4_qnwl3")]
+modulate = Color(0.047557652, 0.047557652, 0.04755763, 1)
+position = Vector2(2154, 492)
+
+[node name="House2" parent="Buildings" unique_id=1734249841 instance=ExtResource("18_g3c0m")]
+modulate = Color(0.047557652, 0.047557652, 0.04755763, 1)
+position = Vector2(2330, 492)
+
+[node name="HouseDustyRose2" parent="Buildings" unique_id=108778119 instance=ExtResource("4_qnwl3")]
+modulate = Color(0.047557652, 0.047557652, 0.04755763, 1)
+position = Vector2(2506, 492)
+
+[node name="Geometry" type="Node2D" parent="." unique_id=491046715]
+
+[node name="Ground" type="StaticBody2D" parent="Geometry" unique_id=1806807780]
+position = Vector2(1100, 680)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Ground" unique_id=1794584501]
+position = Vector2(-13, 0)
+shape = SubResource("floor")
+
+[node name="Curb" type="Polygon2D" parent="Geometry" unique_id=1824508447]
+position = Vector2(-718, -13329.9)
+scale = Vector2(1.1813637, 22.4998)
+color = Color(0.38545707, 0.28626725, 0.2282412, 1)
+polygon = PackedVector2Array(0, 620, 2200, 620, 2200, 622.93976, 2200, 626, 1100.73, 626, 0, 626)
+
+[node name="Curb2" type="Polygon2D" parent="Geometry" unique_id=1298752734]
+position = Vector2(1881, -13329.999)
+scale = Vector2(0.32500002, 22.4998)
+color = Color(0.4509804, 0.4392157, 0.47843137, 1)
+polygon = PackedVector2Array(0, 620, 2200, 620, 2200, 622.93976, 2200, 626, 1100.73, 626, 0, 626)
+
+[node name="WestBoundary" type="StaticBody2D" parent="Geometry" unique_id=1159423724]
+position = Vector2(-266, 360)
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/WestBoundary" unique_id=1114114445]
+shape = SubResource("wall")
+
+[node name="EastBoundary" type="StaticBody2D" parent="Geometry" unique_id=722109662]
+position = Vector2(2220, 360)
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/EastBoundary" unique_id=524093992]
+shape = SubResource("wall")
+
+[node name="Background" type="Polygon2D" parent="Geometry" unique_id=162884734]
+z_index = -10
+position = Vector2(-718, -76157.5)
+scale = Vector2(1.4854546, 122.833)
+color = Color(0.10064214, 0.09805592, 0.11097591, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 626, 1101, 626, 0, 626)
+
+[node name="Props" type="Node2D" parent="." unique_id=1527274168]
+
+[node name="FallenBranch" parent="Props" unique_id=1920790556 instance=ExtResource("7_qsj1x")]
+z_index = 2
+position = Vector2(-385, 620)
+
+[node name="FallenLog" parent="Props" unique_id=2109278300 instance=ExtResource("8_k00xt")]
+z_index = 2
+position = Vector2(-547, 620)
+
+[node name="Boulder" parent="Props" unique_id=1834101075 instance=ExtResource("14_32qwc")]
+position = Vector2(-266, 620)
+
+[node name="ExposedRootsSilo" parent="Props" unique_id=1357115081 instance=ExtResource("10_7kdg4")]
+modulate = Color(0.12591085, 0.12591085, 0.12591082, 1)
+position = Vector2(114, 620)
+
+[node name="RockSmall" parent="Props" unique_id=1197890322 instance=ExtResource("8_6ei53")]
+position = Vector2(-59, 620)
+
+[node name="Mushrooms" parent="Props" unique_id=1170323936 instance=ExtResource("12_cgomg")]
+position = Vector2(-95, 621)
+
+[node name="Fern" parent="Props" unique_id=1191999188 instance=ExtResource("5_imbqn")]
+position = Vector2(-339, 620)
+
+[node name="GrassTuft" parent="Props" unique_id=1552619415 instance=ExtResource("6_bwqxg")]
+z_index = 2
+position = Vector2(-1, 620)
+
+[node name="GrassTuft2" parent="Props" unique_id=6402047 instance=ExtResource("6_bwqxg")]
+z_index = 2
+position = Vector2(212, 620)
+
+[node name="GrassTuft3" parent="Props" unique_id=692843422 instance=ExtResource("6_bwqxg")]
+z_index = 2
+position = Vector2(94, 620)
+
+[node name="Fern2" parent="Props" unique_id=1469522635 instance=ExtResource("5_imbqn")]
+z_index = 2
+position = Vector2(-468, 620)
+
+[node name="MossyLog" parent="Props" unique_id=169313129 instance=ExtResource("12_0ijua")]
+z_index = 2
+position = Vector2(333, 620)
+
+[node name="BushLargeSilo" parent="Props" unique_id=383048398 instance=ExtResource("13_8na5f")]
+modulate = Color(0.06053035, 0.06053035, 0.060530342, 1)
+z_index = -4
+position = Vector2(47, 620)
+
+[node name="StumpSmall" parent="Props" unique_id=245356746 instance=ExtResource("17_jsfv0")]
+z_index = 2
+position = Vector2(-280, 620)
+
+[node name="GrassTuftSilo" parent="Props" unique_id=42487872 instance=ExtResource("6_bwqxg")]
+modulate = Color(0.099985994, 0.099985994, 0.099985994, 1)
+z_index = -4
+position = Vector2(-24, 620)
+
+[node name="GrassTuftSilo2" parent="Props" unique_id=480159876 instance=ExtResource("6_bwqxg")]
+modulate = Color(0.099985994, 0.099985994, 0.099985994, 1)
+z_index = -4
+position = Vector2(142, 620)
+
+[node name="FernSilo" parent="Props" unique_id=1377828685 instance=ExtResource("5_imbqn")]
+modulate = Color(0.096204735, 0.09620475, 0.096204735, 1)
+z_index = -2
+position = Vector2(-430, 620)
+
+[node name="FernSilo2" parent="Props" unique_id=1173924496 instance=ExtResource("5_imbqn")]
+modulate = Color(0.096204735, 0.09620475, 0.096204735, 1)
+z_index = -3
+position = Vector2(-551, 620)
+
+[node name="FernSilo3" parent="Props" unique_id=5381259 instance=ExtResource("5_imbqn")]
+modulate = Color(0.096204735, 0.09620475, 0.096204735, 1)
+position = Vector2(-213, 620)
+
+[node name="FernSilo4" parent="Props" unique_id=547478702 instance=ExtResource("5_imbqn")]
+modulate = Color(0.096204735, 0.09620475, 0.096204735, 1)
+position = Vector2(-147, 620)
+
+[node name="GrassTuftSilo3" parent="Props" unique_id=744052900 instance=ExtResource("6_bwqxg")]
+modulate = Color(0.099985994, 0.099985994, 0.099985994, 1)
+z_index = -4
+position = Vector2(380, 620)
+
+[node name="GrassTuftSilo4" parent="Props" unique_id=694411739 instance=ExtResource("6_bwqxg")]
+modulate = Color(0.099985994, 0.099985994, 0.099985994, 1)
+z_index = -4
+position = Vector2(-296, 620)
+
+[node name="GrassTuftSilo5" parent="Props" unique_id=1999665744 instance=ExtResource("6_bwqxg")]
+modulate = Color(0.099985994, 0.099985994, 0.099985994, 1)
+z_index = -4
+position = Vector2(-108, 620)
+
+[node name="GrassTuftSilo6" parent="Props" unique_id=636060705 instance=ExtResource("6_bwqxg")]
+modulate = Color(0.099985994, 0.099985994, 0.099985994, 1)
+z_index = -4
+position = Vector2(185, 620)
+
+[node name="Mushrooms2" parent="Props" unique_id=1650343673 instance=ExtResource("12_cgomg")]
+modulate = Color(0.09239707, 0.09239706, 0.09239706, 1)
+position = Vector2(422, 621)
+
+[node name="Streetlamp" parent="Props" unique_id=714982314 instance=ExtResource("2_asx42")]
+position = Vector2(521, 620)
+
+[node name="MISC" type="Node2D" parent="Props" unique_id=1002952472]
+
+[node name="Fern" parent="Props/MISC" unique_id=1021577541 instance=ExtResource("5_imbqn")]
+z_index = 2
+position = Vector2(1125, 620)
+
+[node name="Fern2" parent="Props/MISC" unique_id=104350040 instance=ExtResource("5_imbqn")]
+z_index = 2
+position = Vector2(840, 620)
+
+[node name="BushSmall" parent="Props/MISC" unique_id=372353525 instance=ExtResource("17_7gop2")]
+position = Vector2(1608, 620)
+
+[node name="GrassTuft" parent="Props/MISC" unique_id=370591462 instance=ExtResource("6_bwqxg")]
+z_index = 2
+position = Vector2(930, 620)
+
+[node name="GrassTuft2" parent="Props/MISC" unique_id=2144436087 instance=ExtResource("6_bwqxg")]
+z_index = 2
+position = Vector2(1437, 620)
+
+[node name="RockSmall" parent="Props/MISC" unique_id=344980636 instance=ExtResource("8_6ei53")]
+position = Vector2(1029, 620)
+
+[node name="RockSmall2" parent="Props/MISC" unique_id=733460133 instance=ExtResource("8_6ei53")]
+position = Vector2(655, 620)
+
+[node name="FallenLogSilo3" parent="Props/MISC" unique_id=184790750 instance=ExtResource("8_k00xt")]
+z_index = 0
+position = Vector2(1804, 620)
+
+[node name="FallenLogSilo4" parent="Props/MISC" unique_id=1000091560 instance=ExtResource("8_k00xt")]
+modulate = Color(0.13319641, 0.13319641, 0.13319638, 1)
+z_index = -3
+position = Vector2(570, 620)
+
+[node name="FernSilo" parent="Props/MISC" unique_id=917952034 instance=ExtResource("5_imbqn")]
+modulate = Color(0.08468992, 0.08468992, 0.08468992, 1)
+z_index = -2
+position = Vector2(1197, 620)
+
+[node name="FernSilo2" parent="Props/MISC" unique_id=1824106814 instance=ExtResource("5_imbqn")]
+modulate = Color(0.08468992, 0.08468992, 0.08468992, 1)
+z_index = -2
+position = Vector2(916, 620)
+
+[node name="FernSilo3" parent="Props/MISC" unique_id=1849036336 instance=ExtResource("5_imbqn")]
+modulate = Color(0.08468992, 0.08468992, 0.08468992, 1)
+z_index = -2
+position = Vector2(478, 620)
+
+[node name="FernSilo4" parent="Props/MISC" unique_id=21079334 instance=ExtResource("5_imbqn")]
+modulate = Color(0.08468992, 0.08468992, 0.08468992, 1)
+z_index = -2
+position = Vector2(1529, 620)
+
+[node name="FernSilo5" parent="Props/MISC" unique_id=1998007454 instance=ExtResource("5_imbqn")]
+modulate = Color(0.08468992, 0.08468992, 0.08468992, 1)
+z_index = -2
+position = Vector2(1706, 620)
+
+[node name="GrassTuftSilo" parent="Props/MISC" unique_id=902615640 instance=ExtResource("6_bwqxg")]
+modulate = Color(0.11858138, 0.11858138, 0.11858138, 1)
+z_index = -4
+position = Vector2(638, 620)
+
+[node name="GrassTuftSilo2" parent="Props/MISC" unique_id=1284242737 instance=ExtResource("6_bwqxg")]
+modulate = Color(0.11858138, 0.11858138, 0.11858138, 1)
+z_index = -4
+position = Vector2(723, 620)
+
+[node name="GrassTuftSilo3" parent="Props/MISC" unique_id=1906565840 instance=ExtResource("6_bwqxg")]
+modulate = Color(0.11858138, 0.11858138, 0.11858138, 1)
+z_index = -4
+position = Vector2(1292, 620)
+
+[node name="GrassTuftSilo4" parent="Props/MISC" unique_id=1580391520 instance=ExtResource("6_bwqxg")]
+modulate = Color(0.11858138, 0.11858138, 0.11858138, 1)
+z_index = -4
+position = Vector2(1484, 620)
+
+[node name="RockSmallSilo" parent="Props/MISC" unique_id=321459079 instance=ExtResource("8_6ei53")]
+modulate = Color(0.103743516, 0.10374353, 0.103743516, 1)
+z_index = -5
+position = Vector2(440, 620)
+
+[node name="RockSmallSilo2" parent="Props/MISC" unique_id=1639402831 instance=ExtResource("8_6ei53")]
+modulate = Color(0.103743516, 0.10374353, 0.103743516, 1)
+z_index = -5
+position = Vector2(1351, 620)
+
+[node name="Streetlamp2" parent="Props" unique_id=1733998691 instance=ExtResource("2_asx42")]
+position = Vector2(1881, 620)
+
+[node name="Interactables" type="Node2D" parent="." unique_id=1337389834]
+
+[node name="CuttableFenceSide" parent="Interactables" unique_id=1318221223 instance=ExtResource("2_04x8t")]
+position = Vector2(521, 620)
+scale = Vector2(1.5, 1.5)
+
+[node name="Note" parent="Interactables" unique_id=489710493 instance=ExtResource("3_qxsnt")]
+position = Vector2(476, 618)
+rotation = 0.20943952
+scale = Vector2(0.3, 0.3)
+skew = 1.2758356
+document = SubResource("Resource_asx42")
+
+[node name="Note2" parent="Interactables" unique_id=1645172902 instance=ExtResource("3_qxsnt")]
+position = Vector2(1833.9999, 594)
+rotation = 0.2094395
+scale = Vector2(0.30000004, 0.29999998)
+skew = 1.2758356
+document = SubResource("Resource_7gop2")
+
+[node name="Actors" type="Node2D" parent="." unique_id=1189311552]
+
+[node name="Player" parent="Actors" unique_id=1065848384 instance=ExtResource("4_asx42")]
+position = Vector2(-155, 588)
+
+[node name="Spawns" type="Node2D" parent="." unique_id=1790161343]
+
+[node name="default" type="Marker2D" parent="Spawns" unique_id=835030279]
+position = Vector2(-155, 588)
+
+[node name="from_area_2" type="Marker2D" parent="Spawns" unique_id=129397878]
+position = Vector2(260, 588)
+
+[node name="Entrance" parent="Spawns" unique_id=166180848 instance=ExtResource("5_04x8t")]
+position = Vector2(260, 556)
+action_label = "Go deeper"
+destination_scene = "uid://d22fnxrmc8sh3"
+
+[node name="Facade" parent="Spawns/Entrance" index="0" unique_id=1815167978]
+visible = false
+
+[node name="HUD" parent="." unique_id=296689736 instance=ExtResource("5_gxonl")]
+
+[node name="AmbientSound" type="AudioStreamPlayer" parent="." unique_id=722606247]
+stream = ExtResource("6_cgomg")
+volume_db = -16.0
+autoplay = true
+script = ExtResource("7_imbqn")
+
+[editable path="Spawns/Entrance"]

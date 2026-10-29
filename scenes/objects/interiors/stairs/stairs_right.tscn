@@ -1,0 +1,27 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://scripts/interiors/interior_variant.gd" id="script"]
+[ext_resource type="Texture2D" path="res://art/pixel/interiors/stairs/stairs_warm.png" id="warm"]
+[ext_resource type="Texture2D" path="res://art/pixel/interiors/stairs/stairs_sage.png" id="sage"]
+[ext_resource type="Texture2D" path="res://art/pixel/interiors/stairs/stairs_slate.png" id="slate"]
+[sub_resource type="SegmentShape2D" id="ramp"]
+a = Vector2(0, 0)
+b = Vector2(192, -128)
+[node name="Stairs" type="StaticBody2D"]
+z_index = -1
+texture_filter = 1
+collision_layer = 1
+collision_mask = 0
+script = ExtResource("script")
+variant_textures = Array[Texture2D]([ExtResource("warm"), ExtResource("sage"), ExtResource("slate")])
+[node name="Artwork" type="Sprite2D" parent="."]
+position = Vector2(96.0, -64.0)
+scale = Vector2(2,2)
+texture = ExtResource("warm")
+[node name="WalkSurface" type="CollisionShape2D" parent="."]
+shape = SubResource("ramp")
+one_way_collision = true
+one_way_collision_margin = 8.0
+[node name="LowerLanding" type="Marker2D" parent="."]
+position = Vector2(0, 0)
+[node name="UpperLanding" type="Marker2D" parent="."]
+position = Vector2(192, -128)

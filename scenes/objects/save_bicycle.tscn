@@ -1,26 +1,34 @@
-[gd_scene load_steps=5 format=3]
-[ext_resource type="Script" path="res://scripts/save_station.gd" id="script"]
-[ext_resource type="Texture2D" path="res://art/pixel/bicycle.png" id="art"]
-[ext_resource type="AudioStream" path="res://audio/bicycle_bell.wav" id="bell"]
+[gd_scene format=3 uid="uid://db83ujlaupd0k"]
+
+[ext_resource type="Texture2D" uid="uid://csv75bdh65ylj" path="res://art/pixel/bicycle.png" id="art"]
+[ext_resource type="AudioStream" uid="uid://bnhexkwawaro6" path="res://audio/bicycle_bell.wav" id="bell"]
+[ext_resource type="Script" uid="uid://chh58ahfd0u0s" path="res://scripts/save_station.gd" id="script"]
+
 [sub_resource type="RectangleShape2D" id="area"]
 size = Vector2(64, 56)
-[node name="SaveBicycle" type="Area2D"]
+
+[node name="SaveBicycle" type="Area2D" unique_id=161983407]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("script")
-station_name = "Bicycle"
-[node name="Bell" type="Node2D" parent="."]
-[node name="Bicycle" type="Sprite2D" parent="Bell"]
+interaction_radius = 60.0
+
+[node name="Bell" type="Node2D" parent="." unique_id=841303946]
+
+[node name="Bicycle" type="Sprite2D" parent="Bell" unique_id=690930292]
+texture_filter = 1
 position = Vector2(0, -28)
 scale = Vector2(2, 2)
-texture_filter = 1
 texture = ExtResource("art")
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1968283969]
 position = Vector2(0, -28)
 shape = SubResource("area")
-[node name="SaveSpawn" type="Marker2D" parent="."]
+
+[node name="SaveSpawn" type="Marker2D" parent="." unique_id=64672003]
 position = Vector2(-56, -32)
-[node name="BellSound" type="AudioStreamPlayer2D" parent="."]
+
+[node name="BellSound" type="AudioStreamPlayer2D" parent="." unique_id=996214319]
 stream = ExtResource("bell")
 volume_db = -5.0
 max_distance = 600.0

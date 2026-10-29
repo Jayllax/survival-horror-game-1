@@ -38,7 +38,8 @@ func run() -> void:
         if FileAccess.file_exists(Game.slot_path(index)):
             DirAccess.remove_absolute(ProjectSettings.globalize_path(Game.slot_path(index)))
     Game.reset_run()
-    var sandbox: Node2D = load("res://scenes/levels/story_sandbox.tscn").instantiate()
+    preload("res://tests/support/loadout.gd").handgun()
+    var sandbox: Node2D = load("res://tests/fixtures/story_sandbox.tscn").instantiate()
     get_tree().root.add_child(sandbox)
     get_tree().current_scene = sandbox
     await frames(8)

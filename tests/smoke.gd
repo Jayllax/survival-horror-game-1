@@ -67,7 +67,7 @@ func run() -> void:
     menu.get_node("Start").pressed.emit()
     await frames(8)
     var town: Node2D = get_tree().current_scene
-    check(town.scene_file_path.ends_with("town.tscn"), "Menu starts street")
+    check(town.scene_file_path.ends_with("town_01.tscn"), "Menu starts street")
     check(not town.has_node("HUD/Root/EndingPanel"), "No ending screen")
     var player: CharacterBody2D = town.get_node("Actors/Player")
     check(player.is_on_floor(), "Spawn lands on street")
@@ -110,10 +110,10 @@ func run() -> void:
     await press("interact")
     check(Game.transitioning, "E starts entrance fade")
     # Input is locked; a second entrance request cannot start another transition.
-    Transition.travel("res://scenes/levels/alley.tscn", "default")
+    Transition.travel("res://scenes/levels/alleyway_01.tscn", "default")
     await get_tree().create_timer(1.2).timeout
     var interior: Node2D = get_tree().current_scene
-    check(interior.scene_file_path.ends_with("interior.tscn") and not Game.transitioning, "Fade loads interior and completes")
+    check(interior.scene_file_path.ends_with("house_01.tscn") and not Game.transitioning, "Fade loads interior and completes")
     check(not Transition.busy and is_zero_approx(Transition.curtain.color.a), "Transition completes fade and releases input lock")
     check(not Game.has_saves(), "Entering a location does not create an automatic save")
     player = interior.get_node("Actors/Player")
@@ -131,14 +131,14 @@ func run() -> void:
     await get_tree().create_timer(1.2).timeout
     town = get_tree().current_scene
     player = town.get_node("Actors/Player")
-    check(town.scene_file_path.ends_with("town.tscn") and absf(player.position.x-town.get_node("Spawns/from_shop").position.x)<2, "Return door selects street return marker")
+    check(town.scene_file_path.ends_with("town_01.tscn") and absf(player.position.x-town.get_node("Spawns/from_shop").position.x)<2, "Return door selects street return marker")
     player.position = Vector2(town.get_node("Interactables/ShopEntrance").position.x,588)
     await frames(3)
     await press("interact")
     await get_tree().create_timer(1.2).timeout
     interior = get_tree().current_scene
     check(not interior.has_node("Interactables/SupplyBox"), "Collected item stays absent on revisit")
-    Transition.travel("res://scenes/levels/town.tscn", "from_shop")
+    Transition.travel("res://scenes/levels/town_01.tscn", "from_shop")
     await get_tree().create_timer(1.2).timeout
     town = get_tree().current_scene
     player = town.get_node("Actors/Player")
@@ -147,7 +147,7 @@ func run() -> void:
     await press("interact")
     await get_tree().create_timer(1.2).timeout
     var alley: Node2D = get_tree().current_scene
-    check(alley.scene_file_path.ends_with("alley.tscn"), "E enters alley using same portal system")
+    check(alley.scene_file_path.ends_with("alleyway_01.tscn"), "E enters alley using same portal system")
     player = alley.get_node("Actors/Player")
     var enemy: CharacterBody2D = alley.get_node("Actors/Enemy")
     enemy.set_physics_process(false)

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="InventoryItemDefinition" format=3]
+[ext_resource type="Script" path="res://scripts/item_definition.gd" id="script"]
+[ext_resource type="Texture2D" path="res://art/pixel/bolt_cutters.png" id="art"]
+[resource]
+script = ExtResource("script")
+id = "bolt_cutters_single_use"
+display_name = "Single-use bolt cutters"
+category = "Tool"
+description = "Opens one cuttable fence, then is removed from the inventory."
+icon = ExtResource("art")
+remove_after_use = true
+use_as_item_id = "bolt_cutters"
+grid_size = Vector2i(3, 1)
+compact_grid_size = Vector2i(2, 1)

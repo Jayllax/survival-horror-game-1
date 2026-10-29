@@ -1,15 +1,19 @@
-[gd_scene load_steps=3 format=3]
-[ext_resource type="Texture2D" path="res://art/pixel/fence_reinforced.png" id="art"]
+[gd_scene format=3 uid="uid://ck4s3ssumhhxl"]
+
+[ext_resource type="Texture2D" uid="uid://5fphipjfjeqx" path="res://art/pixel/fence_reinforced.png" id="art"]
+
 [sub_resource type="RectangleShape2D" id="barrier"]
-size = Vector2(96,64)
-[node name="ReinforcedFence" type="StaticBody2D"]
+size = Vector2(96, 64)
+
+[node name="ReinforcedFence" type="StaticBody2D" unique_id=670300790]
 texture_filter = 1
-collision_layer = 1
 collision_mask = 2
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0,-32)
-scale = Vector2(2,2)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1004196022]
+position = Vector2(0, -32)
+scale = Vector2(2, 2)
 texture = ExtResource("art")
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0,-32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1167165325]
+position = Vector2(0, -32)
 shape = SubResource("barrier")

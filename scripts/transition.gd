@@ -2,11 +2,16 @@ extends CanvasLayer
 var busy := false
 @onready var curtain: ColorRect = $Curtain
 
-func travel(path: String, destination_spawn: String) -> void:
+func travel(path: String, destination_spawn: String, item_use_uid: int = -1, unlock_state_key: String = "", force_remove: bool = false) -> void:
     if busy or Game.health <= 0:
         return
+    path = LocationPaths.resolve(path)
     if not ResourceLoader.exists(path):
         Game.message.emit("Destination scene is missing. Check this entrance in the Inspector.")
+        return
+    var destination := load(path) as PackedScene
+    if not destination:
+        Game.message.emit("Destination is not a valid scene.")
         return
     busy = true
     Game.transitioning = true
@@ -20,8 +25,17 @@ func travel(path: String, destination_spawn: String) -> void:
     var previous_spawn := Game.spawn_id
     Game.spawn_id = destination_spawn
     var tree := get_tree()
-    var result := tree.change_scene_to_file(path)
+    var result := ERR_UNAVAILABLE
+    if item_use_uid >= 0 and Game.inventory.entry(item_use_uid).is_empty():
+        Game.message.emit("The required item is no longer available.")
+    else:
+        result = tree.change_scene_to_packed(destination)
     if result == OK:
+        # Commit only after scene replacement is accepted, before the new _ready().
+        if item_use_uid >= 0:
+            Game.finish_item_use(item_use_uid, false, force_remove)
+        if not unlock_state_key.is_empty():
+            Game.world[unlock_state_key] = true
         # SceneTree.scene_changed is unavailable in older Godot 4 releases.
         # Scene replacement is deferred: wait for the new root and its _ready().
         await tree.process_frame

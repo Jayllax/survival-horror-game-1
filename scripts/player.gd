@@ -53,6 +53,10 @@ var coyote_remaining := 0.0
 var jump_buffer := 0.0
 var combat_remaining := 0.0
 var weapon_uid := -2
+var default_light_scale := Vector2.ONE
+var default_muzzle_scale := Vector2.ONE
+var default_muzzle_position := Vector2.ZERO
+var default_shot_sound: AudioStream
 var story_interact_held := false
 var story_shoot_held := false
 var story_jump_held := false
@@ -71,6 +75,10 @@ func _ready() -> void:
     standing_collision_position = body_collision.position
     standing_aim_position = aim.position
     standing_art_scale = body_art.scale
+    default_light_scale = flashlight_light.scale
+    default_muzzle_scale = muzzle.scale
+    default_muzzle_position = muzzle.position
+    default_shot_sound = $ShotSound.stream
     update_animation()
     Game.changed.connect(sync_weapon)
     sync_weapon()
@@ -87,9 +95,17 @@ func sync_weapon() -> void:
         muzzle.energy = 0
         weapon_uid = Game.equipped_uid
     $Aim/Gun.texture = definition.weapon_texture if definition and Input.is_action_pressed("aim") and dodge_remaining <= 0 else null
+    var art_scale := definition.weapon_scale if definition else Vector2.ONE
+    art_scale = Vector2(maxf(0.01, absf(art_scale.x)), maxf(0.01, absf(art_scale.y)))
+    $Aim/Gun.scale = art_scale
+    # Artwork size must not change the designer's flashlight width/reach.
+    flashlight_light.scale = default_light_scale / art_scale
+    muzzle.scale = default_muzzle_scale / art_scale
+    muzzle.position = definition.muzzle_offset * Vector2(1, -1 if $Aim/Gun.flip_v else 1) if definition and definition.custom_weapon_pose else default_muzzle_position
+    $ShotSound.stream = definition.shot_sound if definition and definition.shot_sound else default_shot_sound
     if definition:
         magazine_size = definition.magazine_size
-        bullet_damage = definition.bullet_damage
+        bullet_damage = Game.inventory.weapon_damage(Game.equipped_uid)
         shot_interval = definition.shot_interval
         reload_seconds = definition.reload_seconds
 
@@ -118,12 +134,20 @@ func _physics_process(delta: float) -> void:
     if reload_remaining > 0:
         reload_remaining = maxf(0.0, reload_remaining - delta)
         if reload_remaining == 0:
-            var ammo_id := Game.active_weapon().ammunition_id
+            var definition := Game.active_weapon()
+            if not definition:
+                return
+            var ammo_id := definition.ammunition_id
             var needed: int = mini(magazine_size - Game.magazine, Game.count_item(ammo_id))
+            if definition.reload_one_at_a_time:
+                needed = mini(needed, 1)
             if needed > 0:
                 Game.take_item(ammo_id, needed)
                 Game.magazine += needed
                 Game.changed.emit()
+            if definition.reload_one_at_a_time and Game.magazine < magazine_size and Game.count_item(ammo_id) > 0:
+                reload_remaining = reload_seconds
+                combat_remaining = reload_seconds + 1.0
     $Aim/Gun.position.x = move_toward($Aim/Gun.position.x, 18.0, delta * 40.0)
     var direction := Input.get_axis("move_left", "move_right")
     if direction != 0:
@@ -241,8 +265,13 @@ func begin_dodge(direction: float) -> bool:
     return true
 
 func shoot() -> void:
-    if story_shoot_held or not Input.is_action_pressed("aim") or not Game.has_equipped_weapon() or shot_cooldown > 0 or reload_remaining > 0 or dodge_remaining > 0:
+    if story_shoot_held or not Input.is_action_pressed("aim") or not Game.has_equipped_weapon() or shot_cooldown > 0 or dodge_remaining > 0:
         return
+    var definition := Game.active_weapon()
+    if reload_remaining > 0:
+        if not definition.reload_one_at_a_time or Game.magazine <= 0:
+            return
+        reload_remaining = 0
     shot_cooldown = shot_interval
     if Game.magazine <= 0:
         combat_remaining = combat_feedback_seconds
@@ -253,22 +282,30 @@ func shoot() -> void:
     Game.emit_noise(global_position,gunshot_noise_radius,self)
     $ShotSound.play()
     muzzle.energy = 2.5
-    $Aim/Gun.position.x = 15.0
+    $Aim/Gun.position.x = 18.0 - definition.recoil_distance
     var origin: Vector2 = $Aim/Gun/Muzzle.global_position
-    var target: Vector2 = origin + Vector2.RIGHT.rotated(aim.rotation) * 900
-    var query := PhysicsRayQueryParameters2D.create(origin, target, 5)
-    query.exclude = [get_rid()]
-    query.hit_from_inside = true
     # A long gun can visually extend past a thin fence while the body is blocked.
     # Check shoulder-to-muzzle first so it cannot fire through that obstruction.
     var barrel_query := PhysicsRayQueryParameters2D.create(aim.global_position,origin,1)
     barrel_query.exclude = [get_rid()]
     barrel_query.hit_from_inside = true
-    var hit := get_world_2d().direct_space_state.intersect_ray(barrel_query)
-    if hit.is_empty():
-        hit = get_world_2d().direct_space_state.intersect_ray(query)
-    else:
-        origin = hit["position"]
+    var obstruction := get_world_2d().direct_space_state.intersect_ray(barrel_query)
+    var pellets := clampi(definition.pellets_per_shot, 1, 16)
+    for pellet in pellets:
+        var angle := 0.0 if pellets == 1 else lerpf(-0.5, 0.5, float(pellet) / float(pellets - 1)) * deg_to_rad(definition.spread_degrees)
+        var target := origin + Vector2.RIGHT.rotated(aim.rotation + angle) * definition.firing_range
+        var hit := obstruction
+        var start := origin
+        if hit.is_empty():
+            var query := PhysicsRayQueryParameters2D.create(origin, target, 5)
+            query.exclude = [get_rid()]
+            query.hit_from_inside = true
+            hit = get_world_2d().direct_space_state.intersect_ray(query)
+        else:
+            start = hit["position"]
+        resolve_bullet(start, target, hit)
+
+func resolve_bullet(origin: Vector2, target: Vector2, hit: Dictionary) -> void:
     var end: Vector2 = hit.get("position", target)
     if not hit.is_empty() and hit["collider"].has_method("take_damage"):
         hit["collider"].take_damage(bullet_damage)

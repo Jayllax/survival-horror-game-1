@@ -1,16 +1,16 @@
 # Ignotum / designer guide
 
-For reusable wire/solid fences in broad and end views, see [FENCE_GUIDE.md](docs/guides/FENCE_GUIDE.md). Try `scenes/levels/fence_sandbox.tscn` with F6.
+For reusable wire/solid fences in broad and end views, see [FENCE_GUIDE.md](docs/guides/FENCE_GUIDE.md). Try `tests/fixtures/fence_sandbox.tscn` with F6.
 
 For sleeping enemies, crouch bypasses, directional sight/hearing, patrol/search behaviour, and the attack animation/hitbox, see [ENEMY_AI_GUIDE.md](docs/guides/ENEMY_AI_GUIDE.md).
 
-For player/enemy SpriteFrames, crouch, sprint, short dodge, and gun-only combat, see [CHARACTER_GUIDE.md](docs/guides/CHARACTER_GUIDE.md). Open `scenes/levels/combat_sandbox.tscn` with F6 to try them.
+For player/enemy SpriteFrames, crouch, sprint, short dodge, and gun-only combat, see [CHARACTER_GUIDE.md](docs/guides/CHARACTER_GUIDE.md). Open `tests/fixtures/combat_sandbox.tscn` with F6 to try them.
 
-For editable environmental notes, colored speakers, and NPC conversations, see [NARRATIVE_GUIDE.md](docs/guides/NARRATIVE_GUIDE.md). Open `scenes/levels/story_sandbox.tscn` and press F6 to try the framework without changing your town.
+For editable environmental notes, colored speakers, and NPC conversations, see [NARRATIVE_GUIDE.md](docs/guides/NARRATIVE_GUIDE.md). Open `tests/fixtures/story_sandbox.tscn` and press F6 to try the framework without changing your town.
 
 ## Your starting point
 
-Import `project.godot` with Godot 4.7.2 Standard, open `scenes/levels/town.tscn`, choose **2D**, and press **F6** to test. **F5** starts the main menu. Stop with F8 before editing. The game has no story progression requirement or ending. You own the writing and campaign structure.
+Import `project.godot` with Godot 4.7.2 Standard, open `scenes/levels/town_01.tscn`, choose **2D**, and press **F6** to test. **F5** starts the main menu. Stop with F8 before editing. The game has no story progression requirement or ending. You own the writing and campaign structure.
 
 The supplied first street links to a small ground-floor interior and service alley to demonstrate entrances. Your uploaded alley is a blockout; use the separate combat/stealth sandbox scenes to test enemies, then place them where your levels need them. All objects are visible in the editor, including every destination and spawn marker.
 
@@ -34,7 +34,7 @@ Decorative façades and most street props do not block movement. Platforms, phys
 
 1. Drag `scenes/objects/entrance.tscn` into `Interactables`.
 2. Select its root. Set **Action Label**, such as “Enter”.
-3. Set **Destination Scene** with the file picker, such as `scenes/levels/interior.tscn`.
+3. Set **Destination Scene** with the file picker, such as `scenes/levels/house_01.tscn`.
 4. Set **Destination Spawn** to a Marker2D name in that location's `Spawns` branch, such as `from_street`.
 5. Keep **Required Key** empty and **Requires Power** off for an unlocked entrance.
 6. In the destination, place a return entrance that targets the original scene and a different return marker.
@@ -44,7 +44,7 @@ The player presses **E** within Interaction Radius. The scene fades to black, lo
 
 For an alley, enable **Editable Children** on the entrance instance and hide its `Facade` sprite. Put a dark, visible gap in the buildings behind it. The supplied `AlleyEntrance` demonstrates this. Its Area2D rectangle helps selection in the editor; interaction is based on proximity. Avoid placing accessible triggers on opposite sides of a thin wall because the proximity system does not check line of sight.
 
-For a key lock, set Required Key to a pickup's **Item Id**, such as `workshop_key`. The key is reusable. An entrance is a background transition; `door.tscn` is a physical sliding gate that opens on the same side-scrolling plane. Physical gates support **Consume Key** if you deliberately want a one-use key.
+For a key lock, set Required Key to a pickup's **Item Id**, such as `workshop_key`. The key’s **Use Behavior → Remove After Use** checkbox controls consumption. Successfully unlocked entrances stay unlocked for backtracking even when their key is spent. An entrance is a background transition; `door.tscn` is a physical sliding gate on the same side-scrolling plane. See the [item-use guide](docs/guides/ITEM_USE_GUIDE.md) for both key/tool variants and the legacy Consume Key override.
 
 ## Make another location
 
@@ -87,19 +87,19 @@ When Item Definition is assigned it supplies Item Id; change the definition's Id
 
 ### Create a combination recipe
 
-Duplicate `data/recipes/field_dressing.tres`. Set **Input A**, **Input B**, **Output Id**, and **Output Quantity** using item IDs from the catalog. Add it to **Recipes** in `data/catalog.tres`. Input order does not matter. Both inputs are consumed only when the complete result fits; the inventory restores the original items if the result cannot fit. A recipe can require two units of the same item by using the same ID for both inputs.
+Duplicate `data/recipes/field_dressing.tres`. Set **Input A**, **Input B**, **Output Id**, and **Output Quantity** using item IDs from the catalog. Add it to **Recipes** in `data/catalog.tres`. Input order does not matter. Each input follows its own **Remove After Use** checkbox, and the complete result must fit before any change is committed. A recipe can require two units of the same item by using the same ID for both inputs.
 
 The included recipe is clean cloth + antiseptic → field dressing. One dressing restores 30 health, capped at 100. Use never wastes it at full health.
 
 ### Reusable tool gates
 
-`scenes/objects/chained_gate.tscn` uses **Required Key = bolt_cutters** and **Consume Key = Off**. Required Key can represent a tool as well as a traditional key. Change it to any carried item ID for another gate type. Once opened, the gate's collision and state remain open across scene changes and manual saves.
+`scenes/objects/chained_gate.tscn` is an alias to the cuttable fence and uses **Required Tool = bolt_cutters**. Tool/key requirements can accept matching variants through their **Use As Item Id**. Change it to any carried item ID for another gate type. Once opened, the gate's collision and state remain open across scene changes and manual saves.
 
 The supplied building has cloth, antiseptic, and bolt cutters. The alley's chained gate blocks access to a dressing. These are replaceable mechanical examples, not narrative objectives. Remove or rearrange them freely.
 
 ## Pickups, notes, and circuits
 
-The starting inventory is an **8-column × 4-row grid (32 cells)**. Press **I or Tab** to open/close it. Tab is reserved for toggling while inventory is open; it still navigates the other menus. Ammunition stacks to 24 per item instance. The handgun occupies **2×1 cells**, and each handgun is a separate item with its own loaded rounds. Most existing supplies, keys and puzzle objects use one cell until you change their footprint. Full or fragmented grids leave pickups in the world.
+The starting inventory is an **8-column × 4-row grid (32 cells)**. Press **I or Tab** to open/close it. Tab is reserved for toggling while inventory is open; it still navigates the other menus. Current 9mm and buckshot ammunition stack to 12 per item instance; change Max Stack in their item definitions. The handgun occupies **2×1 cells**, and each handgun is a separate item with its own loaded rounds. Most existing supplies, keys and puzzle objects use one cell until you change their footprint. Full or fragmented grids leave pickups in the world.
 
 ### Move, rotate and combine
 
@@ -121,7 +121,7 @@ Open **`data/inventory_settings.tres`** in the Inspector. **Columns/Rows** set t
 
 Open any item definition `.tres` and edit **Inventory Footprint → Grid Size**: X is columns, Y is rows. For example, use **(3, 2)** for a large puzzle object or **(4, 1)** for a long weapon. **Can Rotate** controls rotation. Keep dimensions positive and no larger than the supported grid. Change **Max Stack** independently; a whole stack uses that item's footprint. Automatic pickups try the natural orientation, then the rotated orientation, without moving existing items.
 
-A future upgrade can call **`Game.expand_inventory(columns, rows)`**. This only enlarges the current run's grid; coordinates and items remain intact, and each manual save retains its own upgraded size. The foundation includes this hook, not an authored backpack-upgrade pickup.
+Size upgrades now shrink individual compatible items instead of growing the grid. See [Weapons and item upgrades](docs/guides/WEAPONS_AND_UPGRADES.md). The older `Game.expand_inventory` hook remains for compatibility, but no capacity-upgrade pickup is supplied.
 
 ### Add future weapons without changing player code
 
@@ -132,7 +132,7 @@ A future upgrade can call **`Game.expand_inventory(columns, rows)`**. This only 
 5. Duplicate a pickup scene and assign the new **Item Definition**; update its child Sprite2D texture for the editor preview. Place it where you want the weapon to be discovered.
 6. Collect it, arrange it, and select **Equip**. Multiple weapons, including duplicate weapons of the same type, have independent magazines and stable instance IDs. New weapon pickups start unloaded; the starting weapon begins loaded.
 
-These definitions currently drive the existing **hitscan firearm** behavior. Shotgun spread, alternate fire modes and distinct weapon animations require later gameplay additions. Five or six definitions do not require five or six player scripts. Define a new ammunition item and match its ID for a different ammunition type. Existing Player movement and dodge settings remain on the Player; firearm stats now come from the equipped definition.
+These definitions drive **hitscan firearms**, including shotgun pellet count, spread, range, shell-by-shell reload and per-weapon hand/muzzle offsets. Alternate fire modes and distinct weapon animations would require further additions. Five or six definitions do not require five or six player scripts. Define a new ammunition item and match its ID for a different ammunition type. Existing Player movement and dodge settings remain on the Player; firearm stats now come from the equipped definition.
 
 Reuse `ammo.tscn`, `fuse.tscn`, or `key.tscn`. Assign **Item Definition**, set **Quantity** and optional **Action Label**, and update child Sprite2D Texture for the editor preview. Arbitrary item IDs work as keys or circuit inputs; names default to a readable capitalization. Built-ins have friendlier labels.
 
@@ -141,7 +141,7 @@ Reuse `ammo.tscn`, `fuse.tscn`, or `key.tscn`. Assign **Item Definition**, set *
 `switchboard.tscn` is an optional reusable three-dial puzzle; it is not placed in the starting street. Set:
 
 - **Puzzle Solution:** each of three values must be 1–3.
-- **Puzzle Input Item:** an item to consume; leave empty for no requirement.
+- **Puzzle Input Item:** a required item; its Remove After Use setting controls consumption. Leave empty for no requirement.
 - **Puzzle Reward Item:** item awarded; leave empty for no reward.
 - **Require Reference:** optionally require a Clue with the same Power Channel first.
 - **Power Channel:** a unique circuit name, such as `workshop`.
@@ -164,7 +164,7 @@ An example bicycle is placed at **(200, 620)** on the street. The front-facing a
 
 ### What each slot remembers
 
-Each independent file records the location, bicycle's return position, the grid dimensions, every item instance (ID, quantity, coordinates and rotation), equipped weapon, health, each weapon’s loaded magazine, flashlight state, circuit/reference flags, collected pickups, opened gates, defeated enemies, and elapsed play time. The slot menu shows location, station name, local save date/time, played hours/minutes, and health. Saving does not heal the player or refill ammunition. Partly injured living enemies, their patrol positions, and active animations reset when a scene reloads.
+Each independent file records the location, bicycle's return position, the grid dimensions, every item instance (ID, quantity, coordinates, rotation and installed upgrades), equipped weapon, health, each weapon’s loaded magazine, flashlight state, circuit/reference flags, collected pickups, opened gates, defeated enemies, and elapsed play time. The slot menu shows location, station name, local save date/time, played hours/minutes, and health. Saving does not heal the player or refill ammunition. Partly injured living enemies, their patrol positions, and active animations reset when a scene reloads.
 
 **Main menu → Load game** and **Pause → Load game** both open the four-slot picker. The death menu also loads a selected file. Loading returns to the recorded **SaveSpawn position**, not the last entrance. **New game** starts fresh in memory and preserves all four files. A player can later overwrite a slot only by saving at a bicycle and confirming.
 
@@ -172,7 +172,7 @@ The scene must use `scripts/location.gd`, as the supplied locations do. Keep its
 
 State IDs default to `scene file path + node path`. Renaming a persistent object changes its identity. Give interactables a unique **Persistent Id** before release if you intend to rename them. Do not duplicate explicit IDs. Enemy identities currently use their scene/node paths. Back up saves before changing scene paths, item IDs, or geometry around saved return positions.
 
-In Godot, choose **Project → Open User Data Folder** to find **`save_1.json` through `save_4.json`**, plus `settings.cfg`. Files are written to a temporary file first, then committed. Save previews include the stored item count, grid capacity and whether a weapon is equipped. Loading validates the entire snapshot before changing scenes and applies it as one state change; it never merges the loaded inventory or progress with the current run. Every slot reads its own file; opening another slot’s preview does not change the run. Unavailable/corrupt saves are marked in the picker and cannot be loaded; they can be replaced after confirmation. The old `checkpoint.json` remains unused. Previous **version-2 bicycle saves** are read without rewriting them: the eight pockets are placed in an 8×4 grid and the formerly implicit handgun becomes an equipped 2-cell item with its saved ammunition. Saving at a bicycle writes the new version-3 format only to the chosen slot.
+In Godot, choose **Project → Open User Data Folder** to find **`save_1.json` through `save_4.json`**, plus `settings.cfg`. Files are written to a temporary file first, then committed. Save previews include the stored item count, grid capacity and whether a weapon is equipped. Loading validates the entire snapshot before changing scenes and applies it as one state change; it never merges the loaded inventory or progress with the current run. Every slot reads its own file; opening another slot’s preview does not change the run. Unavailable/corrupt saves are marked in the picker and cannot be loaded; they can be replaced after confirmation. The old `checkpoint.json` remains unused. Previous **version-2 bicycle saves** are read without rewriting them: the eight pockets are placed in an 8×4 grid and the formerly implicit handgun becomes an equipped 2-cell item with its saved ammunition. Saving at a bicycle writes the new version-4 format, including installed item upgrades, only to the chosen slot.
 
 ## Art and interface
 
@@ -185,3 +185,23 @@ CanvasModulate sets ambient darkness. Lamps and the flashlight add real light. F
 Play from New Game, enter the building, collect ammo, return, revisit, and confirm it stays collected. Enter the alley, test combat, return to the bicycle, save to a slot, go to the menu, choose Load game, and verify state. Try the other slots and cancel an overwrite. Save A, collect several items and finish a puzzle, save B, then repeatedly load A/B and check the differences. Try moving, rotating and unequipping the handgun before saving. Try an empty magazine, full pockets, a wrong puzzle answer, locked entrances, death, and retry. Physical sound and standalone exports still need testing on your computer.
 
 `bash tools/check.sh` imports resources and runs gameplay, interface, asset, manual-save, grid-input, aiming, narrative, combat, and stealth integration suites. Each suite uses a separate test data directory so your normal saves are not overwritten. `bash tools/check.sh aiming narrative combat stealth` selects the newer feature suites, which work with your current item settings. Older tests still assert original example item values and layouts; intentional designer changes can require updating those test expectations. `tests/capture.tscn` is an optional graphical screenshot helper for Linux. Tests reference the supplied scene/node names, so update the tests if your intentional design changes rename them.
+
+## Interior furniture and stairs
+
+Start with [INTERIOR_KIT_GUIDE.md](docs/guides/INTERIOR_KIT_GUIDE.md). Drag scenes from `scenes/objects/interiors/` into a room and choose Color Variant in the Inspector. The kit includes 24 furniture/lamp objects in three colors, plus walkable full/half stairs in both directions. Your latest snapshot removes the separate showroom/catalog scenes; the guide and PNG preview remain available.
+
+## Forest scenery
+
+See the [FOREST_KIT_GUIDE.md](docs/guides/FOREST_KIT_GUIDE.md) for trees, logs, stumps, bushes, ferns, rocks and smaller ground props. Drag scenes from `scenes/objects/forest/`, choose one of three color variants, and enable Solid only where you want to block the player. Your latest snapshot removes the separate showroom/catalog scenes; compare the colors in the guide’s PNG preview.
+
+## Weapons and per-item upgrades
+
+See [WEAPONS_AND_UPGRADES.md](docs/guides/WEAPONS_AND_UPGRADES.md) for the buckshot shotgun, separate ammunition, compact saw and damage kit. All five pickup scenes are under `scenes/objects/equipment/`, including a handgun to place in your town. New games start unarmed; change Starting Weapon in `data/inventory_settings.tres` to configure another loadout. Test the equipment separately with `tests/fixtures/weapon_workbench.tscn` and F6.
+
+## Remove items after use
+
+Open an item `.tres` under `data/items/`, expand **Use Behavior**, and set **Remove After Use**. See [ITEM_USE_GUIDE.md](docs/guides/ITEM_USE_GUIDE.md) for healing, crafting, upgrades, puzzles, doors and fences. Use the ready-made `scenes/objects/equipment/bolt_cutters_single_use.tscn` for disposable cutters; the existing bolt cutter pickup remains reusable. Both work with the same fences.
+
+## Square alleyway lighting
+
+Place `scenes/objects/lighting/alley_light.tscn` for a square light, or assign `art/lights/square_beam.tres` to an existing PointLight2D. Texture Scale controls overall size; Transform Scale X/Y makes it rectangular. See the [alley light guide](docs/guides/ALLEY_LIGHT_GUIDE.md).

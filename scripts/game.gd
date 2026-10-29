@@ -9,6 +9,7 @@ signal noise_emitted(origin: Vector2, radius: float, source: Node)
 var item_catalog: Dictionary = {}
 var recipes: Array[InventoryRecipe] = []
 var last_combined_id := ""
+var last_combined_uid := -1
 var inventory: GridInventory
 var equipped_uid := -1
 var loading_save := false
@@ -31,7 +32,7 @@ var spawn_id := "default"
 var transitioning := false
 var flashlight_on := true
 const SAVE_SLOT_COUNT := 4
-const SAVE_VERSION := 3
+const SAVE_VERSION := 4
 var pending_restore: Dictionary = {}
 var play_seconds := 0.0
 
@@ -91,12 +92,27 @@ func use_uid(uid: int) -> bool:
     var definition: InventoryItemDefinition = item_catalog.get(item.get("id", ""))
     if not definition or definition.heal_amount <= 0 or health >= 100 or item.is_empty():
         return false
-    inventory.consume_uid(uid)
+    if not finish_item_use(uid, false):
+        return false
     health = mini(100, health + definition.heal_amount)
     changed.emit()
     return true
 
+func find_use_uid(required_id: String) -> int:
+    return inventory.find_use_uid(required_id)
+
+func finish_item_use(uid: int, notify: bool = true, force_remove: bool = false) -> bool:
+    if not inventory.finish_use(uid, force_remove):
+        return false
+    _repair_equipment()
+    if notify:
+        changed.emit()
+    return true
+
 func can_combine(id: String) -> bool:
+    var definition: InventoryItemDefinition = item_catalog.get(id)
+    if definition and (definition.upgrade or definition.is_weapon or definition.compact_grid_size != Vector2i.ZERO):
+        return true
     if stack_limit(id) > 1:
         return true
     for recipe in recipes:
@@ -115,24 +131,46 @@ func combine_items(first: String, second: String) -> bool:
 
 func combine_uids(first_uid: int, second_uid: int) -> bool:
     last_combined_id = ""
+    last_combined_uid = -1
     var first := inventory.entry(first_uid)
     var second := inventory.entry(second_uid)
     if first_uid == second_uid or first.is_empty() or second.is_empty():
         return false
+    var pair := upgrade_pair(first_uid, second_uid)
+    if not pair.is_empty():
+        var trial := inventory.copy()
+        var tool := trial.entry(pair["tool"])
+        if not trial.apply_upgrade(pair["target"], tool["id"]) or not trial.finish_use(pair["tool"]):
+            return false
+        inventory = trial
+        last_combined_uid = int(pair["target"])
+        last_combined_id = inventory.entry(last_combined_uid)["id"]
+        changed.emit()
+        return true
     for recipe in recipes:
         if not ((recipe.input_a == first["id"] and recipe.input_b == second["id"]) or (recipe.input_b == first["id"] and recipe.input_a == second["id"])):
             continue
         var trial := inventory.copy()
-        trial.consume_uid(first_uid)
-        trial.consume_uid(second_uid)
+        trial.finish_use(first_uid)
+        trial.finish_use(second_uid)
         if not trial.add(recipe.output_id, recipe.output_quantity):
             return false
         inventory = trial
         last_combined_id = recipe.output_id
+        last_combined_uid = inventory.first_uid(recipe.output_id)
         _repair_equipment()
         changed.emit()
         return true
     return merge_items(first_uid, second_uid)
+
+func upgrade_pair(first_uid: int, second_uid: int) -> Dictionary:
+    if first_uid == second_uid:
+        return {}
+    for pair in [[first_uid, second_uid], [second_uid, first_uid]]:
+        var tool := inventory.entry(pair[0])
+        if not tool.is_empty() and inventory.can_apply_upgrade(pair[1], tool["id"]):
+            return {"tool": pair[0], "target": pair[1]}
+    return {}
 
 func merge_items(target_uid: int, source_uid: int) -> bool:
     var target := inventory.entry(target_uid)
@@ -142,6 +180,7 @@ func merge_items(target_uid: int, source_uid: int) -> bool:
     if not inventory.merge(target_uid, source_uid):
         return false
     last_combined_id = id
+    last_combined_uid = target_uid
     _repair_equipment()
     changed.emit()
     return true
@@ -245,7 +284,13 @@ func _read_slot(index: int) -> Variant:
     var parser := JSON.new()
     if parser.parse(FileAccess.get_file_as_string(slot_path(index))) != OK:
         return null
-    return parser.data
+    var data: Variant = parser.data
+    if data is Dictionary:
+        if data.get("scene") is String:
+            data["scene"] = LocationPaths.resolve(data["scene"])
+        if data.get("world") is Dictionary:
+            data["world"] = LocationPaths.resolve_world(data["world"])
+    return data
 
 func _saved_catalog(data: Dictionary) -> Dictionary:
     var catalog := item_catalog.duplicate()
@@ -259,7 +304,7 @@ func _saved_catalog(data: Dictionary) -> Dictionary:
     return catalog
 
 func _saved_inventory(data: Dictionary, catalog: Dictionary) -> GridInventory:
-    if data.get("version") == SAVE_VERSION:
+    if data.get("version", 0) >= 3:
         return GridInventory.restore(data.get("inventory"), catalog)
     # Read version-2 saves without modifying them. The old handgun was implicit equipment.
     var old_slots: Variant = data.get("slots")
@@ -292,7 +337,7 @@ func _save_error(data: Variant) -> String:
     var model := _saved_inventory(data, catalog) if not catalog.is_empty() else null
     if model == null:
         return "Saved inventory or item definitions are invalid."
-    if data["version"] == SAVE_VERSION:
+    if data["version"] >= 3:
         if not GridInventory.whole(data.get("equipped_uid"), -1, 1000000000):
             return "Saved equipment is invalid."
         var equipped := model.entry(int(data["equipped_uid"]))
@@ -326,7 +371,7 @@ func save_info(index: int) -> Dictionary:
     var info: Dictionary = data.duplicate(true)
     info["occupied"] = true
     info["valid"] = true
-    if data["version"] == SAVE_VERSION:
+    if data["version"] >= 3:
         info["item_count"] = data["inventory"]["items"].size()
         info["grid_columns"] = int(data["inventory"]["columns"])
         info["grid_rows"] = int(data["inventory"]["rows"])
@@ -413,7 +458,7 @@ func load_slot(index: int) -> bool:
     inventory = restored
     item_catalog = catalog
     inventory.definitions = item_catalog
-    equipped_uid = int(data["equipped_uid"]) if data["version"] == SAVE_VERSION else inventory.first_uid("pistol")
+    equipped_uid = int(data["equipped_uid"]) if data["version"] >= 3 else inventory.first_uid("pistol")
     health = int(data["health"])
     world = data["world"].duplicate(true)
     clue_read = bool(data.get("clue", false))
@@ -434,4 +479,4 @@ func finish_location_load() -> void:
 func start_game() -> void:
     get_tree().paused = false
     reset_run()
-    get_tree().change_scene_to_file("res://scenes/levels/town.tscn")
+    get_tree().change_scene_to_file("res://scenes/levels/town_01.tscn")

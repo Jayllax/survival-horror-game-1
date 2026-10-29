@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1")
 id = "cloth"
+remove_after_use = true
 display_name = "Clean cloth"
 category = "Material"
 description = "Can be combined to create an item."
