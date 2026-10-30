@@ -10,6 +10,8 @@ Five [side-view paper notes](docs/guides/NOTE_VARIANTS_GUIDE.md) are available u
 
 Eight [transparent blood overlays](docs/guides/BLOOD_OVERLAY_GUIDE.md) are ready in `scenes/objects/blood/`, with editable native PNGs in `art/pixel/blood/`. They are placed manually and can be clipped to furniture artwork using Godot's Clip Children setting.
 
+The [pushable furniture component](docs/guides/PUSHABLE_GUIDE.md) goes **under your existing furniture as a child**. Resize its collision box, set push speed/optional travel limits, and use it as a solid movable step. Its position is stored in bicycle saves. Scenes are under `scenes/objects/physics/`.
+
 Editable Godot **4.7.2 Standard** 2D survival-horror foundation. Import `project.godot` in Godot, then press **F5** for your configured introduction scene. The reusable main menu is `scenes/ui/main_menu.tscn`. All level geometry, props, characters and interactables are authored scene nodes.
 
 Your latest October 29 upload's renamed town/alley/house scenes, layouts, movement, camera, flashlight brightness, Z ordering, interaction ranges and startup scene are preserved. New games now start unarmed, as requested. This iteration adds a buckshot shotgun and consumable per-item size/damage upgrades. The grid stays at your chosen capacity; your story and level design remain yours to build.
@@ -57,12 +59,12 @@ Four bicycle-only save slots independently store inventory/layout/equipment, amm
 ## Validation
 
 ```sh
-GODOT_BIN=/path/to/godot-4.7.2 bash tools/check.sh loot light_switch code_lock item_use equipment grid_inventory aiming narrative combat stealth fences character_art interiors forest
+GODOT_BIN=/path/to/godot-4.7.2 bash tools/check.sh pushables aiming narrative combat stealth interiors
 ```
 
-This imports the project and runs fourteen suites against your current settings, with isolated user-data folders. They cover empty/filled containers and saved searches, room lighting and independent circuit saves, four-digit locks and independent puzzle saves, item upgrades, independent upgraded saves, shotgun spread/reloads, grid manipulation, UI/aim, notes/dialogue, movement/combat, stealth, independently saved fence routes, pixel animation states, phased enemy strikes and both hands staying on gun grips across aim angles.
+This focused movement/interaction command imports the project and uses isolated user-data folders. It covers child-component pushing, the push-and-jump escape route, independent moved-object saves, aiming, notes/dialogue, movement/combat, stealth and the authored stairs.
 
-The older four suites (`smoke`, `interface`, `assets`, `manual_saves`) assume historical item names, quantities and example level layouts. Your later designer revisions intentionally differ. The script's no-argument mode includes all eighteen suites; select the fourteen current suites above for this snapshot. Never change your designer data to satisfy historical fixtures.
+The runner also contains inventory, upgrades, fence, looting, code-lock, lighting and art suites. Some item fixtures still use earlier item IDs such as `gate_key`; the current designer resource uses `gate_key_01`. The older four suites (`smoke`, `interface`, `assets`, `manual_saves`) also assume historical names, quantities and layouts. The no-argument mode runs all nineteen suites. Select the relevant fixtures and update their setup when changing catalog IDs; keep designer data authoritative.
 
 Graphical checks used Linux software OpenGL. Standalone exports, other operating systems and physical audio output have not been tested. Required font license files remain in `art/fonts/`.
 

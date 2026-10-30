@@ -60,6 +60,8 @@ var default_shot_sound: AudioStream
 var story_interact_held := false
 var story_shoot_held := false
 var story_jump_held := false
+var is_pushing := false
+var pushed_body: PhysicsBody2D
 @export var combat_feedback_seconds: float = 1.8
 @export_range(0.1, 1.0) var aiming_move_multiplier: float = 0.55
 @onready var body_art: CharacterVisuals = $Body
@@ -110,6 +112,8 @@ func sync_weapon() -> void:
         reload_seconds = definition.reload_seconds
 
 func _physics_process(delta: float) -> void:
+    is_pushing = false
+    pushed_body = null
     if not Input.is_action_pressed("interact"):
         story_interact_held = false
     if not Input.is_action_pressed("shoot"):
@@ -170,7 +174,18 @@ func _physics_process(delta: float) -> void:
     velocity.x = dodge_direction * dodge_speed if dodge_remaining > 0 else move_toward(velocity.x, direction * move_speed * speed_multiplier, acceleration * delta)
     var was_grounded := is_on_floor()
     var fall_speed := velocity.y
+    apply_pushable_movement(delta, direction)
+    # Follow only the distance the object really moved. Its broadphase collider
+    # may still occupy its old position this tick; every other obstacle stays solid.
+    if is_instance_valid(pushed_body):
+        add_collision_exception_with(pushed_body)
     move_and_slide()
+    if is_instance_valid(pushed_body):
+        remove_collision_exception_with(pushed_body)
+    if is_pushing:
+        # A side contact can zero velocity.x even though both bodies travelled.
+        # Keep that actual motion for acceleration and walk animation next frame.
+        velocity.x = get_real_velocity().x
     if not was_grounded and is_on_floor() and fall_speed > 100:
         Game.emit_noise(global_position,landing_noise_radius,self)
     if is_on_floor() and absf(get_real_velocity().x) > 10 and footstep_remaining <= 0 and dodge_remaining <= 0:
@@ -188,6 +203,33 @@ func _physics_process(delta: float) -> void:
     update_interaction()
     if Input.is_action_just_pressed("interact") and not story_interact_held and is_instance_valid(nearest):
         nearest.interact(self)
+
+func apply_pushable_movement(delta: float, direction: float) -> void:
+    if not is_on_floor() or velocity.y < 0 or dodge_remaining > 0 or direction * velocity.x <= 0:
+        return
+    if not get_tree().has_group("pushable"):
+        return
+    var motion := Vector2(velocity.x * delta, 0)
+    var hit := KinematicCollision2D.new()
+    if not test_move(global_transform, motion, hit, safe_margin, false):
+        return
+    var body := hit.get_collider()
+    if not body is PhysicsBody2D or not body.is_in_group("pushable"):
+        return
+    if hit.get_normal().x * signf(motion.x) > -0.7:
+        return # Standing/landing on top must not push the platform sideways.
+    var approach := maxf(0.0, hit.get_travel().x * signf(motion.x))
+    var remaining := maxf(0.0, absf(motion.x) - approach)
+    var moved: float = body.push_from(self, signf(motion.x) * remaining, delta)
+    is_pushing = moved * signf(motion.x) > 0.001
+    var follow_distance := approach + maxf(0.0, moved * signf(motion.x))
+    if is_pushing:
+        # Leave the normal collision skin rather than causing sideways recovery
+        # from the furniture's gravity step on the following frame.
+        follow_distance = maxf(0.0, follow_distance - safe_margin)
+        pushed_body = body
+        is_sprinting = false
+    velocity.x = signf(motion.x) * minf(absf(motion.x), follow_distance) / delta
 
 func suppress_story_exit_input() -> void:
     story_interact_held = Input.is_action_pressed("interact")

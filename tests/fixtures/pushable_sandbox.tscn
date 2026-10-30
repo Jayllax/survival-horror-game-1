@@ -1,0 +1,79 @@
+[gd_scene load_steps=10 format=3]
+[ext_resource type="Script" path="res://scripts/location.gd" id="location"]
+[ext_resource type="PackedScene" path="res://scenes/actors/player.tscn" id="player"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="hud"]
+[ext_resource type="PackedScene" path="res://scenes/objects/save_bicycle.tscn" id="bike"]
+[ext_resource type="PackedScene" path="res://scenes/objects/physics/pushable_nightstand.tscn" id="nightstand"]
+[sub_resource type="RectangleShape2D" id="floor"]
+size = Vector2(1600, 120)
+[sub_resource type="RectangleShape2D" id="boundary"]
+size = Vector2(40, 900)
+[sub_resource type="RectangleShape2D" id="ledge"]
+size = Vector2(180, 30)
+[sub_resource type="RectangleShape2D" id="wall"]
+size = Vector2(40, 240)
+
+[node name="PushableSandbox" type="Node2D"]
+script = ExtResource("location")
+display_name = "Pushable framework test"
+camera_bounds = Rect2i(0, 0, 1600, 720)
+
+[node name="Background" type="Polygon2D" parent="."]
+z_index = -10
+color = Color(0.14, 0.14, 0.18, 1)
+polygon = PackedVector2Array(0, 0, 1600, 0, 1600, 720, 0, 720)
+
+[node name="Geometry" type="Node2D" parent="."]
+[node name="Floor" type="StaticBody2D" parent="Geometry"]
+position = Vector2(800, 680)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Floor"]
+shape = SubResource("floor")
+[node name="FloorArtwork" type="Polygon2D" parent="Geometry"]
+color = Color(0.31, 0.39, 0.45, 1)
+polygon = PackedVector2Array(0, 620, 1600, 620, 1600, 720, 0, 720)
+[node name="LeftBoundary" type="StaticBody2D" parent="Geometry"]
+position = Vector2(-20, 300)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/LeftBoundary"]
+shape = SubResource("boundary")
+[node name="RightBoundary" type="StaticBody2D" parent="Geometry"]
+position = Vector2(1620, 300)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/RightBoundary"]
+shape = SubResource("boundary")
+[node name="UpperLedge" type="StaticBody2D" parent="Geometry"]
+position = Vector2(1190, 580)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/UpperLedge"]
+shape = SubResource("ledge")
+[node name="Artwork" type="Polygon2D" parent="Geometry/UpperLedge"]
+color = Color(0.31, 0.43, 0.38, 1)
+polygon = PackedVector2Array(-90, -15, 90, -15, 90, 15, -90, 15)
+[node name="BlockingWall" type="StaticBody2D" parent="Geometry"]
+position = Vector2(1510, 500)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/BlockingWall"]
+shape = SubResource("wall")
+[node name="Artwork" type="Polygon2D" parent="Geometry/BlockingWall"]
+color = Color(0.31, 0.39, 0.45, 1)
+polygon = PackedVector2Array(-20, -120, 20, -120, 20, 120, -20, 120)
+
+[node name="Props" type="Node2D" parent="."]
+[node name="Nightstand" parent="Props" instance=ExtResource("nightstand")]
+position = Vector2(1000, 620)
+[node name="PushableBody" parent="Props/Nightstand" index="2"]
+persistent_id = "fixture_pushable_nightstand"
+
+[node name="Interactables" type="Node2D" parent="."]
+[node name="SaveBicycle" parent="Interactables" instance=ExtResource("bike")]
+position = Vector2(180, 620)
+
+[node name="Actors" type="Node2D" parent="."]
+[node name="Player" parent="Actors" instance=ExtResource("player")]
+position = Vector2(300, 588)
+[node name="Camera2D" parent="Actors/Player" index="3"]
+enabled = false
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(800, 390)
+zoom = Vector2(0.7, 0.7)
+
+[node name="Spawns" type="Node2D" parent="."]
+[node name="default" type="Marker2D" parent="Spawns"]
+position = Vector2(300, 588)
+[node name="HUD" parent="." instance=ExtResource("hud")]

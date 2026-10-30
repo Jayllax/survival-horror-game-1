@@ -225,3 +225,7 @@ Choose one of five reusable scenes in `scenes/objects/notes/`: flat, folded, cru
 ## Blood overlays
 
 Place scenes from `scenes/objects/blood/` over your floors or furniture. The native transparent PNGs are under `art/pixel/blood/`; opacity is editable using **Self Modulate → Alpha**. For a stain clipped to furniture, set the furniture's Artwork Sprite2D to **Clip Children → Clip + Draw**, make the stain its child, and set the stain's local Scale to **(1,1)** when that Artwork already uses 2× scale. See [BLOOD_OVERLAY_GUIDE.md](docs/guides/BLOOD_OVERLAY_GUIDE.md) for placement, depth and masking.
+
+## Pushable furniture
+
+Add `scenes/objects/physics/pushable_body.tscn` as a **child of your existing furniture**. Enable Editable Children and resize its CollisionShape2D to fit. Set Push Speed, a unique Persistent Id and optional left/right travel limits on the component. It moves the parent furniture, stays solid for jumping and remembers its position in bicycle saves. `pushable_nightstand.tscn` has the child already fitted. See [PUSHABLE_GUIDE.md](docs/guides/PUSHABLE_GUIDE.md) for the hierarchy and collision setup.
