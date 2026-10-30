@@ -111,7 +111,7 @@ func any_panel_open() -> bool:
     return false
 
 func close_panels() -> void:
-    if Game.health <= 0:
+    if Game.health <= 0 or story_ui.is_dialogue():
         return
     story_ui.close()
     code_lock_ui.close()
@@ -123,6 +123,8 @@ func close_panels() -> void:
     get_tree().paused = false
 
 func toggle_pause() -> void:
+    if story_ui.is_dialogue():
+        return
     if Game.health <= 0 and $Root/PausePanel.visible:
         return
     var should_open: bool = not $Root/PausePanel.visible
@@ -132,6 +134,8 @@ func toggle_pause() -> void:
     get_tree().paused = should_open
 
 func open_inventory() -> void:
+    if story_ui.is_dialogue():
+        return
     inventory_feedback("")
     $Root/InventoryPanel.show()
     get_tree().paused = true
@@ -236,7 +240,7 @@ func refresh() -> void:
         selected_uid = int(Game.inventory.entries[0]["uid"]) if not Game.inventory.entries.is_empty() else -1
     update_selection()
     if Game.health <= 0:
-        story_ui.close()
+        story_ui.close(true)
         code_lock_ui.close()
         for path in ["InventoryPanel", "NotePanel", "PuzzlePanel"]:
             root.get_node(path).hide()

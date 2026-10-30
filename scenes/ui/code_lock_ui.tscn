@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bp56m6rpqs2te"]
 
-[ext_resource type="FontFile" uid="uid://cvpc2epm7fh3n" path="res://art/fonts/lakeside-castle.regular.ttf" id="2_6qfw5"]
+[ext_resource type="FontFile" path="res://art/fonts/marcellus/Marcellus-Regular.ttf" id="2_6qfw5"]
 [ext_resource type="Script" uid="uid://b8lpdifyikbtj" path="res://scripts/puzzles/code_lock_ui.gd" id="script"]
 
 [sub_resource type="StyleBoxFlat" id="panel"]
@@ -76,9 +76,10 @@ theme_override_constants/separation = 22
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.73333335, 0.59607846, 1)
 theme_override_fonts/font = ExtResource("2_6qfw5")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 26
 text = "CODE LOCK"
 horizontal_alignment = 1
+texture_filter = 2
 
 [node name="Dials" type="HBoxContainer" parent="Center/Panel/Margin/Content" unique_id=1687016717]
 layout_mode = 2

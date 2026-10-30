@@ -6,7 +6,7 @@ Use Godot **4.7.2 Standard**. Everything below is editable in the Inspector; you
 
 Open `tests/fixtures/story_sandbox.tscn` and press **F6**. Walk right to the note on the bench, then the NPC, then the save bicycle. The sandbox is separate from your town and contains placeholder writing only. **F5** still starts your existing main menu and town.
 
-Nearby objects show only **Read** or **Talk**, without key hints. Reading opens a centered, scrollable note; conversation opens a box at the bottom of the screen. Both pause the player and enemies. Use **E**, **Enter**, or **Space** to reveal/advance dialogue, or click its Continue button. First press finishes revealing the current line; next press advances. **Esc** or Leave cancels. Inventory cannot open over either reader.
+Nearby objects show only **Read** or **Talk**, without key hints. Reading opens a centered, scrollable note; conversation opens a box at the bottom of the screen. Both pause the player and enemies. Use **E**, **Enter**, or **Space** to reveal/advance dialogue, or click its Continue button. First press finishes revealing the current line; next press advances. Conversations must be finished: there is no Leave button, and **Esc**, pause and inventory cannot interrupt dialogue. The final Continue/Finish action closes the window. Notes can still be closed with **Esc** or Close. Inventory cannot open over either reader.
 
 The example NPC now uses its own green-shirt palette variant of your current player design, with a six-frame idle animation. Its art has the same head, proportions, native pixel scale and standing height as the player. No player artwork has been changed.
 
@@ -37,7 +37,7 @@ Reuse the same speaker resource in all that character's lines. Editing it update
 4. Repeat in speaking order. Reorder lines by dragging their array handles. Entries without text are skipped. Leaving Speaker empty produces an unnamed line with the UI's default color.
 5. Save the sequence. If you duplicated an existing sequence, make its embedded line resources unique before rewriting them; keep speaker resources shared deliberately.
 
-Each entry is one displayed block, rather than one sentence or one physical text line. Long dialogue blocks scroll inside the box. The framework is linear conversation; branching choices and quest logic can be added later without changing the text resources used here.
+Each entry is one displayed block, rather than one sentence or one physical text line. Long dialogue blocks scroll inside the box. Lines can optionally contain player responses with their own branches and saved story flags. See [DIALOGUE_CHOICES_GUIDE.md](DIALOGUE_CHOICES_GUIDE.md) for Inspector steps and conditional items or passages.
 
 ## Place an NPC
 
@@ -51,7 +51,7 @@ NPCs stand in place and face the player when spoken to. **Face Player** can disa
 
 ## Track progress and save it
 
-Each placed Note/NPC automatically records progress in the existing saved world state. Notes record that they have been opened. NPCs record completion **only after finishing the last line**; leaving early does not complete a first conversation. Finished NPCs select Repeat Dialogue on the next interaction.
+Each placed Note/NPC automatically records progress in the existing saved world state. Notes record that they have been opened. NPCs record completion **only after finishing the last line**. The player must finish the conversation before returning to gameplay. Finished NPCs select Repeat Dialogue on the next interaction.
 
 By default identity comes from the level and node path. Before releasing content, give important objects a unique **Persistent Id**, for example `station_notice_01` or `station_attendant`. Keep those IDs stable when rearranging or renaming levels/nodes. Duplicating an object also duplicates its ID: clear or change it unless you intend the objects to share progress. Reusing the same conversation resource alone does not share completion between NPCs.
 
@@ -68,8 +68,14 @@ Select the StoryUI root for **Characters Per Second** (45 by default; 0 means in
 ## Quick checks after writing
 
 - Test each note/NPC with F6 in its actual level, including proximity and long text.
-- Test reveal, advance, cancellation, repeat conversations, and speaker changes.
+- Test reveal, advance, blocked dialogue cancellation, note closing, repeat conversations, and speaker changes.
 - Save before and after finishing a conversation in separate bicycle slots, then load both.
 - Test through normal level transitions as well as F6. Keep exactly one Player and one HUD per location.
 
 For automated checks, `bash tools/check.sh aiming narrative` imports the project and tests real interactions, input safety, and independent saved progress with isolated test saves. Use `GODOT_BIN=/path/to/godot bash tools/check.sh aiming narrative` if the engine is not on your PATH. The older suites assume original template item values; they are not needed to test your new narrative content.
+
+For fonts and optional per-document typewriter styling, see [FONT_GUIDE.md](FONT_GUIDE.md).
+
+## Player responses and story conditions
+
+Expand a DialogueLine's **Choices** array and add **DialogueChoice** resources. Each response can set a named flag and point to another DialogueSequence. `scenes/objects/story/world_flag_condition.tscn` connects those saved flags to editor-placed items, entrances, artwork and collision shapes. Full setup: [DIALOGUE_CHOICES_GUIDE.md](DIALOGUE_CHOICES_GUIDE.md).

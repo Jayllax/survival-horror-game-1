@@ -93,7 +93,7 @@ func verify_interaction_and_connections() -> void:
     var flashlight_on := flashlight.enabled
     check(switch.is_on and light.enabled and ceiling.light_enabled and floor_lamp.light_enabled and not clue.visible, "Default switch powers all assigned native/root/child lights and hides the optional dark-only clue")
     check(switch.is_in_group("interactable") and bool(Game.world.get(switch.state_key(), false)), "Switch participates in interactions and records its initial state")
-    player.global_position = switch.global_position + Vector2(20, 0)
+    player.global_position = switch.global_position + Vector2(switch.interaction_radius * 0.4, 0)
     await frames()
     check(hud.get_node("Root/Prompt").text == "Turn lights off", "Nearby interaction offers the current switch action")
     await key(KEY_E, true, false, false)

@@ -55,3 +55,15 @@ Five native side-view paper sprites are grouped in `art/pixel/notes/`; matching 
 Native blood textures are grouped in `art/pixel/blood/`, and script-free Sprite2D scenes in `scenes/objects/blood/`. The [overlay guide](guides/BLOOD_OVERLAY_GUIDE.md) explains furniture masking, scale and depth. The checkerboard/context preview is documentation only; game PNGs are transparent and no stains are automatically added to levels.
 
 The child pushable component lives at `scenes/objects/physics/pushable_body.tscn`, with its controller under `scripts/physics/` and a fitted nightstand variant beside it. It moves its furniture parent and records positions through existing world saves. The [pushable guide](guides/PUSHABLE_GUIDE.md) explains per-instance collision sizing and travel limits. Its editor-authored development room stays under `tests/fixtures/`; no campaign furniture is converted automatically.
+
+## Fonts
+
+`art/fonts/` contains the uploaded fonts and four new open-license families, with notices and two editable FontVariation presets under `styles/`. The [font guide](guides/FONT_GUIDE.md) lists each UI node and the per-note override controls. The newest uploaded levels, items, Jax art and project/window settings are preserved.
+
+## Conversation choices
+
+`DialogueChoice` resources belong to the Choices array on a DialogueLine. Conditional world targets use `scenes/objects/story/world_flag_condition.tscn`. Choice buttons are a reusable authored UI scene; additional response buttons are instanced only as UI. All level targets remain editor-placed. See the [choice guide](guides/DIALOGUE_CHOICES_GUIDE.md). The separate `tests/fixtures/dialogue_choices_sandbox.tscn` is not linked to the campaign.
+
+### Verification notes for this iteration
+
+The focused narrative/choice and modal suites validate the new UI and saved consequences. Legacy code-lock and loot checks now read the designer's key resource ID instead of assuming `gate_key`; the light-switch test places the player inside the edited Interaction Radius. These are fixture changes only. The separate headless aiming suite reports one left-mirroring assertion failure in both the untouched October 30 22-42 upload and this branch. Aiming behavior and character/weapon attachment resources were not changed in this iteration.

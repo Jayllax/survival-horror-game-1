@@ -112,14 +112,25 @@ func run() -> void:
     check(ui.line_index == 1 and ui.get_node("DialoguePanel/Speaker").text == npc.dialogue.lines[1].speaker.display_name, "Enter advances to the next selected speaker")
     check(ui.body.get_theme_color("default_color") == npc.dialogue.lines[1].speaker.text_color, "Text color changes with the speaker")
     await key(KEY_ESCAPE)
-    check(not ui.is_open() and not npc.has_completed(), "Leaving early cancels without recording conversation completion")
-    check(npc.current_dialogue() == npc.dialogue, "Cancelled conversation keeps the first conversation available")
-    ui.characters_per_second = 0
-    await key(KEY_E)
-    check(ui.line_index == 0 and ui.body.visible_characters == -1, "Zero character speed displays each full line instantly")
-    npc.completion_flag = "story:test_conversation"
-    for i in npc.dialogue.playable_lines().size():
+    check(ui.is_dialogue() and ui.line_index == 1 and get_tree().paused and not hud.get_node("Root/PausePanel").visible, "Escape cannot cancel a conversation or open the pause menu")
+    check(not npc.has_completed() and npc.current_dialogue() == npc.dialogue, "An unfinished conversation never records completion")
+    check(not ui.has_node("DialoguePanel/Leave"), "Conversations have no Leave button")
+    ui.close()
+    hud.close_panels()
+    hud.toggle_pause()
+    hud.open_inventory()
+    await key(KEY_TAB)
+    check(ui.is_dialogue() and get_tree().paused and not hud.get_node("Root/PausePanel").visible and not hud.get_node("Root/InventoryPanel").visible, "Close, pause and inventory requests cannot bypass an active conversation")
+    if ui.body.visible_characters >= 0:
         await key(KEY_E)
+    check(ui.line_index == 1 and ui.body.visible_characters == -1, "A blocked cancel still lets the player reveal the current line")
+    ui.characters_per_second = 0
+    npc.completion_flag = "story:test_conversation"
+    await key(KEY_E)
+    check(ui.line_index == 2 and ui.body.visible_characters == -1, "Zero character speed displays the next full line instantly")
+    await key(KEY_ESCAPE)
+    check(ui.is_dialogue() and not npc.has_completed(), "Even the last displayed line stays open until the player finishes it")
+    await key(KEY_E)
     check(not ui.is_open() and not get_tree().paused and npc.has_completed(), "Finishing the last line records completion and resumes gameplay")
     check(Game.world.get("story:test_conversation",false), "Optional designer completion flag records future story progress")
     check(npc.dialogue.lines.size() == 3 and not npc.dialogue.lines[0].text.is_empty(), "Displaying and closing does not modify shared content resources")
@@ -145,6 +156,22 @@ func run() -> void:
     await frames()
     check(ui.get_node("NotePanel/Body").get_content_height() > ui.get_node("NotePanel/Body").size.y and ui.get_node("NotePanel/Body").scroll_active, "Long note text remains available through scrolling")
     ui.get_node("NotePanel/Close").pressed.emit()
+    var reader: RichTextLabel = ui.get_node("NotePanel/Body")
+    var original_note_font := reader.get_theme_font("normal_font")
+    var original_note_size := reader.get_theme_font_size("normal_font_size")
+    var typed_note := NoteDocument.new()
+    typed_note.text = "A typewritten document."
+    typed_note.body_font = load("res://art/fonts/styles/typewritten_document.tres")
+    typed_note.body_font_size = 20
+    check(hud.show_story_note(typed_note,note) and reader.get_theme_font("normal_font") == typed_note.body_font and reader.get_theme_font_size("normal_font_size") == 20, "Individual documents can choose a typewriter font and size")
+    ui.close()
+    check(hud.show_story_note(long_note,note) and reader.get_theme_font("normal_font") == original_note_font and reader.get_theme_font_size("normal_font_size") == original_note_size, "A later ordinary note restores the reader's original font and size")
+    ui.close()
+    typed_note.body_font = null
+    typed_note.body_font_size = 22
+    check(hud.show_story_note(typed_note,note) and reader.get_theme_font("normal_font") == original_note_font and reader.get_theme_font_size("normal_font_size") == 22, "A note can change only its size without replacing the default font")
+    ui.close()
+    check(long_note.body_font == null and long_note.body_font_size == 0, "Displaying a note never rewrites its shared appearance settings")
     hud.open_inventory()
     check(not hud.show_dialogue(npc.dialogue,npc), "Conversation cannot replace an open inventory")
     hud.close_panels()

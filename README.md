@@ -59,7 +59,7 @@ Four bicycle-only save slots independently store inventory/layout/equipment, amm
 ## Validation
 
 ```sh
-GODOT_BIN=/path/to/godot-4.7.2 bash tools/check.sh pushables aiming narrative combat stealth interiors
+GODOT_BIN=/path/to/godot-4.7.2 bash tools/check.sh pushables aiming narrative dialogue_choices combat stealth interiors
 ```
 
 This focused movement/interaction command imports the project and uses isolated user-data folders. It covers child-component pushing, the push-and-jump escape route, independent moved-object saves, aiming, notes/dialogue, movement/combat, stealth and the authored stairs.
@@ -77,3 +77,5 @@ Change **Columns/Rows** and **Starting Weapon** in `data/inventory_settings.tres
 Item definitions expose **Use Behavior → Remove After Use**. Existing defaults are retained; a separate disposable cutter pickup is ready under `scenes/objects/equipment/`. Keys, tools and puzzle inputs are removed only when the corresponding action succeeds, and unlocked entrances remain usable for backtracking.
 
 Older town/alley/interior scene paths are redirected to their new names when reading save files, including scene-prefixed collected/opened-object state. Existing files are not rewritten during previews. The uploaded empty animation point lists remain intact; a built-in reference keeps the current character’s attachments aligned when both saved profiles are empty.
+
+Fonts and document appearance: [font guide](docs/guides/FONT_GUIDE.md). Player answers, saved story flags and conditional objects: [dialogue choice guide](docs/guides/DIALOGUE_CHOICES_GUIDE.md).

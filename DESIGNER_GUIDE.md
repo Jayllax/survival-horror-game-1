@@ -229,3 +229,11 @@ Place scenes from `scenes/objects/blood/` over your floors or furniture. The nat
 ## Pushable furniture
 
 Add `scenes/objects/physics/pushable_body.tscn` as a **child of your existing furniture**. Enable Editable Children and resize its CollisionShape2D to fit. Set Push Speed, a unique Persistent Id and optional left/right travel limits on the component. It moves the parent furniture, stays solid for jumping and remembers its position in bicycle saves. `pushable_nightstand.tscn` has the child already fitted. See [PUSHABLE_GUIDE.md](docs/guides/PUSHABLE_GUIDE.md) for the hierarchy and collision setup.
+
+## Fonts and document appearance
+
+See [FONT_GUIDE.md](docs/guides/FONT_GUIDE.md) for shared title, note and dialogue fonts. Existing note-body text keeps Lakeside Castle. Individual NoteDocument resources now offer optional **Body Font** and **Body Font Size** fields; use `art/fonts/styles/typewritten_document.tres` for Special Elite, or leave them empty/zero to use the shared reader.
+
+## Conversation choices and story flags
+
+DialogueLine resources now have an optional **Choices** array. Each DialogueChoice can record a **Choice Id**, set a story flag, and branch to another **Next Dialogue** sequence. Add `scenes/objects/story/world_flag_condition.tscn` to connect a flag to item visibility, entrance interaction or passage collision. Conversations must finish before returning to gameplay; notes still close normally and keep your transparent presentation. See [DIALOGUE_CHOICES_GUIDE.md](docs/guides/DIALOGUE_CHOICES_GUIDE.md).

@@ -385,6 +385,10 @@ func update_interaction() -> void:
     nearest = null
     var best := INF
     for object in get_tree().get_nodes_in_group("interactable"):
+        if not bool(object.get_meta("story_interaction_enabled", true)):
+            continue
+        if object is CanvasItem and not object.is_visible_in_tree():
+            continue
         if not object.is_available():
             continue
         var distance: float = global_position.distance_to(object.global_position)

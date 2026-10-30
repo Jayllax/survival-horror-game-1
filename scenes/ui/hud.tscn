@@ -1,13 +1,15 @@
 [gd_scene format=3 uid="uid://cu7udyf271gqe"]
 
 [ext_resource type="Script" uid="uid://cwqx8hqp1qhp0" path="res://scripts/hud.gd" id="1"]
-[ext_resource type="FontFile" uid="uid://dxt7wstj8clsi" path="res://art/fonts/madawaska.river.otf" id="2_gss2c"]
+[ext_resource type="FontFile" path="res://art/fonts/marcellus/Marcellus-Regular.ttf" id="2_gss2c"]
 [ext_resource type="FontFile" uid="uid://dki1d2lncyaxp" path="res://art/fonts/copy-photo.regular.otf" id="2_oj5la"]
 [ext_resource type="FontFile" uid="uid://cvpc2epm7fh3n" path="res://art/fonts/lakeside-castle.regular.ttf" id="5_h022r"]
 [ext_resource type="PackedScene" path="res://scenes/ui/code_lock_ui.tscn" id="code_lock_ui"]
 [ext_resource type="Script" uid="uid://7hvyb5kyk0g5" path="res://scripts/inventory_grid_control.gd" id="grid_script"]
 [ext_resource type="PackedScene" path="res://scenes/ui/save_menu.tscn" id="save_menu"]
 [ext_resource type="PackedScene" path="res://scenes/ui/story_ui.tscn" id="story_ui"]
+
+[ext_resource type="FontFile" path="res://art/fonts/im_fell_english/IMFellEnglish-Regular.ttf" id="note_title_font"]
 
 [sub_resource type="StyleBoxFlat" id="health"]
 bg_color = Color(0.61, 0.24, 0.2, 0.85)
@@ -131,8 +133,9 @@ offset_top = 22.0
 offset_right = 428.0
 offset_bottom = 54.0
 theme_override_fonts/font = ExtResource("2_gss2c")
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 26
 text = "Inventory"
+texture_filter = 2
 
 [node name="Condition" type="Label" parent="Root/InventoryPanel" unique_id=2143219993]
 layout_mode = 0
@@ -200,6 +203,7 @@ theme_override_fonts/font = ExtResource("2_gss2c")
 theme_override_font_sizes/font_size = 25
 text = "Select an item"
 autowrap_mode = 2
+texture_filter = 2
 
 [node name="Category" type="Label" parent="Root/InventoryPanel" unique_id=323841181]
 layout_mode = 0
@@ -289,6 +293,7 @@ theme_override_fonts/font = ExtResource("2_gss2c")
 theme_override_font_sizes/font_size = 30
 text = "PAUSED"
 horizontal_alignment = 1
+texture_filter = 2
 
 [node name="Subtitle" type="Label" parent="Root/PausePanel" unique_id=751318461]
 layout_mode = 0
@@ -340,10 +345,11 @@ offset_left = 30.0
 offset_top = 20.0
 offset_right = 630.0
 offset_bottom = 60.0
-theme_override_fonts/font = ExtResource("2_gss2c")
-theme_override_font_sizes/font_size = 25
+theme_override_fonts/font = ExtResource("note_title_font")
+theme_override_font_sizes/font_size = 30
 text = "EXAMINE"
 horizontal_alignment = 1
+texture_filter = 2
 
 [node name="Text" type="Label" parent="Root/NotePanel" unique_id=717556478]
 layout_mode = 0
@@ -379,8 +385,10 @@ offset_left = 30.0
 offset_top = 20.0
 offset_right = 630.0
 offset_bottom = 58.0
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 26
 text = "SWITCHBOARD"
+theme_override_fonts/font = ExtResource("2_gss2c")
+texture_filter = 2
 
 [node name="Hint" type="Label" parent="Root/PuzzlePanel" unique_id=157179912]
 layout_mode = 0

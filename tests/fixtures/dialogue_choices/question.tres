@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="DialogueSequence" load_steps=9 format=3]
+[ext_resource type="Script" path="res://scripts/narrative/dialogue_sequence.gd" id="sequence"]
+[ext_resource type="Script" path="res://scripts/narrative/dialogue_line.gd" id="line"]
+[ext_resource type="Script" path="res://scripts/narrative/dialogue_choice.gd" id="choice"]
+[ext_resource type="Resource" path="res://tests/fixtures/dialogue_choices/accepted.tres" id="accepted"]
+[ext_resource type="Resource" path="res://tests/fixtures/dialogue_choices/declined.tres" id="declined"]
+[sub_resource type="Resource" id="accept"]
+script = ExtResource("choice")
+text = "First test response"
+choice_id = "framework_accept"
+set_flag = "story:framework_path"
+next_dialogue = ExtResource("accepted")
+[sub_resource type="Resource" id="decline"]
+script = ExtResource("choice")
+text = "Second test response"
+choice_id = "framework_decline"
+set_flag = "story:framework_path"
+flag_value = false
+next_dialogue = ExtResource("declined")
+[sub_resource type="Resource" id="question"]
+script = ExtResource("line")
+text = "Choose one of the two test paths. The first opens the test barrier and reveals the ammunition; the second keeps them unchanged."
+choices = Array[ExtResource("choice")]([SubResource("accept"), SubResource("decline")])
+[resource]
+script = ExtResource("sequence")
+lines = Array[ExtResource("line")]([SubResource("question")])

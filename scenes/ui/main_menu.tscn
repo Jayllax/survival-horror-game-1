@@ -2,9 +2,11 @@
 
 [ext_resource type="Script" uid="uid://dx3hvjx8g471m" path="res://scripts/main_menu.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://2aajvjioqmcw" path="res://art/pixel/station.png" id="2"]
-[ext_resource type="FontFile" uid="uid://dxt7wstj8clsi" path="res://art/fonts/madawaska.river.otf" id="3_x2yvf"]
+[ext_resource type="FontVariation" path="res://art/fonts/styles/main_title.tres" id="3_x2yvf"]
 [ext_resource type="FontFile" uid="uid://dki1d2lncyaxp" path="res://art/fonts/copy-photo.regular.otf" id="4_uhagc"]
 [ext_resource type="PackedScene" path="res://scenes/ui/save_menu.tscn" id="save_menu"]
+
+[ext_resource type="FontFile" path="res://art/fonts/marcellus/Marcellus-Regular.ttf" id="heading_font"]
 
 [node name="MainMenu" type="Control" unique_id=1717923289]
 layout_mode = 3
@@ -37,6 +39,8 @@ offset_bottom = -25.0
 theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
 vertical_alignment = 1
+theme_override_fonts/font = ExtResource("heading_font")
+texture_filter = 2
 
 [node name="Title" type="Label" parent="." unique_id=512561569]
 layout_mode = 0
@@ -45,8 +49,10 @@ offset_top = 115.0
 offset_right = 862.0
 offset_bottom = 235.0
 theme_override_fonts/font = ExtResource("3_x2yvf")
-theme_override_font_sizes/font_size = 76
+theme_override_font_sizes/font_size = 96
 text = "IGNOTUM"
+theme_override_colors/font_color = Color(0.8, 0.73333335, 0.59607846, 1)
+texture_filter = 2
 
 [node name="Subtitle" type="Label" parent="." unique_id=629827538]
 layout_mode = 0
@@ -105,6 +111,9 @@ layout_mode = 0
 offset_left = 35.0
 offset_top = 28.0
 text = "OPTIONS"
+theme_override_fonts/font = ExtResource("heading_font")
+texture_filter = 2
+theme_override_font_sizes/font_size = 26
 
 [node name="VolumeLabel" type="Label" parent="OptionsPanel" unique_id=1930716263]
 layout_mode = 0

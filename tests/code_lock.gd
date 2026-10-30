@@ -1,4 +1,5 @@
 extends Node
+const KEY_DEFINITION = preload("res://data/items/gate_key.tres")
 var checks := 0
 var failures := 0
 var room: Node2D
@@ -134,7 +135,7 @@ func run() -> void:
 
 func verify_rewards_and_opening() -> void:
     var lock := make_lock("reward_test")
-    lock.reward_item = load("res://data/items/gate_key.tres")
+    lock.reward_item = KEY_DEFINITION
     lock.completion_flag = "puzzle:test_drawer"
     var inventory_before := Game.inventory.snapshot()
     var full := GridInventory.new(Game.item_catalog, 1, 1)
@@ -143,7 +144,7 @@ func verify_rewards_and_opening() -> void:
     var full_before := Game.inventory.snapshot()
     check(not lock.attempt_unlock("0042").is_empty() and Game.inventory.snapshot() == full_before and not lock.has_unlocked() and not Game.world.has(lock.completion_flag), "Full inventory cannot lose the reward or mark the lock completed")
     Game.inventory = GridInventory.restore(inventory_before, Game.item_catalog)
-    var count_before := Game.count_item("gate_key")
+    var count_before := Game.count_item(KEY_DEFINITION.id)
     var collision := CollisionShape2D.new()
     collision.name = "TestBarrier"
     var solid := StaticBody2D.new()
@@ -176,17 +177,17 @@ func verify_rewards_and_opening() -> void:
     lock.animation_player_path = NodePath("Animator")
     check(lock.attempt_unlock("0042").is_empty(), "Correct code with room grants the configured reward")
     await frames()
-    check(Game.count_item("gate_key") == count_before + 1 and bool(Game.world.get(lock.completion_flag, false)), "One reward and the designer's custom progress flag commit together")
+    check(Game.count_item(KEY_DEFINITION.id) == count_before + 1 and bool(Game.world.get(lock.completion_flag, false)), "One reward and the designer's custom progress flag commit together")
     check(collision.disabled and not closed_art.visible and open_art.visible, "Unlock disables the chosen blocker and swaps the assigned artwork")
     check(animator.is_playing(), "Successful opening starts the assigned AnimationPlayer animation")
     lock.attempt_unlock("0042")
-    check(Game.count_item("gate_key") == count_before + 1, "Reattempting an unlocked container never duplicates its contents")
+    check(Game.count_item(KEY_DEFINITION.id) == count_before + 1, "Reattempting an unlocked container never duplicates its contents")
     collision.disabled = false
     closed_art.show()
     open_art.hide()
     lock.apply_open_state(true)
     await frames()
-    check(collision.disabled and not closed_art.visible and open_art.visible and Game.count_item("gate_key") == count_before + 1, "Restoring open visuals/collision does not grant another reward")
+    check(collision.disabled and not closed_art.visible and open_art.visible and Game.count_item(KEY_DEFINITION.id) == count_before + 1, "Restoring open visuals/collision does not grant another reward")
     check(open_art.position == Vector2(0, -12) and not animator.is_playing(), "Restored opening animation shows its final pose instead of replaying")
     lock.queue_free()
     var invalid := make_lock("bad_config")
@@ -199,7 +200,7 @@ func verify_rewards_and_opening() -> void:
 
 func verify_save_slots() -> void:
     var lock := make_lock("saved_test")
-    lock.reward_item = load("res://data/items/gate_key.tres")
+    lock.reward_item = KEY_DEFINITION
     lock.remember_digits("0030")
     player.global_position = bike.global_position + Vector2(-25, 0)
     await frames()
@@ -214,9 +215,9 @@ func verify_save_slots() -> void:
     refresh_room()
     lock = make_lock("saved_test")
     check(not lock.has_unlocked() and lock.current_digits() == "0030", "Loading A restores unsolved lock and previous dial positions")
-    var count_a := Game.count_item("gate_key")
+    var count_a := Game.count_item(KEY_DEFINITION.id)
     check(Game.load_slot(1), "Load slot B through the real save system")
     await frames(8)
     refresh_room()
     lock = make_lock("saved_test")
-    check(lock.has_unlocked() and not lock.is_available() and Game.count_item("gate_key") == count_a + 1, "Loading B restores unlocked state and its own inventory reward")
+    check(lock.has_unlocked() and not lock.is_available() and Game.count_item(KEY_DEFINITION.id) == count_a + 1, "Loading B restores unlocked state and its own inventory reward")
