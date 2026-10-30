@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_dusty_rose_left.tscn" id="4_qnwl3"]
 [ext_resource type="Script" uid="uid://ct1jqn7k4e0md" path="res://scripts/narrative/note_document.gd" id="4_qxsnt"]
 [ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="5_04x8t"]
-[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_gxonl"]
+[ext_resource type="PackedScene" uid="uid://cu7udyf271gqe" path="res://scenes/ui/hud.tscn" id="5_gxonl"]
 [ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/fern.tscn" id="5_imbqn"]
 [ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/grass_tuft.tscn" id="6_bwqxg"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="6_cgomg"]
@@ -298,7 +298,7 @@ position = Vector2(-266, 360)
 shape = SubResource("wall")
 
 [node name="EastBoundary" type="StaticBody2D" parent="Geometry" unique_id=722109662]
-position = Vector2(2220, 360)
+position = Vector2(1984, 366)
 
 [node name="Shape" type="CollisionShape2D" parent="Geometry/EastBoundary" unique_id=524093992]
 shape = SubResource("wall")
@@ -530,6 +530,23 @@ position = Vector2(1833.9999, 594)
 scale = Vector2(0.4, 0.4)
 document = SubResource("Resource_7gop2")
 
+[node name="Entrance" parent="Interactables" unique_id=166180848 instance=ExtResource("5_04x8t")]
+position = Vector2(260, 556)
+action_label = "Go deeper"
+destination_scene = "uid://d22fnxrmc8sh3"
+
+[node name="Facade" parent="Interactables/Entrance" index="0" unique_id=1815167978]
+visible = false
+
+[node name="Entrance2" parent="Interactables" unique_id=634203237 instance=ExtResource("5_04x8t")]
+position = Vector2(1936, 556)
+action_label = "Go into the town"
+destination_scene = "uid://6qrdl5x7rakj"
+destination_spawn = "from_forest"
+
+[node name="Facade" parent="Interactables/Entrance2" index="0" unique_id=1815167978]
+visible = false
+
 [node name="Actors" type="Node2D" parent="." unique_id=1189311552]
 
 [node name="Player" parent="Actors" unique_id=1065848384 instance=ExtResource("4_asx42")]
@@ -543,13 +560,8 @@ position = Vector2(-155, 588)
 [node name="from_area_2" type="Marker2D" parent="Spawns" unique_id=129397878]
 position = Vector2(260, 588)
 
-[node name="Entrance" parent="Spawns" unique_id=166180848 instance=ExtResource("5_04x8t")]
-position = Vector2(260, 556)
-action_label = "Go deeper"
-destination_scene = "uid://d22fnxrmc8sh3"
-
-[node name="Facade" parent="Spawns/Entrance" index="0" unique_id=1815167978]
-visible = false
+[node name="from_town_01" type="Marker2D" parent="Spawns" unique_id=2071300971]
+position = Vector2(1936, 588)
 
 [node name="HUD" parent="." unique_id=296689736 instance=ExtResource("5_gxonl")]
 
@@ -559,4 +571,5 @@ volume_db = -16.0
 autoplay = true
 script = ExtResource("7_imbqn")
 
-[editable path="Spawns/Entrance"]
+[editable path="Interactables/Entrance"]
+[editable path="Interactables/Entrance2"]

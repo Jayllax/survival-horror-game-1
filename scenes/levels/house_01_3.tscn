@@ -8,10 +8,10 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/bathroom/shower.tscn" id="6_jre5a"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/ceiling_lamp.tscn" id="9_h8ip3"]
 [ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="11_s1spc"]
-[ext_resource type="PackedScene" path="res://scenes/objects/lighting/light_switch.tscn" id="12_bi6ye"]
+[ext_resource type="PackedScene" uid="uid://d161ooahnfhd3" path="res://scenes/objects/lighting/light_switch.tscn" id="12_bi6ye"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="12_k2gw4"]
 [ext_resource type="PackedScene" uid="uid://cb1drcxvonlbw" path="res://scenes/objects/loot/loot_container.tscn" id="13_8doii"]
-[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="13_umwgm"]
+[ext_resource type="PackedScene" uid="uid://cu7udyf271gqe" path="res://scenes/ui/hud.tscn" id="13_umwgm"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="14_cs77p"]
 [ext_resource type="Script" uid="uid://bkj62nwqxumq7" path="res://scripts/loot/loot_entry.gd" id="14_t3iio"]
 [ext_resource type="Resource" uid="uid://do6pa807ji1hf" path="res://data/items/cloth.tres" id="15_bi6ye"]
@@ -236,10 +236,12 @@ light_radius_scale = 2.0
 [node name="Interactables" type="Node2D" parent="." unique_id=580173129]
 
 [node name="ExitToHouse_01_2" parent="Interactables" unique_id=928311053 instance=ExtResource("11_s1spc")]
-visible = false
 position = Vector2(643, 556)
 destination_scene = "uid://m80iahaftwpp"
 destination_spawn = "from_bathroom"
+
+[node name="Facade" parent="Interactables/ExitToHouse_01_2" index="0" unique_id=1815167978]
+visible = false
 
 [node name="LootContainer" parent="Interactables" unique_id=286012595 instance=ExtResource("13_8doii")]
 position = Vector2(587, 552)
@@ -268,3 +270,5 @@ stream = ExtResource("14_cs77p")
 volume_db = -16.0
 autoplay = true
 script = ExtResource("15_k6sy1")
+
+[editable path="Interactables/ExitToHouse_01_2"]

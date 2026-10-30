@@ -306,6 +306,14 @@ position = Vector2(100, 620)
 station_name = "Street bicycle"
 interaction_radius = 50.0
 
+[node name="Forest_Entrance" parent="Interactables" unique_id=505011352 instance=ExtResource("4")]
+position = Vector2(-208, 556)
+destination_scene = "uid://dyo3etebfk0vw"
+destination_spawn = "from_town_01"
+
+[node name="Facade" parent="Interactables/Forest_Entrance" index="0" unique_id=1815167978]
+visible = false
+
 [node name="Actors" type="Node2D" parent="." unique_id=1189311552]
 
 [node name="Enemy" parent="Actors" unique_id=981298321 instance=ExtResource("22_w4u1r")]
@@ -344,6 +352,9 @@ position = Vector2(2341, 588)
 [node name="from_alleyway_02_2" type="Marker2D" parent="Spawns" unique_id=2036310132]
 position = Vector2(2966, 588)
 
+[node name="from_forest" type="Marker2D" parent="Spawns" unique_id=1216748484]
+position = Vector2(-208, 588)
+
 [node name="HUD" parent="." unique_id=296689736 instance=ExtResource("3")]
 
 [node name="AmbientSound" type="AudioStreamPlayer" parent="." unique_id=722606247]
@@ -361,3 +372,4 @@ script = ExtResource("22")
 [editable path="Interactables/House_02Entrance2"]
 [editable path="Interactables/House_04Entrance"]
 [editable path="Interactables/Town_02Entrance"]
+[editable path="Interactables/Forest_Entrance"]

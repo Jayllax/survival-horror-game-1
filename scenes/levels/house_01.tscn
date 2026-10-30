@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://6ac0fiq4jtxt" path="res://scripts/location.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://cu7udyf271gqe" path="res://scenes/ui/hud.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/coffee_table.tscn" id="3_aumqg"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/ceiling_lamp.tscn" id="3_gulih"]
 [ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="4"]
@@ -196,15 +196,19 @@ light_radius_scale = 1.0
 [node name="Interactables" type="Node2D" parent="." unique_id=580173129]
 
 [node name="ExitToTown_01" parent="Interactables" unique_id=1321858251 instance=ExtResource("4")]
-visible = false
 position = Vector2(350, 556)
 destination_scene = "res://scenes/levels/town_01.tscn"
 destination_spawn = "from_house_01"
 
-[node name="EnterHouse_01_2" parent="Interactables" unique_id=928311053 instance=ExtResource("4")]
+[node name="Facade" parent="Interactables/ExitToTown_01" index="0" unique_id=1815167978]
 visible = false
+
+[node name="EnterHouse_01_2" parent="Interactables" unique_id=928311053 instance=ExtResource("4")]
 position = Vector2(643, 556)
 destination_scene = "uid://m80iahaftwpp"
+
+[node name="Facade" parent="Interactables/EnterHouse_01_2" index="0" unique_id=1815167978]
+visible = false
 
 [node name="LightSwitch" parent="Interactables" unique_id=1648403643 instance=ExtResource("20_6kljy")]
 position = Vector2(318, 575)
@@ -256,3 +260,6 @@ stream = ExtResource("21")
 volume_db = -16.0
 autoplay = true
 script = ExtResource("22")
+
+[editable path="Interactables/ExitToTown_01"]
+[editable path="Interactables/EnterHouse_01_2"]

@@ -22,7 +22,7 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/blood/blood_smear.tscn" id="18_nc5fq"]
 [ext_resource type="PackedScene" path="res://scenes/objects/blood/blood_pool.tscn" id="19_uka7v"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="20_m645t"]
-[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="21_yxbim"]
+[ext_resource type="PackedScene" uid="uid://cu7udyf271gqe" path="res://scenes/ui/hud.tscn" id="21_yxbim"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="22_sghjm"]
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="23_10luh"]
 
@@ -242,16 +242,20 @@ scale = Vector2(1.1, 1.34)
 [node name="Interactables" type="Node2D" parent="." unique_id=580173129]
 
 [node name="ExitToTown_01" parent="Interactables" unique_id=1321858251 instance=ExtResource("15_a5dn8")]
-visible = false
 position = Vector2(350, 556)
 destination_scene = "uid://6qrdl5x7rakj"
 destination_spawn = "from_house_04"
 
-[node name="EnterHouse_04_2" parent="Interactables" unique_id=928311053 instance=ExtResource("15_a5dn8")]
+[node name="Facade" parent="Interactables/ExitToTown_01" index="0" unique_id=1815167978]
 visible = false
+
+[node name="EnterHouse_04_2" parent="Interactables" unique_id=928311053 instance=ExtResource("15_a5dn8")]
 position = Vector2(643, 556)
 destination_scene = "uid://urhvcxncseea"
 destination_spawn = "from_house_04"
+
+[node name="Facade" parent="Interactables/EnterHouse_04_2" index="0" unique_id=1815167978]
+visible = false
 
 [node name="LightSwitch" parent="Interactables" unique_id=1648403643 instance=ExtResource("16_oyw17")]
 position = Vector2(318, 575)
@@ -290,3 +294,5 @@ script = ExtResource("23_10luh")
 
 [editable path="Props/FloorLamp"]
 [editable path="Props/CeilingLamp"]
+[editable path="Interactables/ExitToTown_01"]
+[editable path="Interactables/EnterHouse_04_2"]
