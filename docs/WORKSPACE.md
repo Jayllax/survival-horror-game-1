@@ -51,3 +51,5 @@ The [light-switch guide](guides/LIGHT_SWITCH_GUIDE.md) covers the reusable `scen
 The [loot-container guide](guides/LOOT_CONTAINER_GUIDE.md) covers the invisible `scenes/objects/loot/loot_container.tscn`, the interaction script and the exported `LootEntry` resource under `scripts/loot/`. Contents are configured directly on placed container instances; an empty array makes an intentionally empty drawer. No duplicate item artwork or gameplay examples are added.
 
 Five native side-view paper sprites are grouped in `art/pixel/notes/`; matching inherited note scenes are in `scenes/objects/notes/`. The [note-variant guide](guides/NOTE_VARIANTS_GUIDE.md) explains placement and editing. The default note scene uses the flat profile; documents and reading logic remain shared. The enlarged preview is kept only under `docs/previews/`.
+
+Native blood textures are grouped in `art/pixel/blood/`, and script-free Sprite2D scenes in `scenes/objects/blood/`. The [overlay guide](guides/BLOOD_OVERLAY_GUIDE.md) explains furniture masking, scale and depth. The checkerboard/context preview is documentation only; game PNGs are transparent and no stains are automatically added to levels.

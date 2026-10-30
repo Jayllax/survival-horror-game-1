@@ -221,3 +221,7 @@ Place `scenes/objects/loot/loot_container.tscn` beside or under your furniture a
 ## Side-view note artwork
 
 Choose one of five reusable scenes in `scenes/objects/notes/`: flat, folded, crumpled, creased or a small stack. Assign your Document on the root and place the root on a tabletop/shelf/floor. The default Note now uses the flat profile. Native editable PNGs are in `art/pixel/notes/`; all share a 20×12 canvas and 2× display scale. See [NOTE_VARIANTS_GUIDE.md](docs/guides/NOTE_VARIANTS_GUIDE.md) for changing existing note artwork while keeping saved read IDs.
+
+## Blood overlays
+
+Place scenes from `scenes/objects/blood/` over your floors or furniture. The native transparent PNGs are under `art/pixel/blood/`; opacity is editable using **Self Modulate → Alpha**. For a stain clipped to furniture, set the furniture's Artwork Sprite2D to **Clip Children → Clip + Draw**, make the stain its child, and set the stain's local Scale to **(1,1)** when that Artwork already uses 2× scale. See [BLOOD_OVERLAY_GUIDE.md](docs/guides/BLOOD_OVERLAY_GUIDE.md) for placement, depth and masking.

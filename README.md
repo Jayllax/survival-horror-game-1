@@ -8,6 +8,8 @@ Searchable furniture uses `scenes/objects/loot/loot_container.tscn`. An empty Co
 
 Five [side-view paper notes](docs/guides/NOTE_VARIANTS_GUIDE.md) are available under `scenes/objects/notes/`, with native PNGs in `art/pixel/notes/`. They share the existing note-reading system; the default Note uses the flat paper profile.
 
+Eight [transparent blood overlays](docs/guides/BLOOD_OVERLAY_GUIDE.md) are ready in `scenes/objects/blood/`, with editable native PNGs in `art/pixel/blood/`. They are placed manually and can be clipped to furniture artwork using Godot's Clip Children setting.
+
 Editable Godot **4.7.2 Standard** 2D survival-horror foundation. Import `project.godot` in Godot, then press **F5** for your configured introduction scene. The reusable main menu is `scenes/ui/main_menu.tscn`. All level geometry, props, characters and interactables are authored scene nodes.
 
 Your latest October 29 upload's renamed town/alley/house scenes, layouts, movement, camera, flashlight brightness, Z ordering, interaction ranges and startup scene are preserved. New games now start unarmed, as requested. This iteration adds a buckshot shotgun and consumable per-item size/damage upgrades. The grid stays at your chosen capacity; your story and level design remain yours to build.
