@@ -34,17 +34,17 @@ size = Vector2(40, 720)
 
 [sub_resource type="Resource" id="Resource_asx42"]
 script = ExtResource("4_qxsnt")
-title = "Note from stranger"
-text = "Stay out of town. It's not what it used to be.
+title = "Note from a Rasmus"
+text = "I know you're confused and want to move forward, and you should, but don't go into town. Find another way. Please.
 
-- Pete"
+- Rasmus"
 
 [sub_resource type="Resource" id="Resource_7gop2"]
 script = ExtResource("4_qxsnt")
-title = "Note from stranger"
-text = "It's not worth it.
+title = "Note from a Rasmus"
+text = "There has to be another way. Please, try to find another way out of here.
 
-- Pete"
+- Rasmus"
 
 [node name="Location" type="Node2D" unique_id=653106688]
 script = ExtResource("1_brq61")

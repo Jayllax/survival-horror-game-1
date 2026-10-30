@@ -4,5 +4,7 @@
 
 [resource]
 script = ExtResource("script")
+columns = 6
+rows = 3
 starting_weapon = ""
 starting_ammo = 0

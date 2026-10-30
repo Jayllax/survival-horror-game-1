@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3]
-[ext_resource type="Script" path="res://scripts/lighting/light_switch.gd" id="script"]
+[gd_scene format=3 uid="uid://d161ooahnfhd3"]
+
+[ext_resource type="Script" uid="uid://cvfx5utycu08u" path="res://scripts/lighting/light_switch.gd" id="script"]
+
 [sub_resource type="RectangleShape2D" id="interaction_shape"]
 size = Vector2(16, 24)
 
-[node name="LightSwitch" type="Area2D"]
+[node name="LightSwitch" type="Area2D" unique_id=1067931549]
 z_index = -1
 texture_filter = 1
 collision_layer = 0
@@ -11,27 +13,28 @@ collision_mask = 0
 monitoring = false
 monitorable = false
 script = ExtResource("script")
+interaction_radius = 20.0
 
-[node name="InteractionShape" type="CollisionShape2D" parent="."]
+[node name="InteractionShape" type="CollisionShape2D" parent="." unique_id=467202495]
 shape = SubResource("interaction_shape")
 
-[node name="Artwork" type="Node2D" parent="."]
+[node name="Artwork" type="Node2D" parent="." unique_id=1232866432]
 
-[node name="Outline" type="Polygon2D" parent="Artwork"]
+[node name="Outline" type="Polygon2D" parent="Artwork" unique_id=24661268]
 color = Color(0.23137255, 0.1764706, 0.1882353, 1)
 polygon = PackedVector2Array(-8, -12, 8, -12, 8, 12, -8, 12)
 
-[node name="Plate" type="Polygon2D" parent="Artwork"]
+[node name="Plate" type="Polygon2D" parent="Artwork" unique_id=799317001]
 color = Color(0.6901961, 0.5686275, 0.49019608, 1)
 polygon = PackedVector2Array(-6, -10, 6, -10, 6, 10, -6, 10)
 
-[node name="Lever" type="Node2D" parent="Artwork"]
+[node name="Lever" type="Node2D" parent="Artwork" unique_id=1252700958]
 position = Vector2(0, -2)
 
-[node name="Rocker" type="Polygon2D" parent="Artwork/Lever"]
+[node name="Rocker" type="Polygon2D" parent="Artwork/Lever" unique_id=1777361140]
 color = Color(0.8, 0.73333335, 0.59607846, 1)
 polygon = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
 
-[node name="Mark" type="Polygon2D" parent="Artwork/Lever"]
+[node name="Mark" type="Polygon2D" parent="Artwork/Lever" unique_id=83674139]
 color = Color(0.23137255, 0.1764706, 0.1882353, 1)
 polygon = PackedVector2Array(-2, -2, 2, -2, 2, 0, -2, 0)

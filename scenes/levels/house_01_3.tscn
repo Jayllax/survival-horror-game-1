@@ -6,19 +6,112 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/bathroom/pedestal_sink.tscn" id="4_3ageq"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/bathroom/medicine_cabinet.tscn" id="5_h2pl4"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/bathroom/shower.tscn" id="6_jre5a"]
-[ext_resource type="PackedScene" uid="uid://cvrfunpo8lblp" path="res://scenes/objects/antiseptic.tscn" id="9_8doii"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/ceiling_lamp.tscn" id="9_h8ip3"]
 [ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="11_s1spc"]
+[ext_resource type="PackedScene" path="res://scenes/objects/lighting/light_switch.tscn" id="12_bi6ye"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="12_k2gw4"]
+[ext_resource type="PackedScene" uid="uid://cb1drcxvonlbw" path="res://scenes/objects/loot/loot_container.tscn" id="13_8doii"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="13_umwgm"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="14_cs77p"]
+[ext_resource type="Script" uid="uid://bkj62nwqxumq7" path="res://scripts/loot/loot_entry.gd" id="14_t3iio"]
+[ext_resource type="Resource" uid="uid://do6pa807ji1hf" path="res://data/items/cloth.tres" id="15_bi6ye"]
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="15_k6sy1"]
+
+[sub_resource type="FontFile" id="FontFile_bi6ye"]
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/14/0/ascent = 0.0
+cache/0/14/0/descent = 0.0
+cache/0/14/0/underline_position = 0.0
+cache/0/14/0/underline_thickness = 0.0
+cache/0/14/0/scale = 1.0
+cache/0/12/0/ascent = 0.0
+cache/0/12/0/descent = 0.0
+cache/0/12/0/underline_position = 0.0
+cache/0/12/0/underline_thickness = 0.0
+cache/0/12/0/scale = 1.0
+cache/0/11/0/ascent = 0.0
+cache/0/11/0/descent = 0.0
+cache/0/11/0/underline_position = 0.0
+cache/0/11/0/underline_thickness = 0.0
+cache/0/11/0/scale = 1.0
+cache/0/10/0/ascent = 0.0
+cache/0/10/0/descent = 0.0
+cache/0/10/0/underline_position = 0.0
+cache/0/10/0/underline_thickness = 0.0
+cache/0/10/0/scale = 1.0
+cache/0/9/0/ascent = 0.0
+cache/0/9/0/descent = 0.0
+cache/0/9/0/underline_position = 0.0
+cache/0/9/0/underline_thickness = 0.0
+cache/0/9/0/scale = 1.0
+cache/0/8/0/ascent = 0.0
+cache/0/8/0/descent = 0.0
+cache/0/8/0/underline_position = 0.0
+cache/0/8/0/underline_thickness = 0.0
+cache/0/8/0/scale = 1.0
+cache/0/7/0/ascent = 0.0
+cache/0/7/0/descent = 0.0
+cache/0/7/0/underline_position = 0.0
+cache/0/7/0/underline_thickness = 0.0
+cache/0/7/0/scale = 1.0
+cache/0/6/0/ascent = 0.0
+cache/0/6/0/descent = 0.0
+cache/0/6/0/underline_position = 0.0
+cache/0/6/0/underline_thickness = 0.0
+cache/0/6/0/scale = 1.0
+cache/0/4/0/ascent = 0.0
+cache/0/4/0/descent = 0.0
+cache/0/4/0/underline_position = 0.0
+cache/0/4/0/underline_thickness = 0.0
+cache/0/4/0/scale = 1.0
+cache/0/3/0/ascent = 0.0
+cache/0/3/0/descent = 0.0
+cache/0/3/0/underline_position = 0.0
+cache/0/3/0/underline_thickness = 0.0
+cache/0/3/0/scale = 1.0
+cache/0/2/0/ascent = 0.0
+cache/0/2/0/descent = 0.0
+cache/0/2/0/underline_position = 0.0
+cache/0/2/0/underline_thickness = 0.0
+cache/0/2/0/scale = 1.0
+cache/0/1/0/ascent = 0.0
+cache/0/1/0/descent = 0.0
+cache/0/1/0/underline_position = 0.0
+cache/0/1/0/underline_thickness = 0.0
+cache/0/1/0/scale = 1.0
+cache/0/5/0/ascent = 0.0
+cache/0/5/0/descent = 0.0
+cache/0/5/0/underline_position = 0.0
+cache/0/5/0/underline_thickness = 0.0
+cache/0/5/0/scale = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_55n3y"]
+font = SubResource("FontFile_bi6ye")
+font_size = 5
 
 [sub_resource type="RectangleShape2D" id="floor"]
 size = Vector2(858, 120)
 
 [sub_resource type="RectangleShape2D" id="wall"]
 size = Vector2(40, 720)
+
+[sub_resource type="Resource" id="Resource_mdf4r"]
+script = ExtResource("14_t3iio")
+item = ExtResource("15_bi6ye")
+metadata/_custom_type_script = "uid://bkj62nwqxumq7"
 
 [node name="Location" type="Node2D" unique_id=701534075]
 script = ExtResource("1_t3iio")
@@ -34,6 +127,22 @@ color = Color(0.039215688, 0.039215688, 0.039215688, 1)
 position = Vector2(-562, 275)
 color = Color(0.025, 0.045, 0.06, 1)
 polygon = PackedVector2Array(1230, 255, 1230, 345, 1180, 345, 1180, 255)
+
+[node name="CodeLabel1" type="Label" parent="Buildings" unique_id=1780942849]
+offset_left = 568.0
+offset_top = 579.0
+offset_right = 571.0
+offset_bottom = 587.0
+text = "II"
+label_settings = SubResource("LabelSettings_55n3y")
+
+[node name="CodeLabel2" type="Label" parent="Buildings" unique_id=1994079186]
+offset_left = 603.0
+offset_top = 579.0
+offset_right = 607.0
+offset_bottom = 587.0
+text = "V"
+label_settings = SubResource("LabelSettings_55n3y")
 
 [node name="Geometry" type="Node2D" parent="." unique_id=50036105]
 
@@ -132,13 +241,15 @@ position = Vector2(643, 556)
 destination_scene = "uid://m80iahaftwpp"
 destination_spawn = "from_bathroom"
 
-[node name="Pickup" parent="Interactables" unique_id=954311762 instance=ExtResource("9_8doii")]
-position = Vector2(587, 553)
-scale = Vector2(0.545, 0.545)
-action_label = "Loot cabinet"
+[node name="LootContainer" parent="Interactables" unique_id=286012595 instance=ExtResource("13_8doii")]
+position = Vector2(587, 552)
+contents = Array[ExtResource("14_t3iio")]([SubResource("Resource_mdf4r")])
 
-[node name="Sprite2D" parent="Interactables/Pickup" index="0" unique_id=1270962096]
-visible = false
+[node name="LightSwitch" parent="Interactables" unique_id=329188652 instance=ExtResource("12_bi6ye")]
+position = Vector2(674, 569)
+scale = Vector2(0.3, 0.3)
+connected_lights = Array[NodePath]([NodePath("../../Props/CeilingLamp")])
+reveal_when_off = Array[NodePath]([NodePath("../../Buildings/CodeLabel1"), NodePath("../../Buildings/CodeLabel2")])
 
 [node name="Actors" type="Node2D" parent="." unique_id=1936203783]
 
@@ -157,5 +268,3 @@ stream = ExtResource("14_cs77p")
 volume_db = -16.0
 autoplay = true
 script = ExtResource("15_k6sy1")
-
-[editable path="Interactables/Pickup"]

@@ -12,6 +12,7 @@ collision_layer = 0
 collision_mask = 0
 script = ExtResource("script")
 interaction_radius = 60.0
+action_label = "Ring bell"
 
 [node name="Bell" type="Node2D" parent="." unique_id=841303946]
 

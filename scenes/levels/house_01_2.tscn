@@ -16,9 +16,96 @@
 [ext_resource type="Script" uid="uid://ct1jqn7k4e0md" path="res://scripts/narrative/note_document.gd" id="15_c6hel"]
 [ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="15_f0p1h"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="16_b7koq"]
+[ext_resource type="PackedScene" uid="uid://cb1drcxvonlbw" path="res://scenes/objects/loot/loot_container.tscn" id="16_c6hel"]
+[ext_resource type="PackedScene" uid="uid://d161ooahnfhd3" path="res://scenes/objects/lighting/light_switch.tscn" id="17_ar532"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="17_r0csf"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="18_lstpd"]
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="19_7akam"]
+
+[sub_resource type="FontFile" id="FontFile_epk7b"]
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/14/0/ascent = 0.0
+cache/0/14/0/descent = 0.0
+cache/0/14/0/underline_position = 0.0
+cache/0/14/0/underline_thickness = 0.0
+cache/0/14/0/scale = 1.0
+cache/0/12/0/ascent = 0.0
+cache/0/12/0/descent = 0.0
+cache/0/12/0/underline_position = 0.0
+cache/0/12/0/underline_thickness = 0.0
+cache/0/12/0/scale = 1.0
+cache/0/11/0/ascent = 0.0
+cache/0/11/0/descent = 0.0
+cache/0/11/0/underline_position = 0.0
+cache/0/11/0/underline_thickness = 0.0
+cache/0/11/0/scale = 1.0
+cache/0/10/0/ascent = 0.0
+cache/0/10/0/descent = 0.0
+cache/0/10/0/underline_position = 0.0
+cache/0/10/0/underline_thickness = 0.0
+cache/0/10/0/scale = 1.0
+cache/0/9/0/ascent = 0.0
+cache/0/9/0/descent = 0.0
+cache/0/9/0/underline_position = 0.0
+cache/0/9/0/underline_thickness = 0.0
+cache/0/9/0/scale = 1.0
+cache/0/8/0/ascent = 0.0
+cache/0/8/0/descent = 0.0
+cache/0/8/0/underline_position = 0.0
+cache/0/8/0/underline_thickness = 0.0
+cache/0/8/0/scale = 1.0
+cache/0/7/0/ascent = 0.0
+cache/0/7/0/descent = 0.0
+cache/0/7/0/underline_position = 0.0
+cache/0/7/0/underline_thickness = 0.0
+cache/0/7/0/scale = 1.0
+cache/0/6/0/ascent = 0.0
+cache/0/6/0/descent = 0.0
+cache/0/6/0/underline_position = 0.0
+cache/0/6/0/underline_thickness = 0.0
+cache/0/6/0/scale = 1.0
+cache/0/4/0/ascent = 0.0
+cache/0/4/0/descent = 0.0
+cache/0/4/0/underline_position = 0.0
+cache/0/4/0/underline_thickness = 0.0
+cache/0/4/0/scale = 1.0
+cache/0/3/0/ascent = 0.0
+cache/0/3/0/descent = 0.0
+cache/0/3/0/underline_position = 0.0
+cache/0/3/0/underline_thickness = 0.0
+cache/0/3/0/scale = 1.0
+cache/0/2/0/ascent = 0.0
+cache/0/2/0/descent = 0.0
+cache/0/2/0/underline_position = 0.0
+cache/0/2/0/underline_thickness = 0.0
+cache/0/2/0/scale = 1.0
+cache/0/1/0/ascent = 0.0
+cache/0/1/0/descent = 0.0
+cache/0/1/0/underline_position = 0.0
+cache/0/1/0/underline_thickness = 0.0
+cache/0/1/0/scale = 1.0
+cache/0/5/0/ascent = 0.0
+cache/0/5/0/descent = 0.0
+cache/0/5/0/underline_position = 0.0
+cache/0/5/0/underline_thickness = 0.0
+cache/0/5/0/scale = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_ar532"]
+font = SubResource("FontFile_epk7b")
+font_size = 5
 
 [sub_resource type="RectangleShape2D" id="floor"]
 size = Vector2(858, 120)
@@ -28,10 +115,10 @@ size = Vector2(40, 720)
 
 [sub_resource type="Resource" id="Resource_2kgsg"]
 script = ExtResource("15_c6hel")
-title = "Note written by a Pete"
-text = "Please don't look for the code. Just turn back.
+title = "Note written by a Rasmus"
+text = "I don't understand why you would ever want to be in this town. It's so dark and cold. The light isn't out of reach, you just need to find it. Try. Please.
 
-- Pete"
+- Rasmus"
 
 [sub_resource type="Resource" id="Resource_c6hel"]
 script = ExtResource("15_c6hel")
@@ -57,6 +144,22 @@ polygon = PackedVector2Array(1230, 255, 1230, 345, 1180, 345, 1180, 255)
 position = Vector2(-787, 275)
 color = Color(0.025, 0.045, 0.06, 1)
 polygon = PackedVector2Array(1230, 255, 1230, 345, 1180, 345, 1180, 255)
+
+[node name="CodeLabel3" type="Label" parent="Buildings" unique_id=1996831998]
+offset_left = 74.0
+offset_top = 580.0
+offset_right = 77.0
+offset_bottom = 588.0
+text = "I"
+label_settings = SubResource("LabelSettings_ar532")
+
+[node name="CodeLabel4" type="Label" parent="Buildings" unique_id=1031426025]
+offset_left = 150.0
+offset_top = 580.0
+offset_right = 153.0
+offset_bottom = 588.0
+text = "II"
+label_settings = SubResource("LabelSettings_ar532")
 
 [node name="Geometry" type="Node2D" parent="." unique_id=50036105]
 
@@ -198,9 +301,9 @@ reward_item = ExtResource("4_ay8je")
 [node name="Note" parent="Interactables" unique_id=1645172902 instance=ExtResource("14_2kgsg")]
 modulate = Color(0.8439394, 1, 1, 1)
 position = Vector2(51.999878, 591)
-rotation = 0.19198622
+rotation = -0.20071286
 scale = Vector2(0.3, 0.3)
-skew = 1.2758356
+skew = -1.2409291
 document = SubResource("Resource_2kgsg")
 
 [node name="Note2" parent="Interactables" unique_id=1834164669 instance=ExtResource("14_2kgsg")]
@@ -209,6 +312,33 @@ rotation = 0.13962634
 scale = Vector2(0.3, 0.3)
 skew = 1.3543755
 document = SubResource("Resource_c6hel")
+
+[node name="LootContainer" parent="Interactables" unique_id=1125194028 instance=ExtResource("16_c6hel")]
+position = Vector2(331, 582)
+persistent_id = "empty1"
+
+[node name="LootContainer2" parent="Interactables" unique_id=286012595 instance=ExtResource("16_c6hel")]
+position = Vector2(271, 582)
+persistent_id = "empty2"
+
+[node name="LightSwitch" parent="Interactables" unique_id=1627212891 instance=ExtResource("17_ar532")]
+position = Vector2(612, 571)
+scale = Vector2(0.3, 0.3)
+connected_lights = Array[NodePath]([NodePath("../../Props/WallLamp")])
+interaction_radius = 50.0
+
+[node name="LightSwitch2" parent="Interactables" unique_id=1940736045 instance=ExtResource("17_ar532")]
+position = Vector2(387, 571)
+scale = Vector2(0.3, 0.3)
+connected_lights = Array[NodePath]([NodePath("../../Props/CeilingLamp")])
+interaction_radius = 50.0
+
+[node name="LightSwitch3" parent="Interactables" unique_id=1218105632 instance=ExtResource("17_ar532")]
+position = Vector2(163, 584)
+scale = Vector2(0.3, 0.3)
+connected_lights = Array[NodePath]([NodePath("../../Props/WallLamp2"), NodePath("../../Props/TableLamp2"), NodePath("../../Props/TableLamp")])
+reveal_when_off = Array[NodePath]([NodePath("../../Buildings/CodeLabel3"), NodePath("../../Buildings/CodeLabel4")])
+interaction_radius = 50.0
 
 [node name="Actors" type="Node2D" parent="." unique_id=1936203783]
 
