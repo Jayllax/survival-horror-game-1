@@ -1,0 +1,222 @@
+[gd_scene format=3 uid="uid://urhvcxncseea"]
+
+[ext_resource type="Script" uid="uid://6ac0fiq4jtxt" path="res://scripts/location.gd" id="1_qayus"]
+[ext_resource type="Texture2D" uid="uid://doeuaul7l3oue" path="res://art/pixel/floor.png" id="2_h8ftp"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bedroom/nightstand.tscn" id="3_0m5wc"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bedroom/bed.tscn" id="4_6o5i0"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bedroom/wardrobe.tscn" id="5_yl0ka"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/table_lamp.tscn" id="6_wx7jk"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/sideboard.tscn" id="7_nntgj"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/bookcase.tscn" id="8_0vubq"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/ceiling_lamp.tscn" id="9_qb0co"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/wall_lamp.tscn" id="10_p2n58"]
+[ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="11_r7pxi"]
+[ext_resource type="PackedScene" uid="uid://d161ooahnfhd3" path="res://scenes/objects/lighting/light_switch.tscn" id="17_q67n8"]
+[ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="18_dcxcn"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="19_b55sx"]
+[ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="20_1lg4o"]
+[ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="21_sl73x"]
+
+[sub_resource type="RectangleShape2D" id="floor"]
+size = Vector2(858, 120)
+
+[sub_resource type="RectangleShape2D" id="wall"]
+size = Vector2(40, 720)
+
+[node name="Location" type="Node2D" unique_id=701534075]
+script = ExtResource("1_qayus")
+display_name = "Building / Ground floor"
+camera_bounds = Rect2i(0, 0, 1152, 720)
+
+[node name="AmbientTint" type="CanvasModulate" parent="." unique_id=758485644]
+visible = false
+color = Color(0.039215688, 0.039215688, 0.039215688, 1)
+
+[node name="Buildings" type="Node2D" parent="." unique_id=199967885]
+
+[node name="House_04Mouth" type="Polygon2D" parent="Buildings" unique_id=1334324940]
+position = Vector2(-562, 275)
+color = Color(0.025, 0.045, 0.06, 1)
+polygon = PackedVector2Array(1230, 255, 1230, 345, 1180, 345, 1180, 255)
+
+[node name="House_04_3Mouth" type="Polygon2D" parent="Buildings" unique_id=2021283907]
+z_index = -5
+position = Vector2(-787, 275)
+color = Color(0.025, 0.045, 0.06, 1)
+polygon = PackedVector2Array(1230, 255, 1230, 345, 1180, 345, 1180, 255)
+
+[node name="Geometry" type="Node2D" parent="." unique_id=50036105]
+
+[node name="Street" type="StaticBody2D" parent="Geometry" unique_id=80617122]
+position = Vector2(576, 680)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Street" unique_id=1585902153]
+position = Vector2(-296, 1)
+shape = SubResource("floor")
+
+[node name="Paving" type="Sprite2D" parent="Geometry/Street" unique_id=1594992477]
+visible = false
+texture_repeat = 2
+texture = ExtResource("2_h8ftp")
+region_enabled = true
+region_rect = Rect2(0, 0, 1152, 120)
+
+[node name="Curb" type="Polygon2D" parent="Geometry" unique_id=713087734]
+position = Vector2(0, -9403.33)
+scale = Vector2(0.60937506, 16.1667)
+color = Color(0.39215687, 0.23921569, 0.14901961, 1)
+polygon = PackedVector2Array(0, 620, 1152, 620, 1151.9999, 623.0512, 1152, 626, 0, 626)
+
+[node name="WestBoundary" type="StaticBody2D" parent="Geometry" unique_id=138952996]
+position = Vector2(-25, 360)
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/WestBoundary" unique_id=98058664]
+position = Vector2(5, 0)
+shape = SubResource("wall")
+
+[node name="EastBoundary" type="StaticBody2D" parent="Geometry" unique_id=393032034]
+position = Vector2(1318, 362)
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/EastBoundary" unique_id=1373582522]
+position = Vector2(-597, 0)
+shape = SubResource("wall")
+
+[node name="Background" type="Polygon2D" parent="Geometry" unique_id=264627438]
+z_index = -10
+position = Vector2(-31, -36624.33)
+scale = Vector2(0.33272728, 59.503754)
+color = Color(0.163681, 0.17744261, 0.25610083, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
+
+[node name="Background2" type="Polygon2D" parent="Geometry" unique_id=1514965316]
+z_index = -10
+position = Vector2(-732, -96063.125)
+scale = Vector2(0.33272728, 155.00018)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
+
+[node name="Background3" type="Polygon2D" parent="Geometry" unique_id=426912759]
+position = Vector2(-452.00003, -53408)
+scale = Vector2(0.7568181, 87.17413)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
+
+[node name="Background4" type="Polygon2D" parent="Geometry" unique_id=1391276875]
+position = Vector2(701, -53906)
+scale = Vector2(0.33272728, 87.17413)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
+
+[node name="Background5" type="Polygon2D" parent="Geometry" unique_id=654738761]
+position = Vector2(-15, -54122)
+scale = Vector2(0.33272728, 87.17413)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
+
+[node name="Props" type="Node2D" parent="." unique_id=341425996]
+
+[node name="Nightstand" parent="Props" unique_id=599128919 instance=ExtResource("3_0m5wc")]
+position = Vector2(44.999992, 609.00006)
+rotation = -1.4643313
+
+[node name="Bed" parent="Props" unique_id=853516651 instance=ExtResource("4_6o5i0")]
+position = Vector2(137, 625.00006)
+rotation = 0.04363323
+
+[node name="Nightstand2" parent="Props" unique_id=209671873 instance=ExtResource("3_0m5wc")]
+position = Vector2(349, 621)
+solid = true
+
+[node name="Wardrobe" parent="Props" unique_id=1200503428 instance=ExtResource("5_yl0ka")]
+position = Vector2(209, 592)
+rotation = 1.5707964
+solid = true
+
+[node name="Wardrobe2" parent="Props" unique_id=1314980178 instance=ExtResource("5_yl0ka")]
+z_index = -2
+position = Vector2(348.99997, 612.99994)
+rotation = -0.4886922
+
+[node name="TableLamp" parent="Props" unique_id=1767768371 instance=ExtResource("6_wx7jk")]
+z_index = 1
+position = Vector2(58.99999, 614.99994)
+rotation = 1.4643313
+scale = Vector2(0.6, 0.6)
+light_enabled = false
+light_energy = 1.2
+light_radius_scale = 1.0
+
+[node name="TableLamp2" parent="Props" unique_id=437929470 instance=ExtResource("6_wx7jk")]
+z_index = 1
+position = Vector2(310.99997, 615)
+rotation = -1.4643313
+scale = Vector2(0.6, 0.6)
+light_energy = 1.2
+light_radius_scale = 1.0
+
+[node name="Sideboard" parent="Props" unique_id=540134005 instance=ExtResource("7_nntgj")]
+position = Vector2(562.00006, 623.00006)
+rotation = 0.17453292
+solid = true
+
+[node name="Bookcase" parent="Props" unique_id=11051384 instance=ExtResource("8_0vubq")]
+position = Vector2(528, 591)
+rotation = -1.5707964
+solid = true
+
+[node name="CeilingLamp" parent="Props" unique_id=2113481216 instance=ExtResource("9_qb0co")]
+position = Vector2(418, 447)
+light_enabled = false
+light_energy = 2.0
+light_radius_scale = 2.0
+
+[node name="WallLamp" parent="Props" unique_id=1895886517 instance=ExtResource("10_p2n58")]
+position = Vector2(684, 536)
+light_enabled = false
+light_energy = 1.5
+
+[node name="Interactables" type="Node2D" parent="." unique_id=580173129]
+
+[node name="ExitToHouse_04" parent="Interactables" unique_id=928311053 instance=ExtResource("11_r7pxi")]
+visible = false
+position = Vector2(643, 556)
+destination_scene = "uid://yxwes2ioawnp"
+destination_spawn = "from_house_04_2"
+
+[node name="EnterHouse_04_3" parent="Interactables" unique_id=166180848 instance=ExtResource("11_r7pxi")]
+visible = false
+position = Vector2(418, 556)
+destination_spawn = "from_house_04_2"
+
+[node name="LightSwitch" parent="Interactables" unique_id=1627212891 instance=ExtResource("17_q67n8")]
+position = Vector2(673, 571)
+scale = Vector2(0.3, 0.3)
+connected_lights = Array[NodePath]([NodePath("../../Props/WallLamp")])
+interaction_radius = 50.0
+
+[node name="LightSwitch2" parent="Interactables" unique_id=1940736045 instance=ExtResource("17_q67n8")]
+position = Vector2(387, 571)
+scale = Vector2(0.3, 0.3)
+starting_on = false
+interaction_radius = 50.0
+
+[node name="Actors" type="Node2D" parent="." unique_id=1936203783]
+
+[node name="Player" parent="Actors" unique_id=1545454888 instance=ExtResource("18_dcxcn")]
+position = Vector2(643, 587)
+
+[node name="Spawns" type="Node2D" parent="." unique_id=1777379054]
+
+[node name="from_house_04" type="Marker2D" parent="Spawns" unique_id=229847141]
+position = Vector2(643, 588)
+
+[node name="from_house_04_3" type="Marker2D" parent="Spawns" unique_id=270069570]
+position = Vector2(419, 588)
+
+[node name="HUD" parent="." unique_id=570484733 instance=ExtResource("19_b55sx")]
+
+[node name="AmbientSound" type="AudioStreamPlayer" parent="." unique_id=1597499294]
+stream = ExtResource("20_1lg4o")
+volume_db = -16.0
+autoplay = true
+script = ExtResource("21_sl73x")

@@ -5,17 +5,22 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/coffee_table.tscn" id="3_uka7v"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/sofa.tscn" id="4_mg6mv"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/floor_lamp.tscn" id="5_31toa"]
+[ext_resource type="PackedScene" path="res://scenes/objects/blood/blood_droplets.tscn" id="5_67vp5"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/dining_table.tscn" id="6_oha7c"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/dining_chair.tscn" id="7_rhgl2"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/ceiling_lamp.tscn" id="8_ld2gq"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/wall_lamp.tscn" id="9_nbecs"]
+[ext_resource type="PackedScene" path="res://scenes/objects/blood/blood_drips.tscn" id="9_uka7v"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/kitchen/fridge.tscn" id="10_uskuv"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/kitchen/sink_cabinet.tscn" id="11_ey8oy"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/kitchen/stove.tscn" id="12_vfglj"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/kitchen/wall_cabinet.tscn" id="13_igs6b"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/kitchen/base_cabinet.tscn" id="14_p2x5q"]
 [ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="15_a5dn8"]
+[ext_resource type="PackedScene" path="res://scenes/objects/blood/blood_splat_small.tscn" id="15_wbugi"]
 [ext_resource type="PackedScene" uid="uid://d161ooahnfhd3" path="res://scenes/objects/lighting/light_switch.tscn" id="16_oyw17"]
+[ext_resource type="PackedScene" path="res://scenes/objects/blood/blood_smear.tscn" id="18_nc5fq"]
+[ext_resource type="PackedScene" path="res://scenes/objects/blood/blood_pool.tscn" id="19_uka7v"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="20_m645t"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="21_yxbim"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="22_sghjm"]
@@ -33,7 +38,6 @@ display_name = "Building / Ground floor"
 camera_bounds = Rect2i(0, 0, 1152, 720)
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=758485644]
-visible = false
 color = Color(0.039215688, 0.039215688, 0.039215688, 1)
 
 [node name="Buildings" type="Node2D" parent="." unique_id=199967885]
@@ -43,7 +47,7 @@ position = Vector2(-855, 275)
 color = Color(0.025, 0.045, 0.06, 1)
 polygon = PackedVector2Array(1230, 255, 1230, 345, 1180, 345, 1180, 255)
 
-[node name="House_01_2Mouth" type="Polygon2D" parent="Buildings" unique_id=1334324940]
+[node name="House_04_2Mouth" type="Polygon2D" parent="Buildings" unique_id=1334324940]
 position = Vector2(-562, 275)
 color = Color(0.025, 0.045, 0.06, 1)
 polygon = PackedVector2Array(1230, 255, 1230, 345, 1180, 345, 1180, 255)
@@ -126,6 +130,11 @@ position = Vector2(59, 621)
 position = Vector2(84.99999, 623)
 rotation = 0.06981317
 
+[node name="BloodOverlay" parent="Props/Sofa" unique_id=1516275485 instance=ExtResource("5_67vp5")]
+position = Vector2(-8.008316, -28.510803)
+rotation = -0.12217305
+scale = Vector2(0.63900375, 0.5)
+
 [node name="FloorLamp" parent="Props" unique_id=374711007 instance=ExtResource("5_31toa")]
 z_index = -3
 position = Vector2(71, 611)
@@ -145,6 +154,11 @@ position = Vector2(230, 622)
 z_index = -2
 position = Vector2(209, 607)
 rotation = -1.5707964
+
+[node name="BloodOverlay" parent="Props/DiningChair" unique_id=138735319 instance=ExtResource("9_uka7v")]
+position = Vector2(-7, -13.999996)
+rotation = 1.4643313
+scale = Vector2(0.27056468, 0.3)
 
 [node name="DiningChair2" parent="Props" unique_id=1994474264 instance=ExtResource("7_rhgl2")]
 z_index = -2
@@ -172,6 +186,11 @@ modulate = Color(0.864304, 0.8431244, 1.0845727, 1)
 position = Vector2(557, 622)
 color_variant = 2
 
+[node name="BloodOverlay" parent="Props/Fridge" unique_id=1527650248 instance=ExtResource("5_67vp5")]
+position = Vector2(7, -41)
+rotation = -0.12217305
+scale = Vector2(0.5, 0.5)
+
 [node name="SinkCabinet" parent="Props" unique_id=624735473 instance=ExtResource("11_ey8oy")]
 z_index = -2
 position = Vector2(511, 625)
@@ -184,16 +203,30 @@ scale = Vector2(1, 0.81)
 [node name="WallCabinet" parent="Props" unique_id=1311071225 instance=ExtResource("13_igs6b")]
 position = Vector2(429, 506)
 
+[node name="BloodOverlay" parent="Props/WallCabinet" unique_id=1499885178 instance=ExtResource("15_wbugi")]
+position = Vector2(-19.000015, 18.000015)
+rotation = 0.2443461
+scale = Vector2(0.70093274, 0.47281456)
+
 [node name="WallCabinet2" parent="Props" unique_id=319113412 instance=ExtResource("13_igs6b")]
 position = Vector2(489, 506)
 
 [node name="WallCabinet3" parent="Props" unique_id=1900911237 instance=ExtResource("13_igs6b")]
 position = Vector2(549, 506)
 
+[node name="BloodOverlay" parent="Props/WallCabinet3" unique_id=516713276 instance=ExtResource("15_wbugi")]
+position = Vector2(18, 32.999996)
+rotation = 0.2443461
+scale = Vector2(0.47303012, 0.49270248)
+
 [node name="BaseCabinet" parent="Props" unique_id=882658757 instance=ExtResource("14_p2x5q")]
 z_index = -3
 position = Vector2(423, 625)
 scale = Vector2(0.8, 1)
+
+[node name="BloodOverlay2" parent="Props/BaseCabinet" unique_id=1863665076 instance=ExtResource("18_nc5fq")]
+position = Vector2(-8.75001, -42)
+scale = Vector2(0.9927063, 0.72175294)
 
 [node name="WallLamp2" parent="Props" unique_id=702496554 instance=ExtResource("9_nbecs")]
 z_index = -3
@@ -201,6 +234,10 @@ position = Vector2(467, 549)
 light_enabled = false
 light_energy = 1.2
 light_radius_scale = 1.0
+
+[node name="BloodOverlay" parent="Props" unique_id=575467245 instance=ExtResource("19_uka7v")]
+position = Vector2(623, 619)
+scale = Vector2(1.1, 1.34)
 
 [node name="Interactables" type="Node2D" parent="." unique_id=580173129]
 
@@ -210,10 +247,11 @@ position = Vector2(350, 556)
 destination_scene = "uid://6qrdl5x7rakj"
 destination_spawn = "from_house_04"
 
-[node name="EnterHouse_01_2" parent="Interactables" unique_id=928311053 instance=ExtResource("15_a5dn8")]
+[node name="EnterHouse_04_2" parent="Interactables" unique_id=928311053 instance=ExtResource("15_a5dn8")]
 visible = false
 position = Vector2(643, 556)
-destination_scene = "uid://m80iahaftwpp"
+destination_scene = "uid://urhvcxncseea"
+destination_spawn = "from_house_04"
 
 [node name="LightSwitch" parent="Interactables" unique_id=1648403643 instance=ExtResource("16_oyw17")]
 position = Vector2(318, 575)
@@ -236,10 +274,10 @@ position = Vector2(352, 587)
 
 [node name="Spawns" type="Node2D" parent="." unique_id=1777379054]
 
-[node name="default" type="Marker2D" parent="Spawns" unique_id=229847141]
+[node name="from_house_04_2" type="Marker2D" parent="Spawns" unique_id=229847141]
 position = Vector2(643, 588)
 
-[node name="from_street" type="Marker2D" parent="Spawns" unique_id=706827966]
+[node name="from_town_01" type="Marker2D" parent="Spawns" unique_id=706827966]
 position = Vector2(352, 588)
 
 [node name="HUD" parent="." unique_id=570484733 instance=ExtResource("21_yxbim")]
