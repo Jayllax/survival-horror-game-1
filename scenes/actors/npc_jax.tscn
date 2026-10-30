@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://b1t26x82qn6n6"]
+
+[ext_resource type="Texture2D" uid="uid://3nt7hvkr0u4q" path="res://art/pixel/npc_jax_,motion.png" id="4_prk52"]
+[ext_resource type="Resource" uid="uid://dfrn7lxpnh7w0" path="res://data/narrative/example_conversation.tres" id="dialogue"]
+[ext_resource type="Resource" uid="uid://2kpu7flkh5j1" path="res://data/narrative/example_repeat.tres" id="repeat"]
+[ext_resource type="Script" uid="uid://cqcs2nby0i1jy" path="res://scripts/narrative/narrative_interactable.gd" id="script"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2gt3p"]
+atlas = ExtResource("4_prk52")
+region = Rect2(64, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cb18x"]
+atlas = ExtResource("4_prk52")
+region = Rect2(96, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i4py2"]
+atlas = ExtResource("4_prk52")
+region = Rect2(32, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i01ae"]
+atlas = ExtResource("4_prk52")
+region = Rect2(96, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w5bgk"]
+atlas = ExtResource("4_prk52")
+region = Rect2(128, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rsfl6"]
+atlas = ExtResource("4_prk52")
+region = Rect2(64, 40, 32, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ygi8c"]
+animations = [{
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_2gt3p")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_cb18x")
+}, {
+"duration": 5.0,
+"texture": SubResource("AtlasTexture_2gt3p")
+}, {
+"duration": 5.0,
+"texture": SubResource("AtlasTexture_cb18x")
+}, {
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_2gt3p")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_i4py2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i01ae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w5bgk")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_rsfl6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i4py2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i01ae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i4py2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rsfl6")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_w5bgk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rsfl6")
+}],
+"loop": 1,
+"name": &"talking",
+"speed": 1.0
+}]
+
+[node name="NPC" type="Area2D" unique_id=760903738]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("script")
+kind = 1
+dialogue = ExtResource("dialogue")
+repeat_dialogue = ExtResource("repeat")
+prompt_offset = Vector2(0, -62)
+
+[node name="Body" type="AnimatedSprite2D" parent="." unique_id=1780124678]
+position = Vector2(-1, 32)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_ygi8c")
+animation = &"idle"
+autoplay = "idle"
+offset = Vector2(0, -20)

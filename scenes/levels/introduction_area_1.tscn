@@ -521,17 +521,13 @@ position = Vector2(521, 620)
 scale = Vector2(1.5, 1.5)
 
 [node name="Note" parent="Interactables" unique_id=489710493 instance=ExtResource("3_qxsnt")]
-position = Vector2(476, 618)
-rotation = 0.20943952
-scale = Vector2(0.3, 0.3)
-skew = 1.2758356
+position = Vector2(476, 620)
+scale = Vector2(0.4, 0.4)
 document = SubResource("Resource_asx42")
 
 [node name="Note2" parent="Interactables" unique_id=1645172902 instance=ExtResource("3_qxsnt")]
 position = Vector2(1833.9999, 594)
-rotation = 0.2094395
-scale = Vector2(0.30000004, 0.29999998)
-skew = 1.2758356
+scale = Vector2(0.4, 0.4)
 document = SubResource("Resource_7gop2")
 
 [node name="Actors" type="Node2D" parent="." unique_id=1189311552]

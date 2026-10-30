@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cs51u64blnw6m"]
 
-[ext_resource type="Texture2D" uid="uid://c7twp3q738pw0" path="res://art/pixel/notice.png" id="art"]
+[ext_resource type="Texture2D" path="res://art/pixel/notes/note_flat.png" id="art"]
 [ext_resource type="Resource" uid="uid://4sn6von58nih" path="res://data/narrative/example_note.tres" id="document"]
 [ext_resource type="Script" uid="uid://cqcs2nby0i1jy" path="res://scripts/narrative/narrative_interactable.gd" id="script"]
 
@@ -12,4 +12,7 @@ document = ExtResource("document")
 interaction_radius = 50.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1279006753]
+texture_filter = 1
+position = Vector2(0, -12)
+scale = Vector2(2, 2)
 texture = ExtResource("art")

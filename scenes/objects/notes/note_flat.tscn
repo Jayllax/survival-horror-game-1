@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="PackedScene" path="res://scenes/objects/note.tscn" id="base"]
+[ext_resource type="Texture2D" path="res://art/pixel/notes/note_flat.png" id="art"]
+
+[node name="Note" instance=ExtResource("base")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("art")

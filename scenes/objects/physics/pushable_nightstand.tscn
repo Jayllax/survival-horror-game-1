@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bedroom/nightstand.tscn" id="furniture"]
+[ext_resource type="PackedScene" path="res://scenes/objects/physics/pushable_body.tscn" id="body"]
+
+[sub_resource type="RectangleShape2D" id="nightstand_shape"]
+resource_local_to_scene = true
+size = Vector2(28, 30)
+
+[node name="Nightstand" instance=ExtResource("furniture")]
+
+[node name="PushableBody" parent="." instance=ExtResource("body")]
+
+[node name="CollisionShape2D" parent="PushableBody" index="0"]
+position = Vector2(0, -15)
+shape = SubResource("nightstand_shape")

@@ -1,0 +1,6 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="PackedScene" path="res://scenes/objects/blood/blood_overlay.tscn" id="base"]
+[ext_resource type="Texture2D" path="res://art/pixel/blood/blood_smear.png" id="art"]
+
+[node name="BloodOverlay" instance=ExtResource("base")]
+texture = ExtResource("art")
