@@ -436,16 +436,14 @@ position = Vector2(1646, 620)
 [node name="Interactables" type="Node2D" parent="." unique_id=1337389834]
 
 [node name="Note" parent="Interactables" unique_id=489710493 instance=ExtResource("3_sh5d3")]
-position = Vector2(712.00006, 596)
-rotation = 0.20943952
+position = Vector2(720, 598)
 scale = Vector2(0.3, 0.3)
-skew = 1.2758356
 document = SubResource("Resource_2rmq6")
 
 [node name="Pickup2" parent="Interactables" unique_id=757723452 instance=ExtResource("4_sh5d3")]
-position = Vector2(766.00006, 594)
+position = Vector2(766.00006, 595.00006)
 rotation = 0.65449846
-scale = Vector2(0.4, 0.4)
+scale = Vector2(0.3, 0.3)
 skew = 0.32637656
 
 [node name="Pickup3" parent="Interactables" unique_id=1513320068 instance=ExtResource("15_tv0fq")]

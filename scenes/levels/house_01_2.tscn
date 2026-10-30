@@ -299,18 +299,13 @@ interaction_radius = 50.0
 reward_item = ExtResource("4_ay8je")
 
 [node name="Note" parent="Interactables" unique_id=1645172902 instance=ExtResource("14_2kgsg")]
-modulate = Color(0.8439394, 1, 1, 1)
-position = Vector2(51.999878, 591)
-rotation = -0.20071286
+position = Vector2(60, 591)
 scale = Vector2(0.3, 0.3)
-skew = -1.2409291
 document = SubResource("Resource_2kgsg")
 
 [node name="Note2" parent="Interactables" unique_id=1834164669 instance=ExtResource("14_2kgsg")]
-position = Vector2(562.99994, 580)
-rotation = 0.13962634
+position = Vector2(546, 580)
 scale = Vector2(0.3, 0.3)
-skew = 1.3543755
 document = SubResource("Resource_c6hel")
 
 [node name="LootContainer" parent="Interactables" unique_id=1125194028 instance=ExtResource("16_c6hel")]
