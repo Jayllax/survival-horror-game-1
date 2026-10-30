@@ -79,3 +79,5 @@ Item definitions expose **Use Behavior → Remove After Use**. Existing defaults
 Older town/alley/interior scene paths are redirected to their new names when reading save files, including scene-prefixed collected/opened-object state. Existing files are not rewritten during previews. The uploaded empty animation point lists remain intact; a built-in reference keeps the current character’s attachments aligned when both saved profiles are empty.
 
 Fonts and document appearance: [font guide](docs/guides/FONT_GUIDE.md). Player answers, saved story flags and conditional objects: [dialogue choice guide](docs/guides/DIALOGUE_CHOICES_GUIDE.md).
+
+For scene-contained custom items and bicycle save/load regression checks, run `GODOT_BIN=/path/to/godot bash tools/check.sh embedded_item_saves`. This includes a second Godot process that loads the files written by the first.

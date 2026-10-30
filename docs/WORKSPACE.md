@@ -73,3 +73,9 @@ The focused narrative/choice and modal suites validate the new UI and saved cons
 The October 30 23-28 upload changes seven level scenes; all seven are imported byte-for-byte. `inventory_grid_control.gd` now limits GUI hits and keyboard focus to real cells, cancels drops outside the grid without changing item data, and adapts its bounds to current inventory dimensions. Its 21 native GUI checks cover outside clicks, valid dragging/rotation, stack merging and resized grids.
 
 All general interface text, including code-drawn inventory counts, uses `art/fonts/styles/ui_text.tres` (Marcellus). Save-slot records use the Special Elite preset. The only retained old interface face is Lakeside Castle in note contents, as requested. A runtime audit checked 105 font roles across menus, popups and the HUD with exactly that one exception and no failures. Transparent note panels and authored layouts are retained.
+
+## Scene-contained item saves
+
+`Game._saved_catalog` accepts typed InventoryItemDefinition resources stored either externally or inside a scene/resource. It loads and holds the owning resource before resolving embedded IDs in a fresh process; it never instantiates the owning level. The previous `.tres` filename-only check rejected the designer's embedded `house_03_key` and `gate_key`, even after visiting their locations without collecting them. Save format 4, slot isolation, atomic writes and malformed-data validation remain unchanged.
+
+`tests/embedded_item_saves.tscn` exercises the real alley, house and town bicycle menu, both custom keys, independent inventory/health/progress snapshots and malformed-data rejection. `tools/check.sh embedded_item_saves` automatically launches a second Godot process to verify the same files load without previously visited scenes in memory. The latest supplied ZIP differs only in UI-theme property ordering; that exact uploaded file is preserved, along with all levels and assets.

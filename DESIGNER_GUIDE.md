@@ -162,6 +162,8 @@ Saving is **manual**. Entering rooms, collecting objects, opening gates, pausing
 
 An example bicycle is placed at **(200, 620)** on the street. The front-facing artwork is deliberately mirror-symmetric and uses colors sampled from your current player. **Bell/Bicycle** is a normal editor-visible Sprite2D. The native PNG is **32×28** and displayed at **2×** in Godot. Edit `art/pixel/bicycle.png` directly; there is no enlarged duplicate. Replace **BellSound → Stream** to use another sound. Bell Animation Seconds controls the small visual bob before opening the menu. No inventory item, key, story text, or consumable is required.
 
+Custom inventory items can be stored as separate `.tres` files or created directly inside a level scene through the Inspector. Both are supported by saving and loading, including after restarting the game. You do not need to move existing scene-contained keys into separate files.
+
 ### What each slot remembers
 
 Each independent file records the location, bicycle's return position, the grid dimensions, every item instance (ID, quantity, coordinates, rotation and installed upgrades), equipped weapon, health, each weapon’s loaded magazine, flashlight state, circuit/reference flags, collected pickups, opened gates, defeated enemies, and elapsed play time. The slot menu shows location, station name, local save date/time, played hours/minutes, and health. Saving does not heal the player or refill ammunition. Partly injured living enemies, their patrol positions, and active animations reset when a scene reloads.
