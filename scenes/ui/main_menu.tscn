@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://dx3hvjx8g471m" path="res://scripts/main_menu.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://2aajvjioqmcw" path="res://art/pixel/station.png" id="2"]
 [ext_resource type="FontVariation" path="res://art/fonts/styles/main_title.tres" id="3_x2yvf"]
-[ext_resource type="FontFile" uid="uid://dki1d2lncyaxp" path="res://art/fonts/copy-photo.regular.otf" id="4_uhagc"]
 [ext_resource type="PackedScene" path="res://scenes/ui/save_menu.tscn" id="save_menu"]
 
 [ext_resource type="FontFile" path="res://art/fonts/marcellus/Marcellus-Regular.ttf" id="heading_font"]
@@ -68,7 +67,6 @@ offset_left = 68.0
 offset_top = 354.0
 offset_right = 433.0
 offset_bottom = 398.0
-theme_override_fonts/font = ExtResource("4_uhagc")
 text = "New game"
 
 [node name="Quit" type="Button" parent="." unique_id=921365535]
@@ -77,7 +75,6 @@ offset_left = 68.0
 offset_top = 462.0
 offset_right = 433.0
 offset_bottom = 506.0
-theme_override_fonts/font = ExtResource("4_uhagc")
 text = "Quit"
 
 [node name="Continue" type="Button" parent="." unique_id=1682072324]
@@ -86,7 +83,6 @@ offset_left = 68.0
 offset_top = 300.0
 offset_right = 433.0
 offset_bottom = 344.0
-theme_override_fonts/font = ExtResource("4_uhagc")
 text = "Load game"
 
 [node name="Options" type="Button" parent="." unique_id=2017020663]
@@ -95,7 +91,6 @@ offset_left = 68.0
 offset_top = 408.0
 offset_right = 433.0
 offset_bottom = 452.0
-theme_override_fonts/font = ExtResource("4_uhagc")
 text = "Options"
 
 [node name="OptionsPanel" type="Panel" parent="." unique_id=573137180]

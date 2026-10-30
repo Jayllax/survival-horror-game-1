@@ -1,6 +1,6 @@
 [gd_resource type="Theme" format=3 uid="uid://ughu8ktudw4d"]
 
-[ext_resource type="FontFile" uid="uid://b0awfo2ongx6g" path="res://art/fonts/Silkscreen-Regular.ttf" id="font"]
+[ext_resource type="FontVariation" path="res://art/fonts/styles/ui_text.tres" id="font"]
 
 [sub_resource type="StyleBoxFlat" id="focus"]
 bg_color = Color(0, 0, 0, 0)
@@ -35,7 +35,8 @@ border_width_bottom = 1
 border_color = Color(0.85, 0.7, 0.45, 1)
 
 [resource]
-default_font_size = 16
+default_font = ExtResource("font")
+default_font_size = 18
 Button/colors/font_color = Color(0.85, 0.84, 0.75, 1)
 Button/colors/font_hover_color = Color(1, 0.9, 0.7, 1)
 Button/fonts/font = ExtResource("font")
@@ -47,3 +48,10 @@ Label/colors/font_color = Color(0.85, 0.84, 0.75, 1)
 Label/colors/font_shadow_color = Color(0.02, 0.04, 0.05, 0.8)
 Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
+Label/fonts/font = ExtResource("font")
+RichTextLabel/fonts/normal_font = ExtResource("font")
+RichTextLabel/fonts/bold_font = ExtResource("font")
+RichTextLabel/fonts/italics_font = ExtResource("font")
+RichTextLabel/fonts/bold_italics_font = ExtResource("font")
+RichTextLabel/fonts/mono_font = ExtResource("font")
+Window/fonts/title_font = ExtResource("font")

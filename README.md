@@ -59,7 +59,7 @@ Four bicycle-only save slots independently store inventory/layout/equipment, amm
 ## Validation
 
 ```sh
-GODOT_BIN=/path/to/godot-4.7.2 bash tools/check.sh pushables aiming narrative dialogue_choices combat stealth interiors
+GODOT_BIN=/path/to/godot-4.7.2 bash tools/check.sh inventory_bounds pushables aiming narrative dialogue_choices combat stealth interiors
 ```
 
 This focused movement/interaction command imports the project and uses isolated user-data folders. It covers child-component pushing, the push-and-jump escape route, independent moved-object saves, aiming, notes/dialogue, movement/combat, stealth and the authored stairs.

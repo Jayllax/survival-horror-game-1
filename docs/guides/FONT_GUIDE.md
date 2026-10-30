@@ -1,6 +1,6 @@
 # Changing fonts
 
-The main title uses Cormorant Garamond; menu headings and speaker names use Marcellus; note titles use IM Fell English. Your existing Lakeside Castle note and conversation body font, panel styling and Copy Photo button choices are preserved.
+The main title uses Cormorant Garamond; menu headings and speaker names use Marcellus; note titles use IM Fell English. Your existing Lakeside Castle note-content font and transparent note panels are preserved. General dialogue and all other interface text now use the new fonts. Save-slot records use Special Elite.
 
 ## Make one note typewritten
 
@@ -37,9 +37,11 @@ The main-menu `Title` in `scenes/ui/main_menu.tscn` references `art/fonts/styles
 
 Other headings use **Theme Overrides → Fonts → Font**, with sizes in **Font Sizes**. No chapter or location-title overlay was added; the station's TownName remains blank unless you provide text.
 
-The older **Examine** message uses `Root/NotePanel/Title` and `Root/NotePanel/Text` in `hud.tscn`. Its body also keeps Lakeside Castle.
+The older **Examine** message uses `Root/NotePanel/Title` and `Root/NotePanel/Text` in `hud.tscn`. Its body now uses the shared Marcellus interface font.
 
-General buttons use `art/ui_theme.tres` → **Button → Fonts → Font**. Local overrides take priority, including your Copy Photo buttons. The inventory grid has its own internal font.
+General labels, buttons, dialogue, tooltips and code-drawn inventory counts share `art/fonts/styles/ui_text.tres`. Open that FontVariation and change **Base Font** to update the general interface in one place. `art/ui_theme.tres` references it for the default font and text-control types. It no longer uses Silkscreen, Copy Photo or Madawaska.
+
+Save-slot buttons reference `art/fonts/styles/typewritten_document.tres`; change its **Base Font** to change those records. The main title and decorative headings keep their separate role-specific fonts listed above. Lakeside Castle is used only for the shared note-content reader. A note can still deliberately override its font through its Document resource.
 
 ## Licenses and preview
 
@@ -55,3 +57,6 @@ These previews use the actual game interface; sample typography text exists only
 - [Default note reader](../previews/fonts-note-reader.png)
 - [Optional typewritten note](../previews/fonts-typewritten-note.png)
 - [Conversation with Continue only](../previews/fonts-conversation.png)
+
+- [Save-slot records](../previews/fonts-save-menu.png)
+- [Inventory, buttons and item counts](../previews/fonts-inventory.png)

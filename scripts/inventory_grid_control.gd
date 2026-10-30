@@ -9,7 +9,7 @@ var grab_offset := Vector2i.ZERO
 var keyboard_cell := Vector2i.ZERO
 var combining := false
 var pointer_cell := Vector2i.ZERO
-const PIXEL_FONT = preload("res://art/fonts/Silkscreen-Regular.ttf")
+const UI_FONT = preload("res://art/fonts/styles/ui_text.tres")
 
 func _ready() -> void:
     focus_mode = Control.FOCUS_ALL
@@ -90,9 +90,9 @@ func draw_item(item: Dictionary, rect: Rect2, tint: Color = Color.WHITE) -> void
         draw_texture_rect(texture, Rect2(-drawn / 2, drawn), false, tint)
         draw_set_transform(Vector2.ZERO)
     if item["count"] > 1:
-        draw_string(PIXEL_FONT, rect.end - Vector2(30,5), str(item["count"]), HORIZONTAL_ALIGNMENT_RIGHT, 26, 12, tint)
+        draw_string(UI_FONT, rect.end - Vector2(30,5), str(item["count"]), HORIZONTAL_ALIGNMENT_RIGHT, 26, 14, tint)
     if item["uid"] == Game.equipped_uid:
-        draw_string(PIXEL_FONT, rect.position + Vector2(5,14), "E", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color("b4d1bd"))
+        draw_string(UI_FONT, rect.position + Vector2(5,14), "E", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color("b4d1bd"))
 
 func pick(uid: int, cell: Vector2i) -> void:
     if not is_valid_cell(cell):

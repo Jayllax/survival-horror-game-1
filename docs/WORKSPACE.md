@@ -58,7 +58,7 @@ The child pushable component lives at `scenes/objects/physics/pushable_body.tscn
 
 ## Fonts
 
-`art/fonts/` contains the uploaded fonts and four new open-license families, with notices and two editable FontVariation presets under `styles/`. The [font guide](guides/FONT_GUIDE.md) lists each UI node and the per-note override controls. The newest uploaded levels, items, Jax art and project/window settings are preserved.
+`art/fonts/` contains the uploaded fonts and four new open-license families, with notices and editable FontVariation presets under `styles/`. The [font guide](guides/FONT_GUIDE.md) lists each UI node and the per-note override controls. The newest uploaded levels, items, Jax art and project/window settings are preserved.
 
 ## Conversation choices
 
@@ -67,3 +67,9 @@ The child pushable component lives at `scenes/objects/physics/pushable_body.tscn
 ### Verification notes for this iteration
 
 The focused narrative/choice and modal suites validate the new UI and saved consequences. Legacy code-lock and loot checks now read the designer's key resource ID instead of assuming `gate_key`; the light-switch test places the player inside the edited Interaction Radius. These are fixture changes only. The separate headless aiming suite reports one left-mirroring assertion failure in both the untouched October 30 22-42 upload and this branch. Aiming behavior and character/weapon attachment resources were not changed in this iteration.
+
+## Inventory bounds and complete interface font pass
+
+The October 30 23-28 upload changes seven level scenes; all seven are imported byte-for-byte. `inventory_grid_control.gd` now limits GUI hits and keyboard focus to real cells, cancels drops outside the grid without changing item data, and adapts its bounds to current inventory dimensions. Its 21 native GUI checks cover outside clicks, valid dragging/rotation, stack merging and resized grids.
+
+All general interface text, including code-drawn inventory counts, uses `art/fonts/styles/ui_text.tres` (Marcellus). Save-slot records use the Special Elite preset. The only retained old interface face is Lakeside Castle in note contents, as requested. A runtime audit checked 105 font roles across menus, popups and the HUD with exactly that one exception and no failures. Transparent note panels and authored layouts are retained.

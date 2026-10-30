@@ -2,7 +2,6 @@
 
 [ext_resource type="FontFile" path="res://art/fonts/im_fell_english/IMFellEnglish-Regular.ttf" id="2_fdpkf"]
 [ext_resource type="FontFile" uid="uid://cvpc2epm7fh3n" path="res://art/fonts/lakeside-castle.regular.ttf" id="3_n1y5b"]
-[ext_resource type="FontFile" uid="uid://dki1d2lncyaxp" path="res://art/fonts/copy-photo.regular.otf" id="4_usul1"]
 [ext_resource type="Script" uid="uid://5a5lf3mdl43r" path="res://scripts/narrative/story_ui.gd" id="script"]
 
 [ext_resource type="FontFile" path="res://art/fonts/marcellus/Marcellus-Regular.ttf" id="heading_font"]
@@ -78,7 +77,6 @@ offset_left = 32.0
 offset_top = -65.0
 offset_right = -32.0
 offset_bottom = -23.0
-theme_override_fonts/font = ExtResource("4_usul1")
 text = "Close"
 
 [node name="DialoguePanel" type="Panel" parent="." unique_id=254669242]
@@ -112,7 +110,6 @@ offset_left = 28.0
 offset_top = 53.0
 offset_right = -28.0
 offset_bottom = -59.0
-theme_override_fonts/normal_font = ExtResource("3_n1y5b")
 theme_override_font_sizes/normal_font_size = 18
 scroll_following = true
 
@@ -126,7 +123,6 @@ offset_left = -268.0
 offset_top = -48.0
 offset_right = -28.0
 offset_bottom = -12.0
-theme_override_fonts/font = ExtResource("4_usul1")
 theme_override_font_sizes/font_size = 14
 text = "Continue"
 
