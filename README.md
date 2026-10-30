@@ -6,6 +6,8 @@ Reusable [room light switches](docs/guides/LIGHT_SWITCH_GUIDE.md) are available 
 
 Searchable furniture uses `scenes/objects/loot/loot_container.tscn`. An empty Contents array shows **Empty** once; filled containers transfer their configured items together and remain searchable if everything cannot fit. See the [loot-container guide](docs/guides/LOOT_CONTAINER_GUIDE.md).
 
+Five [side-view paper notes](docs/guides/NOTE_VARIANTS_GUIDE.md) are available under `scenes/objects/notes/`, with native PNGs in `art/pixel/notes/`. They share the existing note-reading system; the default Note uses the flat paper profile.
+
 Editable Godot **4.7.2 Standard** 2D survival-horror foundation. Import `project.godot` in Godot, then press **F5** for your configured introduction scene. The reusable main menu is `scenes/ui/main_menu.tscn`. All level geometry, props, characters and interactables are authored scene nodes.
 
 Your latest October 29 upload's renamed town/alley/house scenes, layouts, movement, camera, flashlight brightness, Z ordering, interaction ranges and startup scene are preserved. New games now start unarmed, as requested. This iteration adds a buckshot shotgun and consumable per-item size/damage upgrades. The grid stays at your chosen capacity; your story and level design remain yours to build.

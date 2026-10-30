@@ -217,3 +217,7 @@ Place `scenes/objects/lighting/light_switch.tscn`, assign lights or interior lam
 ## Searchable furniture and empty drawers
 
 Place `scenes/objects/loot/loot_container.tscn` beside or under your furniture and give it a unique **Persistent Id**. Leave **Contents** size **0** to show **Empty** once and remove the Search interaction. To add loot, create a **LootEntry** for each item type inside Contents, then assign its **Item** and **Quantity**. All contents must fit before anything is taken. Empty and filled containers keep their searched state in bicycle saves. See [LOOT_CONTAINER_GUIDE.md](docs/guides/LOOT_CONTAINER_GUIDE.md) for Inspector steps and optional opening artwork/animations.
+
+## Side-view note artwork
+
+Choose one of five reusable scenes in `scenes/objects/notes/`: flat, folded, crumpled, creased or a small stack. Assign your Document on the root and place the root on a tabletop/shelf/floor. The default Note now uses the flat profile. Native editable PNGs are in `art/pixel/notes/`; all share a 20×12 canvas and 2× display scale. See [NOTE_VARIANTS_GUIDE.md](docs/guides/NOTE_VARIANTS_GUIDE.md) for changing existing note artwork while keeping saved read IDs.
