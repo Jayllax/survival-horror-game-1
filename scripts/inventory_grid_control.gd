@@ -15,13 +15,32 @@ func _ready() -> void:
     focus_mode = Control.FOCUS_ALL
     mouse_filter = Control.MOUSE_FILTER_STOP
     clip_contents = true
-    Game.changed.connect(queue_redraw)
+    Game.changed.connect(sync_grid)
+    sync_grid()
+
+func is_valid_cell(cell: Vector2i) -> bool:
+    return Game.inventory != null and cell.x >= 0 and cell.y >= 0 and cell.x < Game.inventory.columns and cell.y < Game.inventory.rows
+
+func sync_grid() -> void:
+    if Game.inventory:
+        keyboard_cell.x = clampi(keyboard_cell.x, 0, Game.inventory.columns - 1)
+        keyboard_cell.y = clampi(keyboard_cell.y, 0, Game.inventory.rows - 1)
+    queue_redraw()
+
+func _has_point(point: Vector2) -> bool:
+    # The authored Control leaves room for larger inventories. Only drawn cells
+    # participate in GUI hit testing; its unused margins are not extra slots.
+    var step := cell_size()
+    return step > 0 and Rect2(Vector2.ZERO, Vector2(Game.inventory.columns, Game.inventory.rows) * step).has_point(point)
 
 func cell_size() -> float:
+    if Game.inventory == null or Game.inventory.columns <= 0 or Game.inventory.rows <= 0:
+        return 0.0
     return floorf(minf(64, minf(size.x / Game.inventory.columns, size.y / Game.inventory.rows)))
 
 func cell_at(point: Vector2) -> Vector2i:
-    return Vector2i(floori(point.x / cell_size()), floori(point.y / cell_size()))
+    var step := cell_size()
+    return Vector2i(floori(point.x / step), floori(point.y / step)) if step > 0 else Vector2i(-1, -1)
 
 func item_rect(item: Dictionary) -> Rect2:
     return Rect2(Vector2(item["x"], item["y"]) * cell_size() + Vector2(2,2), Vector2(Game.inventory.item_dimensions(item)) * cell_size() - Vector2(4,4))
@@ -30,6 +49,8 @@ func _draw() -> void:
     if not Game.inventory:
         return
     var step := cell_size()
+    if step <= 0:
+        return
     for y in Game.inventory.rows:
         for x in Game.inventory.columns:
             var rect := Rect2(Vector2(x,y) * step + Vector2.ONE, Vector2.ONE * (step - 2))
@@ -50,7 +71,7 @@ func _draw() -> void:
             var merge: bool = not target.is_empty() and target["uid"] != held_uid and target["id"] == item["id"] and Game.stack_limit(item["id"]) > int(target["count"])
             var upgrade := not target.is_empty() and not Game.upgrade_pair(held_uid, int(target["uid"])).is_empty()
             draw_item(item, item_rect(item), Color(0.55,0.85,0.65,0.9) if valid or merge or upgrade else Color(0.95,0.4,0.4,0.9))
-    if has_focus():
+    if has_focus() and is_valid_cell(keyboard_cell):
         draw_rect(Rect2(Vector2(keyboard_cell) * step + Vector2(2,2), Vector2.ONE * (step-4)), Color("ccbb98"), false, 1)
 
 func draw_item(item: Dictionary, rect: Rect2, tint: Color = Color.WHITE) -> void:
@@ -74,6 +95,8 @@ func draw_item(item: Dictionary, rect: Rect2, tint: Color = Color.WHITE) -> void
         draw_string(PIXEL_FONT, rect.position + Vector2(5,14), "E", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color("b4d1bd"))
 
 func pick(uid: int, cell: Vector2i) -> void:
+    if not is_valid_cell(cell):
+        return
     var item := Game.inventory.entry(uid)
     if item.is_empty():
         return
@@ -84,6 +107,11 @@ func pick(uid: int, cell: Vector2i) -> void:
     queue_redraw()
 
 func drop_at(cell: Vector2i) -> bool:
+    if not is_valid_cell(cell):
+        cancel_drag()
+        feedback.emit("That item does not fit there. Its original position is unchanged.")
+        item_selected.emit(selected_uid)
+        return false
     var uid := held_uid
     var target := Game.inventory.item_at(cell)
     var item := Game.inventory.entry(uid)
@@ -133,8 +161,11 @@ func rotate_item() -> void:
 
 func _gui_input(event: InputEvent) -> void:
     if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+        var cell := cell_at(event.position)
+        if not is_valid_cell(cell):
+            return
         grab_focus()
-        keyboard_cell = cell_at(event.position)
+        keyboard_cell = cell
         var uid := Game.inventory.item_at(keyboard_cell)
         selected_uid = uid
         var was_combining := combining
@@ -143,6 +174,7 @@ func _gui_input(event: InputEvent) -> void:
             pick(uid, keyboard_cell)
         accept_event()
     if event is InputEventKey and event.pressed and not event.echo:
+        sync_grid()
         var direction := Vector2i.ZERO
         match event.keycode:
             KEY_LEFT: direction.x = -1
