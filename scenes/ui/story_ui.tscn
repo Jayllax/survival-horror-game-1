@@ -1,22 +1,22 @@
-[gd_scene load_steps=5 format=3]
-[ext_resource type="Script" path="res://scripts/narrative/story_ui.gd" id="script"]
-[ext_resource type="FontFile" path="res://art/fonts/Silkscreen-Regular.ttf" id="font"]
-[sub_resource type="StyleBoxFlat" id="note_style"]
-bg_color = Color(0.14, 0.14, 0.18, 0.99)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.55, 0.42, 0.38, 1)
+[gd_scene format=3 uid="uid://de46xs8pmb4tx"]
+
+[ext_resource type="FontFile" uid="uid://dxt7wstj8clsi" path="res://art/fonts/madawaska.river.otf" id="2_fdpkf"]
+[ext_resource type="FontFile" uid="uid://cvpc2epm7fh3n" path="res://art/fonts/lakeside-castle.regular.ttf" id="3_n1y5b"]
+[ext_resource type="FontFile" uid="uid://dki1d2lncyaxp" path="res://art/fonts/copy-photo.regular.otf" id="4_usul1"]
+[ext_resource type="Script" uid="uid://5a5lf3mdl43r" path="res://scripts/narrative/story_ui.gd" id="script"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0egci"]
+
 [sub_resource type="StyleBoxFlat" id="dialogue_style"]
-bg_color = Color(0.14, 0.14, 0.18, 0.97)
+bg_color = Color(0.101932324, 0.101932265, 0.0789723, 0.4745098)
 border_width_left = 1
 border_width_top = 2
 border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.55, 0.42, 0.38, 1)
 
-[node name="StoryUI" type="Control"]
+[node name="StoryUI" type="Control" unique_id=2132790646]
+process_mode = 3
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -24,11 +24,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-process_mode = 3
 script = ExtResource("script")
 
-[node name="NotePanel" type="Panel" parent="."]
+[node name="NotePanel" type="Panel" parent="." unique_id=556469272]
 visible = false
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -37,34 +37,37 @@ offset_left = -380.0
 offset_top = -268.0
 offset_right = 380.0
 offset_bottom = 268.0
-theme_override_styles/panel = SubResource("note_style")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_0egci")
 
-[node name="Title" type="Label" parent="NotePanel"]
+[node name="Title" type="Label" parent="NotePanel" unique_id=1576408828]
+layout_mode = 0
 anchor_right = 1.0
 offset_left = 32.0
 offset_top = 25.0
 offset_right = -32.0
 offset_bottom = 81.0
-theme_override_colors/font_color = Color(0.8, 0.73, 0.60, 1)
+theme_override_colors/font_color = Color(0.8, 0.73, 0.6, 1)
+theme_override_fonts/font = ExtResource("2_fdpkf")
 theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
 autowrap_mode = 2
-mouse_filter = 2
 
-[node name="Body" type="RichTextLabel" parent="NotePanel"]
-theme_override_fonts/normal_font = ExtResource("font")
+[node name="Body" type="RichTextLabel" parent="NotePanel" unique_id=1283499942]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 32.0
 offset_top = 96.0
 offset_right = -32.0
 offset_bottom = -90.0
-theme_override_colors/default_color = Color(0.8, 0.73, 0.60, 1)
+focus_mode = 2
+theme_override_colors/default_color = Color(0.8, 0.73, 0.6, 1)
+theme_override_fonts/normal_font = ExtResource("3_n1y5b")
 theme_override_font_sizes/normal_font_size = 18
-bbcode_enabled = false
-scroll_active = true
 selection_enabled = true
 
-[node name="Close" type="Button" parent="NotePanel"]
+[node name="Close" type="Button" parent="NotePanel" unique_id=1812288717]
+layout_mode = 0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -72,10 +75,12 @@ offset_left = 32.0
 offset_top = -65.0
 offset_right = -32.0
 offset_bottom = -23.0
+theme_override_fonts/font = ExtResource("4_usul1")
 text = "Close"
 
-[node name="DialoguePanel" type="Panel" parent="."]
+[node name="DialoguePanel" type="Panel" parent="." unique_id=254669242]
 visible = false
+layout_mode = 0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -85,39 +90,42 @@ offset_right = -48.0
 offset_bottom = -24.0
 theme_override_styles/panel = SubResource("dialogue_style")
 
-[node name="Speaker" type="Label" parent="DialoguePanel"]
+[node name="Speaker" type="Label" parent="DialoguePanel" unique_id=1457548647]
+layout_mode = 0
 anchor_right = 1.0
 offset_left = 28.0
 offset_top = 17.0
 offset_right = -28.0
 offset_bottom = 47.0
+theme_override_fonts/font = ExtResource("2_fdpkf")
 theme_override_font_sizes/font_size = 20
-mouse_filter = 2
 
-[node name="Body" type="RichTextLabel" parent="DialoguePanel"]
-theme_override_fonts/normal_font = ExtResource("font")
+[node name="Body" type="RichTextLabel" parent="DialoguePanel" unique_id=380939567]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 28.0
 offset_top = 53.0
 offset_right = -28.0
 offset_bottom = -59.0
+theme_override_fonts/normal_font = ExtResource("3_n1y5b")
 theme_override_font_sizes/normal_font_size = 18
-bbcode_enabled = false
-scroll_active = true
 scroll_following = true
 
-[node name="Leave" type="Button" parent="DialoguePanel"]
+[node name="Leave" type="Button" parent="DialoguePanel" unique_id=738620743]
+layout_mode = 0
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 28.0
 offset_top = -48.0
 offset_right = 240.0
 offset_bottom = -12.0
+theme_override_fonts/font = ExtResource("4_usul1")
 theme_override_font_sizes/font_size = 14
 text = "Leave"
 
-[node name="Continue" type="Button" parent="DialoguePanel"]
+[node name="Continue" type="Button" parent="DialoguePanel" unique_id=109175227]
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -126,5 +134,6 @@ offset_left = -268.0
 offset_top = -48.0
 offset_right = -28.0
 offset_bottom = -12.0
+theme_override_fonts/font = ExtResource("4_usul1")
 theme_override_font_sizes/font_size = 14
 text = "Continue"

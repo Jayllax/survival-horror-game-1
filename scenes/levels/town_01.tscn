@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://6ac0fiq4jtxt" path="res://scripts/location.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_cream_left.tscn" id="2_35lbs"]
-[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://cu7udyf271gqe" path="res://scenes/ui/hud.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://dfitvfrdt4ym7" path="res://scenes/objects/streetlamp.tscn" id="3_ip0dd"]
 [ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_terracotta_no_chimney.tscn" id="5_5ycnk"]
@@ -287,6 +287,7 @@ visible = false
 
 [node name="House_04Entrance" parent="Interactables" unique_id=59443969 instance=ExtResource("4")]
 position = Vector2(2654, 556)
+destination_scene = "uid://yxwes2ioawnp"
 destination_spawn = "from_town_01"
 
 [node name="Facade" parent="Interactables/House_04Entrance" index="0" unique_id=1815167978]
