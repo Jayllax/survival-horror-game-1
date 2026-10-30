@@ -5,9 +5,10 @@
 
 [resource]
 script = ExtResource("1")
-id = "gate_key"
-display_name = "Key"
+id = "gate_key_01"
+display_name = "Gate key"
 category = "Key"
-description = "A key."
+description = "A key for a gate."
 icon = ExtResource("2")
+remove_after_use = true
 grid_size = Vector2i(2, 1)

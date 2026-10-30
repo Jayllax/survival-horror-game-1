@@ -34,6 +34,7 @@ script = ExtResource("1")
 camera_bounds = Rect2i(0, 0, 2200, 720)
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=857491603]
+visible = false
 color = Color(0.038397163, 0.038397174, 0.038397145, 1)
 
 [node name="Buildings" type="Node2D" parent="." unique_id=1653355476]
