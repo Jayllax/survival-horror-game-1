@@ -1,5 +1,7 @@
 # Ignotum / designer guide
 
+For physical side-view doors separating two rooms inside one level, see [ROOM_DOOR_GUIDE.md](docs/guides/ROOM_DOOR_GUIDE.md). Place `scenes/objects/room_door_side.tscn` with its root on the floor; no scene transition is needed.
+
 For reusable wire/solid fences in broad and end views, see [FENCE_GUIDE.md](docs/guides/FENCE_GUIDE.md). Try `tests/fixtures/fence_sandbox.tscn` with F6.
 
 For sleeping enemies, crouch bypasses, directional sight/hearing, patrol/search behaviour, and the attack animation/hitbox, see [ENEMY_AI_GUIDE.md](docs/guides/ENEMY_AI_GUIDE.md).
@@ -162,6 +164,8 @@ Saving is **manual**. Entering rooms, collecting objects, opening gates, pausing
 
 An example bicycle is placed at **(200, 620)** on the street. The front-facing artwork is deliberately mirror-symmetric and uses colors sampled from your current player. **Bell/Bicycle** is a normal editor-visible Sprite2D. The native PNG is **32×28** and displayed at **2×** in Godot. Edit `art/pixel/bicycle.png` directly; there is no enlarged duplicate. Replace **BellSound → Stream** to use another sound. Bell Animation Seconds controls the small visual bob before opening the menu. No inventory item, key, story text, or consumable is required.
 
+Custom inventory items can be stored as separate `.tres` files or created directly inside a level scene through the Inspector. Both are supported by saving and loading, including after restarting the game. You do not need to move existing scene-contained keys into separate files.
+
 ### What each slot remembers
 
 Each independent file records the location, bicycle's return position, the grid dimensions, every item instance (ID, quantity, coordinates, rotation and installed upgrades), equipped weapon, health, each weapon’s loaded magazine, flashlight state, circuit/reference flags, collected pickups, opened gates, defeated enemies, and elapsed play time. The slot menu shows location, station name, local save date/time, played hours/minutes, and health. Saving does not heal the player or refill ammunition. Partly injured living enemies, their patrol positions, and active animations reset when a scene reloads.
@@ -229,3 +233,19 @@ Place scenes from `scenes/objects/blood/` over your floors or furniture. The nat
 ## Pushable furniture
 
 Add `scenes/objects/physics/pushable_body.tscn` as a **child of your existing furniture**. Enable Editable Children and resize its CollisionShape2D to fit. Set Push Speed, a unique Persistent Id and optional left/right travel limits on the component. It moves the parent furniture, stays solid for jumping and remembers its position in bicycle saves. `pushable_nightstand.tscn` has the child already fitted. See [PUSHABLE_GUIDE.md](docs/guides/PUSHABLE_GUIDE.md) for the hierarchy and collision setup.
+
+## Fonts and document appearance
+
+See [FONT_GUIDE.md](docs/guides/FONT_GUIDE.md) for shared title, note and dialogue fonts. Existing note-body text keeps Lakeside Castle. Individual NoteDocument resources now offer optional **Body Font** and **Body Font Size** fields; use `art/fonts/styles/typewritten_document.tres` for Special Elite, or leave them empty/zero to use the shared reader.
+
+## Conversation choices and story flags
+
+DialogueLine resources now have an optional **Choices** array. Each DialogueChoice can record a **Choice Id**, set a story flag, and branch to another **Next Dialogue** sequence. Add `scenes/objects/story/world_flag_condition.tscn` to connect a flag to item visibility, entrance interaction or passage collision. Conversations must finish before returning to gameplay; notes still close normally and keep your transparent presentation. See [DIALOGUE_CHOICES_GUIDE.md](docs/guides/DIALOGUE_CHOICES_GUIDE.md).
+
+Branches return to the next parent line automatically, including nested responses. Uncheck a choice's **Return After Branch** only to replace the remaining conversation. Each line also has **Voice (optional) → Voice Audio / Voice Volume Db**. On the NPC root, **Conversation Animation** selects idle/talking clips and that character's speaker resources, allowing its visual to animate while gameplay remains paused. Jax is already configured. The response box now fits its actual answers. Full instructions and recording behavior are in the dialogue-choice guide above.
+
+For enemies controlled by a completion/story flag, use the condition's **Activate When Met** array and assign the **whole Enemy root**. Visibility alone only hides artwork; activation also disables AI, hearing and physics. Your `house_03_1` enemy is already connected to `story:spoke_to_jax_1` this way. See the enemy-activation section of the dialogue-choice guide.
+
+## Music, ambience and footsteps
+
+Select a level root and expand **Audio** to assign Music Cue and Ambience Cue resources from `data/audio/`. The introduction scenes share ambient_track_2; town_01 uses ambient_track_1. The persistent controller crossfades region changes and adds sight-based scary_2 combat music. Safe-room music is available for your own rooms. Player footstep sounds follow animation contacts and can be changed with concrete/dirt Area2D zones. Full Inspector instructions: [AUDIO_GUIDE.md](docs/guides/AUDIO_GUIDE.md).

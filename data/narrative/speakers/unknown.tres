@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="DialogueSpeaker" format=3 uid="uid://bxi2s27p2nb0h"]
+
+[ext_resource type="Script" uid="uid://ddbwf8pq6a7n1" path="res://scripts/narrative/dialogue_speaker.gd" id="1_t2smv"]
+
+[resource]
+script = ExtResource("1_t2smv")
+display_name = "Unknown man"
+text_color = Color(0.74812615, 0.63252634, 0.34844252, 1)

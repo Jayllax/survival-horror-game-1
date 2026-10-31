@@ -295,9 +295,25 @@ func _read_slot(index: int) -> Variant:
 func _saved_catalog(data: Dictionary) -> Dictionary:
     var catalog := item_catalog.duplicate()
     for definition_path in data.get("item_definitions", []):
-        if not definition_path is String or not definition_path.begins_with("res://") or not definition_path.ends_with(".tres") or not ResourceLoader.exists(definition_path):
+        # Inspector-created items may live inside a level as .tscn::Resource_id.
+        # Validate the loaded resource's type, rather than requiring a .tres suffix.
+        if not definition_path is String or not definition_path.begins_with("res://"):
             return {}
-        var definition := load(definition_path) as InventoryItemDefinition
+        var owner_path: String = definition_path.get_slice("::", 0)
+        if not ResourceLoader.exists(owner_path):
+            return {}
+        # Subresources are not discoverable in a fresh session until their owner
+        # is loaded. Hold that resource while resolving the item; never instantiate it.
+        var definition_owner: Resource = load(owner_path)
+        if definition_owner == null:
+            return {}
+        var definition: InventoryItemDefinition
+        if definition_path == owner_path:
+            definition = definition_owner as InventoryItemDefinition
+        else:
+            if not ResourceLoader.exists(definition_path):
+                return {}
+            definition = load(definition_path) as InventoryItemDefinition
         if not definition:
             return {}
         catalog[definition.id] = definition

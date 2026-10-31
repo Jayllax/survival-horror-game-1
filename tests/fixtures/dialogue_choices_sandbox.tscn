@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3]
+[ext_resource type="PackedScene" path="res://tests/fixtures/story_sandbox.tscn" id="base"]
+[ext_resource type="Resource" path="res://tests/fixtures/dialogue_choices/question.tres" id="dialogue"]
+[ext_resource type="PackedScene" path="res://scenes/objects/ammo.tscn" id="ammo"]
+[ext_resource type="PackedScene" path="res://scenes/objects/story/world_flag_condition.tscn" id="condition"]
+[ext_resource type="PackedScene" path="res://scenes/objects/entrance.tscn" id="entrance"]
+[sub_resource type="RectangleShape2D" id="barrier"]
+size = Vector2(24, 96)
+
+[node name="DialogueChoicesSandbox" instance=ExtResource("base")]
+display_name = "Dialogue choices framework sandbox"
+
+[node name="SaveBicycle" parent="Interactables" index="1"]
+position = Vector2(450, 620)
+
+[node name="NPC" parent="Actors" index="1"]
+dialogue = ExtResource("dialogue")
+repeat_dialogue = null
+persistent_id = "choices_sandbox_npc"
+
+[node name="ChoiceBarrier" type="StaticBody2D" parent="Geometry"]
+position = Vector2(760, 620)
+[node name="Shape" type="CollisionShape2D" parent="Geometry/ChoiceBarrier"]
+position = Vector2(0, -48)
+shape = SubResource("barrier")
+[node name="Artwork" type="Polygon2D" parent="Geometry/ChoiceBarrier"]
+polygon = PackedVector2Array(-12, -96, 12, -96, 12, 0, -12, 0)
+color = Color(0.294, 0.275, 0.349, 1)
+
+[node name="ConditionalAmmo" parent="Interactables" instance=ExtResource("ammo")]
+position = Vector2(900, 588)
+persistent_id = "choices_sandbox_ammo"
+
+[node name="ConditionalEntrance" parent="Interactables" instance=ExtResource("entrance")]
+position = Vector2(80, 570)
+destination_scene = "res://tests/fixtures/dialogue_choices_sandbox.tscn"
+
+[node name="ChoiceCondition" parent="." instance=ExtResource("condition")]
+flag_id = "story:framework_path"
+visible_when_met = Array[NodePath]([NodePath("../Interactables/ConditionalAmmo")])
+visible_when_unmet = Array[NodePath]([NodePath("../Geometry/ChoiceBarrier/Artwork")])
+disable_collision_when_met = Array[NodePath]([NodePath("../Geometry/ChoiceBarrier/Shape")])
+enable_interaction_when_met = Array[NodePath]([NodePath("../Interactables/ConditionalEntrance")])

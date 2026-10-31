@@ -6,9 +6,9 @@
 [resource]
 script = ExtResource("1")
 id = "cloth"
-remove_after_use = true
 display_name = "Clean cloth"
 category = "Material"
-description = "Can be combined to create an item."
+description = "A cloth. No use on its own."
 icon = ExtResource("2")
 max_stack = 3
+remove_after_use = true

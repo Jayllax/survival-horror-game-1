@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_dusty_rose_left.tscn" id="4_qnwl3"]
 [ext_resource type="Script" uid="uid://ct1jqn7k4e0md" path="res://scripts/narrative/note_document.gd" id="4_qxsnt"]
 [ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="5_04x8t"]
-[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_gxonl"]
+[ext_resource type="PackedScene" uid="uid://cu7udyf271gqe" path="res://scenes/ui/hud.tscn" id="5_gxonl"]
 [ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/fern.tscn" id="5_imbqn"]
 [ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/grass_tuft.tscn" id="6_bwqxg"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="6_cgomg"]
@@ -25,6 +25,7 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/bush_small.tscn" id="17_7gop2"]
 [ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/stump_small.tscn" id="17_jsfv0"]
 [ext_resource type="PackedScene" uid="uid://cfoibs7ccueyy" path="res://scenes/objects/houses/building_house.tscn" id="18_g3c0m"]
+[ext_resource type="Resource" path="res://data/audio/music/ambient_track_2.tres" id="location_music"]
 
 [sub_resource type="RectangleShape2D" id="floor"]
 size = Vector2(2774, 120)
@@ -49,6 +50,7 @@ text = "There has to be another way. Please, try to find another way out of here
 [node name="Location" type="Node2D" unique_id=653106688]
 script = ExtResource("1_brq61")
 camera_bounds = Rect2i(0, 0, 2200, 720)
+music_cue = ExtResource("location_music")
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=857491603]
 color = Color(0.038397163, 0.038397174, 0.038397145, 1)
@@ -68,7 +70,7 @@ polygon = PackedVector2Array(1150, 310, 1244.9397, 310.99933, 1340.0001, 310, 13
 position = Vector2(-254, 620)
 
 [node name="PineTall2" parent="Buildings/Plains" unique_id=1941184444 instance=ExtResource("11_gxonl")]
-position = Vector2(-55, 620)
+position = Vector2(17, 620)
 
 [node name="PineTall3" parent="Buildings/Plains" unique_id=1037341216 instance=ExtResource("11_gxonl")]
 position = Vector2(174, 620)
@@ -144,7 +146,7 @@ position = Vector2(-414, 620)
 [node name="PineTallSilo4" parent="Buildings/Silos" unique_id=878984059 instance=ExtResource("11_gxonl")]
 modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
 z_index = -3
-position = Vector2(-156, 620)
+position = Vector2(-171, 620)
 
 [node name="PineTallSilo5" parent="Buildings/Silos" unique_id=518866526 instance=ExtResource("11_gxonl")]
 modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
@@ -175,6 +177,11 @@ position = Vector2(382, 620)
 modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
 z_index = -1
 position = Vector2(139, 620)
+
+[node name="PineTallSilo11" parent="Buildings/Silos" unique_id=728161371 instance=ExtResource("11_gxonl")]
+modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+z_index = -3
+position = Vector2(-97, 620)
 
 [node name="Silos2" type="Node2D" parent="Buildings" unique_id=1978560596]
 position = Vector2(1267, 0)
@@ -298,7 +305,7 @@ position = Vector2(-266, 360)
 shape = SubResource("wall")
 
 [node name="EastBoundary" type="StaticBody2D" parent="Geometry" unique_id=722109662]
-position = Vector2(2220, 360)
+position = Vector2(1984, 366)
 
 [node name="Shape" type="CollisionShape2D" parent="Geometry/EastBoundary" unique_id=524093992]
 shape = SubResource("wall")
@@ -309,6 +316,34 @@ position = Vector2(-718, -76157.5)
 scale = Vector2(1.4854546, 122.833)
 color = Color(0.10064214, 0.09805592, 0.11097591, 1)
 polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 626, 1101, 626, 0, 626)
+
+[node name="Background4" type="Polygon2D" parent="Geometry" unique_id=1423829344]
+z_index = 3
+position = Vector2(-817, -61550.4)
+scale = Vector2(1.6518183, 100.33929)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
+
+[node name="Background5" type="Polygon2D" parent="Geometry" unique_id=2021309497]
+z_index = 3
+position = Vector2(-1545.0002, -73517.01)
+scale = Vector2(0.3759091, 118.56452)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
+
+[node name="Background6" type="Polygon2D" parent="Geometry" unique_id=1342030739]
+z_index = 3
+position = Vector2(-1366, -74123)
+scale = Vector2(1.9799999, 118.56452)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
+
+[node name="Background7" type="Polygon2D" parent="Geometry" unique_id=1596714728]
+z_index = 3
+position = Vector2(2529, -73437.99)
+scale = Vector2(0.3759091, 118.56452)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
 
 [node name="Props" type="Node2D" parent="." unique_id=1527274168]
 
@@ -530,6 +565,23 @@ position = Vector2(1833.9999, 594)
 scale = Vector2(0.4, 0.4)
 document = SubResource("Resource_7gop2")
 
+[node name="Entrance" parent="Interactables" unique_id=166180848 instance=ExtResource("5_04x8t")]
+position = Vector2(260, 556)
+action_label = "Go deeper"
+destination_scene = "uid://d22fnxrmc8sh3"
+
+[node name="Facade" parent="Interactables/Entrance" index="0" unique_id=1815167978]
+visible = false
+
+[node name="Entrance2" parent="Interactables" unique_id=634203237 instance=ExtResource("5_04x8t")]
+position = Vector2(1936, 556)
+action_label = "Go into the town"
+destination_scene = "uid://6qrdl5x7rakj"
+destination_spawn = "from_forest"
+
+[node name="Facade" parent="Interactables/Entrance2" index="0" unique_id=1815167978]
+visible = false
+
 [node name="Actors" type="Node2D" parent="." unique_id=1189311552]
 
 [node name="Player" parent="Actors" unique_id=1065848384 instance=ExtResource("4_asx42")]
@@ -543,13 +595,8 @@ position = Vector2(-155, 588)
 [node name="from_area_2" type="Marker2D" parent="Spawns" unique_id=129397878]
 position = Vector2(260, 588)
 
-[node name="Entrance" parent="Spawns" unique_id=166180848 instance=ExtResource("5_04x8t")]
-position = Vector2(260, 556)
-action_label = "Go deeper"
-destination_scene = "uid://d22fnxrmc8sh3"
-
-[node name="Facade" parent="Spawns/Entrance" index="0" unique_id=1815167978]
-visible = false
+[node name="from_town_01" type="Marker2D" parent="Spawns" unique_id=2071300971]
+position = Vector2(1936, 588)
 
 [node name="HUD" parent="." unique_id=296689736 instance=ExtResource("5_gxonl")]
 
@@ -559,4 +606,5 @@ volume_db = -16.0
 autoplay = true
 script = ExtResource("7_imbqn")
 
-[editable path="Spawns/Entrance"]
+[editable path="Interactables/Entrance"]
+[editable path="Interactables/Entrance2"]

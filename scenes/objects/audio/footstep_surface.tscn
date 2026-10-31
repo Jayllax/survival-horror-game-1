@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3]
+[ext_resource type="Script" path="res://scripts/audio/footstep_zone.gd" id="script"]
+[ext_resource type="Resource" path="res://data/audio/footsteps/dirt.tres" id="surface"]
+[sub_resource type="RectangleShape2D" id="shape"]
+resource_local_to_scene = true
+size = Vector2(200,96)
+[node name="FootstepSurface" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("script")
+surface = ExtResource("surface")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0,-48)
+shape = SubResource("shape")

@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cjvei6sff82yp"]
+
+[ext_resource type="SpriteFrames" uid="uid://btwbhxonkvjf7" path="res://data/animations/npc_frames.tres" id="art"]
+[ext_resource type="Resource" uid="uid://dfrn7lxpnh7w0" path="res://data/narrative/example_conversation.tres" id="dialogue"]
+[ext_resource type="Script" uid="uid://cqcs2nby0i1jy" path="res://scripts/narrative/narrative_interactable.gd" id="script"]
+
+[node name="examine_lines" type="Area2D" unique_id=675673708]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("script")
+kind = 1
+dialogue = ExtResource("dialogue")
+interaction_radius = 30.0
+prompt_offset = Vector2(0, -62)
+action_label = "Examine"
+
+[node name="Body" type="AnimatedSprite2D" parent="." unique_id=856332909]
+visible = false
+position = Vector2(-1, 32)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("art")
+animation = &"idle"
+autoplay = "idle"
+offset = Vector2(0, -20)

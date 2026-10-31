@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DialogueSpeaker" format=3 uid="uid://b0rr02qasea6n"]
+
+[ext_resource type="Script" uid="uid://ddbwf8pq6a7n1" path="res://scripts/narrative/dialogue_speaker.gd" id="1_0qna2"]
+
+[resource]
+script = ExtResource("1_0qna2")
+display_name = "Jax Dole"
+text_color = Color(0.37342674, 0.5021107, 0.36396736, 1)
+metadata/_custom_type_script = "uid://ddbwf8pq6a7n1"

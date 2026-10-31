@@ -8,6 +8,6 @@ script = ExtResource("1")
 id = "ammo"
 display_name = "9mm rounds"
 category = "Ammunition"
-description = "9mm ammunition. Each stack holds up to 12 rounds."
+description = "A 9mm ammunition box. Has space for 12 rounds."
 icon = ExtResource("2")
 max_stack = 12

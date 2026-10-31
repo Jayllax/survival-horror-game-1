@@ -183,8 +183,14 @@ func run() -> void:
     fallback.take_damage(100)
     await get_tree().create_timer(fallback.death_seconds+fallback.corpse_linger_seconds+0.1).timeout
     check(not is_instance_valid(fallback), "Missing death artwork cannot leave a live or immortal enemy behind")
+    for audio in level.find_children("*", "AudioStreamPlayer", true, false):
+        audio.stop()
+    for audio in level.find_children("*", "AudioStreamPlayer2D", true, false):
+        audio.stop()
+    GameAudio.stop_all()
+    await get_tree().create_timer(0.2).timeout
     level.queue_free()
     get_tree().current_scene = null
-    await frames()
+    await get_tree().create_timer(0.2).timeout
     print("IGNOTUM COMBAT: %d checks, %d failures" % [checks,failures])
     get_tree().quit(0 if failures == 0 else 1)

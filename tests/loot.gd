@@ -1,4 +1,5 @@
 extends Node
+const KEY_DEFINITION = preload("res://data/items/gate_key.tres")
 var checks := 0
 var failures := 0
 var room: Node2D
@@ -112,7 +113,7 @@ func verify_empty_and_interaction() -> void:
     await frames()
 
 func verify_contents_and_failure() -> void:
-    var container := make_container("mixed_contents", [entry("ammo"), entry("gate_key")])
+    var container := make_container("mixed_contents", [entry("ammo"), entry(KEY_DEFINITION.id)])
     container.completion_flag = "puzzle:test_cabinet"
     var full := GridInventory.new(Game.item_catalog, 1, 1)
     var partial_count := Game.stack_limit("ammo") - 1
@@ -127,8 +128,8 @@ func verify_contents_and_failure() -> void:
     bigger.add("ammo", partial_count)
     Game.inventory = bigger
     check(container.search(), "Making room allows a later complete search")
-    check(Game.count_item("ammo") == partial_count + 1 and Game.count_item("gate_key") == 1, "Configured quantities stack and different item types are granted together")
-    check(container.has_searched() and bool(Game.world.get(container.completion_flag, false)) and pickups == ["ammo", "gate_key"], "Completion and all pickup feedback correspond to the committed contents")
+    check(Game.count_item("ammo") == partial_count + 1 and Game.count_item(KEY_DEFINITION.id) == 1, "Configured quantities stack and different item types are granted together")
+    check(container.has_searched() and bool(Game.world.get(container.completion_flag, false)) and pickups == ["ammo", KEY_DEFINITION.id], "Completion and all pickup feedback correspond to the committed contents")
     before = Game.inventory.snapshot()
     check(not container.search() and Game.inventory.snapshot() == before, "A full container cannot be looted twice")
     container.queue_free()
@@ -195,7 +196,7 @@ func verify_visuals() -> void:
 func verify_slots() -> void:
     Game.reset_run()
     var empty := make_container("saved_empty")
-    var filled := make_container("saved_filled", [entry("gate_key", 2)])
+    var filled := make_container("saved_filled", [entry(KEY_DEFINITION.id, 2)])
     await frames()
     player.global_position = bike.global_position + Vector2(-25, 0)
     await frames()
@@ -209,16 +210,16 @@ func verify_slots() -> void:
     await frames(8)
     refresh_room()
     empty = make_container("saved_empty")
-    filled = make_container("saved_filled", [entry("gate_key", 2)])
-    check(empty.is_available() and filled.is_available() and Game.count_item("gate_key") == 0, "Earlier save restores searchable drawers and the earlier inventory")
+    filled = make_container("saved_filled", [entry(KEY_DEFINITION.id, 2)])
+    check(empty.is_available() and filled.is_available() and Game.count_item(KEY_DEFINITION.id) == 0, "Earlier save restores searchable drawers and the earlier inventory")
     check(Game.load_slot(1), "Load slot B through the actual save system")
     await frames(8)
     refresh_room()
     empty = make_container("saved_empty")
-    filled = make_container("saved_filled", [entry("gate_key", 2)])
-    check(not empty.is_available() and not filled.is_available() and Game.count_item("gate_key") == 2, "Later save restores searched drawers and exactly its own loot")
+    filled = make_container("saved_filled", [entry(KEY_DEFINITION.id, 2)])
+    check(not empty.is_available() and not filled.is_available() and Game.count_item(KEY_DEFINITION.id) == 2, "Later save restores searched drawers and exactly its own loot")
     var message_count := messages.size()
-    check(not empty.search() and not filled.search() and messages.size() == message_count and Game.count_item("gate_key") == 2, "Restored searched containers cannot repeat Empty or duplicate their rewards")
+    check(not empty.search() and not filled.search() and messages.size() == message_count and Game.count_item(KEY_DEFINITION.id) == 2, "Restored searched containers cannot repeat Empty or duplicate their rewards")
     empty.queue_free()
     filled.queue_free()
     await frames()

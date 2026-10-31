@@ -19,7 +19,7 @@
 [ext_resource type="Script" uid="uid://bkj62nwqxumq7" path="res://scripts/loot/loot_entry.gd" id="18_6o5i0"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="18_dcxcn"]
 [ext_resource type="Texture2D" uid="uid://cjug2skil3n0b" path="res://art/pixel/key.png" id="19_6o5i0"]
-[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="19_b55sx"]
+[ext_resource type="PackedScene" uid="uid://cu7udyf271gqe" path="res://scenes/ui/hud.tscn" id="19_b55sx"]
 [ext_resource type="PackedScene" uid="uid://cq3gd5ebqxqvb" path="res://scenes/objects/notes/note_crumpled.tscn" id="19_ttjls"]
 [ext_resource type="Script" uid="uid://ysok34dxqtu8" path="res://scripts/item_definition.gd" id="19_yl0ka"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="20_1lg4o"]
@@ -31,11 +31,11 @@ size = Vector2(858, 120)
 [sub_resource type="RectangleShape2D" id="wall"]
 size = Vector2(40, 720)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kwcdv"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6o5i0"]
 resource_local_to_scene = true
 size = Vector2(28, 28)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qayus"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yl0ka"]
 resource_local_to_scene = true
 size = Vector2(44, 26)
 
@@ -167,7 +167,7 @@ position = Vector2(349, 621)
 [node name="PushableBody" parent="Props/Nightstand2" unique_id=2018865041 instance=ExtResource("12_ttjls")]
 
 [node name="CollisionShape2D" parent="Props/Nightstand2/PushableBody" index="0"]
-shape = SubResource("RectangleShape2D_kwcdv")
+shape = SubResource("RectangleShape2D_6o5i0")
 
 [node name="Wardrobe" parent="Props" unique_id=1200503428 instance=ExtResource("5_yl0ka")]
 position = Vector2(209, 592)
@@ -235,7 +235,7 @@ push_speed = 27.612
 
 [node name="CollisionShape2D" parent="Props/Armchair/PushableBody" index="0"]
 position = Vector2(0, -13)
-shape = SubResource("RectangleShape2D_qayus")
+shape = SubResource("RectangleShape2D_yl0ka")
 
 [node name="Bookcase4" parent="Props" unique_id=90072044 instance=ExtResource("8_0vubq")]
 z_index = -5
@@ -250,16 +250,20 @@ rotation = -1.5358897
 [node name="Interactables" type="Node2D" parent="." unique_id=580173129]
 
 [node name="ExitToHouse_04" parent="Interactables" unique_id=928311053 instance=ExtResource("11_r7pxi")]
-visible = false
 position = Vector2(643, 556)
 destination_scene = "uid://yxwes2ioawnp"
 destination_spawn = "from_house_04_2"
 
-[node name="LockedDoor" parent="Interactables" unique_id=166180848 instance=ExtResource("11_r7pxi")]
+[node name="Facade" parent="Interactables/ExitToHouse_04" index="0" unique_id=1815167978]
 visible = false
+
+[node name="LockedDoor" parent="Interactables" unique_id=166180848 instance=ExtResource("11_r7pxi")]
 position = Vector2(418, 556)
 kind = 4
 description = "The door is locked."
+
+[node name="Facade" parent="Interactables/LockedDoor" index="0" unique_id=1815167978]
+visible = false
 
 [node name="LightSwitch" parent="Interactables" unique_id=1627212891 instance=ExtResource("17_q67n8")]
 position = Vector2(673, 571)
@@ -305,3 +309,5 @@ script = ExtResource("21_sl73x")
 
 [editable path="Props/Nightstand2/PushableBody"]
 [editable path="Props/Armchair/PushableBody"]
+[editable path="Interactables/ExitToHouse_04"]
+[editable path="Interactables/LockedDoor"]

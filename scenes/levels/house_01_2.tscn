@@ -5,11 +5,11 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/bedroom/nightstand.tscn" id="3_6q1nt"]
 [ext_resource type="PackedScene" path="res://scenes/objects/puzzles/code_lock.tscn" id="3_bwf31"]
 [ext_resource type="Resource" uid="uid://et2nquwup3rj" path="res://data/items/pistol.tres" id="4_ay8je"]
-[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bedroom/wardrobe.tscn" id="5_0dox0"]
+[ext_resource type="PackedScene" uid="uid://b05yk71l6rpu" path="res://scenes/objects/interiors/bedroom/wardrobe.tscn" id="5_0dox0"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/bedroom/bed.tscn" id="5_1nxfd"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/table_lamp.tscn" id="6_ubtef"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/sideboard.tscn" id="7_tf2dk"]
-[ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/bookcase.tscn" id="8_pm6jb"]
+[ext_resource type="PackedScene" uid="uid://bs5djbah2okuq" path="res://scenes/objects/interiors/living_room/bookcase.tscn" id="8_pm6jb"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/ceiling_lamp.tscn" id="8_rynyu"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/wall_lamp.tscn" id="9_mning"]
 [ext_resource type="PackedScene" uid="uid://cs51u64blnw6m" path="res://scenes/objects/note.tscn" id="14_2kgsg"]
@@ -18,7 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="16_b7koq"]
 [ext_resource type="PackedScene" uid="uid://cb1drcxvonlbw" path="res://scenes/objects/loot/loot_container.tscn" id="16_c6hel"]
 [ext_resource type="PackedScene" uid="uid://d161ooahnfhd3" path="res://scenes/objects/lighting/light_switch.tscn" id="17_ar532"]
-[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="17_r0csf"]
+[ext_resource type="PackedScene" uid="uid://cu7udyf271gqe" path="res://scenes/ui/hud.tscn" id="17_r0csf"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="18_lstpd"]
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="19_7akam"]
 
@@ -281,14 +281,18 @@ light_energy = 1.5
 [node name="Interactables" type="Node2D" parent="." unique_id=580173129]
 
 [node name="ExitToHouse_01" parent="Interactables" unique_id=928311053 instance=ExtResource("15_f0p1h")]
-visible = false
 position = Vector2(643, 556)
 destination_scene = "uid://i4sef51ugq0j"
 
-[node name="EnterHouse_01_3" parent="Interactables" unique_id=166180848 instance=ExtResource("15_f0p1h")]
+[node name="Facade" parent="Interactables/ExitToHouse_01" index="0" unique_id=1815167978]
 visible = false
+
+[node name="EnterHouse_01_3" parent="Interactables" unique_id=166180848 instance=ExtResource("15_f0p1h")]
 position = Vector2(418, 556)
 destination_scene = "uid://chl2o2r7b3fjd"
+
+[node name="Facade" parent="Interactables/EnterHouse_01_3" index="0" unique_id=1815167978]
+visible = false
 
 [node name="CodeLock" parent="Interactables" unique_id=320575340 instance=ExtResource("3_bwf31")]
 position = Vector2(174, 601)
@@ -355,3 +359,6 @@ stream = ExtResource("18_lstpd")
 volume_db = -16.0
 autoplay = true
 script = ExtResource("19_7akam")
+
+[editable path="Interactables/ExitToHouse_01"]
+[editable path="Interactables/EnterHouse_01_3"]

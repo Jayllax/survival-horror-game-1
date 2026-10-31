@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/house_03_1.tscn" id="base"]
+[ext_resource type="PackedScene" path="res://scenes/objects/save_bicycle.tscn" id="bicycle"]
+[ext_resource type="PackedScene" path="res://scenes/actors/enemy.tscn" id="enemy"]
+[ext_resource type="PackedScene" path="res://scenes/objects/story/world_flag_condition.tscn" id="condition"]
+
+[node name="StoryActivationSandbox" instance=ExtResource("base")]
+inherit_region_music = false
+
+[node name="TestBicycle" parent="Interactables" instance=ExtResource("bicycle")]
+position = Vector2(800, 620)
+station_name = "Story activation test bicycle"
+
+[node name="OppositeEnemy" parent="Actors" instance=ExtResource("enemy")]
+position = Vector2(900, 588)
+wake_proximity_radius = 0.0
+hearing_multiplier = 0.0
+
+[node name="StoryCondition" parent="Actors/OppositeEnemy" instance=ExtResource("condition")]
+flag_id = "story:remove_opposite"
+activate_when_unmet = Array[NodePath]([NodePath("..")])

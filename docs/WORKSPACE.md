@@ -55,3 +55,51 @@ Five native side-view paper sprites are grouped in `art/pixel/notes/`; matching 
 Native blood textures are grouped in `art/pixel/blood/`, and script-free Sprite2D scenes in `scenes/objects/blood/`. The [overlay guide](guides/BLOOD_OVERLAY_GUIDE.md) explains furniture masking, scale and depth. The checkerboard/context preview is documentation only; game PNGs are transparent and no stains are automatically added to levels.
 
 The child pushable component lives at `scenes/objects/physics/pushable_body.tscn`, with its controller under `scripts/physics/` and a fitted nightstand variant beside it. It moves its furniture parent and records positions through existing world saves. The [pushable guide](guides/PUSHABLE_GUIDE.md) explains per-instance collision sizing and travel limits. Its editor-authored development room stays under `tests/fixtures/`; no campaign furniture is converted automatically.
+
+## Fonts
+
+`art/fonts/` contains the uploaded fonts and four new open-license families, with notices and editable FontVariation presets under `styles/`. The [font guide](guides/FONT_GUIDE.md) lists each UI node and the per-note override controls. The newest uploaded levels, items, Jax art and project/window settings are preserved.
+
+## Conversation choices
+
+`DialogueChoice` resources belong to the Choices array on a DialogueLine. Conditional world targets use `scenes/objects/story/world_flag_condition.tscn`. Choice buttons are a reusable authored UI scene; additional response buttons are instanced only as UI. All level targets remain editor-placed. See the [choice guide](guides/DIALOGUE_CHOICES_GUIDE.md). The separate `tests/fixtures/dialogue_choices_sandbox.tscn` is not linked to the campaign.
+
+### Verification notes for this iteration
+
+The focused narrative/choice and modal suites validate the new UI and saved consequences. Legacy code-lock and loot checks now read the designer's key resource ID instead of assuming `gate_key`; the light-switch test places the player inside the edited Interaction Radius. These are fixture changes only. The separate headless aiming suite reports one left-mirroring assertion failure in both the untouched October 30 22-42 upload and this branch. Aiming behavior and character/weapon attachment resources were not changed in this iteration.
+
+## Inventory bounds and complete interface font pass
+
+The October 30 23-28 upload changes seven level scenes; all seven are imported byte-for-byte. `inventory_grid_control.gd` now limits GUI hits and keyboard focus to real cells, cancels drops outside the grid without changing item data, and adapts its bounds to current inventory dimensions. Its 21 native GUI checks cover outside clicks, valid dragging/rotation, stack merging and resized grids.
+
+All general interface text, including code-drawn inventory counts, uses `art/fonts/styles/ui_text.tres` (Marcellus). Save-slot records use the Special Elite preset. The only retained old interface face is Lakeside Castle in note contents, as requested. A runtime audit checked 105 font roles across menus, popups and the HUD with exactly that one exception and no failures. Transparent note panels and authored layouts are retained.
+
+## Scene-contained item saves
+
+`Game._saved_catalog` accepts typed InventoryItemDefinition resources stored either externally or inside a scene/resource. It loads and holds the owning resource before resolving embedded IDs in a fresh process; it never instantiates the owning level. The previous `.tres` filename-only check rejected the designer's embedded `house_03_key` and `gate_key`, even after visiting their locations without collecting them. Save format 4, slot isolation, atomic writes and malformed-data validation remain unchanged.
+
+`tests/embedded_item_saves.tscn` exercises the real alley, house and town bicycle menu, both custom keys, independent inventory/health/progress snapshots and malformed-data rejection. `tools/check.sh embedded_item_saves` automatically launches a second Godot process to verify the same files load without previously visited scenes in memory. The latest supplied ZIP differs only in UI-theme property ordering; that exact uploaded file is preserved, along with all levels and assets.
+
+## Audio framework
+
+`GameAudio` is a persistent script autoload that instances the authored `scenes/audio/game_audio.tscn` channels at runtime. Cue resources, ambience and footstep banks are organized in `data/audio/`; recordings are in `audio/`. The Location root exposes its audio choices, and Player has an authored Footsteps child. The only campaign-scene changes are music cue assignments on both introductions and town_01; authored visual layout and story content are untouched. The enemy music query reuses existing sight and state without changing AI decisions or hearing. See [AUDIO_GUIDE.md](guides/AUDIO_GUIDE.md).
+
+## Physical room doors
+
+`scenes/objects/room_door_side.tscn` is a reusable door inside one level, with its controller at `scripts/room_door.gd` and native narrow profile at `art/pixel/doors/`. The leaf reuses existing green door art. Its authored solid barrier and light occluder clear after opening. Closing checks actual physics bodies and reverses safely when occupied. Open/closed and unlock states use separate namespaced world flags through existing bicycle saves. The separate editor-authored two-room fixture and `room_doors` suite exercise both-sided movement, key consumption, safe closing and slot isolation. No existing campaign scenes, player settings or input actions are changed. See [ROOM_DOOR_GUIDE.md](guides/ROOM_DOOR_GUIDE.md).
+
+## Returning dialogue branches, animated NPCs and recorded voice
+
+The October 31 16:45 upload adds the house_03_2 interior and Jax's sixteen-line conversation with nested responses. Its authored levels, dialogue text and character artwork are preserved. Choice branches now retain parent continuations; Return After Branch defaults on, with an explicit replacement option. NPC roots expose idle/talking clip names, a visual path and speaker aliases. Only the selected AnimatedSprite2D runs during the existing dialogue pause, restoring its prior playback state afterwards. Jax maps both his Unknown Man and Jax Dole resources to his existing talking clip.
+
+StoryUI sizes its response list from button content, keeping a small bottom margin and scrolling long lists. An authored Voice player and separate Master-routed Voice bus play each line's optional recording while paused. Sources are duplicated for one-shot playback; text reveal keeps playback running, and advancing/cleanup stops it. No speech assets are invented. The `dialogue_flow` suite follows both real Jax routes through the return to parent index six and verifies nested returns, animation, responsive layout and voice lifecycle. Native playback checks use silent in-memory recordings. See [DIALOGUE_CHOICES_GUIDE.md](guides/DIALOGUE_CHOICES_GUIDE.md).
+
+## Jump and injury recordings
+
+The three uploaded effects are unchanged MP3s in `audio/effects/character/`. Player has an authored JumpSound, called only inside the existing successful-jump branch. Its existing HurtSound now uses `data/audio/effects/hurt_alternating.tres`, a native AudioStreamRandomizer in Sequential mode. Resource Local To Scene gives each character an independent sequence. Enemy has an authored spatial HurtSound using that same resource at pitch 0.78; its existing positive, living-damage branch starts playback. Core gameplay changes are only these two playback calls. Native sound-node volume/pitch settings remain editable in the Inspector. Future dialogue voice uploads are not assigned automatically. See [AUDIO_GUIDE.md](guides/AUDIO_GUIDE.md).
+
+## Story-controlled actor activation
+
+The October 31 19:29 ZIP imports eleven player_jax recordings and their existing line assignments, disposable bolt-cutter settings, the quieter jump mix and current town/alley/interior edits. WorldFlagCondition now has Activate When Met/Unmet target arrays for whole actors. It saves each target's original process mode, hides/disables it while inactive and restores it when matched; native CollisionObject2D Remove mode removes disabled actor physics. Enemy.set_story_active immediately gates signal-driven hearing, damage and attack entry points, removes inactive enemies from the enemy group and stops their hurt audio. Saved defeat still wins over later activation.
+
+The only additional campaign edit replaces the three incorrect root-target visibility/interaction/collision entries on house_03_1's existing condition with a single Activate When Met entry. Its flag name and enemy tuning remain intact; all other uploaded level/dialogue/audio/player/item files remain exact. The new story_activation suite follows the actual voiced Jax conversation, returns to that enemy, verifies no invisible attacks or bullet blocking, and tests inverse child conditions and independent inactive/active/defeated save slots. See [DIALOGUE_CHOICES_GUIDE.md](guides/DIALOGUE_CHOICES_GUIDE.md).

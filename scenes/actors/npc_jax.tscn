@@ -4,6 +4,9 @@
 [ext_resource type="Resource" uid="uid://dfrn7lxpnh7w0" path="res://data/narrative/example_conversation.tres" id="dialogue"]
 [ext_resource type="Resource" uid="uid://2kpu7flkh5j1" path="res://data/narrative/example_repeat.tres" id="repeat"]
 [ext_resource type="Script" uid="uid://cqcs2nby0i1jy" path="res://scripts/narrative/narrative_interactable.gd" id="script"]
+[ext_resource type="Script" path="res://scripts/narrative/dialogue_speaker.gd" id="speaker_script"]
+[ext_resource type="Resource" path="res://data/narrative/speakers/jax_dole.tres" id="jax_speaker"]
+[ext_resource type="Resource" path="res://data/narrative/speakers/unknown.tres" id="unknown_speaker"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2gt3p"]
 atlas = ExtResource("4_prk52")
@@ -95,6 +98,7 @@ kind = 1
 dialogue = ExtResource("dialogue")
 repeat_dialogue = ExtResource("repeat")
 prompt_offset = Vector2(0, -62)
+dialogue_speakers = Array[ExtResource("speaker_script")]([ExtResource("jax_speaker"), ExtResource("unknown_speaker")])
 
 [node name="Body" type="AnimatedSprite2D" parent="." unique_id=1780124678]
 position = Vector2(-1, 32)

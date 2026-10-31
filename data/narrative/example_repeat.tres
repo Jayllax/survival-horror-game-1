@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="DialogueSequence" format=3 uid="uid://2kpu7flkh5j1"]
 
+[ext_resource type="Script" uid="uid://c72jybcn230jo" path="res://scripts/narrative/dialogue_choice.gd" id="2_v667y"]
 [ext_resource type="Script" uid="uid://dokxahjw0ajyo" path="res://scripts/narrative/dialogue_line.gd" id="line"]
 [ext_resource type="Resource" path="res://data/narrative/speakers/example_npc.tres" id="npc"]
 [ext_resource type="Script" uid="uid://n78cmm0wplag" path="res://scripts/narrative/dialogue_sequence.gd" id="sequence"]

@@ -14,11 +14,11 @@
 [ext_resource type="PackedScene" uid="uid://mdei23004fri" path="res://scenes/objects/ammo.tscn" id="9_in5tb"]
 [ext_resource type="PackedScene" uid="uid://dfitvfrdt4ym7" path="res://scenes/objects/streetlamp.tscn" id="9_in168"]
 [ext_resource type="Script" uid="uid://bkj62nwqxumq7" path="res://scripts/loot/loot_entry.gd" id="10_fs2yv"]
-[ext_resource type="Texture2D" uid="uid://35yj3xaj5dbl" path="res://art/pixel/source/key.png" id="11_c2ebr"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="11_mcqgs"]
 [ext_resource type="Script" uid="uid://ysok34dxqtu8" path="res://scripts/item_definition.gd" id="11_xn0ni"]
-[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="12_2rurx"]
+[ext_resource type="PackedScene" uid="uid://cu7udyf271gqe" path="res://scenes/ui/hud.tscn" id="12_2rurx"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="13_bw6gv"]
+[ext_resource type="Texture2D" uid="uid://cjug2skil3n0b" path="res://art/pixel/key.png" id="13_in168"]
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="14_c5ioa"]
 [ext_resource type="PackedScene" uid="uid://qwm3h0igxrrq" path="res://scenes/objects/fence_cuttable_side.tscn" id="14_d1lar"]
 
@@ -34,7 +34,7 @@ id = "house_03_key"
 display_name = "House key"
 category = "Key"
 description = "A key for a house."
-icon = ExtResource("11_c2ebr")
+icon = ExtResource("13_in168")
 remove_after_use = true
 grid_size = Vector2i(2, 1)
 metadata/_custom_type_script = "uid://ysok34dxqtu8"
@@ -310,6 +310,8 @@ visible = false
 [node name="House_03Enter" parent="Interactables" unique_id=2013891440 instance=ExtResource("8_in168")]
 position = Vector2(-51, 556)
 action_label = "Enter house"
+required_key = "house_03_key"
+destination_scene = "uid://blmep4h1m81o3"
 destination_spawn = "from_alleyway_02"
 
 [node name="Facade" parent="Interactables/House_03Enter" index="0" unique_id=1815167978]
@@ -360,7 +362,7 @@ position = Vector2(478.94843, 587.99994)
 [node name="from_town_01_2" type="Marker2D" parent="Spawns" unique_id=58507107]
 position = Vector2(1183, 588)
 
-[node name="from_house_03" type="Marker2D" parent="Spawns" unique_id=1612750634]
+[node name="from_house_03_1" type="Marker2D" parent="Spawns" unique_id=1612750634]
 position = Vector2(-51, 588)
 
 [node name="HUD" parent="." unique_id=1915867905 instance=ExtResource("12_2rurx")]

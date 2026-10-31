@@ -22,14 +22,14 @@ config/icon="res://art/icon.svg"
 [autoload]
 
 Game="*res://scripts/game.gd"
+GameAudio="*res://scripts/audio/game_audio.gd"
 Transition="*res://scenes/ui/transition.tscn"
 
 [display]
 
-window/size/window_width_override=1152
-window/size/window_height_override=648
+window/size/window_width_override=1920
+window/size/window_height_override=1080
 window/stretch/mode="canvas_items"
-window/stretch/scale_mode="integer"
 
 [gui]
 

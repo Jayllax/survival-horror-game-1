@@ -6,9 +6,10 @@
 [resource]
 script = ExtResource("1")
 id = "antiseptic"
-remove_after_use = true
-display_name = "Antiseptic"
+display_name = "Bottle of alcohol"
 category = "Material"
-description = "Can be combined to create an item."
+description = "A full bottle of alcohol. No use on its own. Besides getting me drunk."
 icon = ExtResource("2")
 max_stack = 3
+remove_after_use = true
+grid_size = Vector2i(2, 1)

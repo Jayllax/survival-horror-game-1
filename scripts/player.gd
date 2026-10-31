@@ -164,6 +164,7 @@ func _physics_process(delta: float) -> void:
     jump_buffer = jump_buffer_seconds if Input.is_action_just_pressed("jump") and not story_jump_held else maxf(0, jump_buffer - delta)
     if jump_buffer > 0 and coyote_remaining > 0 and dodge_remaining <= 0 and not is_crouching:
         velocity.y = jump_velocity
+        $JumpSound.play()
         Game.emit_noise(global_position,jump_noise_radius,self)
         jump_buffer = 0
         coyote_remaining = 0
@@ -385,6 +386,10 @@ func update_interaction() -> void:
     nearest = null
     var best := INF
     for object in get_tree().get_nodes_in_group("interactable"):
+        if not bool(object.get_meta("story_interaction_enabled", true)):
+            continue
+        if object is CanvasItem and not object.is_visible_in_tree():
+            continue
         if not object.is_available():
             continue
         var distance: float = global_position.distance_to(object.global_position)

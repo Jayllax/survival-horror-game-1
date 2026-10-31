@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DialogueSequence" load_steps=4 format=3]
+[ext_resource type="Script" path="res://scripts/narrative/dialogue_sequence.gd" id="sequence"]
+[ext_resource type="Script" path="res://scripts/narrative/dialogue_line.gd" id="line"]
+[sub_resource type="Resource" id="response"]
+script = ExtResource("line")
+text = "First test branch. Finish this line to return to gameplay."
+[resource]
+script = ExtResource("sequence")
+lines = Array[ExtResource("line")]([SubResource("response")])

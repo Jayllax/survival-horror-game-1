@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://6ac0fiq4jtxt" path="res://scripts/location.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_cream_left.tscn" id="2_35lbs"]
-[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://cu7udyf271gqe" path="res://scenes/ui/hud.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://dfitvfrdt4ym7" path="res://scenes/objects/streetlamp.tscn" id="3_ip0dd"]
 [ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_terracotta_no_chimney.tscn" id="5_5ycnk"]
@@ -14,13 +14,19 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_dusty_rose_left.tscn" id="8_biwbp"]
 [ext_resource type="PackedScene" uid="uid://cfoibs7ccueyy" path="res://scenes/objects/houses/building_house.tscn" id="8_n8lao"]
 [ext_resource type="PackedScene" path="res://scenes/objects/fence_reinforced_side.tscn" id="10_le0go"]
+[ext_resource type="PackedScene" uid="uid://cjvei6sff82yp" path="res://scenes/actors/examine_lines.tscn" id="15_rmnuy"]
+[ext_resource type="Script" uid="uid://dokxahjw0ajyo" path="res://scripts/narrative/dialogue_line.gd" id="16_en3fj"]
+[ext_resource type="Script" uid="uid://c72jybcn230jo" path="res://scripts/narrative/dialogue_choice.gd" id="17_hvnho"]
+[ext_resource type="Resource" uid="uid://tejmjkno6iqb" path="res://data/narrative/speakers/you.tres" id="18_5x2mi"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_cream.tscn" id="18_vn4xj"]
+[ext_resource type="Script" uid="uid://n78cmm0wplag" path="res://scripts/narrative/dialogue_sequence.gd" id="19_w3lfx"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_pale_olive_no_chimney.tscn" id="20_akiom"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="21"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_teal_right.tscn" id="21_mwytw"]
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="22"]
 [ext_resource type="PackedScene" uid="uid://da5r8bq0hou0w" path="res://scenes/actors/enemy.tscn" id="22_w4u1r"]
 [ext_resource type="PackedScene" uid="uid://mdei23004fri" path="res://scenes/objects/ammo.tscn" id="23_uk0bi"]
+[ext_resource type="Resource" path="res://data/audio/music/ambient_track_1.tres" id="location_music"]
 [ext_resource type="PackedScene" uid="uid://db83ujlaupd0k" path="res://scenes/objects/save_bicycle.tscn" id="save_bicycle"]
 
 [sub_resource type="RectangleShape2D" id="floor"]
@@ -29,9 +35,19 @@ size = Vector2(4731, 120)
 [sub_resource type="RectangleShape2D" id="wall"]
 size = Vector2(40, 720)
 
+[sub_resource type="Resource" id="Resource_62b4b"]
+script = ExtResource("16_en3fj")
+speaker = ExtResource("18_5x2mi")
+text = "The door is locked."
+
+[sub_resource type="Resource" id="Resource_6ocd3"]
+script = ExtResource("19_w3lfx")
+lines = Array[ExtResource("16_en3fj")]([SubResource("Resource_62b4b")])
+
 [node name="Location" type="Node2D" unique_id=653106688]
 script = ExtResource("1")
 camera_bounds = Rect2i(0, 0, 2200, 720)
+music_cue = ExtResource("location_music")
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=857491603]
 color = Color(0.038397163, 0.038397174, 0.038397145, 1)
@@ -158,6 +174,96 @@ self_modulate = Color(0, 0, 0, 0.84313726)
 z_index = -10
 position = Vector2(-64, 492)
 
+[node name="HouseSilo05" parent="Buildings/Silos" unique_id=1787184596 instance=ExtResource("2_35lbs")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(375, 492)
+
+[node name="HouseSilo06" parent="Buildings/Silos" unique_id=2074871332 instance=ExtResource("5_5ycnk")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(859, 492)
+
+[node name="HouseSilo07" parent="Buildings/Silos" unique_id=1701703278 instance=ExtResource("5_5ycnk")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(1093, 492)
+
+[node name="HouseSilo2" parent="Buildings/Silos" unique_id=1145206618 instance=ExtResource("8_n8lao")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(1283, 492)
+
+[node name="HouseSilo3" parent="Buildings/Silos" unique_id=1989924863 instance=ExtResource("8_n8lao")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(1528, 492)
+
+[node name="HouseSilo08" parent="Buildings/Silos" unique_id=641108578 instance=ExtResource("5_5ycnk")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(1766, 492)
+
+[node name="HouseSilo09" parent="Buildings/Silos" unique_id=733856594 instance=ExtResource("2_35lbs")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(1942, 492)
+
+[node name="HouseSilo10" parent="Buildings/Silos" unique_id=1047805407 instance=ExtResource("5_5ycnk")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(2118, 492)
+
+[node name="HouseSilo11" parent="Buildings/Silos" unique_id=1252071492 instance=ExtResource("5_5ycnk")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(2342, 492)
+
+[node name="HouseSilo12" parent="Buildings/Silos" unique_id=554788570 instance=ExtResource("2_35lbs")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(2566, 492)
+
+[node name="HouseSilo4" parent="Buildings/Silos" unique_id=2133562624 instance=ExtResource("8_n8lao")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(2742, 492)
+
+[node name="HouseSilo13" parent="Buildings/Silos" unique_id=2071050398 instance=ExtResource("2_35lbs")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(2966, 492)
+
+[node name="HouseSilo14" parent="Buildings/Silos" unique_id=2141671022 instance=ExtResource("2_35lbs")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(3189, 492)
+
+[node name="HouseSilo5" parent="Buildings/Silos" unique_id=793598581 instance=ExtResource("8_n8lao")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(3366, 492)
+
+[node name="HouseSilo15" parent="Buildings/Silos" unique_id=987337796 instance=ExtResource("5_5ycnk")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(3542, 492)
+
 [node name="Geometry" type="Node2D" parent="." unique_id=491046715]
 
 [node name="Street" type="StaticBody2D" parent="Geometry" unique_id=1806807780]
@@ -233,6 +339,73 @@ scale = Vector2(1.2, 1.2)
 
 [node name="Interactables" type="Node2D" parent="." unique_id=1337389834]
 
+[node name="Examines" type="Node" parent="Interactables" unique_id=188118921]
+
+[node name="examine_lines" parent="Interactables/Examines" unique_id=675673708 instance=ExtResource("15_rmnuy")]
+position = Vector2(-152, 572)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines2" parent="Interactables/Examines" unique_id=858455576 instance=ExtResource("15_rmnuy")]
+position = Vector2(24, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines3" parent="Interactables/Examines" unique_id=1811070625 instance=ExtResource("15_rmnuy")]
+position = Vector2(156, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines4" parent="Interactables/Examines" unique_id=1618844303 instance=ExtResource("15_rmnuy")]
+position = Vector2(549, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines5" parent="Interactables/Examines" unique_id=522297909 instance=ExtResource("15_rmnuy")]
+position = Vector2(725, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines6" parent="Interactables/Examines" unique_id=222785814 instance=ExtResource("15_rmnuy")]
+position = Vector2(1333, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines7" parent="Interactables/Examines" unique_id=2107505898 instance=ExtResource("15_rmnuy")]
+position = Vector2(1678, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines8" parent="Interactables/Examines" unique_id=1377968052 instance=ExtResource("15_rmnuy")]
+position = Vector2(2030, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines9" parent="Interactables/Examines" unique_id=158893581 instance=ExtResource("15_rmnuy")]
+position = Vector2(2206, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines10" parent="Interactables/Examines" unique_id=1410017448 instance=ExtResource("15_rmnuy")]
+position = Vector2(2478, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines11" parent="Interactables/Examines" unique_id=335801177 instance=ExtResource("15_rmnuy")]
+position = Vector2(2830, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines12" parent="Interactables/Examines" unique_id=1965954673 instance=ExtResource("15_rmnuy")]
+position = Vector2(3102, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines13" parent="Interactables/Examines" unique_id=597553144 instance=ExtResource("15_rmnuy")]
+position = Vector2(3278, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
 [node name="Ammo" parent="Interactables" unique_id=1595936546 instance=ExtResource("23_uk0bi")]
 position = Vector2(3320, 614)
 scale = Vector2(0.4, 0.4)
@@ -268,7 +441,8 @@ destination_spawn = "from_town_01_2"
 visible = false
 
 [node name="House_01Entrance" parent="Interactables" unique_id=1065461545 instance=ExtResource("4")]
-position = Vector2(997, 556)
+position = Vector2(997, 573)
+action_label = "Open door"
 destination_scene = "res://scenes/levels/house_01.tscn"
 destination_spawn = "from_street"
 
@@ -276,7 +450,8 @@ destination_spawn = "from_street"
 visible = false
 
 [node name="House_02Entrance2" parent="Interactables" unique_id=798795210 instance=ExtResource("4")]
-position = Vector2(1189, 556)
+position = Vector2(1189, 573)
+action_label = "Open door"
 description = "Requires house_02_key."
 required_key = "house_key"
 puzzle_input_item = ""
@@ -286,7 +461,9 @@ puzzle_reward_item = ""
 visible = false
 
 [node name="House_04Entrance" parent="Interactables" unique_id=59443969 instance=ExtResource("4")]
-position = Vector2(2654, 556)
+position = Vector2(2654, 573)
+action_label = "Open door"
+destination_scene = "uid://yxwes2ioawnp"
 destination_spawn = "from_town_01"
 
 [node name="Facade" parent="Interactables/House_04Entrance" index="0" unique_id=1815167978]
@@ -304,6 +481,14 @@ disabled = true
 position = Vector2(100, 620)
 station_name = "Street bicycle"
 interaction_radius = 50.0
+
+[node name="Forest_Entrance" parent="Interactables" unique_id=505011352 instance=ExtResource("4")]
+position = Vector2(-208, 556)
+destination_scene = "uid://dyo3etebfk0vw"
+destination_spawn = "from_town_01"
+
+[node name="Facade" parent="Interactables/Forest_Entrance" index="0" unique_id=1815167978]
+visible = false
 
 [node name="Actors" type="Node2D" parent="." unique_id=1189311552]
 
@@ -343,6 +528,9 @@ position = Vector2(2341, 588)
 [node name="from_alleyway_02_2" type="Marker2D" parent="Spawns" unique_id=2036310132]
 position = Vector2(2966, 588)
 
+[node name="from_forest" type="Marker2D" parent="Spawns" unique_id=1216748484]
+position = Vector2(-208, 588)
+
 [node name="HUD" parent="." unique_id=296689736 instance=ExtResource("3")]
 
 [node name="AmbientSound" type="AudioStreamPlayer" parent="." unique_id=722606247]
@@ -360,3 +548,4 @@ script = ExtResource("22")
 [editable path="Interactables/House_02Entrance2"]
 [editable path="Interactables/House_04Entrance"]
 [editable path="Interactables/Town_02Entrance"]
+[editable path="Interactables/Forest_Entrance"]

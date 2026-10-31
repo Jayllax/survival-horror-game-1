@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cs51u64blnw6m" path="res://scenes/objects/note.tscn" id="3_sh5d3"]
 [ext_resource type="PackedScene" uid="uid://b1w32h180ysmo" path="res://scenes/objects/cloth.tscn" id="4_sh5d3"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="4_wxw3f"]
-[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_ptwdc"]
+[ext_resource type="PackedScene" uid="uid://cu7udyf271gqe" path="res://scenes/ui/hud.tscn" id="5_ptwdc"]
 [ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="6_lw1bj"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="6_o6ti5"]
 [ext_resource type="PackedScene" path="res://scenes/objects/bench.tscn" id="7_hq8ni"]
@@ -25,6 +25,11 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/stump_large.tscn" id="17_us4dc"]
 [ext_resource type="Texture2D" uid="uid://bgu1iar6rpv4a" path="res://art/pixel/bolt_cutters.png" id="19_nt1bl"]
 [ext_resource type="Script" uid="uid://ysok34dxqtu8" path="res://scripts/item_definition.gd" id="20_6qbk5"]
+[ext_resource type="PackedScene" uid="uid://cb1drcxvonlbw" path="res://scenes/objects/loot/loot_container.tscn" id="23_2sibl"]
+[ext_resource type="Script" uid="uid://bkj62nwqxumq7" path="res://scripts/loot/loot_entry.gd" id="24_jqssf"]
+[ext_resource type="Resource" uid="uid://i77pedfgvhlr" path="res://data/items/antiseptic.tres" id="25_b2mxv"]
+[ext_resource type="PackedScene" uid="uid://cjvei6sff82yp" path="res://scenes/actors/examine_lines.tscn" id="26_jqssf"]
+[ext_resource type="Resource" path="res://data/audio/music/ambient_track_2.tres" id="location_music"]
 
 [sub_resource type="RectangleShape2D" id="floor"]
 size = Vector2(2774, 120)
@@ -50,9 +55,15 @@ remove_after_use = true
 grid_size = Vector2i(3, 1)
 compact_grid_size = Vector2i(2, 1)
 
+[sub_resource type="Resource" id="Resource_6qbk5"]
+script = ExtResource("24_jqssf")
+item = ExtResource("25_b2mxv")
+metadata/_custom_type_script = "uid://bkj62nwqxumq7"
+
 [node name="Location" type="Node2D" unique_id=653106688]
 script = ExtResource("1_hq8ni")
 camera_bounds = Rect2i(0, 0, 2200, 720)
+music_cue = ExtResource("location_music")
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=857491603]
 color = Color(0.038397163, 0.038397174, 0.038397145, 1)
@@ -447,16 +458,16 @@ scale = Vector2(0.3, 0.3)
 skew = 0.32637656
 
 [node name="Pickup3" parent="Interactables" unique_id=1513320068 instance=ExtResource("15_tv0fq")]
-position = Vector2(1531.0001, 602.00006)
+position = Vector2(1531, 602)
 rotation = -1.701696
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.3, 0.3)
 item_definition = SubResource("Resource_e0tjl")
 requires_power = false
 consume_key = true
 
 [node name="ReinforcedFenceSide" parent="Interactables" unique_id=1451298879 instance=ExtResource("3_2rmq6")]
 position = Vector2(-207, 620)
-scale = Vector2(1.2, 1.2)
+scale = Vector2(1.4, 1.4)
 
 [node name="ReinforcedFenceSide2" parent="Interactables" unique_id=228909135 instance=ExtResource("3_2rmq6")]
 position = Vector2(1615, 620)
@@ -469,6 +480,13 @@ destination_spawn = "from_area_2"
 
 [node name="Facade" parent="Interactables/Entrance" index="0" unique_id=1815167978]
 visible = false
+
+[node name="LootContainer" parent="Interactables" unique_id=286012595 instance=ExtResource("23_2sibl")]
+position = Vector2(663, 577)
+contents = Array[ExtResource("24_jqssf")]([SubResource("Resource_6qbk5")])
+
+[node name="examine_lines" parent="Interactables" unique_id=675673708 instance=ExtResource("26_jqssf")]
+position = Vector2(-189, 582)
 
 [node name="Actors" type="Node2D" parent="." unique_id=1189311552]
 
