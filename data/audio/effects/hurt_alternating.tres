@@ -1,0 +1,11 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=3 format=3]
+
+[ext_resource type="AudioStream" path="res://audio/effects/character/hurt_1.mp3" id="first"]
+[ext_resource type="AudioStream" path="res://audio/effects/character/hurt_2.mp3" id="second"]
+
+[resource]
+resource_local_to_scene = true
+playback_mode = 2
+streams_count = 2
+stream_0/stream = ExtResource("first")
+stream_1/stream = ExtResource("second")

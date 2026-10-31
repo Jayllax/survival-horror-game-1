@@ -82,13 +82,25 @@ To put dirt footsteps on a floor:
 
 The banks are in `data/audio/footsteps/`. Edit Samples, Volume Db and Pitch Variation there. Audible footstep settings do not change enemy hearing: use the Player's existing **Stealth Noise** properties for that. Crouch steps remain quiet and keep the existing zero-noise AI rule.
 
+## Jump and injury sounds
+
+The uploaded `jump_1.mp3`, `hurt_1.mp3` and `hurt_2.mp3` are in **`audio/effects/character/`**, unchanged. Jump plays only when the player actually takes off, including the existing buffered/coyote jumps; rejected airborne or crouching jump inputs do not play it.
+
+The Player's **HurtSound** uses `data/audio/effects/hurt_alternating.tres`. Although Godot calls the resource AudioStreamRandomizer, its **Playback Mode** is set to **Sequential**, so successful hurt events alternate **hurt_1 → hurt_2 → hurt_1**. Each placed character has its own sequence. The player's existing invulnerability and damage checks still apply.
+
+The Enemy has its own **HurtSound** using the same recordings at **Pitch Scale 0.78** for a deeper voice. It is a native **AudioStreamPlayer2D**, so it follows the enemy and fades with distance; Max Distance is initially 900 world pixels. Damage reactions, including fatal hits, trigger it; hitting an already dead enemy does not.
+
+To adjust the mix, open `scenes/actors/player.tscn` and select **JumpSound** or **HurtSound**, or open `scenes/actors/enemy.tscn` and select **HurtSound**. Change **Volume Db**; on the enemy, **Pitch Scale** controls how deep/slowed it sounds (1.0 is the original recording). The quiet jump recording starts at +12 dB, player hurt at +6 dB and enemy hurt at +3 dB. These are playback gains, not edits to the source files. All use the **SFX** bus and existing Master volume control. Enable Editable Children to override a particular placed instance.
+
 ## Mix and folders
 
-Godot's **Audio** dock contains Master, Music, Ambience and SFX buses. The existing in-game master-volume option still controls the whole mix. Relative bus levels can be adjusted and saved in `default_bus_layout.tres`; cue/bank volumes give finer control.
+Godot's **Audio** dock contains Master, Music, Ambience, SFX and Voice buses. The existing in-game master-volume option still controls the whole mix. Relative bus levels can be adjusted and saved in `default_bus_layout.tres`; cue/bank volumes give finer control.
 
 - `audio/music/`: your four unchanged music MP3s.
 - `audio/ambience/`: the Godot-compatible forest Ogg.
 - `audio/footsteps/`: short concrete and dirt variations used by the game.
+- `audio/effects/character/`: unchanged jump and hurt recordings.
+- `audio/voice/`: optional line recordings you assign to dialogue yourself.
 - `audio/sources/`: unchanged original forest/footstep takes; ignored by Godot's importer.
 - `data/audio/`: editable cues and surface banks.
 - `scenes/audio/`: persistent mixer and player footstep nodes, all visible in the editor.

@@ -240,13 +240,15 @@ func run() -> void:
     Input.action_release("crouch")
     player.set_physics_process(true)
     Game.health = 100
-    player.get_node("HurtSound").stop()
-    player.get_node("ShotSound").stop()
+    for audio in level.find_children("*", "AudioStreamPlayer", true, false):
+        audio.stop()
+    for audio in level.find_children("*", "AudioStreamPlayer2D", true, false):
+        audio.stop()
     GameAudio.stop_all()
     # Let the audio server release playback before the test tears down its scene.
-    await frames(6)
+    await get_tree().create_timer(0.2).timeout
     level.queue_free()
     get_tree().current_scene = null
-    await frames()
+    await get_tree().create_timer(0.2).timeout
     print("IGNOTUM STEALTH: %d checks, %d failures" % [checks,failures])
     get_tree().quit(0 if failures == 0 else 1)

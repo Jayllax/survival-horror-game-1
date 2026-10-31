@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bm6o3pu8jmwes" path="res://scripts/enemy.gd" id="1"]
 [ext_resource type="SpriteFrames" uid="uid://dx15p605ogr7w" path="res://data/animations/enemy_frames.tres" id="2"]
 [ext_resource type="Script" uid="uid://battg16dcvdnc" path="res://scripts/character_visuals.gd" id="visuals"]
+[ext_resource type="AudioStream" path="res://data/audio/effects/hurt_alternating.tres" id="hurt"]
 
 [sub_resource type="CapsuleShape2D" id="shape"]
 radius = 12.0
@@ -41,3 +42,10 @@ monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackPivot/Hitbox" unique_id=809636014]
 shape = SubResource("attack_shape")
+
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("hurt")
+volume_db = 3.0
+pitch_scale = 0.78
+max_distance = 900.0
+bus = &"SFX"

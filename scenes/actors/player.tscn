@@ -6,7 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://b1ia568vco5o4" path="res://art/beam.svg" id="4"]
 [ext_resource type="Texture2D" uid="uid://hud81ykbijrv" path="res://art/light.svg" id="5"]
 [ext_resource type="AudioStream" uid="uid://da7evrd7xdwy5" path="res://audio/shot.wav" id="6"]
-[ext_resource type="AudioStream" uid="uid://27hq6m8o0c76" path="res://audio/hurt.wav" id="7"]
+[ext_resource type="AudioStream" path="res://data/audio/effects/hurt_alternating.tres" id="7"]
+[ext_resource type="AudioStream" path="res://audio/effects/character/jump_1.mp3" id="jump"]
 [ext_resource type="PackedScene" path="res://scenes/actors/weapon_arms.tscn" id="arms"]
 [ext_resource type="Script" uid="uid://battg16dcvdnc" path="res://scripts/character_visuals.gd" id="visuals"]
 
@@ -81,8 +82,13 @@ volume_db = -12.0
 [node name="HurtSound" type="AudioStreamPlayer" parent="." unique_id=1690239658]
 stream = ExtResource("7")
 bus = &"SFX"
-volume_db = -13.0
+volume_db = 6.0
 
 [node name="WeaponArms" parent="." unique_id=575765322 instance=ExtResource("arms")]
 
 [node name="Footsteps" parent="." instance=ExtResource("footsteps")]
+
+[node name="JumpSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("jump")
+volume_db = 12.0
+bus = &"SFX"

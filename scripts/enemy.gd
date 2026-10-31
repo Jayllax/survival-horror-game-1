@@ -351,6 +351,7 @@ func update_visuals() -> void:
 func take_damage(amount: int) -> void:
     if dead or amount <= 0:
         return
+    $HurtSound.play()
     health = maxi(0,health-amount)
     flash_remaining = 0.15
     if health <= 0:
