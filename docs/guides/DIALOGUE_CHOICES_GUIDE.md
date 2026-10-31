@@ -86,6 +86,8 @@ Add `scenes/objects/story/world_flag_condition.tscn` to your level. It is an inv
 | --- | --- |
 | **Visible When Met** | Shows these CanvasItem nodes; hides them otherwise. |
 | **Visible When Unmet** | Hides these nodes; shows them otherwise. |
+| **Activate When Met** | Shows and enables whole enemy/actor roots; hides and disables their processing/physics otherwise. |
+| **Activate When Unmet** | The opposite activation rule: enables the actor before the flag matches, then hides/disables it. |
 | **Enable Interaction When Met** | Enables these existing entrance/interactable roots; disables their interaction otherwise, keeping their artwork visible. |
 | **Disable Collision When Met** | Disables these CollisionShape2D/CollisionPolygon2D nodes; enables them otherwise. |
 | **Enable Collision When Met** | Enables these collision shapes; disables them otherwise. |
@@ -93,6 +95,22 @@ Add `scenes/objects/story/world_flag_condition.tscn` to your level. It is an inv
 ### Reveal an item
 
 Place the ordinary pickup in the editor. Add its **whole root** to Visible When Met, not just its Sprite2D. While hidden, it offers no invisible interaction. Its normal collection and save behavior remains intact: an already-collected pickup is not recreated by a flag change.
+
+### Enable an enemy after a conversation
+
+**Visibility alone does not stop enemy AI.** Use activation for enemies:
+
+1. On the NPC root, set **Completion Flag**, for example `story:spoke_to_jax_1`. This becomes true only after finishing the whole conversation, including branches and resumed parent lines.
+2. On the WorldFlagCondition, set the same **Flag Id** and leave **Required Value** checked.
+3. Expand **Activate When Met**, add an entry and drag in the **whole Enemy root**. Do not select its Body, hitbox or collision child.
+4. Remove that enemy from **Visible When Met**, **Enable Interaction When Met** and **Enable Collision When Met**. Activation handles this actor as one unit; those other fields are for different purposes.
+5. Keep the enemy's authored **Process → Mode** on **Inherit** and its collision **Disable Mode** on **Remove** (the normal defaults).
+
+Before the flag matches, the enemy is hidden, does not move, hear noises, attack, take damage or trigger danger music, and its physics are removed so it cannot block bullets invisibly. Its hurt sound stops. Once the flag matches, visibility and the original process mode return and the living enemy can behave normally. Deactivating and reactivating an already alerted enemy resumes its existing AI state; activation is not a respawn/reset command. A defeated enemy stays defeated, including after loading a save.
+
+The newest `house_03_1` enemy is already configured this way for Jax's `story:spoke_to_jax_1` flag. Your item-reveal condition in `house_03_2` still uses Visible When Met normally. The condition can be a child of the enemy: it still receives flag changes while its parent is disabled. Use Activate When Unmet for the inverse behavior.
+
+Flags are stored independently in bicycle saves. A save from before the conversation keeps this enemy inactive; a later save can keep it active. To test the initial state again, use a new game or load a slot from before the flag was set.
 
 ### Open or close a passage
 
@@ -108,7 +126,7 @@ The component reads saved flags when a location loads and updates when choices c
 
 Open `tests/fixtures/dialogue_choices_sandbox.tscn` and press F6. This development-only fixture demonstrates two placeholder responses, different branches, an optional ammo pickup, an entrance and a passage blocker. It is not connected to your campaign. The bicycle is before the question so you can compare saved states.
 
-Optional automated checks: `GODOT_BIN=/path/to/godot bash tools/check.sh narrative dialogue_choices dialogue_flow`. They cover input, nested return/replacement, both real Jax routes, selected-only effects, compact layout/resizing, paused actor animation, voice lifecycle, completion and independent save slots. Voice timing uses silent test-only streams; no placeholder speech is included in the game.
+Optional automated checks: `GODOT_BIN=/path/to/godot bash tools/check.sh narrative dialogue_choices dialogue_flow story_activation`. They cover input, nested return/replacement, both real Jax routes, selected-only effects, compact layout/resizing, paused actor animation, voice lifecycle, completion and independent save slots. Story activation also exercises the uploaded Jax completion flag and house enemy, disabled physics/attacks/hearing, inverse activation, child controllers and saved defeat. Synthetic voice timing uses silent test-only streams; the authored Jax routes also exercise your assigned recordings.
 
 For fonts, transparent note panels and per-note typewriter text, see [FONT_GUIDE.md](FONT_GUIDE.md).
 

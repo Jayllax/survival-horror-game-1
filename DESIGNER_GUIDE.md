@@ -244,6 +244,8 @@ DialogueLine resources now have an optional **Choices** array. Each DialogueChoi
 
 Branches return to the next parent line automatically, including nested responses. Uncheck a choice's **Return After Branch** only to replace the remaining conversation. Each line also has **Voice (optional) → Voice Audio / Voice Volume Db**. On the NPC root, **Conversation Animation** selects idle/talking clips and that character's speaker resources, allowing its visual to animate while gameplay remains paused. Jax is already configured. The response box now fits its actual answers. Full instructions and recording behavior are in the dialogue-choice guide above.
 
+For enemies controlled by a completion/story flag, use the condition's **Activate When Met** array and assign the **whole Enemy root**. Visibility alone only hides artwork; activation also disables AI, hearing and physics. Your `house_03_1` enemy is already connected to `story:spoke_to_jax_1` this way. See the enemy-activation section of the dialogue-choice guide.
+
 ## Music, ambience and footsteps
 
 Select a level root and expand **Audio** to assign Music Cue and Ambience Cue resources from `data/audio/`. The introduction scenes share ambient_track_2; town_01 uses ambient_track_1. The persistent controller crossfades region changes and adds sight-based scary_2 combat music. Safe-room music is available for your own rooms. Player footstep sounds follow animation contacts and can be changed with concrete/dirt Area2D zones. Full Inspector instructions: [AUDIO_GUIDE.md](docs/guides/AUDIO_GUIDE.md).

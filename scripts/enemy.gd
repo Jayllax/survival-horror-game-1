@@ -60,6 +60,7 @@ var hit_visual_remaining := 0.0
 var stagger_remaining := 0.0
 var death_remaining := 0.0
 var dead := false
+var story_active := true
 var state_elapsed := 0.0
 var memory_remaining := 0.0
 var last_known_position := Vector2.ZERO
@@ -95,10 +96,20 @@ func state_name() -> String:
     return State.keys()[state].to_lower()
 
 func is_attacking() -> bool:
-    return state == State.ATTACK and not dead
+    return story_active and state == State.ATTACK and not dead
 
 func is_music_threat(player: Node2D) -> bool:
-    return not dead and state in [State.WAKING,State.CHASE,State.ATTACK,State.RECOVER,State.HIT] and sees_player(player)
+    return story_active and not dead and state in [State.WAKING,State.CHASE,State.ATTACK,State.RECOVER,State.HIT] and sees_player(player)
+
+func set_story_active(enabled: bool) -> void:
+    story_active = enabled
+    if not enabled:
+        velocity = Vector2.ZERO
+        if is_in_group("enemy"):
+            remove_from_group("enemy")
+        $HurtSound.stop()
+    elif not dead and not is_queued_for_deletion() and not is_in_group("enemy"):
+        add_to_group("enemy")
 
 func change_state(next: State) -> void:
     if state == next:
@@ -126,7 +137,7 @@ func clear_path(point: Vector2) -> bool:
     return get_world_2d().direct_space_state.intersect_ray(query).is_empty()
 
 func sees_player(player: Node2D) -> bool:
-    if player == null or not within_territory(player.global_position):
+    if not story_active or player == null or not within_territory(player.global_position):
         return false
     var offset := player.global_position-global_position
     var radius := detection_radius * (crouched_visibility_multiplier if player.is_crouching else 1.0)
@@ -150,7 +161,7 @@ func wake_towards(point: Vector2) -> void:
     body_art.play_state(&"wake",maxf(wake_seconds,0.01),true)
 
 func hear_noise(origin: Vector2, radius: float, source: Node) -> void:
-    if dead or Game.health <= 0 or Game.transitioning or get_tree().paused or source == self or not within_territory(origin):
+    if not story_active or dead or Game.health <= 0 or Game.transitioning or get_tree().paused or source == self or not within_territory(origin):
         return
     if source != null:
         if not is_instance_valid(source):
@@ -198,7 +209,7 @@ func attack_lane_available() -> bool:
     return true
 
 func begin_attack(player: Node2D) -> bool:
-    if dead or player == null or attack_cooldown > 0 or not attack_lane_available():
+    if not story_active or dead or player == null or attack_cooldown > 0 or not attack_lane_available():
         return false
     if not sees_player(player) or global_position.distance_to(player.global_position) > attack_trigger_range:
         return false
@@ -213,6 +224,8 @@ func begin_attack(player: Node2D) -> bool:
     return true
 
 func update_attack(delta: float, player: Node2D) -> void:
+    if not story_active:
+        return
     var previous := attack_time
     attack_time += delta
     var active_end := attack_windup_seconds+attack_active_seconds
@@ -230,6 +243,8 @@ func update_attack(delta: float, player: Node2D) -> void:
             begin_search()
 
 func _physics_process(delta: float) -> void:
+    if not story_active:
+        return
     if dead:
         update_death(delta)
         return
@@ -349,7 +364,7 @@ func update_visuals() -> void:
         body_art.play_state(&"walk" if absf(velocity.x) > 5 else &"idle")
 
 func take_damage(amount: int) -> void:
-    if dead or amount <= 0:
+    if not story_active or dead or amount <= 0:
         return
     $HurtSound.play()
     health = maxi(0,health-amount)

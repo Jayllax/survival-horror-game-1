@@ -90,7 +90,7 @@ The Player's **HurtSound** uses `data/audio/effects/hurt_alternating.tres`. Alth
 
 The Enemy has its own **HurtSound** using the same recordings at **Pitch Scale 0.78** for a deeper voice. It is a native **AudioStreamPlayer2D**, so it follows the enemy and fades with distance; Max Distance is initially 900 world pixels. Damage reactions, including fatal hits, trigger it; hitting an already dead enemy does not.
 
-To adjust the mix, open `scenes/actors/player.tscn` and select **JumpSound** or **HurtSound**, or open `scenes/actors/enemy.tscn` and select **HurtSound**. Change **Volume Db**; on the enemy, **Pitch Scale** controls how deep/slowed it sounds (1.0 is the original recording). The quiet jump recording starts at +12 dB, player hurt at +6 dB and enemy hurt at +3 dB. These are playback gains, not edits to the source files. All use the **SFX** bus and existing Master volume control. Enable Editable Children to override a particular placed instance.
+To adjust the mix, open `scenes/actors/player.tscn` and select **JumpSound** or **HurtSound**, or open `scenes/actors/enemy.tscn` and select **HurtSound**. Change **Volume Db**; on the enemy, **Pitch Scale** controls how deep/slowed it sounds (1.0 is the original recording). Your latest mix sets jump to +4.828 dB, player hurt to +6 dB and enemy hurt to +3 dB. These are playback gains, not edits to the source files. All use the **SFX** bus and existing Master volume control. Enable Editable Children to override a particular placed instance.
 
 ## Mix and folders
 

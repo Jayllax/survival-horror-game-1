@@ -11,3 +11,5 @@ The weapon workbench contains the new equipment pickups and is used for independ
 - `audio_sandbox.tscn`: separate soundtrack/forest ambience, two enemies, a sight blocker and a dirt-footstep zone. No campaign links point here.
 
 - `room_door_sandbox.tscn`: two rooms in one level separated by a reusable, physical side-view door, with an upper divider, movable nightstand, player, HUD and bicycle. It is isolated from campaign levels.
+
+- `story_activation_sandbox.tscn`: inherits the current house_03_1 for testing the real Jax-controlled enemy, adding an isolated bicycle and a second actor with an inverse condition inside its own subtree. No campaign entrance links to this fixture. The suite also plays the actual house_03_2 conversation and returns through normal fades.
