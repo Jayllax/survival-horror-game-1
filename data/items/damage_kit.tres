@@ -1,13 +1,15 @@
-[gd_resource type="Resource" script_class="InventoryItemDefinition" format=3]
-[ext_resource type="Script" path="res://scripts/item_definition.gd" id="script"]
-[ext_resource type="Texture2D" path="res://art/pixel/equipment/damage_kit.png" id="art"]
+[gd_resource type="Resource" script_class="InventoryItemDefinition" format=3 uid="uid://i3dpdjv80ynv"]
+
+[ext_resource type="Texture2D" uid="uid://djkunbwke7y0p" path="res://art/pixel/equipment/damage_kit.png" id="art"]
+[ext_resource type="Script" uid="uid://ysok34dxqtu8" path="res://scripts/item_definition.gd" id="script"]
 [ext_resource type="Resource" path="res://data/upgrades/damage.tres" id="upgrade"]
+
 [resource]
 script = ExtResource("script")
 id = "damage_kit"
-remove_after_use = true
-display_name = "Damage kit"
+display_name = "Weapon kit"
 category = "Material"
-description = "A single-use weapon upgrade. Increases damage by 25%, rounded to a whole number per projectile. Each weapon accepts one damage kit. It can also have a compact upgrade."
+description = "A weapon kit. I can give one of my weapons more firepower with this."
 icon = ExtResource("art")
+remove_after_use = true
 upgrade = ExtResource("upgrade")

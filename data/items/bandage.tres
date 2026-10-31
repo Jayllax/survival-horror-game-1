@@ -6,10 +6,10 @@
 [resource]
 script = ExtResource("1")
 id = "bandage"
-remove_after_use = true
-display_name = "Bandage"
+display_name = "Sterilized cloth"
 category = "Supply"
-description = "A bandage that restores 30 health."
+description = "A sterilized cloth. I can heal my wounds with this."
 icon = ExtResource("2")
 max_stack = 3
 heal_amount = 30
+remove_after_use = true

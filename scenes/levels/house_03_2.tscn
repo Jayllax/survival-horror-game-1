@@ -36,10 +36,12 @@
 [ext_resource type="Resource" uid="uid://b0rr02qasea6n" path="res://data/narrative/speakers/jax_dole.tres" id="21_ujyqf"]
 [ext_resource type="Script" uid="uid://n78cmm0wplag" path="res://scripts/narrative/dialogue_sequence.gd" id="22_1402q"]
 [ext_resource type="AudioStream" uid="uid://d0vhim6t3fxjb" path="res://audio/voice/player_jax/player_jax_1_2.mp3" id="22_bjnc3"]
+[ext_resource type="PackedScene" path="res://scenes/objects/puzzles/code_lock.tscn" id="23_1fmwm"]
 [ext_resource type="AudioStream" uid="uid://brbp6yfpsmxno" path="res://audio/voice/player_jax/player_jax_1_10.mp3" id="23_at73x"]
 [ext_resource type="AudioStream" uid="uid://bm80na5vks6d4" path="res://audio/voice/player_jax/player_jax_1_3.mp3" id="23_rg7w5"]
 [ext_resource type="AudioStream" uid="uid://dxbltxdr4ll33" path="res://audio/voice/player_jax/player_jax_1_11.mp3" id="23_w7op2"]
 [ext_resource type="AudioStream" uid="uid://cg6376mfyqkc7" path="res://audio/voice/player_jax/player_jax_1_4.mp3" id="24_urshd"]
+[ext_resource type="Resource" uid="uid://c6jjbgbxclxsy" path="res://data/items/compact_saw.tres" id="24_yxqjj"]
 [ext_resource type="AudioStream" uid="uid://d11u56nli6m1l" path="res://audio/voice/player_jax/player_jax_1_5.mp3" id="26_1402q"]
 [ext_resource type="AudioStream" uid="uid://bn7hh11cma3ml" path="res://audio/voice/player_jax/player_jax_1_6.mp3" id="27_6l5d1"]
 [ext_resource type="AudioStream" uid="uid://yb1it177ngh3" path="res://audio/voice/player_jax/player_jax_1_7.mp3" id="28_28k42"]
@@ -91,7 +93,7 @@ voice_audio = ExtResource("22_bjnc3")
 [sub_resource type="Resource" id="Resource_ujyqf"]
 script = ExtResource("17_ujyqf")
 speaker = ExtResource("20_xe5ls")
-text = "No idea. I just woke up in this place. Don't remember how I got here or why."
+text = "So am I. I have no idea where we are. I just woke up in this place. Don't remember how or why I got here."
 metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 
 [sub_resource type="Resource" id="Resource_rg7w5"]
@@ -248,7 +250,7 @@ metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 [sub_resource type="Resource" id="Resource_qi71t"]
 script = ExtResource("17_ujyqf")
 speaker = ExtResource("21_ujyqf")
-text = "Those numbers just keep repeating in my head for some reason. This place sure is strange."
+text = "Those numbers just keep repeating in my head for some reason. This is all so strange."
 metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 
 [sub_resource type="Resource" id="Resource_4ry7p"]
@@ -261,7 +263,7 @@ metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 [sub_resource type="Resource" id="Resource_3yrhw"]
 script = ExtResource("17_ujyqf")
 speaker = ExtResource("21_ujyqf")
-text = "Yeah maybe. Let me know if you find out anything."
+text = "Yeah maybe. Let me know if you find anything."
 metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 
 [sub_resource type="Resource" id="Resource_j2x64"]
@@ -524,10 +526,13 @@ document = SubResource("Resource_wny14")
 position = Vector2(247, 582)
 contents = Array[ExtResource("20_3yrhw")]([SubResource("Resource_kxjmj")])
 
-[node name="WorldFlagCondition" parent="Interactables" unique_id=103124143 instance=ExtResource("20_kxjmj")]
-position = Vector2(323, 594)
-flag_id = "story:spoke_to_jax_1"
-visible_when_met = Array[NodePath]([NodePath("../LootContainer")])
+[node name="CodeLock" parent="Interactables" unique_id=1041732230 instance=ExtResource("23_1fmwm")]
+position = Vector2(148, 606)
+correct_code = "2804"
+panel_title = "LOCKED DRAWER"
+action_label = "Examine drawer"
+interaction_radius = 50.0
+reward_item = ExtResource("24_yxqjj")
 
 [node name="Actors" type="Node2D" parent="." unique_id=1936203783]
 
@@ -543,6 +548,9 @@ repeat_dialogue = SubResource("Resource_s8ns5")
 interaction_radius = 70.0
 completion_flag = "story:spoke_to_jax_1"
 
+[node name="LootContainer" parent="Actors" unique_id=803979568 instance=ExtResource("19_4ry7p")]
+position = Vector2(322, 600)
+
 [node name="Spawns" type="Node2D" parent="." unique_id=1777379054]
 
 [node name="from_house_03_1" type="Marker2D" parent="Spawns" unique_id=270069570]
@@ -555,5 +563,10 @@ stream = ExtResource("20_uvfgb")
 volume_db = -16.0
 autoplay = true
 script = ExtResource("21_4ry7p")
+
+[node name="WorldFlagCondition" parent="." unique_id=103124143 instance=ExtResource("20_kxjmj")]
+position = Vector2(323, 594)
+flag_id = "story:spoke_to_jax_1"
+visible_when_met = Array[NodePath]([NodePath("../Interactables/LootContainer")])
 
 [editable path="Interactables/EnterHouse_03_1"]

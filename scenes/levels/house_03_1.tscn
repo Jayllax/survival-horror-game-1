@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/dining_chair.tscn" id="7_cavyo"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/ceiling_lamp.tscn" id="8_tru5g"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/wall_lamp.tscn" id="9_bbt0o"]
+[ext_resource type="PackedScene" path="res://scenes/objects/physics/pushable_body.tscn" id="10_bbt0o"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/kitchen/fridge.tscn" id="10_x7inm"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/kitchen/sink_cabinet.tscn" id="11_d3pax"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/kitchen/stove.tscn" id="12_l3lpi"]
@@ -28,6 +29,10 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/story/world_flag_condition.tscn" id="23_eiqbq"]
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="23_upbmb"]
 [ext_resource type="PackedScene" uid="uid://da5r8bq0hou0w" path="res://scenes/actors/enemy.tscn" id="24_s5t8u"]
+[ext_resource type="Script" uid="uid://bkj62nwqxumq7" path="res://scripts/loot/loot_entry.gd" id="25_tru5g"]
+[ext_resource type="Resource" uid="uid://do6pa807ji1hf" path="res://data/items/cloth.tres" id="26_bbt0o"]
+[ext_resource type="Resource" uid="uid://cy0xo5h0wjja0" path="res://data/items/ammo.tres" id="26_x7inm"]
+[ext_resource type="PackedScene" uid="uid://cjvei6sff82yp" path="res://scenes/actors/examine_lines.tscn" id="29_d3pax"]
 
 [sub_resource type="RectangleShape2D" id="floor"]
 size = Vector2(906, 120)
@@ -37,6 +42,21 @@ size = Vector2(40, 720)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_55n3y"]
 polygon = PackedVector2Array(0, 620.0081, 2200.0313, 620.0081, 2200.0313, 625.99347, 0, 625.99347)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d3pax"]
+resource_local_to_scene = true
+size = Vector2(91, 28)
+
+[sub_resource type="Resource" id="Resource_s5t8u"]
+script = ExtResource("25_tru5g")
+item = ExtResource("26_bbt0o")
+metadata/_custom_type_script = "uid://bkj62nwqxumq7"
+
+[sub_resource type="Resource" id="Resource_bbt0o"]
+script = ExtResource("25_tru5g")
+item = ExtResource("26_x7inm")
+quantity = 2
+metadata/_custom_type_script = "uid://bkj62nwqxumq7"
 
 [node name="Location" type="Node2D" unique_id=701534075]
 script = ExtResource("1_ggkt8")
@@ -205,7 +225,15 @@ z_index = 1
 position = Vector2(257, 621)
 
 [node name="Sofa" parent="Props" unique_id=2063088090 instance=ExtResource("4_45jck")]
+z_index = 0
 position = Vector2(257, 621)
+
+[node name="PushableBody" parent="Props/Sofa" unique_id=1195453435 instance=ExtResource("10_bbt0o")]
+position = Vector2(-30, 0)
+
+[node name="CollisionShape2D" parent="Props/Sofa/PushableBody" index="0"]
+position = Vector2(29.5, -14)
+shape = SubResource("RectangleShape2D_d3pax")
 
 [node name="FloorLamp" parent="Props" unique_id=374711007 instance=ExtResource("5_eiqbq")]
 z_index = -3
@@ -331,6 +359,20 @@ position = Vector2(481, 609)
 [node name="LootContainer2" parent="Interactables" unique_id=2130125739 instance=ExtResource("22_45jck")]
 position = Vector2(575, 609)
 
+[node name="LootContainer3" parent="Interactables" unique_id=1252992817 instance=ExtResource("22_45jck")]
+position = Vector2(437, 527)
+
+[node name="LootContainer4" parent="Interactables" unique_id=60988632 instance=ExtResource("22_45jck")]
+position = Vector2(746, 560)
+contents = Array[ExtResource("25_tru5g")]([SubResource("Resource_s5t8u")])
+
+[node name="LootContainer5" parent="Interactables" unique_id=53665486 instance=ExtResource("22_45jck")]
+position = Vector2(493, 527)
+contents = Array[ExtResource("25_tru5g")]([SubResource("Resource_bbt0o")])
+
+[node name="LootContainer6" parent="Interactables" unique_id=190045758 instance=ExtResource("22_45jck")]
+position = Vector2(549, 527)
+
 [node name="Actors" type="Node2D" parent="." unique_id=1936203783]
 
 [node name="Player" parent="Actors" unique_id=1545454888 instance=ExtResource("20_8yi4i")]
@@ -341,8 +383,12 @@ position = Vector2(293, 589)
 max_health = 80
 speed = 90.0
 damage = 25
+personal_space = 50.0
 attack_windup_seconds = 0.15
 attack_recovery_seconds = 0.3
+
+[node name="examine_lines" parent="Actors" unique_id=675673708 instance=ExtResource("29_d3pax")]
+position = Vector2(876, 589)
 
 [node name="Spawns" type="Node2D" parent="." unique_id=1777379054]
 
@@ -363,9 +409,13 @@ script = ExtResource("23_upbmb")
 [node name="WorldFlagCondition" parent="." unique_id=1524849241 instance=ExtResource("23_eiqbq")]
 position = Vector2(392, 588)
 flag_id = "story:spoke_to_jax_1"
+visible_when_met = Array[NodePath]([NodePath("../Actors/Enemy")])
 activate_when_met = Array[NodePath]([NodePath("../Actors/Enemy")])
+enable_interaction_when_met = Array[NodePath]([NodePath("../Actors/Enemy")])
+enable_collision_when_met = Array[NodePath]([NodePath("../Actors/Enemy")])
 
 [editable path="Props/Bathroom/WallLamp"]
 [editable path="Props/Bathroom/WallLamp2"]
+[editable path="Props/Sofa/PushableBody"]
 [editable path="Interactables/ExitToAlleyway_02"]
 [editable path="Interactables/EnterHouse_03_2"]

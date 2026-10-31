@@ -14,7 +14,12 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_dusty_rose_left.tscn" id="8_biwbp"]
 [ext_resource type="PackedScene" uid="uid://cfoibs7ccueyy" path="res://scenes/objects/houses/building_house.tscn" id="8_n8lao"]
 [ext_resource type="PackedScene" path="res://scenes/objects/fence_reinforced_side.tscn" id="10_le0go"]
+[ext_resource type="PackedScene" uid="uid://cjvei6sff82yp" path="res://scenes/actors/examine_lines.tscn" id="15_rmnuy"]
+[ext_resource type="Script" uid="uid://dokxahjw0ajyo" path="res://scripts/narrative/dialogue_line.gd" id="16_en3fj"]
+[ext_resource type="Script" uid="uid://c72jybcn230jo" path="res://scripts/narrative/dialogue_choice.gd" id="17_hvnho"]
+[ext_resource type="Resource" uid="uid://tejmjkno6iqb" path="res://data/narrative/speakers/you.tres" id="18_5x2mi"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_cream.tscn" id="18_vn4xj"]
+[ext_resource type="Script" uid="uid://n78cmm0wplag" path="res://scripts/narrative/dialogue_sequence.gd" id="19_w3lfx"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_pale_olive_no_chimney.tscn" id="20_akiom"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="21"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_teal_right.tscn" id="21_mwytw"]
@@ -29,6 +34,15 @@ size = Vector2(4731, 120)
 
 [sub_resource type="RectangleShape2D" id="wall"]
 size = Vector2(40, 720)
+
+[sub_resource type="Resource" id="Resource_62b4b"]
+script = ExtResource("16_en3fj")
+speaker = ExtResource("18_5x2mi")
+text = "The door is locked."
+
+[sub_resource type="Resource" id="Resource_6ocd3"]
+script = ExtResource("19_w3lfx")
+lines = Array[ExtResource("16_en3fj")]([SubResource("Resource_62b4b")])
 
 [node name="Location" type="Node2D" unique_id=653106688]
 script = ExtResource("1")
@@ -325,6 +339,73 @@ scale = Vector2(1.2, 1.2)
 
 [node name="Interactables" type="Node2D" parent="." unique_id=1337389834]
 
+[node name="Examines" type="Node" parent="Interactables" unique_id=188118921]
+
+[node name="examine_lines" parent="Interactables/Examines" unique_id=675673708 instance=ExtResource("15_rmnuy")]
+position = Vector2(-152, 572)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines2" parent="Interactables/Examines" unique_id=858455576 instance=ExtResource("15_rmnuy")]
+position = Vector2(24, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines3" parent="Interactables/Examines" unique_id=1811070625 instance=ExtResource("15_rmnuy")]
+position = Vector2(156, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines4" parent="Interactables/Examines" unique_id=1618844303 instance=ExtResource("15_rmnuy")]
+position = Vector2(549, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines5" parent="Interactables/Examines" unique_id=522297909 instance=ExtResource("15_rmnuy")]
+position = Vector2(725, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines6" parent="Interactables/Examines" unique_id=222785814 instance=ExtResource("15_rmnuy")]
+position = Vector2(1333, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines7" parent="Interactables/Examines" unique_id=2107505898 instance=ExtResource("15_rmnuy")]
+position = Vector2(1678, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines8" parent="Interactables/Examines" unique_id=1377968052 instance=ExtResource("15_rmnuy")]
+position = Vector2(2030, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines9" parent="Interactables/Examines" unique_id=158893581 instance=ExtResource("15_rmnuy")]
+position = Vector2(2206, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines10" parent="Interactables/Examines" unique_id=1410017448 instance=ExtResource("15_rmnuy")]
+position = Vector2(2478, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines11" parent="Interactables/Examines" unique_id=335801177 instance=ExtResource("15_rmnuy")]
+position = Vector2(2830, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines12" parent="Interactables/Examines" unique_id=1965954673 instance=ExtResource("15_rmnuy")]
+position = Vector2(3102, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines13" parent="Interactables/Examines" unique_id=597553144 instance=ExtResource("15_rmnuy")]
+position = Vector2(3278, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
 [node name="Ammo" parent="Interactables" unique_id=1595936546 instance=ExtResource("23_uk0bi")]
 position = Vector2(3320, 614)
 scale = Vector2(0.4, 0.4)
@@ -360,7 +441,8 @@ destination_spawn = "from_town_01_2"
 visible = false
 
 [node name="House_01Entrance" parent="Interactables" unique_id=1065461545 instance=ExtResource("4")]
-position = Vector2(997, 556)
+position = Vector2(997, 573)
+action_label = "Open door"
 destination_scene = "res://scenes/levels/house_01.tscn"
 destination_spawn = "from_street"
 
@@ -368,7 +450,8 @@ destination_spawn = "from_street"
 visible = false
 
 [node name="House_02Entrance2" parent="Interactables" unique_id=798795210 instance=ExtResource("4")]
-position = Vector2(1189, 556)
+position = Vector2(1189, 573)
+action_label = "Open door"
 description = "Requires house_02_key."
 required_key = "house_key"
 puzzle_input_item = ""
@@ -378,7 +461,8 @@ puzzle_reward_item = ""
 visible = false
 
 [node name="House_04Entrance" parent="Interactables" unique_id=59443969 instance=ExtResource("4")]
-position = Vector2(2654, 556)
+position = Vector2(2654, 573)
+action_label = "Open door"
 destination_scene = "uid://yxwes2ioawnp"
 destination_spawn = "from_town_01"
 

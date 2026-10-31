@@ -6,8 +6,8 @@
 [resource]
 script = ExtResource("1")
 id = "fuse"
-remove_after_use = true
-display_name = "Ceramic fuse"
+display_name = "Fuse"
 description = "An electrical fuse."
 icon = ExtResource("2")
+remove_after_use = true
 grid_size = Vector2i(2, 1)

@@ -1,14 +1,16 @@
-[gd_resource type="Resource" script_class="InventoryItemDefinition" format=3]
-[ext_resource type="Script" path="res://scripts/item_definition.gd" id="script"]
-[ext_resource type="Texture2D" path="res://art/pixel/equipment/compact_saw.png" id="art"]
+[gd_resource type="Resource" script_class="InventoryItemDefinition" format=3 uid="uid://c6jjbgbxclxsy"]
+
+[ext_resource type="Texture2D" uid="uid://tccnindl45q" path="res://art/pixel/equipment/compact_saw.png" id="art"]
+[ext_resource type="Script" uid="uid://ysok34dxqtu8" path="res://scripts/item_definition.gd" id="script"]
 [ext_resource type="Resource" path="res://data/upgrades/compact.tres" id="upgrade"]
+
 [resource]
 script = ExtResource("script")
 id = "compact_saw"
-remove_after_use = true
-display_name = "Compact saw kit"
+display_name = "Compact saw"
 category = "Tool"
-description = "A single-use conversion kit. Combine with a compatible weapon or tool to reduce its inventory space. Each item can be compacted once. Loaded ammunition and damage are preserved."
+description = "A compact saw. I think I can shorten the length of some of my items with this. Will probably break it though."
 icon = ExtResource("art")
+remove_after_use = true
 grid_size = Vector2i(2, 1)
 upgrade = ExtResource("upgrade")
