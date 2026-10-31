@@ -1,0 +1,492 @@
+[gd_scene format=3 uid="uid://c4ep4f4cgbcla"]
+
+[ext_resource type="Script" uid="uid://6ac0fiq4jtxt" path="res://scripts/location.gd" id="1_hpdln"]
+[ext_resource type="Texture2D" uid="uid://doeuaul7l3oue" path="res://art/pixel/floor.png" id="2_nh73i"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bedroom/nightstand.tscn" id="3_mycss"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bedroom/bed.tscn" id="4_p6o1h"]
+[ext_resource type="PackedScene" uid="uid://b05yk71l6rpu" path="res://scenes/objects/interiors/bedroom/wardrobe.tscn" id="5_ujyqf"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/table_lamp.tscn" id="6_xe5ls"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/sideboard.tscn" id="7_bjnc3"]
+[ext_resource type="PackedScene" uid="uid://bs5djbah2okuq" path="res://scenes/objects/interiors/living_room/bookcase.tscn" id="8_rg7w5"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/ceiling_lamp.tscn" id="9_urshd"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/dining_chair.tscn" id="10_smmom"]
+[ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="11_6l5d1"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/floor_lamp.tscn" id="11_v5gh1"]
+[ext_resource type="PackedScene" path="res://scenes/objects/room_door_side.tscn" id="13_2t526"]
+[ext_resource type="PackedScene" uid="uid://b1t26x82qn6n6" path="res://scenes/actors/npc_jax.tscn" id="16_knspu"]
+[ext_resource type="PackedScene" uid="uid://d161ooahnfhd3" path="res://scenes/objects/lighting/light_switch.tscn" id="17_fdp1k"]
+[ext_resource type="Script" uid="uid://dokxahjw0ajyo" path="res://scripts/narrative/dialogue_line.gd" id="17_ujyqf"]
+[ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="18_s4eod"]
+[ext_resource type="Script" uid="uid://c72jybcn230jo" path="res://scripts/narrative/dialogue_choice.gd" id="18_xe5ls"]
+[ext_resource type="PackedScene" uid="uid://cu7udyf271gqe" path="res://scenes/ui/hud.tscn" id="19_qi71t"]
+[ext_resource type="Resource" uid="uid://tejmjkno6iqb" path="res://data/narrative/speakers/you.tres" id="19_ujyqf"]
+[ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="20_uvfgb"]
+[ext_resource type="Resource" uid="uid://bxi2s27p2nb0h" path="res://data/narrative/speakers/unknown.tres" id="20_xe5ls"]
+[ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="21_4ry7p"]
+[ext_resource type="Resource" uid="uid://b0rr02qasea6n" path="res://data/narrative/speakers/jax_dole.tres" id="21_ujyqf"]
+[ext_resource type="Script" uid="uid://n78cmm0wplag" path="res://scripts/narrative/dialogue_sequence.gd" id="22_1402q"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_2t526"]
+polygon = PackedVector2Array(0, 620.0081, 2200.0313, 620.0081, 2200.0313, 625.99347, 0, 625.99347)
+
+[sub_resource type="RectangleShape2D" id="floor"]
+size = Vector2(669, 120)
+
+[sub_resource type="RectangleShape2D" id="wall"]
+size = Vector2(40, 720)
+
+[sub_resource type="Resource" id="Resource_28k42"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("19_ujyqf")
+text = "Hey, øhh, undskyld, v-ved du, hvor vi er henne?"
+
+[sub_resource type="Resource" id="Resource_yhxjy"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("20_xe5ls")
+text = "Come again?"
+
+[sub_resource type="Resource" id="Resource_r3hm7"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("19_ujyqf")
+text = "Oh, sorry, uhm, I thought we were in... nevermind. I'm really confused, do you know where we are?"
+
+[sub_resource type="Resource" id="Resource_ujyqf"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("20_xe5ls")
+text = "No idea. I just woke up in a forest outside of town with no recollection of how I got there. I thought I was the only one here until now."
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_rg7w5"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("19_ujyqf")
+text = "So did I... what the fuck is this place?"
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_uvfgb"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("19_ujyqf")
+text = "Do you also not remember your name?"
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_kxjmj"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("20_xe5ls")
+text = "No, I remember, it's Jax. Jax Dole. You don't?"
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_07xaa"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("19_ujyqf")
+text = "No... I-I don't. But uhm, nice to meet you Jax. I'm... well, someone."
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_36lin"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("19_ujyqf")
+text = "You haven't found any way out of this place, have you?"
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_0p0gy"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("21_ujyqf")
+text = "Nah, seems like everything's fenced off or locked, so I decided to chill here for a while."
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_d2p6s"]
+script = ExtResource("22_1402q")
+lines = Array[ExtResource("17_ujyqf")]([SubResource("Resource_36lin"), SubResource("Resource_0p0gy")])
+metadata/_custom_type_script = "uid://n78cmm0wplag"
+
+[sub_resource type="Resource" id="Resource_rpcjx"]
+script = ExtResource("18_xe5ls")
+text = "Ask for his help getting out of town."
+next_dialogue = SubResource("Resource_d2p6s")
+metadata/_custom_type_script = "uid://c72jybcn230jo"
+
+[sub_resource type="Resource" id="Resource_1fmwm"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("21_ujyqf")
+text = "Hah. Nice to meet you too, someone."
+choices = Array[ExtResource("18_xe5ls")]([SubResource("Resource_rpcjx")])
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_s4eod"]
+script = ExtResource("22_1402q")
+lines = Array[ExtResource("17_ujyqf")]([SubResource("Resource_uvfgb"), SubResource("Resource_kxjmj"), SubResource("Resource_07xaa"), SubResource("Resource_1fmwm")])
+metadata/_custom_type_script = "uid://n78cmm0wplag"
+
+[sub_resource type="Resource" id="Resource_at73x"]
+script = ExtResource("18_xe5ls")
+text = "Ask what his name is."
+next_dialogue = SubResource("Resource_s4eod")
+metadata/_custom_type_script = "uid://c72jybcn230jo"
+
+[sub_resource type="Resource" id="Resource_jpepr"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("19_ujyqf")
+text = "You haven't found any way out of this place, have you?"
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_ftcua"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("19_ujyqf")
+text = "Do you also not remember your name?"
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_xkueh"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("20_xe5ls")
+text = "No, I remember, it's Jax. Jax Dole. You don't?"
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_xe5ls"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("19_ujyqf")
+text = "No... I-I don't. But uhm, nice to meet you Jax. I'm... well, someone."
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_bjnc3"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("21_ujyqf")
+text = "Hah. Nice to meet you too, someone."
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_vfjcj"]
+script = ExtResource("22_1402q")
+lines = Array[ExtResource("17_ujyqf")]([SubResource("Resource_ftcua"), SubResource("Resource_xkueh"), SubResource("Resource_xe5ls"), SubResource("Resource_bjnc3")])
+metadata/_custom_type_script = "uid://n78cmm0wplag"
+
+[sub_resource type="Resource" id="Resource_3wqjl"]
+script = ExtResource("18_xe5ls")
+text = "Ask what his name is."
+next_dialogue = SubResource("Resource_vfjcj")
+metadata/_custom_type_script = "uid://c72jybcn230jo"
+
+[sub_resource type="Resource" id="Resource_y2slq"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("20_xe5ls")
+text = "Nah, seems like everything's fenced off or locked, so I decided to chill here for a while."
+choices = Array[ExtResource("18_xe5ls")]([SubResource("Resource_3wqjl")])
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_syrdq"]
+script = ExtResource("22_1402q")
+lines = Array[ExtResource("17_ujyqf")]([SubResource("Resource_jpepr"), SubResource("Resource_y2slq")])
+metadata/_custom_type_script = "uid://n78cmm0wplag"
+
+[sub_resource type="Resource" id="Resource_fdp1k"]
+script = ExtResource("18_xe5ls")
+text = "Ask for his help getting out of town."
+next_dialogue = SubResource("Resource_syrdq")
+metadata/_custom_type_script = "uid://c72jybcn230jo"
+
+[sub_resource type="Resource" id="Resource_1402q"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("20_xe5ls")
+text = "I don't know, man, but I don't want to stick around too long. That's for sure."
+choices = Array[ExtResource("18_xe5ls")]([SubResource("Resource_at73x"), SubResource("Resource_fdp1k")])
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_urshd"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("21_ujyqf")
+text = "Oh by the way, do the numbers 1503 mean anything to you?"
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_6l5d1"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("19_ujyqf")
+text = "No, I don't think so. Why?"
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_qi71t"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("21_ujyqf")
+text = "Those numbers just keep repeating in my head for some reason. This place sure is strange."
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_4ry7p"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("19_ujyqf")
+text = "Yeah... well, I'll keep them in mind. Maybe they're important."
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_3yrhw"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("21_ujyqf")
+text = "Yeah maybe. Let me know if you find out anything."
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_j2x64"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("19_ujyqf")
+text = "Sure, I will. But uhm, I'm gonna go back to finding a way out of here, you coming with?"
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_yxqjj"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("21_ujyqf")
+text = "Nah, I'm gonna stay here for a while. I have this strange feeling that I need to."
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_xligd"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("19_ujyqf")
+text = "Alright, can't argue with strange feelings. "
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_0ujvr"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("21_ujyqf")
+text = "Hah, yeah. Take care of yourself, someone. See you around."
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_lfg3a"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("19_ujyqf")
+text = "You too, see ya."
+metadata/_custom_type_script = "uid://dokxahjw0ajyo"
+
+[sub_resource type="Resource" id="Resource_w7op2"]
+script = ExtResource("22_1402q")
+lines = Array[ExtResource("17_ujyqf")]([SubResource("Resource_28k42"), SubResource("Resource_yhxjy"), SubResource("Resource_r3hm7"), SubResource("Resource_ujyqf"), SubResource("Resource_rg7w5"), SubResource("Resource_1402q"), SubResource("Resource_urshd"), SubResource("Resource_6l5d1"), SubResource("Resource_qi71t"), SubResource("Resource_4ry7p"), SubResource("Resource_3yrhw"), SubResource("Resource_j2x64"), SubResource("Resource_yxqjj"), SubResource("Resource_xligd"), SubResource("Resource_0ujvr"), SubResource("Resource_lfg3a")])
+
+[sub_resource type="Resource" id="repeat"]
+script = ExtResource("17_ujyqf")
+speaker = ExtResource("21_ujyqf")
+text = "Stay safe out there."
+
+[sub_resource type="Resource" id="Resource_s8ns5"]
+script = ExtResource("22_1402q")
+lines = Array[ExtResource("17_ujyqf")]([SubResource("repeat")])
+
+[node name="Location" type="Node2D" unique_id=701534075]
+script = ExtResource("1_hpdln")
+display_name = "Building / Ground floor"
+camera_bounds = Rect2i(0, 0, 1152, 720)
+
+[node name="AmbientTint" type="CanvasModulate" parent="." unique_id=758485644]
+visible = false
+color = Color(0.039215688, 0.039215688, 0.039215688, 1)
+
+[node name="Silos_Mouths" type="Node2D" parent="." unique_id=199967885]
+
+[node name="House_01_3Mouth" type="Polygon2D" parent="Silos_Mouths" unique_id=2021283907]
+position = Vector2(-787, 275)
+color = Color(0.025, 0.045, 0.06, 1)
+polygon = PackedVector2Array(1230, 255, 1230, 345, 1180, 345, 1180, 255)
+
+[node name="Sideboard" parent="Silos_Mouths" unique_id=215097913 instance=ExtResource("7_bjnc3")]
+modulate = Color(0, 0, 0, 1)
+z_index = 3
+position = Vector2(88, 643)
+
+[node name="Sideboard2" parent="Silos_Mouths" unique_id=1611195921 instance=ExtResource("7_bjnc3")]
+modulate = Color(0, 0, 0, 1)
+z_index = 3
+position = Vector2(575, 621)
+
+[node name="Sideboard3" parent="Silos_Mouths" unique_id=572670246 instance=ExtResource("7_bjnc3")]
+modulate = Color(0, 0, 0, 1)
+z_index = 4
+position = Vector2(211, 621)
+
+[node name="Background7" type="Polygon2D" parent="Silos_Mouths" unique_id=654435019]
+z_index = 3
+position = Vector2(373.00003, -8335.001)
+scale = Vector2(0.0036363292, 14.166347)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Silos_Mouths/Background7" unique_id=2089118711]
+occluder = SubResource("OccluderPolygon2D_2t526")
+
+[node name="Geometry" type="Node2D" parent="." unique_id=50036105]
+
+[node name="Street" type="StaticBody2D" parent="Geometry" unique_id=80617122]
+position = Vector2(576, 680)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Street" unique_id=1585902153]
+position = Vector2(-201.5, 1)
+shape = SubResource("floor")
+
+[node name="Paving" type="Sprite2D" parent="Geometry/Street" unique_id=1594992477]
+visible = false
+texture_repeat = 2
+texture = ExtResource("2_nh73i")
+region_enabled = true
+region_rect = Rect2(0, 0, 1152, 120)
+
+[node name="Curb" type="Polygon2D" parent="Geometry" unique_id=713087734]
+z_index = 4
+position = Vector2(41.999996, -617.499)
+scale = Vector2(0.57291675, 1.9960047)
+color = Color(0.547878, 0.322552, 0.234745, 1)
+polygon = PackedVector2Array(0, 620, 1152, 620, 1151.9999, 623.0512, 1152, 626, 0, 626)
+
+[node name="WestBoundary" type="StaticBody2D" parent="Geometry" unique_id=138952996]
+position = Vector2(17, 360)
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/WestBoundary" unique_id=98058664]
+position = Vector2(5, 0)
+shape = SubResource("wall")
+
+[node name="EastBoundary" type="StaticBody2D" parent="Geometry" unique_id=393032034]
+position = Vector2(1318, 362)
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/EastBoundary" unique_id=1373582522]
+position = Vector2(-597, 0)
+shape = SubResource("wall")
+
+[node name="Background" type="Polygon2D" parent="Geometry" unique_id=264627438]
+z_index = -10
+position = Vector2(-31, -36624.33)
+scale = Vector2(0.33272728, 59.503754)
+color = Color(0.13518158, 0.20345232, 0.13822186, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
+
+[node name="Background2" type="Polygon2D" parent="Geometry" unique_id=1514965316]
+z_index = -10
+position = Vector2(-732, -96063.125)
+scale = Vector2(0.3518182, 155.00018)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
+
+[node name="Background3" type="Polygon2D" parent="Geometry" unique_id=426912759]
+position = Vector2(-452.00003, -54342.836)
+scale = Vector2(0.7568181, 88.66747)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
+
+[node name="Background4" type="Polygon2D" parent="Geometry" unique_id=1391276875]
+position = Vector2(701, -53906)
+scale = Vector2(0.33272728, 87.17413)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
+
+[node name="Background5" type="Polygon2D" parent="Geometry" unique_id=654738761]
+position = Vector2(-15, -54122)
+scale = Vector2(0.33272728, 87.17413)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
+
+[node name="Props" type="Node2D" parent="." unique_id=341425996]
+
+[node name="Bed" parent="Props" unique_id=853516651 instance=ExtResource("4_p6o1h")]
+position = Vector2(88, 622)
+
+[node name="Nightstand2" parent="Props" unique_id=209671873 instance=ExtResource("3_mycss")]
+z_index = -2
+position = Vector2(148, 621)
+
+[node name="Wardrobe2" parent="Props" unique_id=1314980178 instance=ExtResource("5_ujyqf")]
+position = Vector2(247, 624)
+
+[node name="TableLamp2" parent="Props" unique_id=437929470 instance=ExtResource("6_xe5ls")]
+position = Vector2(155, 591)
+scale = Vector2(0.6, 0.6)
+light_energy = 1.2
+light_radius_scale = 1.0
+
+[node name="CeilingLamp" parent="Props" unique_id=2113481216 instance=ExtResource("9_urshd")]
+position = Vector2(88, 447)
+light_energy = 2.0
+light_radius_scale = 2.0
+
+[node name="Bookcase" parent="Props" unique_id=11051384 instance=ExtResource("8_rg7w5")]
+z_index = -2
+position = Vector2(603, 622)
+
+[node name="Bookcase2" parent="Props" unique_id=1253201720 instance=ExtResource("8_rg7w5")]
+z_index = -2
+position = Vector2(547, 622)
+
+[node name="Bookcase3" parent="Props" unique_id=1939954409 instance=ExtResource("8_rg7w5")]
+z_index = -3
+position = Vector2(603, 548)
+
+[node name="Bookcase4" parent="Props" unique_id=896516638 instance=ExtResource("8_rg7w5")]
+z_index = -3
+position = Vector2(547, 548)
+
+[node name="DiningChair" parent="Props" unique_id=2013938390 instance=ExtResource("10_smmom")]
+position = Vector2(575, 622)
+scale = Vector2(1.2, 1.2)
+
+[node name="Sideboard" parent="Props" unique_id=655173044 instance=ExtResource("7_bjnc3")]
+z_index = 0
+position = Vector2(323, 621)
+
+[node name="FloorLamp" parent="Props" unique_id=49729642 instance=ExtResource("11_v5gh1")]
+position = Vector2(678, 621)
+
+[node name="CeilingLamp2" parent="Props" unique_id=1403917627 instance=ExtResource("9_urshd")]
+position = Vector2(478, 447)
+light_energy = 1.3
+
+[node name="Interactables" type="Node2D" parent="." unique_id=580173129]
+
+[node name="EnterHouse_03_1" parent="Interactables" unique_id=166180848 instance=ExtResource("11_6l5d1")]
+position = Vector2(418, 556)
+destination_scene = "uid://blmep4h1m81o3"
+destination_spawn = "from_house_03_2"
+
+[node name="Facade" parent="Interactables/EnterHouse_03_1" index="0" unique_id=1815167978]
+visible = false
+
+[node name="LightSwitch" parent="Interactables" unique_id=1627212891 instance=ExtResource("17_fdp1k")]
+position = Vector2(461, 571)
+scale = Vector2(0.3, 0.3)
+connected_lights = Array[NodePath]([NodePath("../../Props/CeilingLamp2")])
+interaction_radius = 50.0
+
+[node name="RoomDoorSide" parent="Interactables" unique_id=1604427707 instance=ExtResource("13_2t526")]
+position = Vector2(377, 621)
+opens_left = true
+
+[node name="LightSwitch2" parent="Interactables" unique_id=1067931549 instance=ExtResource("17_fdp1k")]
+position = Vector2(356, 569)
+scale = Vector2(0.3, 0.3)
+connected_lights = Array[NodePath]([NodePath("../../Props/CeilingLamp")])
+starting_on = false
+interaction_radius = 50.0
+
+[node name="LightSwitch3" parent="Interactables" unique_id=1541620500 instance=ExtResource("17_fdp1k")]
+position = Vector2(155, 583)
+scale = Vector2(0.1, 0.1)
+connected_lights = Array[NodePath]([NodePath("../../Props/TableLamp2")])
+starting_on = false
+interaction_radius = 50.0
+
+[node name="LightSwitch4" parent="Interactables" unique_id=1897290557 instance=ExtResource("17_fdp1k")]
+position = Vector2(678, 582)
+scale = Vector2(0.2, 0.2)
+connected_lights = Array[NodePath]([NodePath("../../Props/FloorLamp")])
+interaction_radius = 50.0
+
+[node name="Actors" type="Node2D" parent="." unique_id=1936203783]
+
+[node name="Player" parent="Actors" unique_id=1545454888 instance=ExtResource("18_s4eod")]
+position = Vector2(417, 588)
+
+[node name="NPC" parent="Actors" unique_id=760903738 instance=ExtResource("16_knspu")]
+position = Vector2(514, 585)
+scale = Vector2(1.1, 1.1)
+dialogue = SubResource("Resource_w7op2")
+repeat_dialogue = SubResource("Resource_s8ns5")
+interaction_radius = 70.0
+
+[node name="Spawns" type="Node2D" parent="." unique_id=1777379054]
+
+[node name="from_house_03_1" type="Marker2D" parent="Spawns" unique_id=270069570]
+position = Vector2(419, 588)
+
+[node name="HUD" parent="." unique_id=570484733 instance=ExtResource("19_qi71t")]
+
+[node name="AmbientSound" type="AudioStreamPlayer" parent="." unique_id=1597499294]
+stream = ExtResource("20_uvfgb")
+volume_db = -16.0
+autoplay = true
+script = ExtResource("21_4ry7p")
+
+[editable path="Interactables/EnterHouse_03_1"]

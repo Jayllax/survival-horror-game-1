@@ -1,25 +1,32 @@
 [gd_resource type="Resource" script_class="DialogueSequence" format=3 uid="uid://dfrn7lxpnh7w0"]
 
+[ext_resource type="Script" uid="uid://c72jybcn230jo" path="res://scripts/narrative/dialogue_choice.gd" id="2_6m2ub"]
+[ext_resource type="Script" uid="uid://ddbwf8pq6a7n1" path="res://scripts/narrative/dialogue_speaker.gd" id="3_2ljbv"]
 [ext_resource type="Script" uid="uid://dokxahjw0ajyo" path="res://scripts/narrative/dialogue_line.gd" id="line"]
 [ext_resource type="Resource" path="res://data/narrative/speakers/example_npc.tres" id="npc"]
 [ext_resource type="Resource" path="res://data/narrative/speakers/player.tres" id="player"]
 [ext_resource type="Script" uid="uid://n78cmm0wplag" path="res://scripts/narrative/dialogue_sequence.gd" id="sequence"]
 
-[sub_resource type="Resource" id="first"]
+[sub_resource type="Resource" id="Resource_6l5d1"]
+script = ExtResource("3_2ljbv")
+display_name = "NPC"
+text_color = Color(0.56, 0.73, 0.7, 1)
+
+[sub_resource type="Resource" id="Resource_28k42"]
 script = ExtResource("line")
-speaker = ExtResource("npc")
+speaker = SubResource("Resource_6l5d1")
 text = "This is an example dialogue line. Replace it with your own writing."
 
-[sub_resource type="Resource" id="second"]
+[sub_resource type="Resource" id="Resource_yhxjy"]
 script = ExtResource("line")
 speaker = ExtResource("player")
 text = "Each line has its own speaker. The speaker resource supplies the name and text color."
 
-[sub_resource type="Resource" id="third"]
+[sub_resource type="Resource" id="Resource_r3hm7"]
 script = ExtResource("line")
 speaker = ExtResource("npc")
 text = "This is the last placeholder line. Finish to record this conversation as completed."
 
 [resource]
 script = ExtResource("sequence")
-lines = Array[ExtResource("line")]([SubResource("first"), SubResource("second"), SubResource("third")])
+lines = Array[ExtResource("line")]([SubResource("Resource_28k42"), SubResource("Resource_yhxjy"), SubResource("Resource_r3hm7")])

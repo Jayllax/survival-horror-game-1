@@ -1,10 +1,14 @@
 [gd_scene format=3 uid="uid://blmep4h1m81o3"]
 
 [ext_resource type="Script" uid="uid://6ac0fiq4jtxt" path="res://scripts/location.gd" id="1_ggkt8"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bathroom/bathtub.tscn" id="2_tdbgi"]
 [ext_resource type="Texture2D" uid="uid://doeuaul7l3oue" path="res://art/pixel/floor.png" id="2_whvjk"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bathroom/medicine_cabinet.tscn" id="3_fqtue"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/coffee_table.tscn" id="3_tdbgi"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/sofa.tscn" id="4_45jck"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bathroom/pedestal_sink.tscn" id="4_whvjk"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/floor_lamp.tscn" id="5_eiqbq"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/bathroom/toilet.tscn" id="5_tdbgi"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/dining_table.tscn" id="6_s5t8u"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/dining_chair.tscn" id="7_cavyo"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/ceiling_lamp.tscn" id="8_tru5g"]
@@ -16,6 +20,7 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/kitchen/base_cabinet.tscn" id="14_13bv6"]
 [ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="15_as4k6"]
 [ext_resource type="PackedScene" uid="uid://d161ooahnfhd3" path="res://scenes/objects/lighting/light_switch.tscn" id="16_xro6i"]
+[ext_resource type="PackedScene" path="res://scenes/objects/room_door_side.tscn" id="17_7r5wi"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="20_8yi4i"]
 [ext_resource type="PackedScene" uid="uid://cu7udyf271gqe" path="res://scenes/ui/hud.tscn" id="21_0snoh"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="22_8pc5w"]
@@ -27,13 +32,15 @@ size = Vector2(906, 120)
 [sub_resource type="RectangleShape2D" id="wall"]
 size = Vector2(40, 720)
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_55n3y"]
+polygon = PackedVector2Array(0, 620.0081, 2200.0313, 620.0081, 2200.0313, 625.99347, 0, 625.99347)
+
 [node name="Location" type="Node2D" unique_id=701534075]
 script = ExtResource("1_ggkt8")
 display_name = "Building / Ground floor"
 camera_bounds = Rect2i(0, 0, 1152, 720)
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=758485644]
-visible = false
 color = Color(0.039215688, 0.039215688, 0.039215688, 1)
 
 [node name="Silos_Mouths" type="Node2D" parent="." unique_id=199967885]
@@ -114,8 +121,8 @@ color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
 
 [node name="Background3" type="Polygon2D" parent="Geometry" unique_id=426912759]
-position = Vector2(-728, -53408)
-scale = Vector2(0.90636367, 87.17413)
+position = Vector2(-728, -54238.47)
+scale = Vector2(0.90636367, 88.50076)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
 
@@ -139,12 +146,56 @@ color = Color(0.49724287, 0.4965883, 0.6418399, 1)
 polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
 
 [node name="Background7" type="Polygon2D" parent="Geometry" unique_id=448066237]
-position = Vector2(701, -7838)
-scale = Vector2(0.0022726855, 13.3659525)
+z_index = 3
+position = Vector2(698, -8335.135)
+scale = Vector2(0.0036363292, 14.166347)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
 
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Geometry/Background7" unique_id=1052575306]
+occluder = SubResource("OccluderPolygon2D_55n3y")
+
 [node name="Props" type="Node2D" parent="." unique_id=341425996]
+
+[node name="Bathroom" type="Node2D" parent="Props" unique_id=1777321218]
+
+[node name="MedicineCabinet" parent="Props/Bathroom" unique_id=1786487425 instance=ExtResource("3_fqtue")]
+position = Vector2(746, 521)
+
+[node name="PedestalSink" parent="Props/Bathroom" unique_id=800888404 instance=ExtResource("4_whvjk")]
+position = Vector2(746, 621)
+
+[node name="Toilet" parent="Props/Bathroom" unique_id=439822161 instance=ExtResource("5_tdbgi")]
+position = Vector2(875, 621)
+
+[node name="Bathtub" parent="Props/Bathroom" unique_id=314163545 instance=ExtResource("2_tdbgi")]
+modulate = Color(0, 0, 0, 1)
+z_index = 2
+position = Vector2(829, 621)
+
+[node name="WallLamp" parent="Props/Bathroom" unique_id=1805200337 instance=ExtResource("9_bbt0o")]
+position = Vector2(745, 449)
+light_energy = 1.5
+light_radius_scale = 1.3
+
+[node name="Artwork" parent="Props/Bathroom/WallLamp" index="0"]
+visible = false
+
+[node name="Light" parent="Props/Bathroom/WallLamp" index="2"]
+energy = 1.5
+texture_scale = 1.3
+
+[node name="WallLamp2" parent="Props/Bathroom" unique_id=814913761 instance=ExtResource("9_bbt0o")]
+position = Vector2(867, 449)
+light_energy = 1.5
+light_radius_scale = 1.3
+
+[node name="Artwork" parent="Props/Bathroom/WallLamp2" index="0"]
+visible = false
+
+[node name="Light" parent="Props/Bathroom/WallLamp2" index="2"]
+energy = 1.5
+texture_scale = 1.3
 
 [node name="CoffeeTable" parent="Props" unique_id=65658492 instance=ExtResource("3_tdbgi")]
 z_index = 1
@@ -241,6 +292,7 @@ visible = false
 
 [node name="EnterHouse_03_2" parent="Interactables" unique_id=928311053 instance=ExtResource("15_as4k6")]
 position = Vector2(643, 556)
+destination_scene = "uid://c4ep4f4cgbcla"
 destination_spawn = "from_house_03_1"
 
 [node name="Facade" parent="Interactables/EnterHouse_03_2" index="0" unique_id=1815167978]
@@ -260,6 +312,15 @@ connected_lights = Array[NodePath]([NodePath("../../Props/CeilingLamp2")])
 position = Vector2(672, 571)
 scale = Vector2(0.3, 0.3)
 connected_lights = Array[NodePath]([NodePath("../../Props/WallLamp2"), NodePath("../../Props/WallLamp")])
+
+[node name="RoomDoorSide" parent="Interactables" unique_id=1134851240 instance=ExtResource("17_7r5wi")]
+position = Vector2(702, 621)
+
+[node name="LightSwitch2" parent="Interactables" unique_id=1067931549 instance=ExtResource("16_xro6i")]
+position = Vector2(776, 571)
+scale = Vector2(0.3, 0.3)
+connected_lights = Array[NodePath]([NodePath("../../Props/Bathroom/WallLamp"), NodePath("../../Props/Bathroom/WallLamp2")])
+starting_on = false
 
 [node name="Actors" type="Node2D" parent="." unique_id=1936203783]
 
@@ -282,5 +343,7 @@ volume_db = -16.0
 autoplay = true
 script = ExtResource("23_upbmb")
 
+[editable path="Props/Bathroom/WallLamp"]
+[editable path="Props/Bathroom/WallLamp2"]
 [editable path="Interactables/ExitToAlleyway_02"]
 [editable path="Interactables/EnterHouse_03_2"]
