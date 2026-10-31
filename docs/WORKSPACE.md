@@ -83,3 +83,7 @@ All general interface text, including code-drawn inventory counts, uses `art/fon
 ## Audio framework
 
 `GameAudio` is a persistent script autoload that instances the authored `scenes/audio/game_audio.tscn` channels at runtime. Cue resources, ambience and footstep banks are organized in `data/audio/`; recordings are in `audio/`. The Location root exposes its audio choices, and Player has an authored Footsteps child. The only campaign-scene changes are music cue assignments on both introductions and town_01; authored visual layout and story content are untouched. The enemy music query reuses existing sight and state without changing AI decisions or hearing. See [AUDIO_GUIDE.md](guides/AUDIO_GUIDE.md).
+
+## Physical room doors
+
+`scenes/objects/room_door_side.tscn` is a reusable door inside one level, with its controller at `scripts/room_door.gd` and native narrow profile at `art/pixel/doors/`. The leaf reuses existing green door art. Its authored solid barrier and light occluder clear after opening. Closing checks actual physics bodies and reverses safely when occupied. Open/closed and unlock states use separate namespaced world flags through existing bicycle saves. The separate editor-authored two-room fixture and `room_doors` suite exercise both-sided movement, key consumption, safe closing and slot isolation. No existing campaign scenes, player settings or input actions are changed. See [ROOM_DOOR_GUIDE.md](guides/ROOM_DOOR_GUIDE.md).

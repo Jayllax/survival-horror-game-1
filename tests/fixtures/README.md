@@ -9,3 +9,5 @@ The weapon workbench contains the new equipment pickups and is used for independ
 - `dialogue_choices_sandbox.tscn`: isolated response branches, saved story flags, a conditional pickup, an entrance and a passage blocker. No campaign destination links point to it.
 
 - `audio_sandbox.tscn`: separate soundtrack/forest ambience, two enemies, a sight blocker and a dirt-footstep zone. No campaign links point here.
+
+- `room_door_sandbox.tscn`: two rooms in one level separated by a reusable, physical side-view door, with an upper divider, movable nightstand, player, HUD and bicycle. It is isolated from campaign levels.

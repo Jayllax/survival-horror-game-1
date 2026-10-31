@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/room_door.gd" id="script"]
+[ext_resource type="Texture2D" path="res://art/pixel/doors/side_door_frame.png" id="edge"]
+[ext_resource type="Texture2D" path="res://art/pixel/door.png" id="face"]
+
+[sub_resource type="AtlasTexture" id="leaf"]
+atlas = ExtResource("face")
+region = Rect2(8, 8, 32, 80)
+
+[sub_resource type="RectangleShape2D" id="barrier"]
+resource_local_to_scene = true
+size = Vector2(8, 88)
+
+[sub_resource type="OccluderPolygon2D" id="shadow"]
+polygon = PackedVector2Array(-4, -88, 4, -88, 4, 0, -4, 0)
+
+[node name="RoomDoorSide" type="Area2D"]
+texture_filter = 1
+collision_layer = 0
+collision_mask = 0
+monitoring = false
+monitorable = false
+script = ExtResource("script")
+
+[node name="Artwork" type="Node2D" parent="."]
+
+[node name="LeafPivot" type="Node2D" parent="Artwork"]
+visible = false
+scale = Vector2(0.125, 1)
+
+[node name="Leaf" type="Sprite2D" parent="Artwork/LeafPivot"]
+position = Vector2(16, -40)
+texture = SubResource("leaf")
+
+[node name="Frame" type="Sprite2D" parent="Artwork"]
+position = Vector2(0, -44)
+scale = Vector2(2, 2)
+texture = ExtResource("edge")
+
+[node name="Barrier" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Barrier"]
+position = Vector2(0, -44)
+shape = SubResource("barrier")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("shadow")

@@ -1,5 +1,7 @@
 # Ignotum / designer guide
 
+For physical side-view doors separating two rooms inside one level, see [ROOM_DOOR_GUIDE.md](docs/guides/ROOM_DOOR_GUIDE.md). Place `scenes/objects/room_door_side.tscn` with its root on the floor; no scene transition is needed.
+
 For reusable wire/solid fences in broad and end views, see [FENCE_GUIDE.md](docs/guides/FENCE_GUIDE.md). Try `tests/fixtures/fence_sandbox.tscn` with F6.
 
 For sleeping enemies, crouch bypasses, directional sight/hearing, patrol/search behaviour, and the attack animation/hitbox, see [ENEMY_AI_GUIDE.md](docs/guides/ENEMY_AI_GUIDE.md).
