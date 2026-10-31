@@ -5,24 +5,35 @@ signal choice_selected(choice_id: String)
 const CHOICE_BUTTON = preload("res://scenes/ui/dialogue_choice_button.tscn")
 @export_range(0.0, 120.0, 1.0) var characters_per_second: float = 45.0
 @export var default_text_color: Color = Color("ccbb98")
+@export_group("Response Layout")
+@export_range(44.0, 400.0) var choice_list_max_height: float = 180.0
+@export_range(36.0, 240.0) var choice_text_max_height: float = 110.0
 var dialogue_lines: Array[DialogueLine] = []
+var return_stack: Array[Dictionary] = []
 var line_index := 0
 var revealed := 0.0
 var source: Node
 var mode := ""
 var active_choices: Array[DialogueChoice] = []
 var choice_buttons: Array[Button] = []
+var _layout_pending := false
 @onready var body: RichTextLabel = $DialoguePanel/Body
+@onready var voice: AudioStreamPlayer = $Voice
 @onready var note_body: RichTextLabel = $NotePanel/Body
 @onready var default_note_font: Font = note_body.get_theme_font("normal_font")
 @onready var default_note_font_size: int = note_body.get_theme_font_size("normal_font_size")
 @onready var default_dialogue_top: float = $DialoguePanel.offset_top
 @onready var default_body_bottom: float = body.offset_bottom
+@onready var default_choices_top: float = $DialoguePanel/Choices.offset_top
+@onready var default_choices_bottom: float = $DialoguePanel/Choices.offset_bottom
 
 func _ready() -> void:
     hide()
     $NotePanel/Close.pressed.connect(close)
     $DialoguePanel/Continue.pressed.connect(advance)
+    voice.finished.connect(update_speaking_animation)
+    resized.connect(queue_choice_layout)
+    $DialoguePanel/Choices/Options.minimum_size_changed.connect(queue_choice_layout)
 
 func is_open() -> bool:
     return visible and not mode.is_empty()
@@ -57,6 +68,7 @@ func open_dialogue(sequence: DialogueSequence, origin: Node) -> bool:
     if lines.is_empty():
         return false
     dialogue_lines = lines
+    return_stack.clear()
     line_index = 0
     source = origin
     mode = "dialogue"
@@ -64,6 +76,8 @@ func open_dialogue(sequence: DialogueSequence, origin: Node) -> bool:
     $DialoguePanel.show()
     show()
     get_tree().paused = true
+    if is_instance_valid(source) and source.has_method("begin_dialogue_animation"):
+        source.begin_dialogue_animation()
     display_line()
     if $DialoguePanel/Continue.visible:
         $DialoguePanel/Continue.grab_focus()
@@ -80,7 +94,9 @@ func display_line() -> void:
     body.scroll_to_line(0)
     revealed = 0.0
     body.visible_characters = 0 if characters_per_second > 0 else -1
+    play_voice(line)
     update_continue()
+    update_speaking_animation()
 
 func _process(delta: float) -> void:
     if not is_dialogue() or body.visible_characters < 0:
@@ -98,7 +114,8 @@ func update_continue() -> void:
             if choice_buttons.is_empty():
                 show_choices(choices)
             return
-    $DialoguePanel/Continue.text = "Reveal" if body.visible_characters >= 0 else ("Finish" if line_index == dialogue_lines.size() - 1 else "Continue")
+    var final_line := line_index == dialogue_lines.size() - 1 and return_stack.is_empty()
+    $DialoguePanel/Continue.text = "Reveal" if body.visible_characters >= 0 else ("Finish" if final_line else "Continue")
 
 func clear_choices() -> void:
     active_choices.clear()
@@ -111,11 +128,11 @@ func clear_choices() -> void:
     $DialoguePanel/Continue.show()
     $DialoguePanel.offset_top = default_dialogue_top
     body.offset_bottom = default_body_bottom
+    $DialoguePanel/Choices.offset_top = default_choices_top
+    $DialoguePanel/Choices.offset_bottom = default_choices_bottom
 
 func show_choices(choices: Array[DialogueChoice]) -> void:
     active_choices = choices
-    $DialoguePanel.offset_top = minf(default_dialogue_top, -380.0)
-    body.offset_bottom = -220.0
     $DialoguePanel/Continue.hide()
     $DialoguePanel/Choices.show()
     $DialoguePanel/Choices.scroll_vertical = 0
@@ -126,6 +143,33 @@ func show_choices(choices: Array[DialogueChoice]) -> void:
         $DialoguePanel/Choices/Options.add_child(button)
         choice_buttons.append(button)
     choice_buttons[0].grab_focus()
+    queue_choice_layout()
+    update_speaking_animation()
+
+func queue_choice_layout() -> void:
+    if active_choices.is_empty() or _layout_pending:
+        return
+    _layout_pending = true
+    fit_choices.call_deferred()
+
+func fit_choices() -> void:
+    _layout_pending = false
+    if not is_dialogue() or active_choices.is_empty():
+        return
+    var panel: Panel = $DialoguePanel
+    var scroll: ScrollContainer = $DialoguePanel/Choices
+    var options: VBoxContainer = $DialoguePanel/Choices/Options
+    var gap := 12.0
+    var bottom := 16.0
+    var max_panel := maxf(165.0, minf(size.y * 0.7, size.y - 48.0))
+    var text_height := clampf(float(body.get_content_height()), 36.0, choice_text_max_height)
+    var list_height := minf(maxf(44.0, options.get_combined_minimum_size().y), choice_list_max_height)
+    text_height = minf(text_height, maxf(36.0, max_panel - body.offset_top - gap - bottom - list_height))
+    list_height = minf(list_height, maxf(44.0, max_panel - body.offset_top - text_height - gap - bottom))
+    panel.offset_top = panel.offset_bottom - (body.offset_top + text_height + gap + list_height + bottom)
+    scroll.offset_top = -bottom - list_height
+    scroll.offset_bottom = -bottom
+    body.offset_bottom = -bottom - list_height - gap
 
 func select_choice(index: int) -> void:
     if not is_dialogue() or body.visible_characters >= 0 or index < 0 or index >= active_choices.size():
@@ -141,6 +185,10 @@ func select_choice(index: int) -> void:
         Game.world[flag] = choice.flag_value
     clear_choices()
     if choice.next_dialogue != null:
+        if not choice.return_after_branch:
+            return_stack.clear()
+        elif line_index + 1 < dialogue_lines.size():
+            return_stack.append({"lines": dialogue_lines, "index": line_index + 1})
         dialogue_lines = choice.next_dialogue.playable_lines()
         line_index = 0
         display_line()
@@ -169,6 +217,11 @@ func advance_sequence() -> void:
     if line_index + 1 < dialogue_lines.size():
         line_index += 1
         display_line()
+    elif not return_stack.is_empty():
+        var resume: Dictionary = return_stack.pop_back()
+        dialogue_lines = resume["lines"]
+        line_index = int(resume["index"])
+        display_line()
     else:
         if is_instance_valid(source) and source.has_method("mark_completed"):
             source.mark_completed()
@@ -179,12 +232,51 @@ func close(force: bool = false) -> void:
     if not is_open() or (is_dialogue() and not force):
         return
     clear_choices()
+    stop_voice()
+    end_speaking_animation()
     hide()
     mode = ""
     source = null
     dialogue_lines.clear()
+    return_stack.clear()
     get_tree().paused = false
     closed.emit()
+
+func play_voice(line: DialogueLine) -> void:
+    stop_voice()
+    if line.voice_audio == null:
+        return
+    # Dialogue is a one-shot even if a recording was imported with looping on.
+    var stream := line.voice_audio.duplicate() as AudioStream
+    if stream is AudioStreamMP3 or stream is AudioStreamOggVorbis:
+        stream.loop = false
+    elif stream is AudioStreamWAV:
+        stream.loop_mode = AudioStreamWAV.LOOP_DISABLED
+    voice.stream = stream
+    voice.volume_db = line.voice_volume_db
+    voice.play()
+
+func stop_voice() -> void:
+    if is_instance_valid(voice):
+        voice.stop()
+        voice.stream = null
+
+func update_speaking_animation() -> void:
+    if not is_dialogue() or not is_instance_valid(source) or not source.has_method("update_dialogue_animation"):
+        return
+    var line := dialogue_lines[line_index]
+    var speaking := voice.playing if line.voice_audio != null else active_choices.is_empty()
+    source.update_dialogue_animation(line, speaking)
+
+func end_speaking_animation() -> void:
+    if is_instance_valid(source) and source.has_method("end_dialogue_animation"):
+        source.end_dialogue_animation()
+
+func _exit_tree() -> void:
+    stop_voice()
+    end_speaking_animation()
+    if not mode.is_empty():
+        get_tree().paused = false
 
 func handle_input(event: InputEvent) -> void:
     if not is_open():

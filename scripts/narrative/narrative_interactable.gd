@@ -12,6 +12,17 @@ extends Area2D
 @export var completion_flag: String = ""
 @export var face_player: bool = true
 
+@export_group("Conversation Animation")
+@export var animate_during_dialogue: bool = true
+@export_node_path("AnimatedSprite2D") var dialogue_body_path: NodePath = ^"Body"
+@export var idle_animation: StringName = &"idle"
+@export var talking_animation: StringName = &"talking"
+## Which text identities belong to this NPC. Empty animates on every speaker's line.
+## Add aliases too, e.g. both Unknown Man and Jax Dole for the same character.
+@export var dialogue_speakers: Array[DialogueSpeaker] = []
+var _dialogue_body: AnimatedSprite2D
+var _body_state: Dictionary = {}
+
 func _ready() -> void:
     add_to_group("interactable")
 
@@ -56,3 +67,43 @@ func mark_completed() -> void:
     if not completion_flag.is_empty():
         Game.world[completion_flag] = true
     Game.changed.emit()
+
+func begin_dialogue_animation() -> void:
+    end_dialogue_animation()
+    if not animate_during_dialogue:
+        return
+    _dialogue_body = get_node_or_null(dialogue_body_path) as AnimatedSprite2D
+    if _dialogue_body == null or _dialogue_body.sprite_frames == null:
+        return
+    _body_state = {"process_mode": _dialogue_body.process_mode,
+        "animation": _dialogue_body.animation, "frame": _dialogue_body.frame,
+        "progress": _dialogue_body.frame_progress, "playing": _dialogue_body.is_playing()}
+    # Only this visual continues during dialogue. Physics, AI and input stay paused.
+    _dialogue_body.process_mode = Node.PROCESS_MODE_ALWAYS
+
+func update_dialogue_animation(line: DialogueLine, speaking: bool) -> void:
+    if not is_instance_valid(_dialogue_body) or _body_state.is_empty():
+        return
+    var belongs_to_npc := dialogue_speakers.is_empty() or line.speaker in dialogue_speakers
+    var clip := talking_animation if speaking and belongs_to_npc else idle_animation
+    if not _dialogue_body.sprite_frames.has_animation(clip) or _dialogue_body.sprite_frames.get_frame_count(clip) == 0:
+        clip = idle_animation
+    if _dialogue_body.sprite_frames.has_animation(clip) and _dialogue_body.sprite_frames.get_frame_count(clip) > 0:
+        if _dialogue_body.animation != clip or not _dialogue_body.is_playing():
+            _dialogue_body.play(clip)
+
+func end_dialogue_animation() -> void:
+    if is_instance_valid(_dialogue_body) and not _body_state.is_empty():
+        _dialogue_body.process_mode = _body_state["process_mode"]
+        var clip: StringName = _body_state["animation"]
+        if _dialogue_body.sprite_frames != null and _dialogue_body.sprite_frames.has_animation(clip) and _dialogue_body.sprite_frames.get_frame_count(clip) > 0:
+            _dialogue_body.play(clip)
+            var frame := clampi(int(_body_state["frame"]), 0, _dialogue_body.sprite_frames.get_frame_count(clip) - 1)
+            _dialogue_body.set_frame_and_progress(frame, float(_body_state["progress"]))
+            if not bool(_body_state["playing"]):
+                _dialogue_body.pause()
+    _body_state.clear()
+    _dialogue_body = null
+
+func _exit_tree() -> void:
+    end_dialogue_animation()

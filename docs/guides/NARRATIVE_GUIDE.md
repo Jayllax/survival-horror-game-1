@@ -27,7 +27,7 @@ Existing Clue and Examine objects still use their original description panel. Ke
 
 In FileSystem, right-click `data/narrative/speakers` → **Create New → Resource**, search for **DialogueSpeaker**, and save a resource for each character. Set **Display Name** and **Text Color**. Both the speaker's name and dialogue text use this color. The existing `player.tres` and `example_npc.tres` are examples.
 
-Reuse the same speaker resource in all that character's lines. Editing it updates their name/color consistently. A speaker resource controls text identity, not which world sprite is displayed: a single conversation can include the NPC, player, and other voices.
+Reuse the same speaker resource in all that character's lines. Editing it updates their name/color consistently. A single conversation can include the NPC, player and other voices. On the NPC root, Conversation Animation → Dialogue Speakers maps these resources to that NPC's talking animation; aliases can share one character.
 
 ## Write a conversation
 
@@ -49,6 +49,8 @@ Body is an **AnimatedSprite2D** with Position **(-1,32)**, Offset **(0,-20)**, S
 
 NPCs stand in place and face the player when spoken to. **Face Player** can disable that turn. They do not block the walking plane and do not have combat, patrols or navigation. The walk clip is supplied as editable artwork for future behavior, not automatic walking. Their appearance, origin and interaction settings remain editable. You can make a reusable character scene with **Scene → Save As** and place it wherever you need.
 
+The NPC root's **Conversation Animation** section selects its AnimatedSprite2D path, idle/talking clip names and speaker identities. **Animate During Dialogue** lets that visual keep playing while movement and combat remain paused. Jax's existing `idle`/`talking` clips are already connected to both his Unknown Man and Jax Dole identities. Other characters can use their own animation names. See [DIALOGUE_CHOICES_GUIDE.md](DIALOGUE_CHOICES_GUIDE.md) for the full setup.
+
 ## Track progress and save it
 
 Each placed Note/NPC automatically records progress in the existing saved world state. Notes record that they have been opened. NPCs record completion **only after finishing the last line**. The player must finish the conversation before returning to gameplay. Finished NPCs select Repeat Dialogue on the next interaction.
@@ -65,6 +67,8 @@ Open `scenes/ui/story_ui.tscn` to change the centered **NotePanel** or bottom **
 
 Select the StoryUI root for **Characters Per Second** (45 by default; 0 means instant text) and **Default Text Color** for unnamed lines. Speaker colors come from the assigned speaker resource. Dialogue leaves the world visible; the note reader uses the HUD's dim backdrop. Gameplay is paused while either is open.
 
+Dialogue pauses gameplay physics and input while allowing the chosen NPC's visual animation and recorded voice to continue. Each DialogueLine has **Voice (optional) → Voice Audio / Voice Volume Db** for a future recording. The new `audio/voice/` folder is ready for your files. Reveal keeps the clip playing; advancing stops it before starting the next line. Lines still advance manually, and text-only lines work as before. The transparent note reader is unchanged.
+
 ## Quick checks after writing
 
 - Test each note/NPC with F6 in its actual level, including proximity and long text.
@@ -78,4 +82,4 @@ For fonts and optional per-document typewriter styling, see [FONT_GUIDE.md](FONT
 
 ## Player responses and story conditions
 
-Expand a DialogueLine's **Choices** array and add **DialogueChoice** resources. Each response can set a named flag and point to another DialogueSequence. `scenes/objects/story/world_flag_condition.tscn` connects those saved flags to editor-placed items, entrances, artwork and collision shapes. Full setup: [DIALOGUE_CHOICES_GUIDE.md](DIALOGUE_CHOICES_GUIDE.md).
+Expand a DialogueLine's **Choices** array and add **DialogueChoice** resources. Each response can set a named flag and point to another DialogueSequence. Branches now return to the next parent line by default, including nested choices; uncheck **Return After Branch** only to replace the rest of the conversation. The response panel fits its content and scrolls longer lists. `scenes/objects/story/world_flag_condition.tscn` connects saved flags to editor-placed items, entrances, artwork and collision shapes. Full setup: [DIALOGUE_CHOICES_GUIDE.md](DIALOGUE_CHOICES_GUIDE.md).

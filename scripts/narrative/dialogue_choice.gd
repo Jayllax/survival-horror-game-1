@@ -9,6 +9,9 @@ extends Resource
 @export var flag_value: bool = true
 ## Assign another DialogueSequence to branch to its first playable line.
 @export var next_dialogue: DialogueSequence
+## After Next Dialogue, resume the line after this choice, including nested branches.
+## Turn off only when this branch should replace the rest of the conversation.
+@export var return_after_branch: bool = true
 
 func is_playable() -> bool:
     return not text.strip_edges().is_empty() and (next_dialogue == null or not next_dialogue.playable_lines().is_empty())

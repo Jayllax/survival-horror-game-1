@@ -85,3 +85,5 @@ For scene-contained custom items and bicycle save/load regression checks, run `G
 Music, ambience, safe-room cues and material footsteps: [AUDIO_GUIDE.md](docs/guides/AUDIO_GUIDE.md). Optional audio/stealth checks: `GODOT_BIN=/path/to/godot bash tools/check.sh audio stealth`.
 
 Physical doors between rooms in the same level: [ROOM_DOOR_GUIDE.md](docs/guides/ROOM_DOOR_GUIDE.md). Reusable scene: `scenes/objects/room_door_side.tscn`. Separate movement, interaction and save checks: `GODOT_BIN=/path/to/godot bash tools/check.sh room_doors`.
+
+Dialogue branches resume their parent conversation by default. NPC conversation animations, compact response layout and optional per-line voice recordings are configured through the Inspector: [dialogue guide](docs/guides/DIALOGUE_CHOICES_GUIDE.md). Verify both authored Jax routes and voice/animation cleanup with `GODOT_BIN=/path/to/godot bash tools/check.sh narrative dialogue_choices dialogue_flow`.

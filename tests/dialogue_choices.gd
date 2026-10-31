@@ -160,6 +160,7 @@ func run() -> void:
     await key(KEY_E)
     room.queue_free()
     get_tree().current_scene = null
-    await frames()
+    GameAudio.stop_all()
+    await get_tree().create_timer(0.2).timeout
     print("IGNOTUM DIALOGUE CHOICES: %d checks, %d failures" % [checks,failures])
     get_tree().quit(0 if failures == 0 else 1)
