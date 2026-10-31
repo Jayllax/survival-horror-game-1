@@ -1,27 +1,43 @@
 {
   "display_scale": 2,
   "palette": {
-    "ink": "#342b3d",
-    "roof": "#513b50",
-    "roof_light": "#705065",
-    "brick_shadow": "#74464e",
-    "brick": "#9a4f51",
-    "brick_light": "#b77566",
-    "wood_shadow": "#75545a",
-    "wood": "#a17767",
-    "tan": "#c39b7d",
-    "cream": "#ded1a5",
-    "ivory": "#e5dfbb",
-    "plaster": "#d4cba8",
-    "metal_dark": "#405b59",
-    "metal": "#5b7c6e",
-    "metal_light": "#8ca896",
-    "glass": "#354358",
-    "glass_light": "#536e80",
-    "mint": "#b4d1bd",
-    "lavender": "#a49bb3",
-    "paving": "#73717b",
-    "paving_dark": "#585463"
+    "color_000000": "#000000",
+    "color_24222e": "#24222e",
+    "color_272e45": "#272e45",
+    "color_294259": "#294259",
+    "color_2d434d": "#2d434d",
+    "color_2e4861": "#2e4861",
+    "color_344f69": "#344f69",
+    "color_352e3d": "#352e3d",
+    "color_385450": "#385450",
+    "color_3b2d30": "#3b2d30",
+    "color_4a3337": "#4a3337",
+    "color_4b4659": "#4b4659",
+    "color_4e6474": "#4e6474",
+    "color_4e6e60": "#4e6e60",
+    "color_585463": "#585463",
+    "color_5a5a70": "#5a5a70",
+    "color_613943": "#613943",
+    "color_637f67": "#637f67",
+    "color_6a8a99": "#6a8a99",
+    "color_6b778e": "#6b778e",
+    "color_73717b": "#73717b",
+    "color_75545a": "#75545a",
+    "color_7d5450": "#7d5450",
+    "color_81967e": "#81967e",
+    "color_844344": "#844344",
+    "color_84ada7": "#84ada7",
+    "color_8f6c61": "#8f6c61",
+    "color_945a50": "#945a50",
+    "color_a17767": "#a17767",
+    "color_afcfc2": "#afcfc2",
+    "color_b0866c": "#b0866c",
+    "color_b0917d": "#b0917d",
+    "color_b7c09a": "#b7c09a",
+    "color_ccbb98": "#ccbb98",
+    "color_d4cba8": "#d4cba8",
+    "color_d9d7a1": "#d9d7a1",
+    "color_e6ebd6": "#e6ebd6"
   },
   "assets": {
     "house": {
@@ -139,50 +155,6 @@
         72
       ],
       "baseline": 36
-    },
-    "drain": {
-      "native_size": [
-        32,
-        8
-      ],
-      "game_size": [
-        64,
-        16
-      ],
-      "baseline": 8,
-      "solid_rectangle": true
-    },
-    "pipe": {
-      "native_size": [
-        8,
-        100
-      ],
-      "game_size": [
-        16,
-        200
-      ],
-      "baseline": 100
-    },
-    "sign": {
-      "native_size": [
-        50,
-        22
-      ],
-      "game_size": [
-        100,
-        44
-      ]
-    },
-    "shelf": {
-      "native_size": [
-        64,
-        72
-      ],
-      "game_size": [
-        128,
-        144
-      ],
-      "baseline": 72
     },
     "radiator": {
       "native_size": [
@@ -348,5 +320,7 @@
   "preserved": [
     "player",
     "ammo"
-  ]
+  ],
+  "palette_file": "res://art/pixel/ignotum.gpl",
+  "notes": "Current palette plus retained legacy flat tile and tile-border colors. Active actor art uses the motion PNG sheets."
 }

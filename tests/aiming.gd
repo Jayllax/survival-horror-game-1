@@ -76,7 +76,7 @@ func run() -> void:
     Input.action_release("shoot")
     check(Game.magazine == rounds - 1, "Releasing right mouse blocks further shots even with left mouse held")
     check(gun.texture == null and not player.is_aiming(), "Releasing aim immediately holsters the gun")
-    check(is_zero_approx(player.aim.rotation) and light.enabled, "Released aim returns the working flashlight to horizontal facing")
+    check(Vector2.RIGHT.rotated(light.global_rotation).distance_to(Vector2(player.facing,0))<0.001 and light.enabled, "Released aim returns the working flashlight to horizontal facing")
     check(not hud.get_node("Root/Crosshair").visible and hud.get_node("Root/Ammo").visible, "Recent firing keeps brief ammo feedback without a cursor crosshair")
     player.shoot()
     check(Game.magazine == rounds - 1, "Holstered shooting is rejected at the combat entry point")
@@ -113,5 +113,7 @@ func run() -> void:
     room.queue_free()
     get_tree().current_scene = null
     await frames()
+    GameAudio.stop_all()
+    await get_tree().create_timer(0.2).timeout
     print("IGNOTUM AIMING: %d checks, %d failures" % [checks, failures])
     get_tree().quit(0 if failures == 0 else 1)

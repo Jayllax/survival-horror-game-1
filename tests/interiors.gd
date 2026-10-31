@@ -20,6 +20,10 @@ func run() -> void:
     await frames(6)
     await verify_props()
     await verify_stairs()
+    GameAudio.stop_all()
+    $Player.queue_free()
+    await frames(2)
+    await get_tree().create_timer(0.2).timeout
     print("IGNOTUM INTERIORS: %d checks, %d failures" % [checks,failures])
     get_tree().quit(0 if failures==0 else 1)
 func verify_props() -> void:

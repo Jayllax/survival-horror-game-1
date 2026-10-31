@@ -2,7 +2,9 @@
 
 One native art pixel covers **2×2 world pixels**. Use nearest-neighbor filtering, hard transparency, flat palette colors and simple shapes. Keep façades and fence panels horizontally symmetrical. Single left/right house chimneys are the deliberate exception requested for those variants.
 
-The current artist palette is **Sparkle's palette**, extracted from your `art/pixlart/house.pixil`; import `art/pixel/ignotum.gpl` into your pixel editor. The previous kit palette and obsolete generators have been replaced/removed so they cannot accidentally overwrite your revisions. Existing scenery, items and editable `.pixil` files are retained.
+The current artist palette is **Sparkle's palette**; import `art/pixel/ignotum.gpl` into your pixel editor. The refined scenery uses restrained material shading, recessed panels, window reveals and top-edge highlights on the original native grids. Keep broad, readable color clusters instead of dense texture. `art/pixel/STYLE_SHEET.png` is a contact sheet made from the current game sprites at 2× native size.
+
+The legacy `tools/build_simple_assets.py` draws an earlier prototype and does **not** reproduce the current artwork. Edit the current PNGs and Pixilart masters rather than running that generator over your work. Plain plaster, existing tile-edge colors and authored character distortion colors are deliberately retained.
 
 ## Files to edit
 
@@ -19,8 +21,14 @@ The current artist palette is **Sparkle's palette**, extracted from your `art/pi
 
 **New characters and fences have only one PNG each.** Edit that native file directly; do not enlarge it before saving. The older source/export pairs remain because your placed scenes and item resources use those exports. Keep both files in step if you edit them. Your `.pixil` working files remain under `art/pixlart/`.
 
-Player/NPC/enemy frames deliberately share the same padded canvas, feet at its bottom. Crouch and death drawings are shorter poses inside that canvas, rather than squashed sprites. The player has brown hair, a flat face without a protruding nose, a plain brown shirt, blue-grey trousers and dark shoes. The matching enemy has muted green skin, dark hair and a burgundy shirt, without extra monster detailing. The NPC has a green shirt and navy trousers. Their editable masters and separate timeline clips are available in the [cast animation pack](../downloads/Ignotum-NPC-enemy-animations.zip).
+Player/NPC/enemy frames deliberately share the same padded canvas, feet at its bottom. Crouch and death drawings are shorter poses inside that canvas, rather than squashed sprites. The player has brown hair, a flat face without a protruding nose, a brown **polo shirt** with a small collar and short placket, blue-grey trousers and dark shoes. Jax retains his dark jacket and gestures. The enemy retains the author's distorted face, hair, green shirt marks and poses; its death row remains entirely authored artwork. Clothing shading is added to existing opaque clothing pixels while skin, hair, effect transparency, silhouettes and animation sequences remain intact.
+
+Current editable masters are under `art/pixlart/player_animation/` and `art/pixlart/cast_animation/`. The updated masters have a visible **REFINED CAST - DRAW HERE** layer; the original author layers are retained underneath and hidden. Keep guides and old layers hidden when exporting the current sprite sheet. `animations-human-made.pixil` remains the original source. Each 32×40 cell is one game animation frame; the `.pixil` documents contain the full sheets.
+
+See the [looping cast comparisons](../previews/refined_cast/README.md). The active Jax scene uses `art/pixel/npc_jax_,motion.png`. The older `player.png`/`enemy.png` strips are legacy assets; current actors use the motion sheets listed above.
 
 See [CHARACTER_GUIDE.md](CHARACTER_GUIDE.md) for exact atlas rows, aiming arms and animation replacement. See [FENCE_GUIDE.md](FENCE_GUIDE.md) for fence placement and saved route openings, and [HOUSE_VARIANTS.md](HOUSE_VARIANTS.md) for houses.
 
 Lighting and fog intentionally use separate smooth Godot 2D light textures. They can create additional screen colors without adding colors to the PNG artwork. Font files and their required OFL license remain in `art/fonts/`.
+
+The unused legacy shelf, sign, drain and pipe PNGs, their import files, and the unused shelf scene have been removed. Interior bookcases and cabinets remain available in their existing folders. Current asset paths, native sizes, alpha silhouettes, collisions and placed level geometry are retained, so existing placements continue to fit.

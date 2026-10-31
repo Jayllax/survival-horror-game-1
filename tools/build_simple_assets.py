@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Build exact-grid production sprites, not crops of the illustrated design sheet.
+"""LEGACY prototype generator; it does not reproduce the current refined PNGs.
+Do not run --write over a working project containing designer art revisions.
 Optional art tooling: Python + Pillow. Godot does not need either.
 Run with --write to replace the scenery/prop/item PNGs; player and ammo are excluded.
 """
@@ -98,24 +99,6 @@ def bin_(d,w,h):
  box(d,(4,6,w-5,h-2),'metal');box(d,(3,5,w-4,8),'metal_light');box(d,(6,10,w-7,13),'metal_dark')
  box(d,(4,h-4,w-5,h-1),'metal_dark');box(d,(6,17,7,h-6),'metal_light')
 make('bin',24,36,bin_,baseline=36)
-def drain(d,w,h):
- box(d,(0,0,w-1,h-1),'paving_dark');box(d,(1,1,w-2,h-2),'ink')
- for x in range(4,w-2,5):box(d,(x,2,x+1,h-3),'paving')
-make('drain',32,8,drain,baseline=8,solid_rectangle=True)
-def pipe(d,w,h):
- box(d,(2,0,5,h-1),'glass');box(d,(2,0,3,h-1),'glass_light')
- for y in [12,h//2,h-14]:box(d,(0,y,7,y+2),'metal_dark')
-make('pipe',8,100,pipe,baseline=100)
-def sign(d,w,h):
- box(d,(1,1,w-2,h-2),'wood_shadow');box(d,(2,2,w-3,h-3),'tan')
- box(d,(2,2,w-3,3),'cream')
-make('sign',50,22,sign)
-def shelf(d,w,h):
- for x in [2,w-5]:box(d,(x,0,x+2,h-1),'wood_shadow')
- for y in [8,31,54,h-4]:box(d,(1,y,w-2,y+2),'wood')
- for x,y,c in [(7,18,'metal'),(25,13,'wood'),(45,21,'brick'),(10,42,'tan'),(37,38,'glass_light'),(49,61,'metal'),(17,60,'wood')]:
-  box(d,(x,y,x+9,(y//23+1)*23+7),c)
-make('shelf',64,72,shelf,baseline=72)
 def radiator(d,w,h):
  for x in range(4,w-3,6):
   box(d,(x,2,x+3,h-4),'cream');line(d,(x,3,x,h-6),'ivory')
