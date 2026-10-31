@@ -30,6 +30,7 @@ shape = SubResource("area")
 position = Vector2(-56, -32)
 
 [node name="BellSound" type="AudioStreamPlayer2D" parent="." unique_id=996214319]
+bus = &"SFX"
 stream = ExtResource("bell")
 volume_db = -5.0
 max_distance = 600.0

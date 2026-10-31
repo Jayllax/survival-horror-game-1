@@ -7,3 +7,5 @@ The weapon workbench contains the new equipment pickups and is used for independ
 `pushable_sandbox.tscn` contains the child-component nightstand, a blocking wall, a bicycle and a raised ledge. The actual player can push the furniture into place, jump onto it and use it to reach the ledge. The automated `pushables` suite also uses this editor-authored room for saved-position and collision checks. It has no campaign entrance or tutorial text.
 
 - `dialogue_choices_sandbox.tscn`: isolated response branches, saved story flags, a conditional pickup, an entrance and a passage blocker. No campaign destination links point to it.
+
+- `audio_sandbox.tscn`: separate soundtrack/forest ambience, two enemies, a sight blocker and a dirt-footstep zone. No campaign links point here.

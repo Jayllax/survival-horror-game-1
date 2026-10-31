@@ -22,6 +22,7 @@ config/icon="res://art/icon.svg"
 [autoload]
 
 Game="*res://scripts/game.gd"
+GameAudio="*res://scripts/audio/game_audio.gd"
 Transition="*res://scenes/ui/transition.tscn"
 
 [display]

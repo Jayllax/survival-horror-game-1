@@ -23,6 +23,8 @@
 [ext_resource type="PackedScene" uid="uid://mdei23004fri" path="res://scenes/objects/ammo.tscn" id="23_uk0bi"]
 [ext_resource type="PackedScene" uid="uid://db83ujlaupd0k" path="res://scenes/objects/save_bicycle.tscn" id="save_bicycle"]
 
+[ext_resource type="Resource" path="res://data/audio/music/ambient_track_1.tres" id="location_music"]
+
 [sub_resource type="RectangleShape2D" id="floor"]
 size = Vector2(4731, 120)
 
@@ -31,6 +33,7 @@ size = Vector2(40, 720)
 
 [node name="Location" type="Node2D" unique_id=653106688]
 script = ExtResource("1")
+music_cue = ExtResource("location_music")
 camera_bounds = Rect2i(0, 0, 2200, 720)
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=857491603]

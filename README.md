@@ -81,3 +81,5 @@ Older town/alley/interior scene paths are redirected to their new names when rea
 Fonts and document appearance: [font guide](docs/guides/FONT_GUIDE.md). Player answers, saved story flags and conditional objects: [dialogue choice guide](docs/guides/DIALOGUE_CHOICES_GUIDE.md).
 
 For scene-contained custom items and bicycle save/load regression checks, run `GODOT_BIN=/path/to/godot bash tools/check.sh embedded_item_saves`. This includes a second Godot process that loads the files written by the first.
+
+Music, ambience, safe-room cues and material footsteps: [AUDIO_GUIDE.md](docs/guides/AUDIO_GUIDE.md). Optional audio/stealth checks: `GODOT_BIN=/path/to/godot bash tools/check.sh audio stealth`.

@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/audio/player_footsteps.gd" id="script"]
+[ext_resource type="Resource" path="res://data/audio/footsteps/concrete.tres" id="surface"]
+[node name="Footsteps" type="Node2D"]
+process_mode = 3
+script = ExtResource("script")
+default_surface = ExtResource("surface")
+[node name="A" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+bus = &"SFX"
+[node name="B" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+bus = &"SFX"
+
+[node name="C" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+bus = &"SFX"
+
+[node name="D" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+bus = &"SFX"

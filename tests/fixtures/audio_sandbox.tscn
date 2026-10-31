@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3]
+[ext_resource type="PackedScene" path="res://tests/fixtures/stealth_sandbox.tscn" id="base"]
+[ext_resource type="PackedScene" path="res://scenes/objects/audio/dirt_footsteps.tscn" id="dirt"]
+[ext_resource type="Resource" path="res://data/audio/ambience/forest.tres" id="forest"]
+[sub_resource type="RectangleShape2D" id="sight_blocker"]
+size = Vector2(12,96)
+[node name="AudioSandbox" instance=ExtResource("base")]
+display_name = "Audio framework sandbox"
+ambience_cue = ExtResource("forest")
+[node name="DirtZone" parent="." instance=ExtResource("dirt")]
+position = Vector2(320,620)
+[node name="SightBlocker" type="StaticBody2D" parent="Geometry"]
+position = Vector2(800,572)
+[node name="Shape" type="CollisionShape2D" parent="Geometry/SightBlocker"]
+shape = SubResource("sight_blocker")
+disabled = true

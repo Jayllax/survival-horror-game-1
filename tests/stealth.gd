@@ -242,6 +242,7 @@ func run() -> void:
     Game.health = 100
     player.get_node("HurtSound").stop()
     player.get_node("ShotSound").stop()
+    GameAudio.stop_all()
     # Let the audio server release playback before the test tears down its scene.
     await frames(6)
     level.queue_free()

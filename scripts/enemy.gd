@@ -97,6 +97,9 @@ func state_name() -> String:
 func is_attacking() -> bool:
     return state == State.ATTACK and not dead
 
+func is_music_threat(player: Node2D) -> bool:
+    return not dead and state in [State.WAKING,State.CHASE,State.ATTACK,State.RECOVER,State.HIT] and sees_player(player)
+
 func change_state(next: State) -> void:
     if state == next:
         return

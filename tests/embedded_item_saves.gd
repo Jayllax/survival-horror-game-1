@@ -132,6 +132,7 @@ func verify_fresh_process() -> void:
     check(Game.count_item("house_03_key")==1 and Game.count_item("gate_key")==1 and Game.count_item("ammo")==12, "A fresh session reconstructs the custom keys and reserve ammunition from the saved paths")
     check(Game.health==74 and Game.magazine==3 and Game.has_equipped_weapon() and Game.world.get("story:embedded_save_test",false), "A fresh session also restores health, equipped weapon, loaded rounds and story progress")
 func finish() -> void:
+    GameAudio.stop_all()
     if get_tree().current_scene:
         for audio in get_tree().current_scene.find_children("*","AudioStreamPlayer",true,false):audio.stop()
     await get_tree().create_timer(0.2).timeout

@@ -2,6 +2,14 @@ extends Node2D
 ## Attach to every location root. Spawn markers are authored Marker2Ds, not generated.
 @export var display_name: String = "Street"
 @export var camera_bounds: Rect2i = Rect2i(0, 0, 3100, 720)
+@export_group("Audio")
+@export var music_cue: AudioCue
+## Rooms without a cue inherit the current region theme (town by default).
+@export var inherit_region_music: bool = true
+@export var ambience_cue: AudioCue
+@export var enable_combat_music: bool = true
+## Optional compatibility with the original per-scene drone player.
+@export var use_legacy_ambience: bool = false
 
 func location_title() -> String:
     return display_name
@@ -26,3 +34,4 @@ func _ready() -> void:
             camera.limit_bottom = camera_bounds.end.y
             camera.reset_smoothing()
     Game.finish_location_load()
+    GameAudio.use_location(self,music_cue,inherit_region_music,ambience_cue,enable_combat_music)

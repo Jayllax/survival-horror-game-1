@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3]
+[ext_resource type="Script" path="res://scripts/audio/game_audio.gd" id="script"]
+[ext_resource type="Script" path="res://scripts/audio/crossfade_layer.gd" id="layer"]
+[ext_resource type="Resource" path="res://data/audio/music/ambient_track_1.tres" id="town"]
+[ext_resource type="Resource" path="res://data/audio/music/scary_2.tres" id="combat"]
+[node name="GameAudio" type="Node"]
+process_mode = 3
+script = ExtResource("script")
+default_region_music = ExtResource("town")
+combat_music = ExtResource("combat")
+
+[node name="Music" type="Node" parent="."]
+script = ExtResource("layer")
+
+[node name="A" type="AudioStreamPlayer" parent="Music"]
+bus = &"Music"
+volume_db = -80.0
+
+[node name="B" type="AudioStreamPlayer" parent="Music"]
+bus = &"Music"
+volume_db = -80.0
+
+[node name="Combat" type="Node" parent="."]
+script = ExtResource("layer")
+
+[node name="A" type="AudioStreamPlayer" parent="Combat"]
+bus = &"Music"
+volume_db = -80.0
+
+[node name="B" type="AudioStreamPlayer" parent="Combat"]
+bus = &"Music"
+volume_db = -80.0
+
+[node name="Ambience" type="Node" parent="."]
+script = ExtResource("layer")
+
+[node name="A" type="AudioStreamPlayer" parent="Ambience"]
+bus = &"Ambience"
+volume_db = -80.0
+
+[node name="B" type="AudioStreamPlayer" parent="Ambience"]
+bus = &"Ambience"
+volume_db = -80.0

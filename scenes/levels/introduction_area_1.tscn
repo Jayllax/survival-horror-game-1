@@ -26,6 +26,8 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/forest/wood/stump_small.tscn" id="17_jsfv0"]
 [ext_resource type="PackedScene" uid="uid://cfoibs7ccueyy" path="res://scenes/objects/houses/building_house.tscn" id="18_g3c0m"]
 
+[ext_resource type="Resource" path="res://data/audio/music/ambient_track_2.tres" id="location_music"]
+
 [sub_resource type="RectangleShape2D" id="floor"]
 size = Vector2(2774, 120)
 
@@ -48,6 +50,7 @@ text = "There has to be another way. Please, try to find another way out of here
 
 [node name="Location" type="Node2D" unique_id=653106688]
 script = ExtResource("1_brq61")
+music_cue = ExtResource("location_music")
 camera_bounds = Rect2i(0, 0, 2200, 720)
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=857491603]

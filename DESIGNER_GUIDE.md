@@ -239,3 +239,7 @@ See [FONT_GUIDE.md](docs/guides/FONT_GUIDE.md) for shared title, note and dialog
 ## Conversation choices and story flags
 
 DialogueLine resources now have an optional **Choices** array. Each DialogueChoice can record a **Choice Id**, set a story flag, and branch to another **Next Dialogue** sequence. Add `scenes/objects/story/world_flag_condition.tscn` to connect a flag to item visibility, entrance interaction or passage collision. Conversations must finish before returning to gameplay; notes still close normally and keep your transparent presentation. See [DIALOGUE_CHOICES_GUIDE.md](docs/guides/DIALOGUE_CHOICES_GUIDE.md).
+
+## Music, ambience and footsteps
+
+Select a level root and expand **Audio** to assign Music Cue and Ambience Cue resources from `data/audio/`. The introduction scenes share ambient_track_2; town_01 uses ambient_track_1. The persistent controller crossfades region changes and adds sight-based scary_2 combat music. Safe-room music is available for your own rooms. Player footstep sounds follow animation contacts and can be changed with concrete/dirt Area2D zones. Full Inspector instructions: [AUDIO_GUIDE.md](docs/guides/AUDIO_GUIDE.md).

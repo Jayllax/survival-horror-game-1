@@ -1,0 +1,5 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="PackedScene" path="res://scenes/objects/audio/footstep_surface.tscn" id="base"]
+[ext_resource type="Resource" path="res://data/audio/footsteps/concrete.tres" id="surface"]
+[node name="ConcreteFootsteps" instance=ExtResource("base")]
+surface = ExtResource("surface")
