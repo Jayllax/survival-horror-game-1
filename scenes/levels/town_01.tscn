@@ -21,9 +21,8 @@
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="22"]
 [ext_resource type="PackedScene" uid="uid://da5r8bq0hou0w" path="res://scenes/actors/enemy.tscn" id="22_w4u1r"]
 [ext_resource type="PackedScene" uid="uid://mdei23004fri" path="res://scenes/objects/ammo.tscn" id="23_uk0bi"]
-[ext_resource type="PackedScene" uid="uid://db83ujlaupd0k" path="res://scenes/objects/save_bicycle.tscn" id="save_bicycle"]
-
 [ext_resource type="Resource" path="res://data/audio/music/ambient_track_1.tres" id="location_music"]
+[ext_resource type="PackedScene" uid="uid://db83ujlaupd0k" path="res://scenes/objects/save_bicycle.tscn" id="save_bicycle"]
 
 [sub_resource type="RectangleShape2D" id="floor"]
 size = Vector2(4731, 120)
@@ -33,10 +32,11 @@ size = Vector2(40, 720)
 
 [node name="Location" type="Node2D" unique_id=653106688]
 script = ExtResource("1")
-music_cue = ExtResource("location_music")
 camera_bounds = Rect2i(0, 0, 2200, 720)
+music_cue = ExtResource("location_music")
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=857491603]
+visible = false
 color = Color(0.038397163, 0.038397174, 0.038397145, 1)
 
 [node name="Buildings" type="Node2D" parent="." unique_id=1653355476]

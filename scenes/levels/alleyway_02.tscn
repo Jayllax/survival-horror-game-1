@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://35yj3xaj5dbl" path="res://art/pixel/source/key.png" id="11_c2ebr"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="11_mcqgs"]
 [ext_resource type="Script" uid="uid://ysok34dxqtu8" path="res://scripts/item_definition.gd" id="11_xn0ni"]
-[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="12_2rurx"]
+[ext_resource type="PackedScene" uid="uid://cu7udyf271gqe" path="res://scenes/ui/hud.tscn" id="12_2rurx"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="13_bw6gv"]
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="14_c5ioa"]
 [ext_resource type="PackedScene" uid="uid://qwm3h0igxrrq" path="res://scenes/objects/fence_cuttable_side.tscn" id="14_d1lar"]
@@ -50,6 +50,7 @@ display_name = "Service alley"
 camera_bounds = Rect2i(0, 0, 1500, 720)
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=1634872600]
+visible = false
 color = Color(0.039215688, 0.039215688, 0.039215688, 1)
 
 [node name="Buildings" type="Node2D" parent="." unique_id=1244740229]
@@ -310,6 +311,7 @@ visible = false
 [node name="House_03Enter" parent="Interactables" unique_id=2013891440 instance=ExtResource("8_in168")]
 position = Vector2(-51, 556)
 action_label = "Enter house"
+destination_scene = "uid://blmep4h1m81o3"
 destination_spawn = "from_alleyway_02"
 
 [node name="Facade" parent="Interactables/House_03Enter" index="0" unique_id=1815167978]
@@ -360,7 +362,7 @@ position = Vector2(478.94843, 587.99994)
 [node name="from_town_01_2" type="Marker2D" parent="Spawns" unique_id=58507107]
 position = Vector2(1183, 588)
 
-[node name="from_house_03" type="Marker2D" parent="Spawns" unique_id=1612750634]
+[node name="from_house_03_1" type="Marker2D" parent="Spawns" unique_id=1612750634]
 position = Vector2(-51, 588)
 
 [node name="HUD" parent="." unique_id=1915867905 instance=ExtResource("12_2rurx")]

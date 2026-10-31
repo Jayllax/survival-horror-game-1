@@ -1,43 +1,45 @@
-[gd_scene load_steps=5 format=3]
-[ext_resource type="Script" path="res://scripts/audio/game_audio.gd" id="script"]
-[ext_resource type="Script" path="res://scripts/audio/crossfade_layer.gd" id="layer"]
-[ext_resource type="Resource" path="res://data/audio/music/ambient_track_1.tres" id="town"]
+[gd_scene format=3 uid="uid://dl2ptxc2jx01u"]
+
 [ext_resource type="Resource" path="res://data/audio/music/scary_2.tres" id="combat"]
-[node name="GameAudio" type="Node"]
+[ext_resource type="Script" uid="uid://bkw8fbaju5dxy" path="res://scripts/audio/crossfade_layer.gd" id="layer"]
+[ext_resource type="Script" uid="uid://gcg2q6qlshsu" path="res://scripts/audio/game_audio.gd" id="script"]
+[ext_resource type="Resource" path="res://data/audio/music/ambient_track_1.tres" id="town"]
+
+[node name="GameAudio" type="Node" unique_id=1941552466]
 process_mode = 3
 script = ExtResource("script")
 default_region_music = ExtResource("town")
 combat_music = ExtResource("combat")
 
-[node name="Music" type="Node" parent="."]
+[node name="Music" type="Node" parent="." unique_id=1020298982]
 script = ExtResource("layer")
 
-[node name="A" type="AudioStreamPlayer" parent="Music"]
-bus = &"Music"
+[node name="A" type="AudioStreamPlayer" parent="Music" unique_id=921497648]
 volume_db = -80.0
-
-[node name="B" type="AudioStreamPlayer" parent="Music"]
 bus = &"Music"
-volume_db = -80.0
 
-[node name="Combat" type="Node" parent="."]
+[node name="B" type="AudioStreamPlayer" parent="Music" unique_id=616167899]
+volume_db = -80.0
+bus = &"Music"
+
+[node name="Combat" type="Node" parent="." unique_id=1629980312]
 script = ExtResource("layer")
 
-[node name="A" type="AudioStreamPlayer" parent="Combat"]
-bus = &"Music"
+[node name="A" type="AudioStreamPlayer" parent="Combat" unique_id=558327392]
 volume_db = -80.0
-
-[node name="B" type="AudioStreamPlayer" parent="Combat"]
 bus = &"Music"
-volume_db = -80.0
 
-[node name="Ambience" type="Node" parent="."]
+[node name="B" type="AudioStreamPlayer" parent="Combat" unique_id=1954515022]
+volume_db = -80.0
+bus = &"Music"
+
+[node name="Ambience" type="Node" parent="." unique_id=2088224185]
 script = ExtResource("layer")
 
-[node name="A" type="AudioStreamPlayer" parent="Ambience"]
+[node name="A" type="AudioStreamPlayer" parent="Ambience" unique_id=112501912]
+volume_db = -80.0
 bus = &"Ambience"
-volume_db = -80.0
 
-[node name="B" type="AudioStreamPlayer" parent="Ambience"]
-bus = &"Ambience"
+[node name="B" type="AudioStreamPlayer" parent="Ambience" unique_id=165293691]
 volume_db = -80.0
+bus = &"Ambience"
