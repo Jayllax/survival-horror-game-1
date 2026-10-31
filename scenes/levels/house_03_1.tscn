@@ -24,7 +24,10 @@
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="20_8yi4i"]
 [ext_resource type="PackedScene" uid="uid://cu7udyf271gqe" path="res://scenes/ui/hud.tscn" id="21_0snoh"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="22_8pc5w"]
+[ext_resource type="PackedScene" uid="uid://cb1drcxvonlbw" path="res://scenes/objects/loot/loot_container.tscn" id="22_45jck"]
+[ext_resource type="PackedScene" path="res://scenes/objects/story/world_flag_condition.tscn" id="23_eiqbq"]
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="23_upbmb"]
+[ext_resource type="PackedScene" uid="uid://da5r8bq0hou0w" path="res://scenes/actors/enemy.tscn" id="24_s5t8u"]
 
 [sub_resource type="RectangleShape2D" id="floor"]
 size = Vector2(906, 120)
@@ -322,10 +325,24 @@ scale = Vector2(0.3, 0.3)
 connected_lights = Array[NodePath]([NodePath("../../Props/Bathroom/WallLamp"), NodePath("../../Props/Bathroom/WallLamp2")])
 starting_on = false
 
+[node name="LootContainer" parent="Interactables" unique_id=286012595 instance=ExtResource("22_45jck")]
+position = Vector2(481, 609)
+
+[node name="LootContainer2" parent="Interactables" unique_id=2130125739 instance=ExtResource("22_45jck")]
+position = Vector2(575, 609)
+
 [node name="Actors" type="Node2D" parent="." unique_id=1936203783]
 
 [node name="Player" parent="Actors" unique_id=1545454888 instance=ExtResource("20_8yi4i")]
 position = Vector2(352, 587)
+
+[node name="Enemy" parent="Actors" unique_id=1751376480 instance=ExtResource("24_s5t8u")]
+position = Vector2(293, 589)
+max_health = 80
+speed = 90.0
+damage = 25
+attack_windup_seconds = 0.15
+attack_recovery_seconds = 0.3
 
 [node name="Spawns" type="Node2D" parent="." unique_id=1777379054]
 
@@ -342,6 +359,13 @@ stream = ExtResource("22_8pc5w")
 volume_db = -16.0
 autoplay = true
 script = ExtResource("23_upbmb")
+
+[node name="WorldFlagCondition" parent="." unique_id=1524849241 instance=ExtResource("23_eiqbq")]
+position = Vector2(392, 588)
+flag_id = "story:spoke_to_jax_1"
+visible_when_met = Array[NodePath]([NodePath("../Actors/Enemy")])
+enable_interaction_when_met = Array[NodePath]([NodePath("../Actors/Enemy")])
+enable_collision_when_met = Array[NodePath]([NodePath("../Actors/Enemy")])
 
 [editable path="Props/Bathroom/WallLamp"]
 [editable path="Props/Bathroom/WallLamp2"]

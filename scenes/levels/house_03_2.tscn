@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://6ac0fiq4jtxt" path="res://scripts/location.gd" id="1_hpdln"]
 [ext_resource type="Texture2D" uid="uid://doeuaul7l3oue" path="res://art/pixel/floor.png" id="2_nh73i"]
+[ext_resource type="Script" uid="uid://duinlv2xx35jy" path="res://scripts/audio/audio_cue.gd" id="2_s4eod"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/bedroom/nightstand.tscn" id="3_mycss"]
+[ext_resource type="AudioStream" uid="uid://taian6nsopb3" path="res://audio/music/save_room_1.mp3" id="3_qi71t"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/bedroom/bed.tscn" id="4_p6o1h"]
 [ext_resource type="PackedScene" uid="uid://b05yk71l6rpu" path="res://scenes/objects/interiors/bedroom/wardrobe.tscn" id="5_ujyqf"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/table_lamp.tscn" id="6_xe5ls"]
@@ -16,15 +18,38 @@
 [ext_resource type="PackedScene" uid="uid://b1t26x82qn6n6" path="res://scenes/actors/npc_jax.tscn" id="16_knspu"]
 [ext_resource type="PackedScene" uid="uid://d161ooahnfhd3" path="res://scenes/objects/lighting/light_switch.tscn" id="17_fdp1k"]
 [ext_resource type="Script" uid="uid://dokxahjw0ajyo" path="res://scripts/narrative/dialogue_line.gd" id="17_ujyqf"]
+[ext_resource type="PackedScene" path="res://scenes/objects/notes/note_stack.tscn" id="17_uvfgb"]
+[ext_resource type="Script" uid="uid://ct1jqn7k4e0md" path="res://scripts/narrative/note_document.gd" id="18_4ry7p"]
+[ext_resource type="FontFile" uid="uid://cvpc2epm7fh3n" path="res://art/fonts/lakeside-castle.regular.ttf" id="18_j2x64"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="18_s4eod"]
 [ext_resource type="Script" uid="uid://c72jybcn230jo" path="res://scripts/narrative/dialogue_choice.gd" id="18_xe5ls"]
+[ext_resource type="PackedScene" uid="uid://cb1drcxvonlbw" path="res://scenes/objects/loot/loot_container.tscn" id="19_4ry7p"]
 [ext_resource type="PackedScene" uid="uid://cu7udyf271gqe" path="res://scenes/ui/hud.tscn" id="19_qi71t"]
 [ext_resource type="Resource" uid="uid://tejmjkno6iqb" path="res://data/narrative/speakers/you.tres" id="19_ujyqf"]
+[ext_resource type="Script" uid="uid://bkj62nwqxumq7" path="res://scripts/loot/loot_entry.gd" id="20_3yrhw"]
+[ext_resource type="AudioStream" uid="uid://b2s0aaqe0fcd0" path="res://audio/voice/player_jax/player_jax_1_1.mp3" id="20_bjnc3"]
+[ext_resource type="PackedScene" path="res://scenes/objects/story/world_flag_condition.tscn" id="20_kxjmj"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="20_uvfgb"]
 [ext_resource type="Resource" uid="uid://bxi2s27p2nb0h" path="res://data/narrative/speakers/unknown.tres" id="20_xe5ls"]
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="21_4ry7p"]
+[ext_resource type="Resource" uid="uid://cjsma5kp5xyrs" path="res://data/items/bolt_cutters.tres" id="21_07xaa"]
 [ext_resource type="Resource" uid="uid://b0rr02qasea6n" path="res://data/narrative/speakers/jax_dole.tres" id="21_ujyqf"]
 [ext_resource type="Script" uid="uid://n78cmm0wplag" path="res://scripts/narrative/dialogue_sequence.gd" id="22_1402q"]
+[ext_resource type="AudioStream" uid="uid://d0vhim6t3fxjb" path="res://audio/voice/player_jax/player_jax_1_2.mp3" id="22_bjnc3"]
+[ext_resource type="AudioStream" uid="uid://brbp6yfpsmxno" path="res://audio/voice/player_jax/player_jax_1_10.mp3" id="23_at73x"]
+[ext_resource type="AudioStream" uid="uid://bm80na5vks6d4" path="res://audio/voice/player_jax/player_jax_1_3.mp3" id="23_rg7w5"]
+[ext_resource type="AudioStream" uid="uid://dxbltxdr4ll33" path="res://audio/voice/player_jax/player_jax_1_11.mp3" id="23_w7op2"]
+[ext_resource type="AudioStream" uid="uid://cg6376mfyqkc7" path="res://audio/voice/player_jax/player_jax_1_4.mp3" id="24_urshd"]
+[ext_resource type="AudioStream" uid="uid://d11u56nli6m1l" path="res://audio/voice/player_jax/player_jax_1_5.mp3" id="26_1402q"]
+[ext_resource type="AudioStream" uid="uid://bn7hh11cma3ml" path="res://audio/voice/player_jax/player_jax_1_6.mp3" id="27_6l5d1"]
+[ext_resource type="AudioStream" uid="uid://yb1it177ngh3" path="res://audio/voice/player_jax/player_jax_1_7.mp3" id="28_28k42"]
+[ext_resource type="AudioStream" uid="uid://b1rnwpstu4316" path="res://audio/voice/player_jax/player_jax_1_8.mp3" id="29_yhxjy"]
+[ext_resource type="AudioStream" uid="uid://4epoipwl5tol" path="res://audio/voice/player_jax/player_jax_1_9.mp3" id="30_yhxjy"]
+
+[sub_resource type="Resource" id="Resource_frk62"]
+script = ExtResource("2_s4eod")
+stream = ExtResource("3_qi71t")
+metadata/_custom_type_script = "uid://duinlv2xx35jy"
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_2t526"]
 polygon = PackedVector2Array(0, 620.0081, 2200.0313, 620.0081, 2200.0313, 625.99347, 0, 625.99347)
@@ -35,10 +60,22 @@ size = Vector2(669, 120)
 [sub_resource type="RectangleShape2D" id="wall"]
 size = Vector2(40, 720)
 
+[sub_resource type="Resource" id="Resource_wny14"]
+script = ExtResource("18_4ry7p")
+title = "Note from stranger"
+text = "If you're reading this Rasmus, stop leaving your shitty notes. I'll keep leaving my own until you stop, 'cause I don't like your attitude. If anybody else reads this, he's wrong about this town. It's... it's fantastic. I don't understand why anyone would ever want to leave this place. Don't let Rasmus ruin your chance for happiness. Astrid seems to be the only one who gets it. And if you're reading this Astrid, come find me at the town center. I found something I think you'll like."
+body_font = ExtResource("18_j2x64")
+
+[sub_resource type="Resource" id="Resource_kxjmj"]
+script = ExtResource("20_3yrhw")
+item = ExtResource("21_07xaa")
+metadata/_custom_type_script = "uid://bkj62nwqxumq7"
+
 [sub_resource type="Resource" id="Resource_28k42"]
 script = ExtResource("17_ujyqf")
 speaker = ExtResource("19_ujyqf")
-text = "Hey, øhh, undskyld, v-ved du, hvor vi er henne?"
+text = "Hey, undskyld, v-ved du, hvor vi er henne?"
+voice_audio = ExtResource("20_bjnc3")
 
 [sub_resource type="Resource" id="Resource_yhxjy"]
 script = ExtResource("17_ujyqf")
@@ -48,27 +85,30 @@ text = "Come again?"
 [sub_resource type="Resource" id="Resource_r3hm7"]
 script = ExtResource("17_ujyqf")
 speaker = ExtResource("19_ujyqf")
-text = "Oh, sorry, uhm, I thought we were in... nevermind. I'm really confused, do you know where we are?"
+text = "Oh, sorry, I thought we were in... nevermind. I'm really confused, do you know where we are?"
+voice_audio = ExtResource("22_bjnc3")
 
 [sub_resource type="Resource" id="Resource_ujyqf"]
 script = ExtResource("17_ujyqf")
 speaker = ExtResource("20_xe5ls")
-text = "No idea. I just woke up in a forest outside of town with no recollection of how I got there. I thought I was the only one here until now."
+text = "No idea. I just woke up in this place. Don't remember how I got here or why."
 metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 
 [sub_resource type="Resource" id="Resource_rg7w5"]
 script = ExtResource("17_ujyqf")
 speaker = ExtResource("19_ujyqf")
 text = "So did I... what the fuck is this place?"
+voice_audio = ExtResource("23_at73x")
 metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 
 [sub_resource type="Resource" id="Resource_uvfgb"]
 script = ExtResource("17_ujyqf")
 speaker = ExtResource("19_ujyqf")
 text = "Do you also not remember your name?"
+voice_audio = ExtResource("23_w7op2")
 metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 
-[sub_resource type="Resource" id="Resource_kxjmj"]
+[sub_resource type="Resource" id="Resource_l4g6o"]
 script = ExtResource("17_ujyqf")
 speaker = ExtResource("20_xe5ls")
 text = "No, I remember, it's Jax. Jax Dole. You don't?"
@@ -78,12 +118,14 @@ metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 script = ExtResource("17_ujyqf")
 speaker = ExtResource("19_ujyqf")
 text = "No... I-I don't. But uhm, nice to meet you Jax. I'm... well, someone."
+voice_audio = ExtResource("23_rg7w5")
 metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 
 [sub_resource type="Resource" id="Resource_36lin"]
 script = ExtResource("17_ujyqf")
 speaker = ExtResource("19_ujyqf")
 text = "You haven't found any way out of this place, have you?"
+voice_audio = ExtResource("24_urshd")
 metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 
 [sub_resource type="Resource" id="Resource_0p0gy"]
@@ -112,7 +154,7 @@ metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 
 [sub_resource type="Resource" id="Resource_s4eod"]
 script = ExtResource("22_1402q")
-lines = Array[ExtResource("17_ujyqf")]([SubResource("Resource_uvfgb"), SubResource("Resource_kxjmj"), SubResource("Resource_07xaa"), SubResource("Resource_1fmwm")])
+lines = Array[ExtResource("17_ujyqf")]([SubResource("Resource_uvfgb"), SubResource("Resource_l4g6o"), SubResource("Resource_07xaa"), SubResource("Resource_1fmwm")])
 metadata/_custom_type_script = "uid://n78cmm0wplag"
 
 [sub_resource type="Resource" id="Resource_at73x"]
@@ -125,12 +167,14 @@ metadata/_custom_type_script = "uid://c72jybcn230jo"
 script = ExtResource("17_ujyqf")
 speaker = ExtResource("19_ujyqf")
 text = "You haven't found any way out of this place, have you?"
+voice_audio = ExtResource("24_urshd")
 metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 
 [sub_resource type="Resource" id="Resource_ftcua"]
 script = ExtResource("17_ujyqf")
 speaker = ExtResource("19_ujyqf")
 text = "Do you also not remember your name?"
+voice_audio = ExtResource("23_w7op2")
 metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 
 [sub_resource type="Resource" id="Resource_xkueh"]
@@ -143,6 +187,7 @@ metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 script = ExtResource("17_ujyqf")
 speaker = ExtResource("19_ujyqf")
 text = "No... I-I don't. But uhm, nice to meet you Jax. I'm... well, someone."
+voice_audio = ExtResource("23_rg7w5")
 metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 
 [sub_resource type="Resource" id="Resource_bjnc3"]
@@ -197,6 +242,7 @@ metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 script = ExtResource("17_ujyqf")
 speaker = ExtResource("19_ujyqf")
 text = "No, I don't think so. Why?"
+voice_audio = ExtResource("26_1402q")
 metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 
 [sub_resource type="Resource" id="Resource_qi71t"]
@@ -209,6 +255,7 @@ metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 script = ExtResource("17_ujyqf")
 speaker = ExtResource("19_ujyqf")
 text = "Yeah... well, I'll keep them in mind. Maybe they're important."
+voice_audio = ExtResource("27_6l5d1")
 metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 
 [sub_resource type="Resource" id="Resource_3yrhw"]
@@ -220,7 +267,8 @@ metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 [sub_resource type="Resource" id="Resource_j2x64"]
 script = ExtResource("17_ujyqf")
 speaker = ExtResource("19_ujyqf")
-text = "Sure, I will. But uhm, I'm gonna go back to finding a way out of here, you coming with?"
+text = "Sure, yeah. I'm also gonna go back to finding a way out of here... you joining?"
+voice_audio = ExtResource("28_28k42")
 metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 
 [sub_resource type="Resource" id="Resource_yxqjj"]
@@ -232,7 +280,8 @@ metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 [sub_resource type="Resource" id="Resource_xligd"]
 script = ExtResource("17_ujyqf")
 speaker = ExtResource("19_ujyqf")
-text = "Alright, can't argue with strange feelings. "
+text = "Alright, can't really argue with strange feelings. "
+voice_audio = ExtResource("29_yhxjy")
 metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 
 [sub_resource type="Resource" id="Resource_0ujvr"]
@@ -244,7 +293,8 @@ metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 [sub_resource type="Resource" id="Resource_lfg3a"]
 script = ExtResource("17_ujyqf")
 speaker = ExtResource("19_ujyqf")
-text = "You too, see ya."
+text = "Yeah you too, Jax, see you around."
+voice_audio = ExtResource("30_yhxjy")
 metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 
 [sub_resource type="Resource" id="Resource_w7op2"]
@@ -264,9 +314,9 @@ lines = Array[ExtResource("17_ujyqf")]([SubResource("repeat")])
 script = ExtResource("1_hpdln")
 display_name = "Building / Ground floor"
 camera_bounds = Rect2i(0, 0, 1152, 720)
+music_cue = SubResource("Resource_frk62")
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=758485644]
-visible = false
 color = Color(0.039215688, 0.039215688, 0.039215688, 1)
 
 [node name="Silos_Mouths" type="Node2D" parent="." unique_id=199967885]
@@ -423,6 +473,7 @@ position = Vector2(678, 621)
 [node name="CeilingLamp2" parent="Props" unique_id=1403917627 instance=ExtResource("9_urshd")]
 position = Vector2(478, 447)
 light_energy = 1.3
+light_radius_scale = 1.4500000000000002
 
 [node name="Interactables" type="Node2D" parent="." unique_id=580173129]
 
@@ -435,7 +486,7 @@ destination_spawn = "from_house_03_2"
 visible = false
 
 [node name="LightSwitch" parent="Interactables" unique_id=1627212891 instance=ExtResource("17_fdp1k")]
-position = Vector2(461, 571)
+position = Vector2(638, 571)
 scale = Vector2(0.3, 0.3)
 connected_lights = Array[NodePath]([NodePath("../../Props/CeilingLamp2")])
 interaction_radius = 50.0
@@ -464,17 +515,33 @@ scale = Vector2(0.2, 0.2)
 connected_lights = Array[NodePath]([NodePath("../../Props/FloorLamp")])
 interaction_radius = 50.0
 
+[node name="Note" parent="Interactables" unique_id=1876394051 instance=ExtResource("17_uvfgb")]
+position = Vector2(301, 578)
+scale = Vector2(0.5, 0.5)
+document = SubResource("Resource_wny14")
+
+[node name="LootContainer" parent="Interactables" unique_id=286012595 instance=ExtResource("19_4ry7p")]
+position = Vector2(247, 582)
+contents = Array[ExtResource("20_3yrhw")]([SubResource("Resource_kxjmj")])
+
+[node name="WorldFlagCondition" parent="Interactables" unique_id=103124143 instance=ExtResource("20_kxjmj")]
+position = Vector2(323, 594)
+flag_id = "story:spoke_to_jax_1"
+visible_when_met = Array[NodePath]([NodePath("../LootContainer")])
+
 [node name="Actors" type="Node2D" parent="." unique_id=1936203783]
 
 [node name="Player" parent="Actors" unique_id=1545454888 instance=ExtResource("18_s4eod")]
 position = Vector2(417, 588)
 
 [node name="NPC" parent="Actors" unique_id=760903738 instance=ExtResource("16_knspu")]
+z_index = -1
 position = Vector2(514, 585)
 scale = Vector2(1.1, 1.1)
 dialogue = SubResource("Resource_w7op2")
 repeat_dialogue = SubResource("Resource_s8ns5")
 interaction_radius = 70.0
+completion_flag = "story:spoke_to_jax_1"
 
 [node name="Spawns" type="Node2D" parent="." unique_id=1777379054]
 

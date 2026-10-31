@@ -36,7 +36,6 @@ camera_bounds = Rect2i(0, 0, 2200, 720)
 music_cue = ExtResource("location_music")
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=857491603]
-visible = false
 color = Color(0.038397163, 0.038397174, 0.038397145, 1)
 
 [node name="Buildings" type="Node2D" parent="." unique_id=1653355476]
@@ -160,6 +159,96 @@ modulate = Color(0, 0, 0, 1)
 self_modulate = Color(0, 0, 0, 0.84313726)
 z_index = -10
 position = Vector2(-64, 492)
+
+[node name="HouseSilo05" parent="Buildings/Silos" unique_id=1787184596 instance=ExtResource("2_35lbs")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(375, 492)
+
+[node name="HouseSilo06" parent="Buildings/Silos" unique_id=2074871332 instance=ExtResource("5_5ycnk")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(859, 492)
+
+[node name="HouseSilo07" parent="Buildings/Silos" unique_id=1701703278 instance=ExtResource("5_5ycnk")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(1093, 492)
+
+[node name="HouseSilo2" parent="Buildings/Silos" unique_id=1145206618 instance=ExtResource("8_n8lao")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(1283, 492)
+
+[node name="HouseSilo3" parent="Buildings/Silos" unique_id=1989924863 instance=ExtResource("8_n8lao")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(1528, 492)
+
+[node name="HouseSilo08" parent="Buildings/Silos" unique_id=641108578 instance=ExtResource("5_5ycnk")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(1766, 492)
+
+[node name="HouseSilo09" parent="Buildings/Silos" unique_id=733856594 instance=ExtResource("2_35lbs")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(1942, 492)
+
+[node name="HouseSilo10" parent="Buildings/Silos" unique_id=1047805407 instance=ExtResource("5_5ycnk")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(2118, 492)
+
+[node name="HouseSilo11" parent="Buildings/Silos" unique_id=1252071492 instance=ExtResource("5_5ycnk")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(2342, 492)
+
+[node name="HouseSilo12" parent="Buildings/Silos" unique_id=554788570 instance=ExtResource("2_35lbs")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(2566, 492)
+
+[node name="HouseSilo4" parent="Buildings/Silos" unique_id=2133562624 instance=ExtResource("8_n8lao")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(2742, 492)
+
+[node name="HouseSilo13" parent="Buildings/Silos" unique_id=2071050398 instance=ExtResource("2_35lbs")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(2966, 492)
+
+[node name="HouseSilo14" parent="Buildings/Silos" unique_id=2141671022 instance=ExtResource("2_35lbs")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(3189, 492)
+
+[node name="HouseSilo5" parent="Buildings/Silos" unique_id=793598581 instance=ExtResource("8_n8lao")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(3366, 492)
+
+[node name="HouseSilo15" parent="Buildings/Silos" unique_id=987337796 instance=ExtResource("5_5ycnk")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(3542, 492)
 
 [node name="Geometry" type="Node2D" parent="." unique_id=491046715]
 
