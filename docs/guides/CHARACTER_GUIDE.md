@@ -6,7 +6,7 @@ Open `tests/fixtures/combat_sandbox.tscn` with **F6** in Godot **4.7.2 Standard*
 
 ## Edit the supplied animation atlases
 
-`art/pixel/player_motion.png` is **192×560 native pixels**, arranged **6 columns × 14 rows**, with **32×40 pixels per frame**. It matches the completed Pixilart master. The enemy is now **192×280**, **6×7**, and the generic NPC is **192×80**, **6×2**, with the same cell size. These are single native PNGs. Body uses **Position (0,32)**, **Offset (0,-20)** and **Scale (2,2)**; one native pixel is two world pixels.
+`art/pixel/player_motion.png` is **192×560 native pixels**, arranged **6 columns × 14 rows**, with **32×40 pixels per frame**. It matches the completed Pixilart master. The enemy uses a **192×560** template, **6×14**, with only its first seven rows populated, and the generic NPC is **192×80**, **6×2**, with the same cell size. These are single native PNGs. Body uses **Position (0,32)**, **Offset (0,-20)** and **Scale (2,2)**; one native pixel is two world pixels.
 
 | Player row | Animation |
 | --- | --- |
@@ -29,12 +29,20 @@ All player rows have six cells, now played in left-to-right sheet order. The com
 
 Enemy rows are **idle, walk, sleep, wake, attack, hit, death**, six frames per row. NPC rows are **idle, walk**. Both now use your current player silhouette and native pixel scale, with palette variants for clothing/skin. Their Body Position is **(-1,32)** to center the odd-width artwork; player body centering is handled by its attachment profile. The NPC plays idle automatically and keeps its existing interaction/face-player behavior. Enemy combat timing and AI are unchanged. See the [cast comparison](../previews/character-cast.png), [enemy animation preview](../previews/enemy-animation-review.gif) and [editable sources](../../art/pixlart/cast_animation/README.md).
 
-The player has brown **hair**, no hat, and a flat face without a protruding nose. The enemy matches its proportions with green skin and a burgundy shirt. Crouch and death are drawn poses; all temporary pose-compression options are disabled in the supplied scenes.
+The player has brown **hair**, no hat, and a flat face without a protruding nose. The enemy retains the designer's own marked shirt, distorted face and partially transparent effects. Crouch and death are drawn poses; all temporary pose-compression options are disabled in the supplied scenes.
 
 1. Open `scenes/actors/player.tscn` or `enemy.tscn`, select **Body**, and click **Sprite Frames**.
-2. Select an animation by name. Replace its frames with individual PNGs or **Add frames from a sprite sheet** (6 horizontal × 14 vertical for the player, 6 × 7 for the enemy, 6 × 2 for the NPC).
+2. Select an animation by name. Replace its frames with individual PNGs or **Add frames from a sprite sheet** (6 horizontal × 14 vertical for the player, 6 × 14 for the enemy, 6 × 2 for the NPC).
 3. Keep the animation names. Set FPS and Loop, then save the shared `.tres` resource. To vary one enemy, use **Make Unique → Save As** first.
 4. Keep native replacement frames 32×40 if using the supplied Body transform. For already-enlarged 64×80 frames, use Body Scale (1,1) and Offset (0,-40) instead. Keep feet at the bottom.
+
+## Designer-redrawn enemy
+
+`art/pixel/enemy_motion.png` is imported byte-for-byte from the visible **Layer 2** of `enemy_redesign.pixil`. Its full 192×560 canvas is retained. The first seven rows remain **idle, walk, sleep, wake, attack, hit, death**, each using six native 32×40 cells. The lower seven blank rows are not referenced by the game. Use a **6 horizontal × 14 vertical** grid when selecting frames from this full sheet.
+
+Edit `art/pixlart/cast_animation/enemy_motion.pixil` on **Layer 2**; keep the original hidden template layers hidden. The original upload is archived unchanged as `enemy_redesign.pixil` beside it. Only the cached global thumbnail was repaired in the editable master. The drawn face distortion and all partial-alpha pixels are preserved, including the death animation.
+
+Enemy SpriteFrames order, durations, FPS, attack phase split, actor scale/offset, collision shapes, AI, damage, sounds and save/story behaviour are unchanged. See the [actual rendered enemy and animation previews](../previews/refined_cast/ENEMY.md).
 
 ## Jax's redesigned sheet
 

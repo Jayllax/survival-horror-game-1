@@ -1,6 +1,6 @@
 # Pixel art workflow
 
-One native art pixel covers **2×2 world pixels**. Use nearest-neighbor filtering, hard transparency, flat palette colors and simple shapes. Keep façades and fence panels horizontally symmetrical. Single left/right house chimneys are the deliberate exception requested for those variants.
+One native art pixel covers **2×2 world pixels**. Use nearest-neighbor filtering, flat palette colours and simple shapes. Preserve the enemy's intentionally drawn partial transparency in its face/death effects; those pixels must not be thresholded. Keep façades and fence panels horizontally symmetrical. Single left/right house chimneys are the deliberate exception requested for those variants.
 
 The base artist swatches are **Sparkle's palette**; import `art/pixel/ignotum.gpl` into your pixel editor. Approved house/tree artwork retains its source colours and intermediate shades. Player artwork uses the designer’s native pixel reference and its colours. `art/pixel/STYLE_SHEET.png` is a contact sheet made from the current game sprites at 2× native size.
 
@@ -15,7 +15,7 @@ The legacy `tools/build_simple_assets.py` draws an earlier prototype and does **
 | Asset | Editable PNG | Display |
 | --- | --- | --- |
 | Player motion | `art/pixel/player_motion.png`, 192×560, 6×14 cells of 32×40 | Body scale 2× |
-| Enemy motion | `art/pixel/enemy_motion.png`, 192×280, 6×7 cells of 32×40 | Body scale 2× |
+| Enemy motion | `art/pixel/enemy_motion.png`, 192×560, 6×14 grid; only the first seven rows are populated | Body scale 2× |
 | Generic NPC motion | `art/pixel/npc_motion.png`, 192×80, 6×2 cells of 32×40 | Body scale 2× |
 | Jax motion | `art/pixel/npc_jax_,motion.png`, 192×560; only the first two rows are populated | Body scale 2× |
 | Broad fences | `art/pixel/fence_cuttable.png`, `fence_reinforced.png`, 48×32 each | Sprite scale 2× |
@@ -32,7 +32,7 @@ The game's `art/pixel/player_motion.png` is the exact PNG stored in the uploaded
 
 All 14 animations now read their six cells in sheet order. The old shuffled crouch-idle mapping and reused walk-column reference were corrected; FPS and per-frame durations are retained. Body-centre, shoulder and flashlight points are calibrated against the actual belt, shirt and hands. The artwork stays fixed; these attachment coordinates fit weapons and lights to it.
 
-Use the [actual game renders and exported animation previews](../previews/refined_cast/README.md) when reviewing artwork. The player master is now the uploaded single-layer document. Generic NPC/enemy masters under `art/pixlart/cast_animation/` keep their existing **REFINED CAST - DRAW HERE** layers. Jax now uses the designer's **Layer 1** in `npc_jax_motion.pixil`; see [the Jax import details](../previews/refined_cast/JAX.md).
+Use the [actual game renders and exported animation previews](../previews/refined_cast/README.md) when reviewing artwork. The player master is now the uploaded single-layer document. The generic NPC master keeps its existing **REFINED CAST - DRAW HERE** layer. Jax uses the designer's **Layer 1** in `npc_jax_motion.pixil`; the enemy uses **Layer 2** in `enemy_motion.pixil`, retaining its other hidden layers. See the [Jax import](../previews/refined_cast/JAX.md) and [enemy import](../previews/refined_cast/ENEMY.md) details.
 
 See the [looping cast comparisons](../previews/refined_cast/README.md). The active Jax scene uses `art/pixel/npc_jax_,motion.png`. The older `player.png`/`enemy.png` strips are legacy assets; current actors use the motion sheets listed above.
 

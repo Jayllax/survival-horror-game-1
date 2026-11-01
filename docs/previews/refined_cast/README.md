@@ -37,7 +37,7 @@ The atlas stays **192×560**, arranged in **6×14 cells of 32×40**. All animati
 
 The handgun and shotgun retain their own grip points, muzzle offsets, recoil and reload rules. Native tests check both hands, shoulders, muzzle flashes and barrel lights across every armed frame in both directions and at four aiming elevations. Holstered lights follow the actual drawn hand in every movement frame. No dangling drawn hands are added to the supplied armed rows.
 
-The editable document's JSON, drawing PNG and both preview PNGs are validated. Opening it inside Pixilart could not be tested here. The enemy artwork and authored effects are unchanged. Jax was subsequently imported from the designer's new sheet; see [Jax's separate preview page](JAX.md).
+The editable document's JSON, drawing PNG and both preview PNGs are validated. Opening it inside Pixilart could not be tested here. The designer's Jax and enemy sheets have their own import previews: [Jax](JAX.md) · [Enemy](ENEMY.md).
 
 ## Verification
 

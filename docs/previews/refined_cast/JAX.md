@@ -27,7 +27,7 @@ These GIFs use the existing scene's frame order, individual durations and playba
 
 The first row supplies idle poses and the second talking poses. Explicit **32×40 AtlasTexture regions** exclude all empty lower rows, so the larger template does not enlarge or offset Jax. In the sprite-sheet picker use **6 horizontal × 14 vertical**, choosing only the populated top rows.
 
-The existing weighted idle/talking sequences, speeds and durations are retained. The only scene edits redirect the two idle AtlasTexture regions to row 1. Talking regions remain on row 2. Body transform, the house's placed position/scale, scene UID, node paths, dialogue resources, speaker aliases, repeat conversation and completion flag are unchanged. The player, generic NPC and enemy artwork are untouched by this import.
+The existing weighted idle/talking sequences, speeds and durations are retained. The only scene edits redirect the two idle AtlasTexture regions to row 1. Talking regions remain on row 2. Body transform, the house's placed position/scale, scene UID, node paths, dialogue resources, speaker aliases, repeat conversation and completion flag are unchanged. The player and generic NPC artwork are unchanged. The enemy's own designer-supplied import is documented [separately](ENEMY.md).
 
 ## Verification
 

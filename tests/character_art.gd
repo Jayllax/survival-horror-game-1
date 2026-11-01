@@ -124,6 +124,17 @@ func run() -> void:
     await frames()
     foe.set_physics_process(false)
     var enemy_body: CharacterVisuals=foe.get_node("Body")
+    var enemy_reference := Image.load_from_file("res://art/templates/characters/enemy_authored_frames.png")
+    var enemy_atlas := preload("res://art/pixel/enemy_motion.png").get_image()
+    check(same_visible_pixels(enemy_reference,enemy_atlas),"All 42 designer enemy cells and their partial face-effect transparency remain unchanged")
+    var enemy_rows := [&"idle",&"walk",&"sleep",&"wake",&"attack",&"hit",&"death"]
+    var enemy_order := enemy_atlas.get_size()==Vector2i(192,560)
+    for row in enemy_rows.size():
+        enemy_order=enemy_order and enemy_body.sprite_frames.get_frame_count(enemy_rows[row])==6
+        for column in 6:
+            var tile := enemy_body.sprite_frames.get_frame_texture(enemy_rows[row],column) as AtlasTexture
+            enemy_order=enemy_order and tile!=null and tile.region==Rect2(column*32,row*40,32,40) and tile.get_image().get_used_rect().has_area()
+    check(enemy_order,"Enemy animations use only the seven populated rows in their original six-cell order")
     check(enemy_body.scale==Vector2(2,2) and not foe.use_sleep_placeholder_pose and not foe.use_attack_placeholder_pose and not foe.use_death_placeholder_pose,"Enemy uses matching native scale and real sleep/attack/death poses")
     for state in [&"idle",&"walk",&"sleep",&"wake",&"attack",&"hit",&"death"]:
         check(enemy_body.has_state(state) and enemy_body.sprite_frames.get_frame_count(state)>1,"Enemy has a multi-frame editable animation: "+str(state))
