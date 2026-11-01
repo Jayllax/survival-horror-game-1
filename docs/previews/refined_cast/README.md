@@ -16,7 +16,7 @@ Edit the current PNGs under `art/pixel/`. Updated Pixilart masters retain the or
 
 ## Verification
 
-Checked with Godot 4.7.2: 151 scenes, 39 data resources and 24 destination links resolve; all 12 designer levels start. The character/attachment, aiming and forest suites pass 186 checks. All 150 character cells retain their dimensions and alpha; clothing texture samples remain identical at matching torso coordinates across the poses. The 40 revised building/tree textures retain native dimensions, alpha silhouettes, source/export scale and expected symmetry. Level layouts, dialogue, item settings and SpriteFrames timing data are retained.
+Checked with Godot 4.7.2: 151 scenes, 39 data resources and 24 destination links resolve; all 12 designer levels start. The character/attachment, aiming and forest suites pass 186 checks. All 150 character cells retain their dimensions and alpha; clothing texture samples remain identical at matching torso coordinates across the poses. Building/tree exports retain native canvas dimensions, ground anchors and source/export scale; their new drawing outlines and shading come from the approved artwork. Level layouts, dialogue, item settings and SpriteFrames timing data are retained.
 
 The designer's November 1 kit, shotgun and shotgun-shell PNGs are included byte-for-byte from the newest ZIP. The other files in that ZIP match the previous project, apart from leftover copies of the four already-retired props.
 

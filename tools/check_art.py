@@ -13,7 +13,8 @@ for name,entry in m['assets'].items():
         pixels=set(im.getdata())
         # Transparent RGB is unused and may retain an edge color after packing.
         # Check the visible artwork; alpha and exact 2x exports are checked below.
-        assert {p for p in pixels if p[3]} <= allowed,name+' palette'
+        if entry.get('color_source') != 'approved_artwork':
+            assert {p for p in pixels if p[3]} <= allowed,name+' palette'
         assert {p[3] for p in pixels} <= {0,255},name+' partial alpha'
         if not entry.get('tile') and not entry.get('solid_rectangle'):
             assert any(p[3]==0 for p in pixels),name+' transparent canvas'
@@ -23,4 +24,4 @@ for name,entry in m['assets'].items():
             def visible_pixels(image):
                 return [p if p[3] else (0,0,0,0) for p in image.convert('RGBA').getdata()]
             assert visible_pixels(export)==visible_pixels(expected),name+' exact 2x visible pixels and alpha'
-print(f'PASS: {len(m["assets"])} native/export pairs use the palette and exact 2x nearest-neighbor visible pixels and alpha.')
+print(f'PASS: {len(m["assets"])} native/export pairs retain dimensions, hard alpha and exact 2x visible pixels; palette checks apply to swatch-based art and approved-artwork shades are retained.')

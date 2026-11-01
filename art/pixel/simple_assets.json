@@ -49,7 +49,8 @@
         192,
         256
       ],
-      "baseline": 128
+      "baseline": 128,
+      "color_source": "approved_artwork"
     },
     "house_cream": {
       "native_size": [
@@ -60,7 +61,8 @@
         192,
         256
       ],
-      "baseline": 128
+      "baseline": 128,
+      "color_source": "approved_artwork"
     },
     "station": {
       "native_size": [
@@ -71,7 +73,8 @@
         256,
         288
       ],
-      "baseline": 144
+      "baseline": 144,
+      "color_source": "approved_artwork"
     },
     "shop": {
       "native_size": [
@@ -82,7 +85,8 @@
         256,
         256
       ],
-      "baseline": 128
+      "baseline": 128,
+      "color_source": "approved_artwork"
     },
     "door": {
       "native_size": [
@@ -322,5 +326,5 @@
     "ammo"
   ],
   "palette_file": "res://art/pixel/ignotum.gpl",
-  "notes": "Current palette plus retained legacy flat tile and tile-border colors. Active actor art uses the motion PNG sheets."
+  "notes": "Base swatches plus retained legacy tile colors. Entries marked approved_artwork retain the approved source RGB shades; active actor art uses the motion PNG sheets."
 }

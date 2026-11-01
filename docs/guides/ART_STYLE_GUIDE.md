@@ -2,9 +2,11 @@
 
 One native art pixel covers **2×2 world pixels**. Use nearest-neighbor filtering, hard transparency, flat palette colors and simple shapes. Keep façades and fence panels horizontally symmetrical. Single left/right house chimneys are the deliberate exception requested for those variants.
 
-The current artist palette is **Sparkle's palette**; import `art/pixel/ignotum.gpl` into your pixel editor. The refined scenery uses restrained material shading, recessed panels, window reveals and top-edge highlights on the original native grids. Keep broad, readable color clusters instead of dense texture. `art/pixel/STYLE_SHEET.png` is a contact sheet made from the current game sprites at 2× native size.
+The base artist swatches are **Sparkle's palette**; import `art/pixel/ignotum.gpl` into your pixel editor. Approved house/tree artwork retains its source colours and intermediate shades. It is not reduced to the earlier flat swatches. `art/pixel/STYLE_SHEET.png` is a contact sheet made from the current game sprites at 2× native size.
 
-Buildings keep clear window/door recesses and a few quiet roof seams, with mostly uniform walls. Trees use three broad leaf tones and simple bark planes. Avoid scattered highlights and small texture marks; the intended balance has readable structure without the previous dense shading.
+Buildings keep the approved window/door recesses, roof seams and mostly uniform walls. Trees keep the approved leaf planes and bark shading. Their source artwork is exported directly with a single nearest-neighbor size conversion. Old internal colour masks, hard shade reduction and mirrored RGB shading must not be reapplied: those operations change the approved design. Tree outlines remain symmetric; directional shading is retained.
+
+See [the actual Godot render and approved source artwork](../previews/approved_world/README.md). These are separate from a concept illustration: the Godot image loads the same textures and reusable scenes as the game.
 
 The legacy `tools/build_simple_assets.py` draws an earlier prototype and does **not** reproduce the current artwork. Edit the current PNGs and Pixilart masters rather than running that generator over your work. Plain plaster, existing tile-edge colors and authored character distortion colors are deliberately retained.
 
@@ -35,4 +37,4 @@ See [CHARACTER_GUIDE.md](CHARACTER_GUIDE.md) for exact atlas rows, aiming arms a
 
 Lighting and fog intentionally use separate smooth Godot 2D light textures. They can create additional screen colors without adding colors to the PNG artwork. Font files and their required OFL license remain in `art/fonts/`.
 
-The unused legacy shelf, sign, drain and pipe PNGs, their import files, and the unused shelf scene have been removed. Interior bookcases and cabinets remain available in their existing folders. Current asset paths, native sizes, alpha silhouettes, collisions and placed level geometry are retained, so existing placements continue to fit.
+The unused legacy shelf, sign, drain and pipe PNGs, their import files, and the unused shelf scene have been removed. Interior bookcases and cabinets remain available in their existing folders. Asset paths, native canvas sizes, ground anchors, collisions and placed level geometry are retained. The house/tree drawing outlines now come from the approved artwork, not the old silhouette masks.
