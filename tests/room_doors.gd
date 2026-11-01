@@ -84,7 +84,9 @@ func verify_passage() -> void:
 	var image: Image = door.get_node("Artwork/Frame").texture.get_image()
 	check(image.get_size() == Vector2i(4, 44), "Side profile uses a simple native 4 by 44 pixel texture at 2x scale")
 	var symmetric := true
-	var palette := [Color.html("b0866c"), Color.html("8f6c61"), Color.html("385450"), Color.html("3b2d30")]
+	# This unchanged frame was recoloured with the approved world art. Check
+	# that palette rather than the four colours of its retired prototype.
+	var palette := [Color.html("2d434d"), Color.html("385450"), Color.html("4a3337"), Color.html("4e6e60"), Color.html("7d5450")]
 	var in_palette := true
 	for y in image.get_height():
 		for x in image.get_width():

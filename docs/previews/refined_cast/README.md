@@ -1,23 +1,29 @@
-# Refined cast animation comparisons
+# Current player export and cast previews
 
-Previous shading is on the left; stable clothing shading is on the right. These GIFs use the existing animation frame order and durations, rounded to GIF timing precision. Open a GIF directly if your viewer displays only its first frame.
+This player image is a **Godot render of the actual `player.tscn`**, using its game PNG, attachment calibration and aiming arms under neutral lighting. The walk GIF is assembled from the actual exported animation frames in their existing playback order. These are the assets included in this commit.
 
-![Player walking in the brown polo](player-walk.gif)
+![Actual player scene in Godot](player-godot.png)
 
-![Jax talking](jax-talking.gif)
+![Actual exported polo walk](player-walk.gif)
 
-![Enemy face distortion](enemy-distortion.gif)
+![One actual 32×40 walk cell enlarged with nearest-neighbor filtering](player-native.png)
 
-![Enemy attack](enemy-attack.gif)
+The complete player design now comes from the approved artwork: head/hair, skin, polo collar and placket, restrained shirt shading, blue-grey trousers and dark shoes. It replaces the earlier version that kept the old head and hands and flattened the clothing. The atlas stays **192×560**, with **32×40** cells; the larger reference is sampled at that native resolution. Grounded feet keep their baseline. SpriteFrames order and durations, movement settings, collision and level layouts remain unchanged. The flashlight/shoulder points and procedural arm colours have been recalibrated for the new drawing.
 
-The game keeps the existing 32×40 frame canvases, poses, skin, hair, authored face effects and effect transparency. Each character reuses one fixed garment pattern across its poses; there are no independently shaded crease patterns or changing trouser highlights. The polo collar and Jax's center seam remain part of their designs. The enemy's death row remains unchanged, and the flashlight still follows the existing attachment points.
+The [approved walking source](player-sources/approved-walk.png) and other pose sources are archived in `player-sources/`. Exporting uses nearest-neighbor sampling of the full artwork; it does not restore old sprite masks or reduce the result to the old palette. Armed variants use their armless torso drawings and the matching normal movement legs. Intermediate source shades remain intact. In gameplay the level's lights and CanvasModulate still affect the resulting colours; the render above isolates the artwork.
 
-Edit the current PNGs under `art/pixel/`. Updated Pixilart masters retain the original author layers underneath the visible **REFINED CAST - DRAW HERE** layer. See [the art guide](../../guides/ART_STYLE_GUIDE.md) for file locations and export scale.
+Edit `art/pixel/player_motion.png` or the visible **REFINED CAST - DRAW HERE** layer in `art/pixlart/player_animation/player_motion.pixil`. The master retains the original hidden author layers; its active layer and previews contain the exact current PNG. The older animation download pack and earlier preview pages document earlier art. Pixilart JSON and embedded PNGs are validated; reopening the file in the Pixilart application could not be tested here.
+
+Jax and enemy artwork is unchanged by this player correction. These existing comparison GIFs show previous shading on the left and their current shading on the right:
+
+![Jax talking comparison](jax-talking.gif)
+
+![Enemy face-distortion comparison](enemy-distortion.gif)
+
+![Enemy attack comparison](enemy-attack.gif)
+
+The designer's November 1 combat-kit, shotgun and shotgun-shell PNGs remain byte-for-byte intact. See [the art guide](../../guides/ART_STYLE_GUIDE.md) for asset locations.
 
 ## Verification
 
-Checked with Godot 4.7.2: 151 scenes, 39 data resources and 24 destination links resolve; all 12 designer levels start. The character/attachment, aiming and forest suites pass 186 checks. All 150 character cells retain their dimensions and alpha; clothing texture samples remain identical at matching torso coordinates across the poses. Building/tree exports retain native canvas dimensions, ground anchors and source/export scale; their new drawing outlines and shading come from the approved artwork. Level layouts, dialogue, item settings and SpriteFrames timing data are retained.
-
-The designer's November 1 kit, shotgun and shotgun-shell PNGs are included byte-for-byte from the newest ZIP. The other files in that ZIP match the previous project, apart from leftover copies of the four already-retired props.
-
-The Pixilart JSON and embedded PNGs are validated, and the active layers exactly match the game PNGs. Reopening the documents in the Pixilart application could not be tested here.
+Godot 4.7.2: 206 checks pass across character art/attachments, aiming, pushables, entrance audio, the existing audio system and room doors. All 151 reusable/fixture scenes, 39 data resources and 24 entrance links resolve, and all 12 designer levels initialize and clean up. Native art validation passes. Source/movement SpriteFrames, level files, project settings and the designer’s three item PNGs are preserved.

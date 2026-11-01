@@ -133,7 +133,9 @@ func verify_motion_attachments(player: CharacterBody2D) -> void:
                 # Frame signals update attachment transforms synchronously, even with physics stopped.
                 var hand_world: Vector2=light.global_position-Vector2(rig.handheld_flashlight_offset.x*facing,rig.handheld_flashlight_offset.y)
                 var pixel:=native_pixel(body,hand_world)
-                hand_aligned=hand_aligned and (pixel.is_equal_approx(Color("ccbb98")) or pixel.is_equal_approx(Color("b0866c")))
+                # The complete approved redraw includes shaded skin, not the two
+                # old flat colours. Still require an opaque, skin-coloured pixel.
+                hand_aligned=hand_aligned and pixel.a>0.99 and pixel.r>0.57 and pixel.g>0.47 and pixel.b<pixel.g and pixel.r-pixel.g<0.24
                 var direction:=Vector2.RIGHT.rotated(light.global_rotation)
                 direction_correct=direction_correct and direction.distance_to(Vector2(facing,0))<0.001
             check(hand_aligned and direction_correct,"Every %s frame keeps the light on a drawn hand and facing horizontally (%s)" % [clip,facing])
@@ -163,9 +165,7 @@ func verify_motion_attachments(player: CharacterBody2D) -> void:
                     # The approved polo has several shirt shades. Its silhouette
                     # and shoulder positions remain the attachment reference.
                     var shoulder_pixel:=native_pixel(body,shoulder)
-                    var on_shirt:=false
-                    for shade in ["4a3337","7d5450","8f6c61","b0917d"]:
-                        on_shirt=on_shirt or shoulder_pixel.is_equal_approx(Color(shade))
+                    var on_shirt:=shoulder_pixel.a>0.99 and shoulder_pixel.r>shoulder_pixel.g and shoulder_pixel.g>shoulder_pixel.b and shoulder_pixel.r<0.71
                     shoulders_aligned=shoulders_aligned and on_shirt
                 var mirror:=Vector2(1,-1 if gun.flip_v else 1)
                 barrel_aligned=barrel_aligned and light.global_position.distance_to(gun.to_global(Vector2(14,4)*mirror))<0.01

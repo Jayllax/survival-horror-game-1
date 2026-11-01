@@ -1,6 +1,6 @@
 # Character animation and gun combat
 
-For the completed editable player project based on your drawings, open [player_animation/player_motion.pixil](../../art/pixlart/player_animation/player_motion.pixil). The [animation pack](../downloads/Ignotum-completed-player-animations.zip) includes individual Pixilart timeline projects and PNG strips. The [blank animation templates](../../art/templates/characters/README.md) remain available for new drawings.
+For the current approved player artwork, open [player_animation/player_motion.pixil](../../art/pixlart/player_animation/player_motion.pixil). Its active layer and previews exactly match `art/pixel/player_motion.png`. The [older animation pack](../downloads/Ignotum-completed-player-animations.zip) documents the earlier simple design; use the current master for this redraw. The [blank animation templates](../../art/templates/characters/README.md) remain available for new drawings.
 
 Open `tests/fixtures/combat_sandbox.tscn` with **F6** in Godot **4.7.2 Standard**. Player and enemy use matching simple pixel art, distinct movement/reaction poses and editor-editable **Body → Sprite Frames** resources. F5 starts your main menu and town.
 
@@ -25,7 +25,7 @@ Open `tests/fixtures/combat_sandbox.tscn` with **F6** in Godot **4.7.2 Standard*
 | 13 | Aim jump |
 | 14 | Aim fall |
 
-All player rows have six frames. The initial idle/walk/run drawings and jump/fall entry poses come from your uploaded file, preserved separately in [player_animation/animations-human-made.pixil](../../art/pixlart/player_animation/animations-human-made.pixil). Grounded feet were moved down one native pixel to the frame boundary; the deepest idle bob uses a neighboring authored pose, and the repeated walk/run loop-ending frame has a shorter duration. New poses reuse your hair/face shape, proportions and simple clothing colors. See the [animated preview](../previews/player-animation-review.gif).
+All player rows have six cells. The complete approved polo design now replaces the previous player drawing, including hair, face, shirt and trousers. The approved walking source is sampled directly into the existing native cells; the other generated poses follow it. Armed clips share the corresponding movement legs, so drawing the weapon keeps their shading. Existing SpriteFrames order, durations and physics settings are preserved. Grounded feet stay at the frame boundary; airborne poses retain their lifted feet. The original authored drawings remain separately in [player_animation/animations-human-made.pixil](../../art/pixlart/player_animation/animations-human-made.pixil) and hidden layers of the current master. See the [current exported player and Godot preview](../previews/refined_cast/README.md).
 
 Enemy rows are **idle, walk, sleep, wake, attack, hit, death**, six frames per row. NPC rows are **idle, walk**. Both now use your current player silhouette and native pixel scale, with palette variants for clothing/skin. Their Body Position is **(-1,32)** to center the odd-width artwork; player body centering is handled by its attachment profile. The NPC plays idle automatically and keeps its existing interaction/face-player behavior. Enemy combat timing and AI are unchanged. See the [cast comparison](../previews/character-cast.png), [enemy animation preview](../previews/enemy-animation-review.gif) and [editable sources](../../art/pixlart/cast_animation/README.md).
 
@@ -76,7 +76,7 @@ The shotgun supplies its own native texture scale, two grip positions, muzzle an
 
 ## Movement tuning
 
-Your uploaded player scene retains **Move Speed 125**, **Jump Velocity -200**, camera offset **(0,-110)**, zoom **(1.4,1.4)** and your camera limit settings. These can be overridden per scene as before. Other root settings include acceleration, gravity, jump buffering and coyote time.
+The current player scene retains **Move Speed 90**, **Jump Velocity -250**, camera zoom **(2,2)** and your camera position/limit settings. These can be overridden per scene as before. Other root settings include acceleration, gravity, jump buffering and coyote time.
 
 | Setting | Default | Meaning |
 | --- | --- | --- |

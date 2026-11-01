@@ -19,6 +19,11 @@ extends Area2D
 @export var persistent_id: String = ""
 @export var puzzle_solution: Vector3i = Vector3i(3, 1, 2)
 @export var door_animation_seconds: float = 0.8
+@export_group("Entrance sound")
+## Optional sound for a successful Entrance (Kind = Entrance). Survives the level change.
+@export var entrance_sound: AudioStream
+@export_range(-60.0, 6.0) var entrance_sound_volume_db: float = 0.0
+@export_range(0.25, 3.0) var entrance_sound_pitch: float = 1.0
 @export_group("Legacy compatibility")
 ## Old per-door override. Leave off to follow the item's Remove After Use setting.
 @export var consume_key: bool = false
@@ -91,7 +96,7 @@ func interact(_player: Node) -> void:
 				if key_uid < 0:
 					Game.message.emit("Locked. Requires " + Game.item_name(required_key) + ".")
 					return
-			Transition.travel(destination_scene, destination_spawn, key_uid, state_key() if key_uid >= 0 else "", consume_key)
+			Transition.travel(destination_scene, destination_spawn, key_uid, state_key() if key_uid >= 0 else "", consume_key, entrance_sound, entrance_sound_volume_db, entrance_sound_pitch)
 
 func solve_puzzle(code: Vector3i) -> bool:
 	if is_powered():
