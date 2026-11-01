@@ -67,6 +67,7 @@ func run() -> void:
     you = load("res://data/narrative/speakers/you.tres")
     ui.characters_per_second = 0
     await frames(8)
+    await verify_jax_art()
     await verify_actual_jax_branches()
     await verify_nested_return_and_replacement()
     await verify_animation()
@@ -75,6 +76,52 @@ func run() -> void:
     await verify_lifecycle_cleanup()
     print("IGNOTUM DIALOGUE FLOW: %d checks, %d failures" % [checks, failures])
     get_tree().quit(0 if failures == 0 else 1)
+
+func same_visible_pixels(a: Image, b: Image) -> bool:
+    if a.get_size()!=b.get_size():
+        return false
+    for y in a.get_height():
+        for x in a.get_width():
+            var first := a.get_pixel(x,y)
+            var second := b.get_pixel(x,y)
+            if first.a!=second.a or (first.a>0 and first!=second):
+                return false
+    return true
+
+func verify_jax_art() -> void:
+    var body: AnimatedSprite2D=npc.get_node("Body")
+    var clips := body.sprite_frames
+    var tile := clips.get_frame_texture(&"idle",0) as AtlasTexture
+    var reference := Image.load_from_file("res://art/templates/characters/jax_authored_frames.png")
+    check(tile.atlas.get_size()==Vector2(192,560) and same_visible_pixels(reference,tile.atlas.get_image()), "Jax uses the complete designer drawing without changing any visible pixels")
+    var valid_frames := true
+    for name in [&"idle",&"talking"]:
+        for i in clips.get_frame_count(name):
+            var frame := clips.get_frame_texture(name,i) as AtlasTexture
+            var image := frame.get_image()
+            valid_frames=valid_frames and frame.region.position.y==(0 if name==&"idle" else 40) and image.get_size()==Vector2i(32,40) and image.get_used_rect().end.y==40
+    check(valid_frames,"Idle reads the first row, talking reads the second, and empty template rows never become animation frames")
+    var timing := clips.get_frame_count(&"idle")==5 and clips.get_animation_speed(&"idle")==2 and clips.get_frame_count(&"talking")==10 and clips.get_animation_speed(&"talking")==1
+    var idle_durations := [2.0,3.0,5.0,5.0,1.5]
+    var talk_durations := [2.0,1.0,1.0,2.0,1.0,1.0,1.0,1.0,2.0,1.0]
+    for i in idle_durations.size():timing=timing and clips.get_frame_duration(&"idle",i)==idle_durations[i]
+    for i in talk_durations.size():timing=timing and clips.get_frame_duration(&"talking",i)==talk_durations[i]
+    check(timing,"Jax retains his existing custom idle/talking frame durations and playback speeds")
+    check(body.position==Vector2(-1,32) and body.offset==Vector2(0,-20) and body.scale==Vector2(2,2),"Jax retains his existing frame size, body transform and grounded feet anchor")
+    var original_transform := npc.global_transform
+    var original_key: String=npc.state_key()
+    var was_completed: bool=npc.has_completed()
+    var original_flag: Variant=Game.world.get(npc.completion_flag,false)
+    var original_player := player.global_position
+    for left in [true,false]:
+        player.global_position=npc.global_position+Vector2(-40 if left else 40,0)
+        npc.interact(player)
+        check(ui.is_dialogue() and body.flip_h==left,"The redesigned Jax faces a player interacting from the %s" % ("left" if left else "right"))
+        ui.close(true)
+        await frames(2)
+    check(npc.global_transform==original_transform and npc.state_key()==original_key and npc.has_completed()==was_completed and Game.world.get(npc.completion_flag,false)==original_flag,"Mirroring and aborted conversations preserve Jax's placement, saved identity and story flag")
+    player.global_position=original_player
+    player.velocity=Vector2.ZERO
 
 func verify_actual_jax_branches() -> void:
     var parent: DialogueSequence = npc.dialogue

@@ -10,11 +10,11 @@
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2gt3p"]
 atlas = ExtResource("4_prk52")
-region = Rect2(64, 40, 32, 40)
+region = Rect2(64, 0, 32, 40)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cb18x"]
 atlas = ExtResource("4_prk52")
-region = Rect2(96, 40, 32, 40)
+region = Rect2(96, 0, 32, 40)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i4py2"]
 atlas = ExtResource("4_prk52")

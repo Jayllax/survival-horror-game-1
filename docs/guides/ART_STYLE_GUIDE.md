@@ -16,7 +16,8 @@ The legacy `tools/build_simple_assets.py` draws an earlier prototype and does **
 | --- | --- | --- |
 | Player motion | `art/pixel/player_motion.png`, 192×560, 6×14 cells of 32×40 | Body scale 2× |
 | Enemy motion | `art/pixel/enemy_motion.png`, 192×280, 6×7 cells of 32×40 | Body scale 2× |
-| NPC motion | `art/pixel/npc_motion.png`, 192×80, 6×2 cells of 32×40 | Body scale 2× |
+| Generic NPC motion | `art/pixel/npc_motion.png`, 192×80, 6×2 cells of 32×40 | Body scale 2× |
+| Jax motion | `art/pixel/npc_jax_,motion.png`, 192×560; only the first two rows are populated | Body scale 2× |
 | Broad fences | `art/pixel/fence_cuttable.png`, `fence_reinforced.png`, 48×32 each | Sprite scale 2× |
 | End-view fences | `art/pixel/fence_cuttable_side.png`, `fence_reinforced_side.png`, 6×32 each | Sprite scale 2× |
 | Houses | `art/pixel/house_variants/house_*.png`, 96×128 | Sprite scale 2× |
@@ -31,7 +32,7 @@ The game's `art/pixel/player_motion.png` is the exact PNG stored in the uploaded
 
 All 14 animations now read their six cells in sheet order. The old shuffled crouch-idle mapping and reused walk-column reference were corrected; FPS and per-frame durations are retained. Body-centre, shoulder and flashlight points are calibrated against the actual belt, shirt and hands. The artwork stays fixed; these attachment coordinates fit weapons and lights to it.
 
-Use the [actual game renders and exported animation previews](../previews/refined_cast/README.md) when reviewing artwork. The player master is now the uploaded single-layer document. NPC/enemy masters under `art/pixlart/cast_animation/` keep their existing **REFINED CAST - DRAW HERE** layers; their artwork is unchanged by this import.
+Use the [actual game renders and exported animation previews](../previews/refined_cast/README.md) when reviewing artwork. The player master is now the uploaded single-layer document. Generic NPC/enemy masters under `art/pixlart/cast_animation/` keep their existing **REFINED CAST - DRAW HERE** layers. Jax now uses the designer's **Layer 1** in `npc_jax_motion.pixil`; see [the Jax import details](../previews/refined_cast/JAX.md).
 
 See the [looping cast comparisons](../previews/refined_cast/README.md). The active Jax scene uses `art/pixel/npc_jax_,motion.png`. The older `player.png`/`enemy.png` strips are legacy assets; current actors use the motion sheets listed above.
 

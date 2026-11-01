@@ -6,7 +6,7 @@ Open `tests/fixtures/combat_sandbox.tscn` with **F6** in Godot **4.7.2 Standard*
 
 ## Edit the supplied animation atlases
 
-`art/pixel/player_motion.png` is **192×560 native pixels**, arranged **6 columns × 14 rows**, with **32×40 pixels per frame**. It matches the completed Pixilart master. The enemy is now **192×280**, **6×7**, and the NPC is **192×80**, **6×2**, with the same cell size. These are single native PNGs. Body uses **Position (0,32)**, **Offset (0,-20)** and **Scale (2,2)**; one native pixel is two world pixels.
+`art/pixel/player_motion.png` is **192×560 native pixels**, arranged **6 columns × 14 rows**, with **32×40 pixels per frame**. It matches the completed Pixilart master. The enemy is now **192×280**, **6×7**, and the generic NPC is **192×80**, **6×2**, with the same cell size. These are single native PNGs. Body uses **Position (0,32)**, **Offset (0,-20)** and **Scale (2,2)**; one native pixel is two world pixels.
 
 | Player row | Animation |
 | --- | --- |
@@ -35,6 +35,14 @@ The player has brown **hair**, no hat, and a flat face without a protruding nose
 2. Select an animation by name. Replace its frames with individual PNGs or **Add frames from a sprite sheet** (6 horizontal × 14 vertical for the player, 6 × 7 for the enemy, 6 × 2 for the NPC).
 3. Keep the animation names. Set FPS and Loop, then save the shared `.tres` resource. To vary one enemy, use **Make Unique → Save As** first.
 4. Keep native replacement frames 32×40 if using the supplied Body transform. For already-enlarged 64×80 frames, use Body Scale (1,1) and Offset (0,-40) instead. Keep feet at the bottom.
+
+## Jax's redesigned sheet
+
+Jax's drawing is imported unchanged from `jax_redesign.pixil` into **`art/pixel/npc_jax_,motion.png`**. His sheet is **192×560**, using the player template's full canvas. Each cell is still **32×40**; the first row supplies idle poses, the second talking poses, and the lower empty rows are unused. For **Add frames from a sprite sheet**, set **6 horizontal × 14 vertical**, then select cells only from the populated rows.
+
+Edit `art/pixlart/cast_animation/npc_jax_motion.pixil`, selecting **Layer 1**. The empty Background layer is preserved. The main document's thumbnail is repaired and Layer 1 is selected; the original upload is archived unchanged as `jax_redesign.pixil` beside it. Existing custom idle/talking frame durations and speeds remain intact.
+
+The reusable `scenes/actors/npc_jax.tscn` keeps Body Position **(-1,32)**, Offset **(0,-20)** and Scale **(2,2)**. The placed Jax in `house_03_2.tscn` retains the designer's root position **(514,585)** and root scale **(1.1,1.1)**. Dialogue, aliases, repeat conversation, completion flag, scene/node identity and facing behaviour are unchanged. See the [actual Godot render and animation previews](../previews/refined_cast/JAX.md).
 
 ## Player states
 
