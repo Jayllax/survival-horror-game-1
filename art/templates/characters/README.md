@@ -4,7 +4,7 @@ Start with **`player_clips/walk.pixil`**. It opens as six **32×40-pixel** anima
 
 ## Current player style reference
 
-`player_style_reference.png` is the designer's exact 32×40 top-left frame, preserved from their November 1 `player.pixil`. Use its simple shapes, flat clothing colours, grey neckline and buckle as the detail standard for character drawings. The completed 84-cell sheet is `art/pixlart/player_animation/player_motion.pixil`; `player_style_reference.pixil` beside it archives the uploaded source unchanged. These are separate from the blank templates below.
+`player_authored_frames.png` contains the exact first five rows (30 finished cells) from the designer's latest **`player_redesign.pixil`**. `player_style_reference.png` is its first 32×40 cell. Use their shapes, colours, shading, grey neckline and belt buckle as the character detail standard. The completed 84-cell master is `art/pixlart/player_animation/player_motion.pixil`; `player_redesign_reference.pixil` beside it archives the latest uploaded source unchanged. The earlier `player_style_reference.pixil` is historical. These completed files are separate from the blank templates below.
 
 ## Draw one animation at a time
 

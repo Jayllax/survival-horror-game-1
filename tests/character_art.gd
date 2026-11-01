@@ -32,14 +32,44 @@ func run() -> void:
     var reference := Image.load_from_file("res://art/templates/characters/player_style_reference.png")
     var atlas := preload("res://art/pixel/player_motion.png").get_image()
     check(same_visible_pixels(reference, atlas.get_region(Rect2i(0,0,32,40))), "The designer's top-left reference frame remains pixel-for-pixel unchanged")
+    var authored := Image.load_from_file("res://art/templates/characters/player_authored_frames.png")
+    check(same_visible_pixels(authored,atlas.get_region(Rect2i(0,0,192,200))), "All 30 completed designer frames remain pixel-for-pixel unchanged")
+    var palette := {}
+    for y in authored.get_height():
+        for x in authored.get_width():
+            var pixel := authored.get_pixel(x,y)
+            if pixel.a>0:
+                palette[pixel.to_rgba32()] = true
+    var same_palette := true
+    for y in atlas.get_height():
+        for x in atlas.get_width():
+            var pixel := atlas.get_pixel(x,y)
+            if pixel.a>0 and not palette.has(pixel.to_rgba32()):
+                same_palette = false
+    check(same_palette, "Completed poses add no colours beyond the 30 designer-drawn frames")
     var head := reference.get_region(Rect2i(9,5,12,10))
     var consistent_head := true
+    var no_extra_hands := true
     for row in 14:
         for column in 6:
             var cell := atlas.get_region(Rect2i(column*32,row*40,32,40))
             var top := cell.get_used_rect().position.y
-            consistent_head = consistent_head and same_visible_pixels(head,cell.get_region(Rect2i(9,top,12,10)))
+            # The designer's completed frames deliberately shift within their cells.
+            var head_x := -1
+            for x in range(21):
+                if same_visible_pixels(head,cell.get_region(Rect2i(x,top,12,10))):
+                    head_x = x
+                    break
+            consistent_head = consistent_head and head_x>=0
+            if row>=8:
+                var head_rect := Rect2i(head_x,top,12,10)
+                for y in 40:
+                    for x in 32:
+                        var pixel := cell.get_pixel(x,y)
+                        var skin := pixel.a>0.99 and pixel.r>0.57 and pixel.g>0.47 and pixel.b<pixel.g and pixel.r-pixel.g<0.24
+                        no_extra_hands = no_extra_hands and (not skin or head_rect.has_point(Vector2i(x,y)))
     check(consistent_head, "All 84 cells use the exact designer-drawn head without rescaling or changing its shading")
+    check(no_extra_hands, "All armed poses omit dangling hands so the weapon rig supplies the only aiming hands")
     var unique_clips := true
     for pair in [[&"walk",&"sprint"],[&"walk",&"crouch_walk"]]:
         var a: AtlasTexture=sprite_frames.get_frame_texture(pair[0],0)
