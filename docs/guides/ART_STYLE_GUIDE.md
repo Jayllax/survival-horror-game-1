@@ -4,6 +4,8 @@ One native art pixel covers **2×2 world pixels**. Use nearest-neighbor filterin
 
 The current artist palette is **Sparkle's palette**; import `art/pixel/ignotum.gpl` into your pixel editor. The refined scenery uses restrained material shading, recessed panels, window reveals and top-edge highlights on the original native grids. Keep broad, readable color clusters instead of dense texture. `art/pixel/STYLE_SHEET.png` is a contact sheet made from the current game sprites at 2× native size.
 
+Buildings keep clear window/door recesses and a few quiet roof seams, with mostly uniform walls. Trees use three broad leaf tones and simple bark planes. Avoid scattered highlights and small texture marks; the intended balance has readable structure without the previous dense shading.
+
 The legacy `tools/build_simple_assets.py` draws an earlier prototype and does **not** reproduce the current artwork. Edit the current PNGs and Pixilart masters rather than running that generator over your work. Plain plaster, existing tile-edge colors and authored character distortion colors are deliberately retained.
 
 ## Files to edit
@@ -22,6 +24,8 @@ The legacy `tools/build_simple_assets.py` draws an earlier prototype and does **
 **New characters and fences have only one PNG each.** Edit that native file directly; do not enlarge it before saving. The older source/export pairs remain because your placed scenes and item resources use those exports. Keep both files in step if you edit them. Your `.pixil` working files remain under `art/pixlart/`.
 
 Player/NPC/enemy frames deliberately share the same padded canvas, feet at its bottom. Crouch and death drawings are shorter poses inside that canvas, rather than squashed sprites. The player has brown hair, a flat face without a protruding nose, a brown **polo shirt** with a small collar and short placket, blue-grey trousers and dark shoes. Jax retains his dark jacket and gestures. The enemy retains the author's distorted face, hair, green shirt marks and poses; its death row remains entirely authored artwork. Clothing shading is added to existing opaque clothing pixels while skin, hair, effect transparency, silhouettes and animation sequences remain intact.
+
+Clothing uses a **fixed shading pattern** that follows the torso through every pose. Keep the polo collar and Jax's center seam consistent when editing cells. Avoid drawing different creases or applying different contrast to each frame: that makes the shirt appear to shimmer. Trousers use a consistent plain tone so moving highlights cannot distract from the authored movement.
 
 Current editable masters are under `art/pixlart/player_animation/` and `art/pixlart/cast_animation/`. The updated masters have a visible **REFINED CAST - DRAW HERE** layer; the original author layers are retained underneath and hidden. Keep guides and old layers hidden when exporting the current sprite sheet. `animations-human-made.pixil` remains the original source. Each 32×40 cell is one game animation frame; the `.pixil` documents contain the full sheets.
 
