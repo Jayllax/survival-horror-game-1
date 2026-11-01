@@ -72,12 +72,14 @@ func run() -> void:
     await frames(2)
     check(Game.magazine == rounds - 1, "Left click while aiming fires one round")
     await right_mouse(false)
+    # Feedback expires by elapsed time. Inspect it immediately after holstering;
+    # 24 rendered frames can outlast that timer on a software graphics driver.
+    check(not hud.get_node("Root/Crosshair").visible and hud.get_node("Root/Ammo").visible, "Recent firing keeps brief ammo feedback without a cursor crosshair")
     await frames(24)
     Input.action_release("shoot")
     check(Game.magazine == rounds - 1, "Releasing right mouse blocks further shots even with left mouse held")
     check(gun.texture == null and not player.is_aiming(), "Releasing aim immediately holsters the gun")
     check(Vector2.RIGHT.rotated(light.global_rotation).distance_to(Vector2(player.facing,0))<0.001 and light.enabled, "Released aim returns the working flashlight to horizontal facing")
-    check(not hud.get_node("Root/Crosshair").visible and hud.get_node("Root/Ammo").visible, "Recent firing keeps brief ammo feedback without a cursor crosshair")
     player.shoot()
     check(Game.magazine == rounds - 1, "Holstered shooting is rejected at the combat entry point")
     Game.add_item(Game.active_weapon().ammunition_id, 3)

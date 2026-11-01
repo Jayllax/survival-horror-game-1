@@ -31,9 +31,17 @@ func run() -> void:
     # Templates are intentionally excluded from the runtime importer.
     var reference := Image.load_from_file("res://art/templates/characters/player_style_reference.png")
     var atlas := preload("res://art/pixel/player_motion.png").get_image()
+    var row_names := [&"idle",&"walk",&"sprint",&"crouch_idle",&"crouch_walk",&"jump",&"fall",&"dodge",&"aim_idle",&"aim_walk",&"crouch_aim_idle",&"crouch_aim_walk",&"aim_jump",&"aim_fall"]
+    var sheet_order := true
+    for row in row_names.size():
+        sheet_order = sheet_order and sprite_frames.get_frame_count(row_names[row])==6
+        for column in 6:
+            var tile := sprite_frames.get_frame_texture(row_names[row],column) as AtlasTexture
+            sheet_order = sheet_order and tile!=null and tile.region==Rect2(column*32,row*40,32,40)
+    check(sheet_order,"Every animation uses all six designer cells in their sheet order")
     check(same_visible_pixels(reference, atlas.get_region(Rect2i(0,0,32,40))), "The designer's top-left reference frame remains pixel-for-pixel unchanged")
     var authored := Image.load_from_file("res://art/templates/characters/player_authored_frames.png")
-    check(same_visible_pixels(authored,atlas.get_region(Rect2i(0,0,192,200))), "All 30 completed designer frames remain pixel-for-pixel unchanged")
+    check(same_visible_pixels(authored,atlas), "All 84 finished designer frames remain pixel-for-pixel unchanged")
     var palette := {}
     for y in authored.get_height():
         for x in authored.get_width():
@@ -46,7 +54,7 @@ func run() -> void:
             var pixel := atlas.get_pixel(x,y)
             if pixel.a>0 and not palette.has(pixel.to_rgba32()):
                 same_palette = false
-    check(same_palette, "Completed poses add no colours beyond the 30 designer-drawn frames")
+    check(same_palette, "The imported sheet retains the finished designer palette exactly")
     var head := reference.get_region(Rect2i(9,5,12,10))
     var consistent_head := true
     var no_extra_hands := true
@@ -108,6 +116,8 @@ func run() -> void:
     player.update_aim(0)
     rig.update_pose()
     check(not rig.visible and gun.texture==null and player.get_node("Aim/Gun/Flashlight").enabled,"Holstering hides aiming hands and gun while preserving the flashlight")
+    await verify_weapon_frames(player)
+    await verify_weapon_actions(player)
     var foe: CharacterBody2D=load("res://scenes/actors/enemy.tscn").instantiate()
     foe.position=Vector2(1100,588)
     level.get_node("Actors").add_child(foe)
@@ -153,6 +163,85 @@ func same_visible_pixels(a: Image, b: Image) -> bool:
             if first.a!=second.a or (first.a>0 and first!=second):
                 return false
     return true
+
+func verify_weapon_frames(player: CharacterBody2D) -> void:
+    var body: AnimatedSprite2D=player.get_node("Body")
+    var rig: Node2D=player.get_node("WeaponArms")
+    var gun: Sprite2D=player.get_node("Aim/Gun")
+    var light: PointLight2D=gun.get_node("Flashlight")
+    for id in ["pistol","shotgun"]:
+        if Game.count_item(id)==0:
+            Game.add_item(id)
+        var uid := Game.inventory.first_uid(id)
+        if Game.equipped_uid!=uid:
+            Game.equip_weapon(uid)
+        var definition := Game.active_weapon()
+        var grips := true
+        var shoulders := true
+        var beam := true
+        var muzzle := true
+        Input.action_press("aim")
+        player.sync_weapon()
+        for facing in [1.0,-1.0]:
+            player.facing=facing
+            body.flip_h=facing<0
+            for angle in [0.0,-0.8,-1.4,0.9]:
+                var event := InputEventMouseMotion.new()
+                event.position=get_viewport().get_canvas_transform()*(player.global_position+Vector2(180*cos(angle)*facing,180*sin(angle)))
+                event.global_position=event.position
+                Input.parse_input_event(event)
+                await frames(1)
+                for clip in [&"aim_idle",&"aim_walk",&"crouch_aim_idle",&"crouch_aim_walk",&"aim_jump",&"aim_fall"]:
+                    player.is_crouching=str(clip).begins_with("crouch_")
+                    body.play_state(clip)
+                    body.pause()
+                    for frame in body.sprite_frames.get_frame_count(clip):
+                        body.frame=frame
+                        rig.update_pose()
+                        var mirror := Vector2(1,-1 if gun.flip_v else 1)
+                        var near: Vector2=definition.near_grip if definition.custom_weapon_pose else rig.near_grip
+                        var far: Vector2=definition.far_grip if definition.custom_weapon_pose else rig.far_grip
+                        grips=grips and rig.visible and rig.get_node("Near/Hand").global_position.distance_to(gun.to_global(near*mirror))<0.01
+                        grips=grips and rig.get_node("Far/Hand").global_position.distance_to(gun.to_global(far*mirror))<0.01
+                        for arm in ["Near","Far"]:
+                            var pixel := native_pixel(body,rig.get_node(arm+"/Upper").global_position)
+                            shoulders=shoulders and pixel.a>0.99 and pixel.r>pixel.g and pixel.g>pixel.b and pixel.r<0.71
+                        var beam_point: Vector2=definition.flashlight_offset if definition.custom_weapon_pose else rig.barrel_flashlight_offset
+                        beam=beam and light.global_position.distance_to(gun.to_global(beam_point*mirror))<0.01 and light.global_scale.is_equal_approx(player.default_light_scale)
+                        var muzzle_point: Vector2=definition.muzzle_offset if definition.custom_weapon_pose else player.default_muzzle_position
+                        muzzle=muzzle and player.muzzle.global_position.distance_to(gun.to_global(muzzle_point*mirror))<0.01
+        check(grips,"Both %s grips align in every armed frame, both directions and four aim elevations" % id)
+        check(shoulders,"Both %s sleeves attach to drawn shirt pixels in every armed pose" % id)
+        check(beam,"The %s flashlight follows its barrel without changing beam size" % id)
+        check(muzzle,"The %s firing origin and muzzle flash stay on the mirrored barrel" % id)
+        Input.action_release("aim")
+    player.is_crouching=false
+
+func verify_weapon_actions(player: CharacterBody2D) -> void:
+    for id in ["pistol","shotgun"]:
+        var uid := Game.inventory.first_uid(id)
+        if Game.equipped_uid!=uid:
+            Game.equip_weapon(uid)
+        var definition := Game.active_weapon()
+        Game.add_item(definition.ammunition_id,6)
+        Game.magazine=2
+        player.shot_cooldown=0
+        player.reload_remaining=0
+        Input.action_press("aim")
+        player.sync_weapon()
+        player.update_aim(0)
+        player.shoot()
+        player.get_node("WeaponArms").update_pose()
+        check(Game.magazine==1 and player.muzzle.energy>0,"The %s fires and shows a muzzle flash using the imported poses" % id)
+        var reserve := Game.count_item(definition.ammunition_id)
+        player.reload_weapon()
+        player.set_physics_process(true)
+        await get_tree().create_timer(player.reload_seconds+0.15).timeout
+        player.set_physics_process(false)
+        check(Game.magazine>1 and Game.count_item(definition.ammunition_id)<reserve,"The %s reload transfers its own ammunition with the new artwork" % id)
+        player.reload_remaining=0
+        Input.action_release("aim")
+        player.update_aim(0)
 
 func native_pixel(body: AnimatedSprite2D, world_point: Vector2) -> Color:
     var texture := body.sprite_frames.get_frame_texture(body.animation,body.frame)

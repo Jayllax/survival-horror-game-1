@@ -334,6 +334,10 @@ region = Rect2(96, 40, 32, 40)
 atlas = ExtResource("sheet")
 region = Rect2(128, 40, 32, 40)
 
+[sub_resource type="AtlasTexture" id="walk_5"]
+atlas = ExtResource("sheet")
+region = Rect2(160, 40, 32, 40)
+
 [resource]
 animations = [{
 "frames": [{
@@ -476,6 +480,9 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("crouch_idle_0")
+}, {
+"duration": 1.0,
 "texture": SubResource("crouch_idle_1")
 }, {
 "duration": 1.0,
@@ -486,9 +493,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("crouch_idle_4")
-}, {
-"duration": 1.0,
-"texture": SubResource("crouch_idle_0")
 }, {
 "duration": 1.0,
 "texture": SubResource("crouch_idle_5")
@@ -652,7 +656,7 @@ animations = [{
 "texture": SubResource("walk_4")
 }, {
 "duration": 0.55,
-"texture": SubResource("walk_2")
+"texture": SubResource("walk_5")
 }],
 "loop": 1,
 "name": &"walk",

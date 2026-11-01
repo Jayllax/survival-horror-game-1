@@ -4,7 +4,7 @@ Start with **`player_clips/walk.pixil`**. It opens as six **32×40-pixel** anima
 
 ## Current player style reference
 
-`player_authored_frames.png` contains the exact first five rows (30 finished cells) from the designer's latest **`player_redesign.pixil`**. `player_style_reference.png` is its first 32×40 cell. Use their shapes, colours, shading, grey neckline and belt buckle as the character detail standard. The completed 84-cell master is `art/pixlart/player_animation/player_motion.pixil`; `player_redesign_reference.pixil` beside it archives the latest uploaded source unchanged. The earlier `player_style_reference.pixil` is historical. These completed files are separate from the blank templates below.
+`player_authored_frames.png` is the full **192×560 designer-finished sheet** from `player_redesign_1.pixil`, unchanged. `player_style_reference.png` is its first 32×40 cell. All 84 cells are now authored by the designer. The current editable game master is `art/pixlart/player_animation/player_motion.pixil`, using the uploaded **Background** layer; `player_redesign_1.pixil` beside it archives the original upload. The main document's malformed global thumbnail was repaired using its valid frame preview. Older `player_style_reference.pixil` and `player_redesign_reference.pixil` files are historical. These completed drawings are separate from the blank templates below.
 
 ## Draw one animation at a time
 
