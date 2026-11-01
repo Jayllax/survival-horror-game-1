@@ -28,6 +28,18 @@ func run() -> void:
     check(player.move_speed==90 and player.jump_velocity==-250 and player.get_node("Camera2D").zoom==Vector2(2,2),"Designer movement, jump and camera tuning survive the art update")
     check(not player.use_crouch_placeholder_pose and not player.use_dodge_placeholder_pose and body.scale==Vector2(2,2),"Real native poses replace squash placeholders at consistent 2x pixel scale")
     var sprite_frames := body.sprite_frames
+    # Templates are intentionally excluded from the runtime importer.
+    var reference := Image.load_from_file("res://art/templates/characters/player_style_reference.png")
+    var atlas := preload("res://art/pixel/player_motion.png").get_image()
+    check(same_visible_pixels(reference, atlas.get_region(Rect2i(0,0,32,40))), "The designer's top-left reference frame remains pixel-for-pixel unchanged")
+    var head := reference.get_region(Rect2i(9,5,12,10))
+    var consistent_head := true
+    for row in 14:
+        for column in 6:
+            var cell := atlas.get_region(Rect2i(column*32,row*40,32,40))
+            var top := cell.get_used_rect().position.y
+            consistent_head = consistent_head and same_visible_pixels(head,cell.get_region(Rect2i(9,top,12,10)))
+    check(consistent_head, "All 84 cells use the exact designer-drawn head without rescaling or changing its shading")
     var unique_clips := true
     for pair in [[&"walk",&"sprint"],[&"walk",&"crouch_walk"]]:
         var a: AtlasTexture=sprite_frames.get_frame_texture(pair[0],0)
@@ -101,6 +113,17 @@ func run() -> void:
     get_tree().quit(0 if failures==0 else 1)
 
 # Check the actual rendered pixels, not just equality with the attachment data.
+func same_visible_pixels(a: Image, b: Image) -> bool:
+    if a.get_size()!=b.get_size():
+        return false
+    for y in a.get_height():
+        for x in a.get_width():
+            var first := a.get_pixel(x,y)
+            var second := b.get_pixel(x,y)
+            if first.a!=second.a or (first.a>0 and first!=second):
+                return false
+    return true
+
 func native_pixel(body: AnimatedSprite2D, world_point: Vector2) -> Color:
     var texture := body.sprite_frames.get_frame_texture(body.animation,body.frame)
     var point := body.to_local(world_point)-body.offset

@@ -2,6 +2,10 @@
 
 Start with **`player_clips/walk.pixil`**. It opens as six **32×40-pixel** animation frames with a blank drawing layer, guides and your **Sparkle's palette**. Everything here is a working template for your drawings; the game's current assets are unchanged.
 
+## Current player style reference
+
+`player_style_reference.png` is the designer's exact 32×40 top-left frame, preserved from their November 1 `player.pixil`. Use its simple shapes, flat clothing colours, grey neckline and buckle as the detail standard for character drawings. The completed 84-cell sheet is `art/pixlart/player_animation/player_motion.pixil`; `player_style_reference.pixil` beside it archives the uploaded source unchanged. These are separate from the blank templates below.
+
 ## Draw one animation at a time
 
 1. Download/extract the template pack, then open [Pixilart's editor](https://www.pixilart.com/draw). Save any drawing already open first, then use **File → Open .pixil** and choose `player_clips/walk.pixil`.

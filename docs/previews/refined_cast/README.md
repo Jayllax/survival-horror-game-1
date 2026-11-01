@@ -1,29 +1,31 @@
-# Current player export and cast previews
+# Player animations from the designer's native reference
 
-This player image is a **Godot render of the actual `player.tscn`**, using its game PNG, attachment calibration and aiming arms under neutral lighting. The walk GIF is assembled from the actual exported animation frames in their existing playback order. These are the assets included in this commit.
+The player's design comes from the top-left frame in the uploaded `player.pixil`. That exact 32×40 frame is retained unchanged in the game's top-left cell. Its unscaled head is identical across all 84 cells. The collar, pale grey neckline, brown sleeves, grey belt buckle, simple trouser edges and existing animation poses carry through the sheet using only colours already present in the reference.
 
-![Actual player scene in Godot](player-godot.png)
+The images and GIFs below are made from **the actual production PNG**. The Godot capture loads `player.tscn`, including its aiming arms, under neutral lighting. Level lighting still affects its appearance in gameplay.
 
-![Actual exported polo walk](player-walk.gif)
+![Actual player scene rendered in Godot](player-godot.png)
 
-![One actual 32×40 walk cell enlarged with nearest-neighbor filtering](player-native.png)
+![Actual exported player walk](player-walk.gif)
 
-The complete player design now comes from the approved artwork: head/hair, skin, polo collar and placket, restrained shirt shading, blue-grey trousers and dark shoes. It replaces the earlier version that kept the old head and hands and flattened the clothing. The atlas stays **192×560**, with **32×40** cells; the larger reference is sampled at that native resolution. Grounded feet keep their baseline. SpriteFrames order and durations, movement settings, collision and level layouts remain unchanged. The flashlight/shoulder points and procedural arm colours have been recalibrated for the new drawing.
+![Actual exported sprint](player-sprint.gif)
 
-The [approved walking source](player-sources/approved-walk.png) and other pose sources are archived in `player-sources/`. Exporting uses nearest-neighbor sampling of the full artwork; it does not restore old sprite masks or reduce the result to the old palette. Armed variants use their armless torso drawings and the matching normal movement legs. Intermediate source shades remain intact. In gameplay the level's lights and CanvasModulate still affect the resulting colours; the render above isolates the artwork.
+![Actual exported crouch walk](player-crouch.gif)
 
-Edit `art/pixel/player_motion.png` or the visible **REFINED CAST - DRAW HERE** layer in `art/pixlart/player_animation/player_motion.pixil`. The master retains the original hidden author layers; its active layer and previews contain the exact current PNG. The older animation download pack and earlier preview pages document earlier art. Pixilart JSON and embedded PNGs are validated; reopening the file in the Pixilart application could not be tested here.
+[Open the whole exported sheet at 4× native scale](player-sheet.png).
 
-Jax and enemy artwork is unchanged by this player correction. These existing comparison GIFs show previous shading on the left and their current shading on the right:
+[Original designer frame, native 32×40](designer-reference.png) · [The same top-left cell enlarged from the production PNG](player-native.png)
 
-![Jax talking comparison](jax-talking.gif)
+## Editable files
 
-![Enemy face-distortion comparison](enemy-distortion.gif)
+- `art/pixlart/player_animation/player_motion.pixil`: the completed current sheet. Its visible **REFINED CAST - DRAW HERE** layer and both previews exactly match the game's `art/pixel/player_motion.png`. Earlier author/guide layers stay hidden underneath.
+- `art/pixlart/player_animation/player_style_reference.pixil`: the uploaded source document, preserved byte-for-byte.
+- `art/templates/characters/player_style_reference.png`: the exact native reference cell, also the detail standard for future NPC artwork.
 
-![Enemy attack comparison](enemy-attack.gif)
+The atlas remains **192×560**, arranged **6×14 cells of 32×40**. Grounded and lifted foot baselines, animation playback order/durations, movement, collision and level layouts remain unchanged. Flashlight and shoulder attachment points and procedural sleeve colours match the current drawing. No high-resolution artwork is resampled into this version, and no new gradients or moving crease patterns are added.
 
-The designer's November 1 combat-kit, shotgun and shotgun-shell PNGs remain byte-for-byte intact. See [the art guide](../../guides/ART_STYLE_GUIDE.md) for asset locations.
+The Pixilart JSON and embedded PNGs are validated; opening the document in the Pixilart application could not be tested here. Older download packs and preview pages document earlier art. Jax/enemy sheets and their authored face effects are unchanged in this player-sheet update.
 
 ## Verification
 
-Godot 4.7.2: 206 checks pass across character art/attachments, aiming, pushables, entrance audio, the existing audio system and room doors. All 151 reusable/fixture scenes, 39 data resources and 24 entrance links resolve, and all 12 designer levels initialize and clean up. Native art validation passes. Source/movement SpriteFrames, level files, project settings and the designer’s three item PNGs are preserved.
+The character/attachment and aiming suites pass **75 checks** in Godot 4.7.2, including exact reference preservation, identical heads in all 84 cells, flashlight alignment for each movement frame facing both ways and standing/crouched weapon grips. Native pixel checks confirm hard transparency, no added colours and unchanged foot baselines. The active Pixilart layer/previews match the PNG exactly. The designer's combat-kit, shotgun and shell PNGs remain unchanged.
