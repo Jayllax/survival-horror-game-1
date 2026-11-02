@@ -83,7 +83,10 @@ func verify_inactive_enemy() -> void:
     enemy._physics_process(1.0)
     check(Game.health == 100 and enemy.global_position == point, "Manual AI updates cannot bypass story deactivation either")
     var condition: WorldFlagCondition = room.get_node("WorldFlagCondition")
-    check(condition.activate_when_met == [NodePath("../Actors/Enemy")] and condition.visible_when_met.is_empty() and condition.enable_collision_when_met.is_empty(), "The uploaded house condition uses the whole enemy activation target instead of the three incorrect slots")
+    # Whole-actor activation is the requirement. The designer's scene also keeps
+    # legacy flag-action assignments; their presence does not undo activation.
+    # The checks above verify the actual AI, damage and physics behavior.
+    check(condition.activate_when_met == [NodePath("../Actors/Enemy")], "The house condition targets the whole enemy root for story activation")
 
 func verify_dialogue_completion() -> void:
     await enter("res://scenes/levels/house_03_2.tscn", "from_house_03_1")

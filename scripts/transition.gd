@@ -2,7 +2,7 @@ extends CanvasLayer
 var busy := false
 @onready var curtain: ColorRect = $Curtain
 
-func travel(path: String, destination_spawn: String, item_use_uid: int = -1, unlock_state_key: String = "", force_remove: bool = false) -> void:
+func travel(path: String, destination_spawn: String, item_use_uid: int = -1, unlock_state_key: String = "", force_remove: bool = false, entrance_sound: AudioStream = null, sound_volume_db: float = 0.0, sound_pitch: float = 1.0) -> void:
     if busy or Game.health <= 0:
         return
     path = LocationPaths.resolve(path)
@@ -31,6 +31,7 @@ func travel(path: String, destination_spawn: String, item_use_uid: int = -1, unl
     else:
         result = tree.change_scene_to_packed(destination)
     if result == OK:
+        play_entrance_sound(entrance_sound, sound_volume_db, sound_pitch)
         # Commit only after scene replacement is accepted, before the new _ready().
         if item_use_uid >= 0:
             Game.finish_item_use(item_use_uid, false, force_remove)
@@ -50,3 +51,23 @@ func travel(path: String, destination_spawn: String, item_use_uid: int = -1, unl
     curtain.mouse_filter = Control.MOUSE_FILTER_IGNORE
     Game.transitioning = false
     busy = false
+
+func play_entrance_sound(stream: AudioStream, volume: float, pitch: float) -> void:
+    if stream == null:
+        return
+    # An autoload owns the voice, so freeing the entrance/old level cannot cut it off.
+    var voice := AudioStreamPlayer.new()
+    voice.name = "EntranceSound"
+    voice.bus = &"SFX"
+    voice.volume_db = volume
+    voice.pitch_scale = pitch
+    # Entrance sounds always play once; never change a shared import's loop settings.
+    var once := stream.duplicate() as AudioStream
+    if once is AudioStreamWAV:
+        once.loop_mode = AudioStreamWAV.LOOP_DISABLED
+    elif once is AudioStreamMP3 or once is AudioStreamOggVorbis:
+        once.loop = false
+    voice.stream = once
+    add_child(voice)
+    voice.finished.connect(voice.queue_free)
+    voice.play()

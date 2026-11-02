@@ -1,7 +1,7 @@
-[gd_scene load_steps=2 format=3]
-[ext_resource type="Texture2D" path="res://art/pixel/blood/blood_splat_small.png" id="art"]
+[gd_scene format=3 uid="uid://dsdl2li65omdx"]
 
-[node name="BloodOverlay" type="Sprite2D"]
+[ext_resource type="Texture2D" uid="uid://cn8jcq0qbh7yd" path="res://art/pixel/blood/blood_splat_small.png" id="art"]
+
+[node name="BloodOverlay" type="Sprite2D" unique_id=1759044290]
 texture_filter = 1
-scale = Vector2(2, 2)
 texture = ExtResource("art")

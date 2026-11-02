@@ -1,12 +1,12 @@
 # Character animation and gun combat
 
-For the completed editable player project based on your drawings, open [player_animation/player_motion.pixil](../../art/pixlart/player_animation/player_motion.pixil). The [animation pack](../downloads/Ignotum-completed-player-animations.zip) includes individual Pixilart timeline projects and PNG strips. The [blank animation templates](../../art/templates/characters/README.md) remain available for new drawings.
+For the designer's finished player sheet, open [player_animation/player_motion.pixil](../../art/pixlart/player_animation/player_motion.pixil). Its **Background** layer is the uploaded drawing, with all 84 cells unchanged, and both previews now show that drawing. `player_redesign_1.pixil` beside it archives the original upload untouched. The older animation download pack documents earlier art; use this current master. The [blank animation templates](../../art/templates/characters/README.md) remain available for new drawings.
 
 Open `tests/fixtures/combat_sandbox.tscn` with **F6** in Godot **4.7.2 Standard**. Player and enemy use matching simple pixel art, distinct movement/reaction poses and editor-editable **Body → Sprite Frames** resources. F5 starts your main menu and town.
 
 ## Edit the supplied animation atlases
 
-`art/pixel/player_motion.png` is **192×560 native pixels**, arranged **6 columns × 14 rows**, with **32×40 pixels per frame**. It matches the completed Pixilart master. The enemy is now **192×280**, **6×7**, and the NPC is **192×80**, **6×2**, with the same cell size. These are single native PNGs. Body uses **Position (0,32)**, **Offset (0,-20)** and **Scale (2,2)**; one native pixel is two world pixels.
+`art/pixel/player_motion.png` is **192×560 native pixels**, arranged **6 columns × 14 rows**, with **32×40 pixels per frame**. It matches the completed Pixilart master. The enemy uses a **192×560** template, **6×14**, with only its first seven rows populated, and the generic NPC is **192×80**, **6×2**, with the same cell size. These are single native PNGs. Body uses **Position (0,32)**, **Offset (0,-20)** and **Scale (2,2)**; one native pixel is two world pixels.
 
 | Player row | Animation |
 | --- | --- |
@@ -25,16 +25,32 @@ Open `tests/fixtures/combat_sandbox.tscn` with **F6** in Godot **4.7.2 Standard*
 | 13 | Aim jump |
 | 14 | Aim fall |
 
-All player rows have six frames. The initial idle/walk/run drawings and jump/fall entry poses come from your uploaded file, preserved separately in [player_animation/animations-human-made.pixil](../../art/pixlart/player_animation/animations-human-made.pixil). Grounded feet were moved down one native pixel to the frame boundary; the deepest idle bob uses a neighboring authored pose, and the repeated walk/run loop-ending frame has a shorter duration. New poses reuse your hair/face shape, proportions and simple clothing colors. See the [animated preview](../previews/player-animation-review.gif).
+All player rows have six cells, now played in left-to-right sheet order. The complete **192×560** drawing from the latest `player_redesign_1.pixil` is imported unchanged into `art/pixel/player_motion.png`; none of its poses are generated or replaced. FPS, frame durations, physics, camera and inputs remain as configured. The old crouch-idle order and skipped sixth walk-cell reference were corrected to follow the finished sheet. The six aiming rows already omit dangling hands, allowing the weapon rig to supply them. The original early drawings remain in `animations-human-made.pixil`; older design uploads are kept separately. See the [actual player, handgun and shotgun renders](../previews/refined_cast/README.md).
 
 Enemy rows are **idle, walk, sleep, wake, attack, hit, death**, six frames per row. NPC rows are **idle, walk**. Both now use your current player silhouette and native pixel scale, with palette variants for clothing/skin. Their Body Position is **(-1,32)** to center the odd-width artwork; player body centering is handled by its attachment profile. The NPC plays idle automatically and keeps its existing interaction/face-player behavior. Enemy combat timing and AI are unchanged. See the [cast comparison](../previews/character-cast.png), [enemy animation preview](../previews/enemy-animation-review.gif) and [editable sources](../../art/pixlart/cast_animation/README.md).
 
-The player has brown **hair**, no hat, and a flat face without a protruding nose. The enemy matches its proportions with green skin and a burgundy shirt. Crouch and death are drawn poses; all temporary pose-compression options are disabled in the supplied scenes.
+The player has brown **hair**, no hat, and a flat face without a protruding nose. The enemy retains the designer's own marked shirt, distorted face and partially transparent effects. Crouch and death are drawn poses; all temporary pose-compression options are disabled in the supplied scenes.
 
 1. Open `scenes/actors/player.tscn` or `enemy.tscn`, select **Body**, and click **Sprite Frames**.
-2. Select an animation by name. Replace its frames with individual PNGs or **Add frames from a sprite sheet** (6 horizontal × 14 vertical for the player, 6 × 7 for the enemy, 6 × 2 for the NPC).
+2. Select an animation by name. Replace its frames with individual PNGs or **Add frames from a sprite sheet** (6 horizontal × 14 vertical for the player, 6 × 14 for the enemy, 6 × 2 for the NPC).
 3. Keep the animation names. Set FPS and Loop, then save the shared `.tres` resource. To vary one enemy, use **Make Unique → Save As** first.
 4. Keep native replacement frames 32×40 if using the supplied Body transform. For already-enlarged 64×80 frames, use Body Scale (1,1) and Offset (0,-40) instead. Keep feet at the bottom.
+
+## Designer-redrawn enemy
+
+`art/pixel/enemy_motion.png` is imported byte-for-byte from the visible **Layer 2** of `enemy_redesign.pixil`. Its full 192×560 canvas is retained. The first seven rows remain **idle, walk, sleep, wake, attack, hit, death**, each using six native 32×40 cells. The lower seven blank rows are not referenced by the game. Use a **6 horizontal × 14 vertical** grid when selecting frames from this full sheet.
+
+Edit `art/pixlart/cast_animation/enemy_motion.pixil` on **Layer 2**; keep the original hidden template layers hidden. The original upload is archived unchanged as `enemy_redesign.pixil` beside it. Only the cached global thumbnail was repaired in the editable master. The drawn face distortion and all partial-alpha pixels are preserved, including the death animation.
+
+Enemy SpriteFrames order, durations, FPS, attack phase split, actor scale/offset, collision shapes, AI, damage, sounds and save/story behaviour are unchanged. See the [actual rendered enemy and animation previews](../previews/refined_cast/ENEMY.md).
+
+## Jax's redesigned sheet
+
+Jax's drawing is imported unchanged from `jax_redesign.pixil` into **`art/pixel/npc_jax_,motion.png`**. His sheet is **192×560**, using the player template's full canvas. Each cell is still **32×40**; the first row supplies idle poses, the second talking poses, and the lower empty rows are unused. For **Add frames from a sprite sheet**, set **6 horizontal × 14 vertical**, then select cells only from the populated rows.
+
+Edit `art/pixlart/cast_animation/npc_jax_motion.pixil`, selecting **Layer 1**. The empty Background layer is preserved. The main document's thumbnail is repaired and Layer 1 is selected; the original upload is archived unchanged as `jax_redesign.pixil` beside it. Existing custom idle/talking frame durations and speeds remain intact.
+
+The reusable `scenes/actors/npc_jax.tscn` keeps Body Position **(-1,32)**, Offset **(0,-20)** and Scale **(2,2)**. The placed Jax in `house_03_2.tscn` retains the designer's root position **(514,585)** and root scale **(1.1,1.1)**. Dialogue, aliases, repeat conversation, completion flag, scene/node identity and facing behaviour are unchanged. See the [actual Godot render and animation previews](../previews/refined_cast/JAX.md).
 
 ## Player states
 
@@ -76,7 +92,7 @@ The shotgun supplies its own native texture scale, two grip positions, muzzle an
 
 ## Movement tuning
 
-Your uploaded player scene retains **Move Speed 125**, **Jump Velocity -200**, camera offset **(0,-110)**, zoom **(1.4,1.4)** and your camera limit settings. These can be overridden per scene as before. Other root settings include acceleration, gravity, jump buffering and coyote time.
+The current player scene retains **Move Speed 90**, **Jump Velocity -250**, camera zoom **(2,2)** and your camera position/limit settings. These can be overridden per scene as before. Other root settings include acceleration, gravity, jump buffering and coyote time.
 
 | Setting | Default | Meaning |
 | --- | --- | --- |

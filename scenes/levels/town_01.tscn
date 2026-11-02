@@ -89,10 +89,16 @@ scale = Vector2(0.6581668, 0.5870964)
 color = Color(0, 0, 0, 0.13333334)
 polygon = PackedVector2Array(1150, 310, 1244.9999, 310.0001, 1340.0001, 310.0001, 1340, 463.84204, 1340, 620, 1150, 620, 1149.9999, 464.1112)
 
+[node name="CreamHouse2" parent="Buildings" unique_id=788053470 instance=ExtResource("18_vn4xj")]
+z_index = -7
+position = Vector2(-330, 498)
+
 [node name="House" parent="Buildings" unique_id=176933239 instance=ExtResource("8_n8lao")]
-position = Vector2(200, 492)
+z_index = -7
+position = Vector2(200, 496)
 
 [node name="HousePlum" parent="Buildings" unique_id=1755587701 instance=ExtResource("5_ihmxm")]
+z_index = -7
 position = Vector2(24, 492)
 
 [node name="HouseCream" parent="Buildings" unique_id=1913707553 instance=ExtResource("2_35lbs")]
@@ -138,7 +144,7 @@ position = Vector2(3102, 492)
 position = Vector2(2654, 492)
 
 [node name="House3" parent="Buildings" unique_id=2112961102 instance=ExtResource("8_n8lao")]
-position = Vector2(3454, 492)
+position = Vector2(3454, 494)
 flip_h = true
 
 [node name="HouseDustyRose3" parent="Buildings" unique_id=623198391 instance=ExtResource("8_biwbp")]
@@ -263,6 +269,15 @@ modulate = Color(0, 0, 0, 1)
 self_modulate = Color(0, 0, 0, 0.84313726)
 z_index = -10
 position = Vector2(3542, 492)
+
+[node name="HouseSilo6" parent="Buildings/Silos" unique_id=1333770290 instance=ExtResource("8_n8lao")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(-420, 492)
+
+[node name="HouseSlateBlue2" parent="Buildings" unique_id=671681953 instance=ExtResource("7_wvt63")]
+position = Vector2(-508, 492)
 
 [node name="Geometry" type="Node2D" parent="." unique_id=491046715]
 

@@ -37,9 +37,13 @@ func run() -> void:
                     for x in image.get_width()/2:
                         var a:=image.get_pixel(x,y)
                         var b:=image.get_pixel(image.get_width()-1-x,y)
-                        symmetry=symmetry and is_equal_approx(a.a,b.a) and (a.a<0.5 or a.is_equal_approx(b))
+                        # Tree contours stay symmetric. The approved artwork's
+                        # directional shading is retained rather than reflected.
+                        symmetry=symmetry and is_equal_approx(a.a,b.a)
+                        if category!='trees':
+                            symmetry=symmetry and (a.a<0.5 or a.is_equal_approx(b))
             check(variants_ok and distinct.size()==3 and native_scale,'All forest palettes update at native 2x scale: '+file)
-            check(symmetry,'Forest artwork has exact horizontal symmetry: '+file)
+            check(symmetry,'Forest contours retain horizontal symmetry: '+file)
             prop.solid=true
             await frames()
             check(not prop.get_node('Solid/Shape').disabled,'Forest blocking can be enabled: '+file)

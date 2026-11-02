@@ -18,7 +18,8 @@ Nightstand                     ← your existing furniture
 ├── Artwork
 ├── Solid                      ← its original furniture collision, if any
 └── PushableBody                ← the reusable child component
-    └── CollisionShape2D        ← the box you resize and position
+    ├── CollisionShape2D        ← the box you resize and position
+    └── PushSound               ← optional spatial movement audio
 ```
 
 The supplied furniture roots have their origin at floor level. The generic body starts with a 32×32 rectangle positioned at **(0,-16)** so its bottom is on that origin. If your parent is a centred Sprite2D, position the collision shape to match that image instead—often **(0,0)**. Fit the box visually to the actual object, especially its top platform surface.
@@ -38,6 +39,9 @@ The original non-pushable nightstand and your existing placements remain unchang
 | **Push Enabled** | Allows player pushing. Turning it off leaves a solid platform. |
 | **Push Speed** | Maximum intended horizontal push speed in world pixels/second; initially 45, slower than your current walk speed. Sprinting does not launch the object. |
 | **Disable Original Collisions** | Normally keep on. The component ignores the furniture's original StaticBody2D collisions at runtime, using its own resized box instead. |
+| **Push Sound** | Drag a WAV, OGG or MP3 here. It repeats while the player actually moves the object. Empty means silent. |
+| **Push Sound Volume Db / Pitch** | Loudness and playback pitch/speed; 1.0 pitch uses the original recording. |
+| **Push Sound Max Distance** | Distance in world pixels over which the spatial sound fades out. |
 | **Use Gravity** | Makes the furniture fall and settle on surfaces. Disable for a fixed-height sliding prop. |
 | **Gravity / Maximum Fall Speed** | Falling behaviour. The object stays upright at its authored angle; it does not roll or topple like a rigid body. |
 | **Use Travel Limits** | Enables the optional horizontal movement range. |
@@ -58,6 +62,8 @@ For a simple flat platform, keep the component's **global rotation at 0 and glob
 Use one PushableBody per furniture object. A second component is ignored at runtime and warned about in the editor. This component is intended for scenery under Node2D/Sprite2D or static furniture roots; player/enemy CharacterBody2D roots and RigidBody2D objects already have movement controllers. Select an individual furniture object as the parent, rather than your level or entire Props container.
 
 ## Saving
+
+Movement audio stops when you release movement, reach a wall/travel limit, disable pushing, pause, die or leave the level. Falling on its own does not trigger scraping. A short recording repeats automatically; enabling Loop on the imported audio is optional. Prefer a clip with matching start/end levels for a smooth loop. All push sounds use the **SFX** bus and the existing master volume. Assign sounds on the **PushableBody child**, rather than the furniture root.
 
 Moved positions stay in the current run when leaving and re-entering a room. Bicycle saves capture them alongside inventory, health and other puzzle progress. Loading an older slot restores that slot's furniture positions without merging in newer positions. Movement does not automatically write a save file.
 

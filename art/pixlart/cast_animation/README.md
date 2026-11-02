@@ -1,8 +1,23 @@
 # Matching NPC and enemy animations
 
+## Designer-redrawn enemy
+
+`enemy_motion.pixil` is now the designer's **192×560** template. Edit the visible **Layer 2**. The original Background and hidden template layers, visibility flags and palette are preserved. `enemy_redesign.pixil` archives the original upload unchanged. Only the cached global thumbnail was repaired in the editable master.
+
+`art/pixel/enemy_motion.png` is the exact visible drawing-layer PNG, including its partially transparent face/death pixels. Runtime cells remain **32×40**: the first seven rows are **idle, walk, sleep, wake, attack, hit, death**. Use a **6×14** picker grid and select only those populated rows. Existing animation timings, attack phases, actor/collision transforms, AI and saved progress are unchanged. [Actual enemy previews and verification](../../../docs/previews/refined_cast/ENEMY.md).
+
+## Designer-redrawn Jax
+
+`npc_jax_motion.pixil` is now the designer's full **192×560** template, with the drawing on **Layer 1** and an empty Background layer. `jax_redesign.pixil` archives the original upload unchanged. The cached global thumbnail was repaired and Layer 1 selected in the editable master; drawing layers and palette are unchanged.
+
+The PNG in `art/pixel/npc_jax_,motion.png` is the exact drawing-layer PNG. Runtime frames stay 32×40: idle comes from row 1, talking from row 2, and the remaining empty template rows are ignored. Use a **6×14** grid when selecting replacement frames from this full sheet. Jax retains the previous custom sequence durations, idle/talking speeds, dialogue, world placement and saved identity. [Actual Jax previews and verification](../../../docs/previews/refined_cast/JAX.md).
+
+The following generic NPC notes and older animation pack describe the earlier templates. Use the current enemy/Jax masters above for their redesigned artwork.
+
+
 Open `enemy_motion.pixil` or `npc_motion.pixil` in Pixilart. These editable masters match the runtime PNG layout exactly. Cells are **32×40**, with six frames per row. The [download pack](../../../docs/downloads/Ignotum-NPC-enemy-animations.zip) also includes one timeline `.pixil` file per animation and PNG strips.
 
-The player, NPC and enemy share the designer's head/hair outline, flat featureless face, broad shirt, leg dimensions, native pixel size and standing height. NPC colors are muted green clothing and navy trousers. Enemy colors retain the plum shirt, dark hair and pale green skin. All colors come from `art/pixel/ignotum.gpl`.
+The generic NPC keeps its existing artwork and native cell size. The current player, Jax and enemy drawings use their respective designer-supplied palettes. Preserve the enemy's marked shirt and distorted face as drawn; do not recolour it to an older template palette.
 
 Enemy rows: **idle, walk, sleep, wake, attack, hit, death**. Idle/walk/sleep loop; the other clips play once. Attack frames 1–2 warn, 3–4 strike, and 5–6 recover, following the existing combat phases. The death clip finishes in a prone pose with bent legs so the original full-sized head fits inside the cell. Sleep is a bowed resting pose; waking rises to the same standing silhouette.
 

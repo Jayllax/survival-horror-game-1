@@ -44,6 +44,8 @@ Decorative façades and most street props do not block movement. Platforms, phys
 
 The player presses **E** within Interaction Radius. The scene fades to black, loads the destination, places the player at the named marker, and fades back in. Input is locked throughout. It never walks the character along an invisible depth axis. There is no end-of-level trigger.
 
+For an entrance sound, select its root and assign **Entrance Sound → Entrance Sound** in the Inspector; Volume Db and Pitch are beside it. It plays once after successful travel is accepted and continues across the scene change. Locked/failed entrances stay silent. Leaving it empty keeps that entrance silent. For movable furniture, assign **Push Sound** on its **PushableBody child**; it repeats only during actual pushing. See [audio settings](docs/guides/AUDIO_GUIDE.md).
+
 For an alley, enable **Editable Children** on the entrance instance and hide its `Facade` sprite. Put a dark, visible gap in the buildings behind it. The supplied `AlleyEntrance` demonstrates this. Its Area2D rectangle helps selection in the editor; interaction is based on proximity. Avoid placing accessible triggers on opposite sides of a thin wall because the proximity system does not check line of sight.
 
 For a key lock, set Required Key to a pickup's **Item Id**, such as `workshop_key`. The key’s **Use Behavior → Remove After Use** checkbox controls consumption. Successfully unlocked entrances stay unlocked for backtracking even when their key is spent. An entrance is a background transition; `door.tscn` is a physical sliding gate on the same side-scrolling plane. See the [item-use guide](docs/guides/ITEM_USE_GUIDE.md) for both key/tool variants and the legacy Consume Key override.

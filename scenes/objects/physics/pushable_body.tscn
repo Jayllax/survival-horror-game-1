@@ -15,3 +15,7 @@ script = ExtResource("script")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -16)
 shape = SubResource("body_shape")
+
+[node name="PushSound" type="AudioStreamPlayer2D" parent="."]
+bus = &"SFX"
+max_distance = 600.0

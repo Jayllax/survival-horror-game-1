@@ -129,57 +129,57 @@ position = Vector2(510, 620)
 [node name="Silos" type="Node2D" parent="Buildings" unique_id=236672605]
 
 [node name="PineTallSilo" parent="Buildings/Silos" unique_id=336688182 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -3
 position = Vector2(57, 620)
 
 [node name="PineTallSilo2" parent="Buildings/Silos" unique_id=661230998 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -3
 position = Vector2(-306, 620)
 
 [node name="PineTallSilo3" parent="Buildings/Silos" unique_id=471838735 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -3
 position = Vector2(-414, 620)
 
 [node name="PineTallSilo4" parent="Buildings/Silos" unique_id=878984059 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -3
 position = Vector2(-171, 620)
 
 [node name="PineTallSilo5" parent="Buildings/Silos" unique_id=518866526 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -3
 position = Vector2(-522, 620)
 
 [node name="PineTallSilo6" parent="Buildings/Silos" unique_id=1306185382 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -3
 position = Vector2(-628, 620)
 
 [node name="PineTallSilo7" parent="Buildings/Silos" unique_id=1848497118 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -3
 position = Vector2(452, 620)
 
 [node name="PineTallSilo8" parent="Buildings/Silos" unique_id=1298241498 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -4
 position = Vector2(-23, 620)
 
 [node name="PineTallSilo9" parent="Buildings/Silos" unique_id=833623183 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -4
 position = Vector2(382, 620)
 
 [node name="PineTallSilo10" parent="Buildings/Silos" unique_id=482656507 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -1
 position = Vector2(139, 620)
 
 [node name="PineTallSilo11" parent="Buildings/Silos" unique_id=728161371 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -3
 position = Vector2(-97, 620)
 
@@ -187,77 +187,77 @@ position = Vector2(-97, 620)
 position = Vector2(1267, 0)
 
 [node name="PineTallSilo" parent="Buildings/Silos2" unique_id=181514417 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -3
 position = Vector2(57, 620)
 
 [node name="PineTallSilo2" parent="Buildings/Silos2" unique_id=1901127465 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -3
 position = Vector2(-306, 620)
 
 [node name="PineTallSilo3" parent="Buildings/Silos2" unique_id=584970330 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -3
 position = Vector2(-414, 620)
 
 [node name="PineTallSilo4" parent="Buildings/Silos2" unique_id=169814565 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -3
 position = Vector2(-156, 620)
 
 [node name="PineTallSilo5" parent="Buildings/Silos2" unique_id=192498035 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -3
 position = Vector2(-522, 620)
 
 [node name="PineTallSilo6" parent="Buildings/Silos2" unique_id=1527344547 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -3
 position = Vector2(-628, 620)
 
 [node name="PineTallSilo7" parent="Buildings/Silos2" unique_id=104465519 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -3
 position = Vector2(452, 620)
 
 [node name="PineTallSilo8" parent="Buildings/Silos2" unique_id=1238510816 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -4
 position = Vector2(-23, 620)
 
 [node name="PineTallSilo9" parent="Buildings/Silos2" unique_id=211980289 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -4
 position = Vector2(382, 620)
 
 [node name="PineTallSilo10" parent="Buildings/Silos2" unique_id=332190508 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -1
 position = Vector2(139, 620)
 
 [node name="PineTallSilo11" parent="Buildings/Silos2" unique_id=621374171 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -3
 position = Vector2(-209, 620)
 
 [node name="PineTallSilo12" parent="Buildings/Silos2" unique_id=83300450 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -3
 position = Vector2(-91, 620)
 
 [node name="PineTallSilo13" parent="Buildings/Silos2" unique_id=888838305 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -3
 position = Vector2(227, 620)
 
 [node name="PineTallSilo14" parent="Buildings/Silos2" unique_id=1466310323 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -3
 position = Vector2(290, 622)
 
 [node name="PineTallSilo15" parent="Buildings/Silos2" unique_id=1160595327 instance=ExtResource("11_gxonl")]
-modulate = Color(0.08627451, 0.12941177, 0.15686275, 0.7607843)
+modulate = Color(0, 0, 0, 1)
 z_index = -3
 position = Vector2(-359, 620)
 
@@ -277,6 +277,62 @@ position = Vector2(2330, 492)
 modulate = Color(0.047557652, 0.047557652, 0.04755763, 1)
 position = Vector2(2506, 492)
 
+[node name="Foreground" type="Node" parent="Buildings" unique_id=925547418]
+
+[node name="PineTall" parent="Buildings/Foreground" unique_id=671508368 instance=ExtResource("11_gxonl")]
+visible = false
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 1
+position = Vector2(88, 639)
+
+[node name="PineTall2" parent="Buildings/Foreground" unique_id=426896578 instance=ExtResource("11_gxonl")]
+visible = false
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 1
+position = Vector2(-47, 639)
+
+[node name="PineTall3" parent="Buildings/Foreground" unique_id=1380364575 instance=ExtResource("11_gxonl")]
+visible = false
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 1
+position = Vector2(-204, 639)
+
+[node name="PineTall4" parent="Buildings/Foreground" unique_id=1448134844 instance=ExtResource("11_gxonl")]
+visible = false
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 1
+position = Vector2(291, 639)
+
+[node name="PineTall5" parent="Buildings/Foreground" unique_id=1205003364 instance=ExtResource("11_gxonl")]
+visible = false
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 1
+position = Vector2(197, 639)
+
+[node name="PineTall6" parent="Buildings/Foreground" unique_id=1046166333 instance=ExtResource("11_gxonl")]
+visible = false
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 1
+position = Vector2(521, 639)
+
+[node name="PineTall7" parent="Buildings/Foreground" unique_id=1681414021 instance=ExtResource("11_gxonl")]
+visible = false
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 1
+position = Vector2(420, 639)
+
+[node name="PineTall8" parent="Buildings/Foreground" unique_id=215599497 instance=ExtResource("11_gxonl")]
+visible = false
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 1
+position = Vector2(636, 639)
+
+[node name="PineTall9" parent="Buildings/Foreground" unique_id=1267586903 instance=ExtResource("11_gxonl")]
+visible = false
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 1
+position = Vector2(763, 639)
+
 [node name="Geometry" type="Node2D" parent="." unique_id=491046715]
 
 [node name="Ground" type="StaticBody2D" parent="Geometry" unique_id=1806807780]
@@ -287,12 +343,14 @@ position = Vector2(-13, 0)
 shape = SubResource("floor")
 
 [node name="Curb" type="Polygon2D" parent="Geometry" unique_id=1824508447]
-position = Vector2(-718, -13329.9)
-scale = Vector2(1.1813637, 22.4998)
+z_index = 1
+position = Vector2(-718, -1759.2119)
+scale = Vector2(1.1813637, 3.8373985)
 color = Color(0.38545707, 0.28626725, 0.2282412, 1)
 polygon = PackedVector2Array(0, 620, 2200, 620, 2200, 622.93976, 2200, 626, 1100.73, 626, 0, 626)
 
 [node name="Curb2" type="Polygon2D" parent="Geometry" unique_id=1298752734]
+visible = false
 position = Vector2(1881, -13329.999)
 scale = Vector2(0.32500002, 22.4998)
 color = Color(0.4509804, 0.4392157, 0.47843137, 1)
@@ -319,8 +377,8 @@ polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 626, 1101, 626,
 
 [node name="Background4" type="Polygon2D" parent="Geometry" unique_id=1423829344]
 z_index = 3
-position = Vector2(-817, -61550.4)
-scale = Vector2(1.6518183, 100.33929)
+position = Vector2(-817, -63736.926)
+scale = Vector2(1.6518183, 103.83214)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
 

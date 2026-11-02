@@ -1,8 +1,8 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene format=3 uid="uid://ttqueugu0fq"]
 
-[ext_resource type="Script" path="res://scripts/room_door.gd" id="script"]
-[ext_resource type="Texture2D" path="res://art/pixel/doors/side_door_frame.png" id="edge"]
-[ext_resource type="Texture2D" path="res://art/pixel/door.png" id="face"]
+[ext_resource type="Texture2D" uid="uid://d2x86br8kv3he" path="res://art/pixel/doors/side_door_frame.png" id="edge"]
+[ext_resource type="Texture2D" uid="uid://d00m7h3e2gckn" path="res://art/pixel/door.png" id="face"]
+[ext_resource type="Script" uid="uid://36xpfd2ya0cu" path="res://scripts/room_door.gd" id="script"]
 
 [sub_resource type="AtlasTexture" id="leaf"]
 atlas = ExtResource("face")
@@ -15,36 +15,36 @@ size = Vector2(8, 88)
 [sub_resource type="OccluderPolygon2D" id="shadow"]
 polygon = PackedVector2Array(-4, -88, 4, -88, 4, 0, -4, 0)
 
-[node name="RoomDoorSide" type="Area2D"]
+[node name="RoomDoorSide" type="Area2D" unique_id=283796742]
 texture_filter = 1
 collision_layer = 0
 collision_mask = 0
 monitoring = false
 monitorable = false
 script = ExtResource("script")
+interaction_radius = 50.0
 
-[node name="Artwork" type="Node2D" parent="."]
+[node name="Artwork" type="Node2D" parent="." unique_id=1131614076]
 
-[node name="LeafPivot" type="Node2D" parent="Artwork"]
+[node name="LeafPivot" type="Node2D" parent="Artwork" unique_id=1524555793]
 visible = false
 scale = Vector2(0.125, 1)
 
-[node name="Leaf" type="Sprite2D" parent="Artwork/LeafPivot"]
+[node name="Leaf" type="Sprite2D" parent="Artwork/LeafPivot" unique_id=1757299284]
 position = Vector2(16, -40)
 texture = SubResource("leaf")
 
-[node name="Frame" type="Sprite2D" parent="Artwork"]
+[node name="Frame" type="Sprite2D" parent="Artwork" unique_id=1370668535]
 position = Vector2(0, -44)
 scale = Vector2(2, 2)
 texture = ExtResource("edge")
 
-[node name="Barrier" type="StaticBody2D" parent="."]
-collision_layer = 1
+[node name="Barrier" type="StaticBody2D" parent="." unique_id=56383033]
 collision_mask = 6
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Barrier"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Barrier" unique_id=836241148]
 position = Vector2(0, -44)
 shape = SubResource("barrier")
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+[node name="LightOccluder2D" type="LightOccluder2D" parent="." unique_id=632558718]
 occluder = SubResource("shadow")

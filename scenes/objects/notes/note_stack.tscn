@@ -1,8 +1,10 @@
-[gd_scene load_steps=3 format=3]
-[ext_resource type="PackedScene" path="res://scenes/objects/note.tscn" id="base"]
-[ext_resource type="Texture2D" path="res://art/pixel/notes/note_stack.png" id="art"]
+[gd_scene format=3 uid="uid://rpp4p2vbsys3"]
 
-[node name="Note" instance=ExtResource("base")]
+[ext_resource type="Texture2D" uid="uid://cjjuuc00ayo4b" path="res://art/pixel/notes/note_stack.png" id="art"]
+[ext_resource type="PackedScene" uid="uid://cs51u64blnw6m" path="res://scenes/objects/note.tscn" id="base"]
 
-[node name="Sprite2D" parent="." index="0"]
+[node name="Note" unique_id=929107018 instance=ExtResource("base")]
+interaction_radius = 40.0
+
+[node name="Sprite2D" parent="." index="0" unique_id=1279006753]
 texture = ExtResource("art")

@@ -8,6 +8,13 @@ extends CharacterBody2D
 ## Prevent the old furniture collider from competing with this body's collider.
 @export var disable_original_collisions: bool = true
 
+@export_group("Push sound")
+## Optional scraping/movement sound. Repeats for as long as the player actually moves this body.
+@export var push_sound: AudioStream
+@export_range(-60.0, 6.0) var push_sound_volume_db: float = -10.0
+@export_range(0.25, 3.0) var push_sound_pitch: float = 1.0
+@export_range(32.0, 3000.0) var push_sound_max_distance: float = 600.0
+
 @export_group("Gravity")
 @export var use_gravity: bool = true
 @export_range(0.0, 3000.0) var gravity: float = 1050.0
@@ -28,6 +35,8 @@ var furniture: Node2D
 var body_to_furniture := Transform2D.IDENTITY
 var authored_x := 0.0
 var recorded_position := Vector2.INF
+var last_push_frame: int = -100
+@onready var push_voice: AudioStreamPlayer2D = $PushSound
 
 func _ready() -> void:
     if Engine.is_editor_hint():
@@ -56,7 +65,39 @@ func _ready() -> void:
         if saved is Dictionary and valid_saved_position(saved.get("position")):
             global_position = Vector2(saved.position[0], saved.position[1])
     add_to_group("pushable")
+    push_voice.finished.connect(repeat_push_sound)
     sync_furniture()
+
+func _notification(what: int) -> void:
+    if what == NOTIFICATION_PAUSED or what == NOTIFICATION_DISABLED:
+        if is_instance_valid(push_voice):
+            push_voice.stop()
+        last_push_frame = -100
+
+func _process(_delta: float) -> void:
+    if not Engine.is_editor_hint() and not has_recent_push():
+        push_voice.stop()
+
+func has_recent_push() -> bool:
+    return push_enabled and not Game.transitioning and Game.health > 0 and not get_tree().paused and last_push_frame == Engine.get_physics_frames()
+
+func repeat_push_sound() -> void:
+    if has_recent_push():
+        push_voice.play()
+
+func update_push_sound(travelled: float) -> void:
+    if absf(travelled) < 0.001 or push_sound == null:
+        last_push_frame = -100
+        push_voice.stop()
+        return
+    last_push_frame = Engine.get_physics_frames()
+    if push_voice.stream != push_sound:
+        push_voice.stream = push_sound
+    push_voice.volume_db = push_sound_volume_db
+    push_voice.pitch_scale = push_sound_pitch
+    push_voice.max_distance = push_sound_max_distance
+    if not push_voice.playing:
+        push_voice.play()
 
 func valid_parent() -> bool:
     return furniture != null and not furniture is CharacterBody2D and not furniture is RigidBody2D and not furniture.has_method("location_title")
@@ -114,6 +155,7 @@ func push_from(pusher: CharacterBody2D, requested_motion: float, delta: float) -
     move_and_collide(Vector2(motion, 0), false, safe_margin)
     var travelled := global_position.x - before
     velocity.x = travelled / delta
+    update_push_sound(travelled)
     sync_furniture()
     return travelled
 

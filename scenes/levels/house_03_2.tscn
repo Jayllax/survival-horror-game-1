@@ -14,11 +14,11 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/dining_chair.tscn" id="10_smmom"]
 [ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="11_6l5d1"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/floor_lamp.tscn" id="11_v5gh1"]
-[ext_resource type="PackedScene" path="res://scenes/objects/room_door_side.tscn" id="13_2t526"]
+[ext_resource type="PackedScene" uid="uid://ttqueugu0fq" path="res://scenes/objects/room_door_side.tscn" id="13_2t526"]
 [ext_resource type="PackedScene" uid="uid://b1t26x82qn6n6" path="res://scenes/actors/npc_jax.tscn" id="16_knspu"]
 [ext_resource type="PackedScene" uid="uid://d161ooahnfhd3" path="res://scenes/objects/lighting/light_switch.tscn" id="17_fdp1k"]
 [ext_resource type="Script" uid="uid://dokxahjw0ajyo" path="res://scripts/narrative/dialogue_line.gd" id="17_ujyqf"]
-[ext_resource type="PackedScene" path="res://scenes/objects/notes/note_stack.tscn" id="17_uvfgb"]
+[ext_resource type="PackedScene" uid="uid://rpp4p2vbsys3" path="res://scenes/objects/notes/note_stack.tscn" id="17_uvfgb"]
 [ext_resource type="Script" uid="uid://ct1jqn7k4e0md" path="res://scripts/narrative/note_document.gd" id="18_4ry7p"]
 [ext_resource type="FontFile" uid="uid://cvpc2epm7fh3n" path="res://art/fonts/lakeside-castle.regular.ttf" id="18_j2x64"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="18_s4eod"]
@@ -329,19 +329,19 @@ color = Color(0.025, 0.045, 0.06, 1)
 polygon = PackedVector2Array(1230, 255, 1230, 345, 1180, 345, 1180, 255)
 
 [node name="Sideboard" parent="Silos_Mouths" unique_id=215097913 instance=ExtResource("7_bjnc3")]
-modulate = Color(0, 0, 0, 1)
+modulate = Color(0, 0, 0, 0.7058824)
 z_index = 3
-position = Vector2(88, 643)
+position = Vector2(88, 634)
 
 [node name="Sideboard2" parent="Silos_Mouths" unique_id=1611195921 instance=ExtResource("7_bjnc3")]
-modulate = Color(0, 0, 0, 1)
-z_index = 3
-position = Vector2(575, 621)
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 4
+position = Vector2(575, 634)
 
 [node name="Sideboard3" parent="Silos_Mouths" unique_id=572670246 instance=ExtResource("7_bjnc3")]
-modulate = Color(0, 0, 0, 1)
+modulate = Color(0, 0, 0, 0.7058824)
 z_index = 4
-position = Vector2(211, 621)
+position = Vector2(219, 633)
 
 [node name="Background7" type="Polygon2D" parent="Silos_Mouths" unique_id=654435019]
 z_index = 3
@@ -352,6 +352,17 @@ polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Silos_Mouths/Background7" unique_id=2089118711]
 occluder = SubResource("OccluderPolygon2D_2t526")
+
+[node name="FloorLamp" parent="Silos_Mouths" unique_id=1448916719 instance=ExtResource("11_v5gh1")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 4
+position = Vector2(323, 633)
+
+[node name="DiningChair" parent="Silos_Mouths" unique_id=2013938390 instance=ExtResource("10_smmom")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 3
+position = Vector2(575, 635)
+scale = Vector2(1.2, 1.2)
 
 [node name="Geometry" type="Node2D" parent="." unique_id=50036105]
 
@@ -370,7 +381,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1152, 120)
 
 [node name="Curb" type="Polygon2D" parent="Geometry" unique_id=713087734]
-z_index = 4
+z_index = 1
 position = Vector2(41.999996, -617.499)
 scale = Vector2(0.57291675, 1.9960047)
 color = Color(0.547878, 0.322552, 0.234745, 1)
@@ -461,10 +472,6 @@ position = Vector2(603, 548)
 z_index = -3
 position = Vector2(547, 548)
 
-[node name="DiningChair" parent="Props" unique_id=2013938390 instance=ExtResource("10_smmom")]
-position = Vector2(575, 622)
-scale = Vector2(1.2, 1.2)
-
 [node name="Sideboard" parent="Props" unique_id=655173044 instance=ExtResource("7_bjnc3")]
 z_index = 0
 position = Vector2(323, 621)
@@ -498,7 +505,7 @@ position = Vector2(377, 621)
 opens_left = true
 
 [node name="LightSwitch2" parent="Interactables" unique_id=1067931549 instance=ExtResource("17_fdp1k")]
-position = Vector2(356, 569)
+position = Vector2(341, 569)
 scale = Vector2(0.3, 0.3)
 connected_lights = Array[NodePath]([NodePath("../../Props/CeilingLamp")])
 starting_on = false
@@ -509,7 +516,6 @@ position = Vector2(155, 583)
 scale = Vector2(0.1, 0.1)
 connected_lights = Array[NodePath]([NodePath("../../Props/TableLamp2")])
 starting_on = false
-interaction_radius = 50.0
 
 [node name="LightSwitch4" parent="Interactables" unique_id=1897290557 instance=ExtResource("17_fdp1k")]
 position = Vector2(678, 582)

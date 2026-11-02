@@ -70,12 +70,15 @@ func run() -> void:
     await fresh_room()
     await verify_child_and_movement()
     await verify_blocking_and_options()
+    await verify_push_sound()
     await verify_platform_puzzle()
     await verify_saves()
     release_inputs()
     get_tree().paused = false
     room.queue_free()
     await frames(5)
+    GameAudio.stop_all()
+    await get_tree().create_timer(0.2).timeout
     print("IGNOTUM PUSHABLES: %d checks, %d failures" % [checks, failures])
     get_tree().quit(0 if failures == 0 else 1)
 
@@ -226,6 +229,46 @@ func verify_blocking_and_options() -> void:
     get_tree().paused = false
     prop.queue_free()
     await frames()
+
+func verify_push_sound() -> void:
+    var clip := AudioStreamWAV.new()
+    clip.format = AudioStreamWAV.FORMAT_16_BITS
+    clip.mix_rate = 22050
+    var silence := PackedByteArray()
+    silence.resize(4410) # A short one-shot must repeat during a continuous push.
+    clip.data = silence
+    var prop := furniture(Vector2(400,620), {"push_sound":clip,"push_sound_volume_db":-17.0,"push_sound_pitch":0.85,"use_travel_limits":true,"right_distance":65.0})
+    var body: PushableBody = prop.get_node("PushableBody")
+    await place_player(Vector2(365,588))
+    check(not body.push_voice.playing, "Assigned push audio stays silent while furniture is idle")
+    Input.action_press("move_right")
+    await frames(25)
+    check(body.push_voice.playing and body.push_voice.bus==&"SFX" and body.push_voice.volume_db==-17 and is_equal_approx(body.push_voice.pitch_scale,0.85), "Actual movement starts the spatial push sound with Inspector volume/pitch")
+    await frames(25)
+    check(body.push_voice.playing, "A short nonlooping clip repeats throughout a sustained push")
+    Input.action_release("move_right")
+    await frames(3)
+    check(not body.push_voice.playing, "Releasing movement stops scraping instead of playing out the clip")
+    Input.action_press("move_right")
+    await frames(6)
+    get_tree().paused = true
+    await frames(3)
+    check(not body.push_voice.playing, "Pausing stops the push voice immediately")
+    get_tree().paused = false
+    Input.action_release("move_right")
+    await frames(3)
+    check(not body.push_voice.playing, "Resuming while idle cannot resurrect a stale push sound")
+    Input.action_press("move_right")
+    await frames(6)
+    body.push_enabled = false
+    await frames(3)
+    check(not body.push_voice.playing, "Disabling pushing stops its sound")
+    body.push_enabled = true
+    await frames(80)
+    check(absf(prop.position.x-465)<0.2 and not body.push_voice.playing, "A blocked travel limit is silent even while movement remains held")
+    release_inputs()
+    prop.queue_free()
+    await frames(3)
 
 func verify_platform_puzzle() -> void:
     await place_player(Vector2(1060,588))

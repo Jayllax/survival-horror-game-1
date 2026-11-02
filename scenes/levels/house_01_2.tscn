@@ -4,9 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://doeuaul7l3oue" path="res://art/pixel/floor.png" id="2_c6hel"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/bedroom/nightstand.tscn" id="3_6q1nt"]
 [ext_resource type="PackedScene" path="res://scenes/objects/puzzles/code_lock.tscn" id="3_bwf31"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/armchair.tscn" id="4_4nb1h"]
 [ext_resource type="Resource" uid="uid://et2nquwup3rj" path="res://data/items/pistol.tres" id="4_ay8je"]
 [ext_resource type="PackedScene" uid="uid://b05yk71l6rpu" path="res://scenes/objects/interiors/bedroom/wardrobe.tscn" id="5_0dox0"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/bedroom/bed.tscn" id="5_1nxfd"]
+[ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/dining_table.tscn" id="5_k77kt"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/table_lamp.tscn" id="6_ubtef"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/sideboard.tscn" id="7_tf2dk"]
 [ext_resource type="PackedScene" uid="uid://bs5djbah2okuq" path="res://scenes/objects/interiors/living_room/bookcase.tscn" id="8_pm6jb"]
@@ -154,12 +156,45 @@ text = "I"
 label_settings = SubResource("LabelSettings_ar532")
 
 [node name="CodeLabel4" type="Label" parent="Buildings" unique_id=1031426025]
-offset_left = 150.0
+offset_left = 149.0
 offset_top = 580.0
-offset_right = 153.0
+offset_right = 154.0
 offset_bottom = 588.0
-text = "II"
+text = "I I"
 label_settings = SubResource("LabelSettings_ar532")
+
+[node name="Silos" type="Node" parent="Buildings" unique_id=1776019325]
+
+[node name="Bookcase" parent="Buildings/Silos" unique_id=1253201720 instance=ExtResource("8_pm6jb")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 6
+position = Vector2(30, 637)
+
+[node name="Bookcase2" parent="Buildings/Silos" unique_id=1233946386 instance=ExtResource("8_pm6jb")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 6
+position = Vector2(196, 637)
+
+[node name="SideboardSilo" parent="Buildings/Silos" unique_id=2125046370 instance=ExtResource("7_tf2dk")]
+modulate = Color(0.00013033328, 0.00018224068, 0.00022259181, 0.7058824)
+z_index = 6
+position = Vector2(113, 655)
+
+[node name="SideboardSilo2" parent="Buildings/Silos" unique_id=477291126 instance=ExtResource("7_tf2dk")]
+modulate = Color(0.00013033328, 0.00018224068, 0.00022259181, 0.7058824)
+z_index = 6
+position = Vector2(113, 613)
+scale = Vector2(0.52, 0.63)
+
+[node name="Armchair" parent="Buildings/Silos" unique_id=1601167243 instance=ExtResource("4_4nb1h")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 6
+position = Vector2(519, 633)
+
+[node name="DiningTable" parent="Buildings/Silos" unique_id=879940008 instance=ExtResource("5_k77kt")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 6
+position = Vector2(519, 634)
 
 [node name="Geometry" type="Node2D" parent="." unique_id=50036105]
 
@@ -178,8 +213,9 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1152, 120)
 
 [node name="Curb" type="Polygon2D" parent="Geometry" unique_id=713087734]
-position = Vector2(0, -9403.33)
-scale = Vector2(0.60937506, 16.1667)
+z_index = 1
+position = Vector2(0, -720.7871)
+scale = Vector2(0.60937506, 2.1625988)
 color = Color(0.547878, 0.322552, 0.234745, 1)
 polygon = PackedVector2Array(0, 620, 1152, 620, 1151.9999, 623.0512, 1152, 626, 0, 626)
 
@@ -212,8 +248,8 @@ color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
 
 [node name="Background3" type="Polygon2D" parent="Geometry" unique_id=426912759]
-position = Vector2(-452.00003, -53408)
-scale = Vector2(0.7568181, 87.17413)
+position = Vector2(-452.00003, -54447.195)
+scale = Vector2(0.7568181, 88.83419)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
 

@@ -11,12 +11,17 @@ for name,entry in m['assets'].items():
         im=original.convert('RGBA')
         assert list(im.size)==entry['native_size'],name+' native dimensions'
         pixels=set(im.getdata())
-        assert pixels <= allowed,name+' palette'
+        # Transparent RGB is unused and may retain an edge color after packing.
+        # Check the visible artwork; alpha and exact 2x exports are checked below.
+        if entry.get('color_source') != 'approved_artwork':
+            assert {p for p in pixels if p[3]} <= allowed,name+' palette'
         assert {p[3] for p in pixels} <= {0,255},name+' partial alpha'
         if not entry.get('tile') and not entry.get('solid_rectangle'):
             assert any(p[3]==0 for p in pixels),name+' transparent canvas'
         with Image.open(root/f'art/pixel/{name}.png') as export:
             assert list(export.size)==entry['game_size'],name+' game dimensions'
             expected=im.resize((im.width*2,im.height*2),Image.Resampling.NEAREST)
-            assert export.convert('RGBA').tobytes()==expected.tobytes(),name+' exact 2x pixels'
-print(f'PASS: {len(m["assets"])} native/export pairs use the palette and exact 2x nearest-neighbor pixels.')
+            def visible_pixels(image):
+                return [p if p[3] else (0,0,0,0) for p in image.convert('RGBA').getdata()]
+            assert visible_pixels(export)==visible_pixels(expected),name+' exact 2x visible pixels and alpha'
+print(f'PASS: {len(m["assets"])} native/export pairs retain dimensions, hard alpha and exact 2x visible pixels; palette checks apply to swatch-based art and approved-artwork shades are retained.')

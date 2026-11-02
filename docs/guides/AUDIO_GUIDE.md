@@ -92,6 +92,14 @@ The Enemy has its own **HurtSound** using the same recordings at **Pitch Scale 0
 
 To adjust the mix, open `scenes/actors/player.tscn` and select **JumpSound** or **HurtSound**, or open `scenes/actors/enemy.tscn` and select **HurtSound**. Change **Volume Db**; on the enemy, **Pitch Scale** controls how deep/slowed it sounds (1.0 is the original recording). Your latest mix sets jump to +4.828 dB, player hurt to +6 dB and enemy hurt to +3 dB. These are playback gains, not edits to the source files. All use the **SFX** bus and existing Master volume control. Enable Editable Children to override a particular placed instance.
 
+## Pushable objects and level entrances
+
+Select a furniture object's **PushableBody** child. Under **Push Sound**, drag an MP3, WAV or OGG into **Push Sound**. Set Volume Db, Pitch and Max Distance to taste. It repeats only while a player push actually moves the object; release, walls, travel limits, disabling, pause, death and transitions stop it. Gravity alone remains silent. Empty means no sound. See [the pushable guide](PUSHABLE_GUIDE.md).
+
+Select an entrance root (**Kind = Entrance**). Under **Entrance Sound**, assign **Entrance Sound**, then adjust **Entrance Sound Volume Db / Pitch**. The clip starts once the destination scene replacement succeeds, at the black part of the fade. Its playback belongs to the persistent transition controller, so deleting the old level does not cut it off. It always plays once, even if the imported recording has Loop enabled; the shared import stays unchanged. Locked/unpowered entrances, missing destinations and aborted travel stay silent. Empty means no sound. These fields apply to entrances between levels.
+
+Both features use **SFX** and the current master-volume control. No sound is assigned to your placed objects automatically; you choose the recordings per instance in the Inspector.
+
 ## Mix and folders
 
 Godot's **Audio** dock contains Master, Music, Ambience, SFX and Voice buses. The existing in-game master-volume option still controls the whole mix. Relative bus levels can be adjusted and saved in `default_bus_layout.tres`; cue/bank volumes give finer control.
@@ -111,3 +119,5 @@ The audio singleton loads the authored mixer scene at runtime, allowing a fresh 
 ## Test room and checks
 
 Open `tests/fixtures/audio_sandbox.tscn` with F6 for a separate audio/stealth room with a dirt zone and forest atmosphere. It is not connected to the campaign. Automated checks run with `GODOT_BIN=/path/to/godot bash tools/check.sh audio`; these cover continuity, crossfades, sight/cover, multiple enemies, pause, regions/safe-room overrides and animated material footsteps.
+
+`bash tools/check.sh pushables entrance_audio` also checks sustained scraping, release/pause/disable/blocked silence, locked/failed entrances, audio surviving source removal, one-shot playback and voice cleanup.

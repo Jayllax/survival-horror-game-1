@@ -2,6 +2,10 @@
 
 Start with **`player_clips/walk.pixil`**. It opens as six **32×40-pixel** animation frames with a blank drawing layer, guides and your **Sparkle's palette**. Everything here is a working template for your drawings; the game's current assets are unchanged.
 
+## Current player style reference
+
+`player_authored_frames.png` is the full **192×560 designer-finished sheet** from `player_redesign_1.pixil`, unchanged. `player_style_reference.png` is its first 32×40 cell. All 84 cells are now authored by the designer. The current editable game master is `art/pixlart/player_animation/player_motion.pixil`, using the uploaded **Background** layer; `player_redesign_1.pixil` beside it archives the original upload. The main document's malformed global thumbnail was repaired using its valid frame preview. Older `player_style_reference.pixil` and `player_redesign_reference.pixil` files are historical. These completed drawings are separate from the blank templates below.
+
 ## Draw one animation at a time
 
 1. Download/extract the template pack, then open [Pixilart's editor](https://www.pixilart.com/draw). Save any drawing already open first, then use **File → Open .pixil** and choose `player_clips/walk.pixil`.
