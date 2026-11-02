@@ -51,7 +51,7 @@ size = Vector2(44, 26)
 [sub_resource type="Resource" id="Resource_qayus"]
 script = ExtResource("16_kwcdv")
 title = "Bloody note"
-text = "Good job finding the key, fuck face. That was the point. So you know I'm here. And that I know it was you who changed the code to my drawer, you stupid piece of shit. I'll have my revenge, and I don't need my gun to do it. You'll see."
+text = "I've found the cause. These new people showing up. I almost got one of them but he managed to escape. They don't belong here. Everything used to be fine. Now it's all FUCKED! I'll get rid of them. I'll make them pay."
 
 [sub_resource type="Resource" id="Resource_wx7jk"]
 script = ExtResource("19_yl0ka")

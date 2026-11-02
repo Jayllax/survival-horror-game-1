@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://6ac0fiq4jtxt" path="res://scripts/location.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://c05hbmwkjbtaw" path="res://scenes/actors/player.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://cfoibs7ccueyy" path="res://scenes/objects/houses/building_house.tscn" id="2_lb3ar"]
-[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://cu7udyf271gqe" path="res://scenes/ui/hud.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_terracotta_no_chimney.tscn" id="3_flp4d"]
 [ext_resource type="PackedScene" uid="uid://c4cjkplrees4c" path="res://scenes/objects/entrance.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_cream_left.tscn" id="4_pcyv7"]
@@ -101,6 +101,24 @@ self_modulate = Color(0, 0, 0, 0.84313726)
 z_index = -10
 position = Vector2(1182, 492)
 
+[node name="HouseSiloThicc1" parent="Buildings" unique_id=2134006598 instance=ExtResource("2_lb3ar")]
+modulate = Color(0.31061712, 0.31061712, 0.3106171, 1)
+self_modulate = Color(0, 0, 0, 1)
+z_index = 3
+position = Vector2(-212, 492)
+
+[node name="HouseSiloThicc2" parent="Buildings" unique_id=1301683409 instance=ExtResource("2_lb3ar")]
+modulate = Color(0.31061712, 0.31061712, 0.3106171, 1)
+self_modulate = Color(0, 0, 0, 1)
+z_index = 3
+position = Vector2(140, 492)
+
+[node name="HouseSiloThicc3" parent="Buildings" unique_id=1008732926 instance=ExtResource("3_flp4d")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 1)
+z_index = 3
+position = Vector2(-36, 492)
+
 [node name="Geometry" type="Node2D" parent="." unique_id=526838699]
 
 [node name="Street" type="StaticBody2D" parent="Geometry" unique_id=1991072136]
@@ -130,16 +148,12 @@ shape = SubResource("RectangleShape2D_d47s1")
 
 [node name="Background" type="Polygon2D" parent="Geometry" unique_id=641202861]
 z_index = -100
-position = Vector2(-39, -76157.5)
-scale = Vector2(1.1931671, 122.833)
+position = Vector2(-134, -76157.5)
+scale = Vector2(1.236349, 122.833)
 color = Color(0.184572, 0.180707, 0.200034, 1)
 polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 626, 1101, 626, 0, 626)
 
 [node name="Props" type="Node2D" parent="." unique_id=161909125]
-
-[node name="ReinforcedFenceSide" parent="Props" unique_id=312725030 instance=ExtResource("6_gle4b")]
-position = Vector2(243, 620)
-scale = Vector2(1.2, 1.5)
 
 [node name="ReinforcedFenceSide2" parent="Props" unique_id=1061022886 instance=ExtResource("6_gle4b")]
 position = Vector2(653, 620.00006)

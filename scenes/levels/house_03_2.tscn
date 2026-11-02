@@ -65,7 +65,10 @@ size = Vector2(40, 720)
 [sub_resource type="Resource" id="Resource_wny14"]
 script = ExtResource("18_4ry7p")
 title = "Note from stranger"
-text = "If you're reading this Rasmus, stop leaving your shitty notes. I'll keep leaving my own until you stop, 'cause I don't like your attitude. If anybody else reads this, he's wrong about this town. It's... it's fantastic. I don't understand why anyone would ever want to leave this place. Don't let Rasmus ruin your chance for happiness. Astrid seems to be the only one who gets it. And if you're reading this Astrid, come find me at the town center. I found something I think you'll like."
+text = "Whoever you are Rasmus, stop leaving your whack ass notes around. I'm going to keep leaving my own until you stop leaving yours. You're wrong about this town, it's amazing. Is it full of psychopaths trying to kill you? Sure, but that's what's great about it! It makes you feel alive! And then there's this one girl I saw. You must not have seen her 'cause damn dude. Crazy body. Don't know where she went though, lost her at the park. Anyway, kindly fuck off with your notes.
+
+All the best,
+Peter"
 body_font = ExtResource("18_j2x64")
 
 [sub_resource type="Resource" id="Resource_kxjmj"]
@@ -93,7 +96,7 @@ voice_audio = ExtResource("22_bjnc3")
 [sub_resource type="Resource" id="Resource_ujyqf"]
 script = ExtResource("17_ujyqf")
 speaker = ExtResource("20_xe5ls")
-text = "So am I. I have no idea where we are. I just woke up in this place. Don't remember how or why I got here."
+text = "So am I, man, I have no idea where we are. I just woke up in this place. Don't remember how or why I'm here."
 metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 
 [sub_resource type="Resource" id="Resource_rg7w5"]
@@ -230,7 +233,7 @@ metadata/_custom_type_script = "uid://c72jybcn230jo"
 [sub_resource type="Resource" id="Resource_1402q"]
 script = ExtResource("17_ujyqf")
 speaker = ExtResource("20_xe5ls")
-text = "I don't know, man, but I don't want to stick around too long. That's for sure."
+text = "I don't know, but I sure don't want to stick around too long. That's for sure."
 choices = Array[ExtResource("18_xe5ls")]([SubResource("Resource_at73x"), SubResource("Resource_fdp1k")])
 metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 
@@ -250,7 +253,7 @@ metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 [sub_resource type="Resource" id="Resource_qi71t"]
 script = ExtResource("17_ujyqf")
 speaker = ExtResource("21_ujyqf")
-text = "Those numbers just keep repeating in my head for some reason. This is all so strange."
+text = "I just... have this flashing image of those numbers in my head. It's fucking weird."
 metadata/_custom_type_script = "uid://dokxahjw0ajyo"
 
 [sub_resource type="Resource" id="Resource_4ry7p"]

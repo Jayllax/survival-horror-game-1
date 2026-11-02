@@ -117,15 +117,15 @@ size = Vector2(40, 720)
 
 [sub_resource type="Resource" id="Resource_2kgsg"]
 script = ExtResource("15_c6hel")
-title = "Note written by a Rasmus"
-text = "I don't understand why you would ever want to be in this town. It's so dark and cold. The light isn't out of reach, you just need to find it. Try. Please.
+title = "Hastily written note"
+text = "To any sane person reading this, get out of this town now! The people here are insane. I've been attacked and chased multiple times. I don't know why or how I ended up here, but I'm not staying. If you want to live then go to the forest. It seems to be safe. I'm gonna leave some supplies there and then search for a way out of this place. I'll check the forest before I leave, so wait for me there unless you don't believe me. In that case, good luck.
 
 - Rasmus"
 
 [sub_resource type="Resource" id="Resource_c6hel"]
 script = ExtResource("15_c6hel")
 title = "Angrily written note"
-text = "Why has someone changed the fucking code? We all knew it, it worked, why? I don't get it. Change it back!"
+text = "Someone is fucking with my things. With everything! First the code to my lock changes then I see weird symbols in the dark and then suddenly alleyways are blocked off. All these fences popping up out of nowhere. I'm losing my FUCKING MIND! EVERYTHING is changing! I will find whoever is behind this. And I will show them what happens when you change MY things."
 
 [node name="Location" type="Node2D" unique_id=701534075]
 script = ExtResource("1_2kgsg")
@@ -345,7 +345,7 @@ document = SubResource("Resource_2kgsg")
 
 [node name="Note2" parent="Interactables" unique_id=1834164669 instance=ExtResource("14_2kgsg")]
 position = Vector2(546, 580)
-scale = Vector2(0.3, 0.3)
+scale = Vector2(0.6, 0.6)
 document = SubResource("Resource_c6hel")
 
 [node name="LootContainer" parent="Interactables" unique_id=1125194028 instance=ExtResource("16_c6hel")]
@@ -357,19 +357,19 @@ position = Vector2(271, 582)
 persistent_id = "empty2"
 
 [node name="LightSwitch" parent="Interactables" unique_id=1627212891 instance=ExtResource("17_ar532")]
-position = Vector2(612, 571)
+position = Vector2(605, 571)
 scale = Vector2(0.3, 0.3)
 connected_lights = Array[NodePath]([NodePath("../../Props/WallLamp")])
 interaction_radius = 50.0
 
 [node name="LightSwitch2" parent="Interactables" unique_id=1940736045 instance=ExtResource("17_ar532")]
-position = Vector2(387, 571)
+position = Vector2(380.00003, 571)
 scale = Vector2(0.3, 0.3)
 connected_lights = Array[NodePath]([NodePath("../../Props/CeilingLamp")])
 interaction_radius = 50.0
 
 [node name="LightSwitch3" parent="Interactables" unique_id=1218105632 instance=ExtResource("17_ar532")]
-position = Vector2(163, 584)
+position = Vector2(159, 584)
 scale = Vector2(0.3, 0.3)
 connected_lights = Array[NodePath]([NodePath("../../Props/WallLamp2"), NodePath("../../Props/TableLamp2"), NodePath("../../Props/TableLamp")])
 reveal_when_off = Array[NodePath]([NodePath("../../Buildings/CodeLabel3"), NodePath("../../Buildings/CodeLabel4")])

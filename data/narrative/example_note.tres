@@ -4,5 +4,4 @@
 
 [resource]
 script = ExtResource("script")
-title = "Note from stranger"
 text = "Your health is i"

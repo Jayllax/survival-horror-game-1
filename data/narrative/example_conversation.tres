@@ -5,11 +5,11 @@
 [ext_resource type="Script" uid="uid://dokxahjw0ajyo" path="res://scripts/narrative/dialogue_line.gd" id="line"]
 [ext_resource type="Script" uid="uid://n78cmm0wplag" path="res://scripts/narrative/dialogue_sequence.gd" id="sequence"]
 
-[sub_resource type="Resource" id="Resource_aakys"]
+[sub_resource type="Resource" id="Resource_xeb51"]
 script = ExtResource("line")
 speaker = ExtResource("3_aakys")
-text = "This way is blocked off."
+text = "The fence has barbered wire on top. I can't climb it."
 
 [resource]
 script = ExtResource("sequence")
-lines = Array[ExtResource("line")]([SubResource("Resource_aakys")])
+lines = Array[ExtResource("line")]([SubResource("Resource_xeb51")])

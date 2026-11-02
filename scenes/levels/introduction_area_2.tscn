@@ -29,6 +29,10 @@
 [ext_resource type="Script" uid="uid://bkj62nwqxumq7" path="res://scripts/loot/loot_entry.gd" id="24_jqssf"]
 [ext_resource type="Resource" uid="uid://i77pedfgvhlr" path="res://data/items/antiseptic.tres" id="25_b2mxv"]
 [ext_resource type="PackedScene" uid="uid://cjvei6sff82yp" path="res://scenes/actors/examine_lines.tscn" id="26_jqssf"]
+[ext_resource type="Script" uid="uid://dokxahjw0ajyo" path="res://scripts/narrative/dialogue_line.gd" id="27_md588"]
+[ext_resource type="Script" uid="uid://c72jybcn230jo" path="res://scripts/narrative/dialogue_choice.gd" id="28_qeckw"]
+[ext_resource type="Resource" uid="uid://tejmjkno6iqb" path="res://data/narrative/speakers/you.tres" id="29_qav3l"]
+[ext_resource type="Script" uid="uid://n78cmm0wplag" path="res://scripts/narrative/dialogue_sequence.gd" id="30_pgc0q"]
 [ext_resource type="Resource" path="res://data/audio/music/ambient_track_2.tres" id="location_music"]
 
 [sub_resource type="RectangleShape2D" id="floor"]
@@ -39,8 +43,8 @@ size = Vector2(40, 720)
 
 [sub_resource type="Resource" id="Resource_2rmq6"]
 script = ExtResource("8_ynkaq")
-title = "Note from a Dom"
-text = "Your health is important. Look out for yourself.
+title = "Handwritten note"
+text = "Thank you for the warnings, Rasmus, but I need to see this town. I've left these supplies for you or anyone else who needs it. Stay safe.
 
 - Dom"
 
@@ -59,6 +63,15 @@ compact_grid_size = Vector2i(2, 1)
 script = ExtResource("24_jqssf")
 item = ExtResource("25_b2mxv")
 metadata/_custom_type_script = "uid://bkj62nwqxumq7"
+
+[sub_resource type="Resource" id="Resource_xeb51"]
+script = ExtResource("27_md588")
+speaker = ExtResource("29_qav3l")
+text = "The fence has barbered wire on top. I can't climb it."
+
+[sub_resource type="Resource" id="Resource_hmmcp"]
+script = ExtResource("30_pgc0q")
+lines = Array[ExtResource("27_md588")]([SubResource("Resource_xeb51")])
 
 [node name="Location" type="Node2D" unique_id=653106688]
 script = ExtResource("1_hq8ni")
@@ -487,6 +500,7 @@ contents = Array[ExtResource("24_jqssf")]([SubResource("Resource_6qbk5")])
 
 [node name="examine_lines" parent="Interactables" unique_id=675673708 instance=ExtResource("26_jqssf")]
 position = Vector2(-189, 582)
+dialogue = SubResource("Resource_hmmcp")
 
 [node name="Actors" type="Node2D" parent="." unique_id=1189311552]
 
