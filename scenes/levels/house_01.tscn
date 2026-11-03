@@ -43,7 +43,7 @@ display_name = "Building / Ground floor"
 camera_bounds = Rect2i(0, 0, 1152, 720)
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=758485644]
-color = Color(0.039215688, 0.039215688, 0.039215688, 1)
+color = Color(0.05490196, 0.05490196, 0.05490196, 1)
 
 [node name="Buildings" type="Node2D" parent="." unique_id=199967885]
 

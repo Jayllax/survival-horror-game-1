@@ -14,6 +14,8 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_dusty_rose_left.tscn" id="8_biwbp"]
 [ext_resource type="PackedScene" uid="uid://cfoibs7ccueyy" path="res://scenes/objects/houses/building_house.tscn" id="8_n8lao"]
 [ext_resource type="PackedScene" path="res://scenes/objects/fence_reinforced_side.tscn" id="10_le0go"]
+[ext_resource type="PackedScene" path="res://scenes/objects/bench.tscn" id="14_hvnho"]
+[ext_resource type="PackedScene" path="res://scenes/objects/bin.tscn" id="15_5x2mi"]
 [ext_resource type="PackedScene" uid="uid://cjvei6sff82yp" path="res://scenes/actors/examine_lines.tscn" id="15_rmnuy"]
 [ext_resource type="Script" uid="uid://dokxahjw0ajyo" path="res://scripts/narrative/dialogue_line.gd" id="16_en3fj"]
 [ext_resource type="Script" uid="uid://c72jybcn230jo" path="res://scripts/narrative/dialogue_choice.gd" id="17_hvnho"]
@@ -50,14 +52,14 @@ camera_bounds = Rect2i(0, 0, 2200, 720)
 music_cue = ExtResource("location_music")
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=857491603]
-color = Color(0.038397163, 0.038397174, 0.038397145, 1)
+color = Color(0.056291588, 0.056291603, 0.056291573, 1)
 
 [node name="Buildings" type="Node2D" parent="." unique_id=1653355476]
 
 [node name="Alleyway_01Mouth" type="Polygon2D" parent="Buildings" unique_id=1408196773]
-z_index = -9
-position = Vector2(-759.1035, 265.99985)
-scale = Vector2(0.91052496, 0.570968)
+z_index = -2
+position = Vector2(-759.1035, 246.99988)
+scale = Vector2(0.91052496, 0.63225824)
 color = Color(0, 0, 0, 0.13333334)
 polygon = PackedVector2Array(1150, 310, 1244.4807, 309.99997, 1340, 309.99997, 1340, 463.84204, 1340, 620, 1244.8208, 620.00006, 1150, 620, 1149.9999, 464.1112)
 
@@ -153,6 +155,9 @@ position = Vector2(3278, 492)
 [node name="HouseTeal" parent="Buildings" unique_id=1758763994 instance=ExtResource("21_mwytw")]
 position = Vector2(3630, 492)
 flip_h = true
+
+[node name="HouseSlateBlue2" parent="Buildings" unique_id=671681953 instance=ExtResource("7_wvt63")]
+position = Vector2(-508, 492)
 
 [node name="Silos" type="Node2D" parent="Buildings" unique_id=1986475710]
 
@@ -276,8 +281,59 @@ self_modulate = Color(0, 0, 0, 0.84313726)
 z_index = -10
 position = Vector2(-420, 492)
 
-[node name="HouseSlateBlue2" parent="Buildings" unique_id=671681953 instance=ExtResource("7_wvt63")]
-position = Vector2(-508, 492)
+[node name="Foreground" type="Node" parent="Buildings" unique_id=1832623489]
+
+[node name="Streetlamp7" parent="Buildings/Foreground" unique_id=1594324042 instance=ExtResource("3_ip0dd")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 3
+position = Vector2(-66, 640)
+
+[node name="Bench" parent="Buildings/Foreground" unique_id=305356500 instance=ExtResource("14_hvnho")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 3
+position = Vector2(551, 612)
+
+[node name="Bin" parent="Buildings/Foreground" unique_id=951425503 instance=ExtResource("15_5x2mi")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 3
+position = Vector2(636, 604)
+
+[node name="Streetlamp2" parent="Buildings/Foreground" unique_id=18078998 instance=ExtResource("3_ip0dd")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 3
+position = Vector2(1189, 640)
+
+[node name="Bench2" parent="Buildings/Foreground" unique_id=1455013918 instance=ExtResource("14_hvnho")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 3
+position = Vector2(1931, 612)
+
+[node name="Bin2" parent="Buildings/Foreground" unique_id=518290862 instance=ExtResource("15_5x2mi")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 3
+position = Vector2(1852, 604)
+
+[node name="Bench3" parent="Buildings/Foreground" unique_id=776064039 instance=ExtResource("14_hvnho")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 3
+position = Vector2(2035, 612)
+
+[node name="Bin3" parent="Buildings/Foreground" unique_id=284907791 instance=ExtResource("15_5x2mi")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 3
+position = Vector2(2119, 604)
+
+[node name="ReinforcedFenceSide" parent="Buildings/Foreground" unique_id=1888730840 instance=ExtResource("10_le0go")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 3
+position = Vector2(2566, 642.00006)
+scale = Vector2(1.2, 1.5)
+
+[node name="ReinforcedFenceSide2" parent="Buildings/Foreground" unique_id=1670065132 instance=ExtResource("10_le0go")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 3
+position = Vector2(3366.0002, 640)
+scale = Vector2(1.2, 1.2)
 
 [node name="Geometry" type="Node2D" parent="." unique_id=491046715]
 
@@ -324,9 +380,6 @@ polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 
 
 [node name="Streetlamp" parent="Props" unique_id=892845672 instance=ExtResource("3_ip0dd")]
 position = Vector2(637, 620)
-
-[node name="Streetlamp2" parent="Props" unique_id=18078998 instance=ExtResource("3_ip0dd")]
-position = Vector2(1093, 620)
 
 [node name="Streetlamp3" parent="Props" unique_id=714982314 instance=ExtResource("3_ip0dd")]
 position = Vector2(1766, 620)
@@ -468,9 +521,11 @@ visible = false
 position = Vector2(1189, 573)
 action_label = "Open door"
 description = "Requires house_02_key."
-required_key = "house_key"
+required_key = "orange_house_key"
 puzzle_input_item = ""
 puzzle_reward_item = ""
+destination_scene = "uid://b8xcgersjdeaw"
+destination_spawn = "from_town_01"
 
 [node name="Facade" parent="Interactables/House_02Entrance2" index="0" unique_id=1815167978]
 visible = false

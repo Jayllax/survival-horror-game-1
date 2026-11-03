@@ -384,7 +384,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"aim_idle",
-"speed": 3.0
+"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -591,7 +591,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"idle",
-"speed": 3.0
+"speed": 1.0
 }, {
 "frames": [{
 "duration": 1.0,

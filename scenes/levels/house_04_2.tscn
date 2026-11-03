@@ -84,7 +84,7 @@ display_name = "Building / Ground floor"
 camera_bounds = Rect2i(0, 0, 1152, 720)
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=758485644]
-color = Color(0.039215688, 0.039215688, 0.039215688, 1)
+color = Color(0.05490196, 0.05490196, 0.05490196, 1)
 
 [node name="Buildings" type="Node2D" parent="." unique_id=199967885]
 
@@ -318,13 +318,11 @@ visible = false
 
 [node name="LightSwitch" parent="Interactables" unique_id=1627212891 instance=ExtResource("17_q67n8")]
 position = Vector2(673, 571)
-scale = Vector2(0.3, 0.3)
 connected_lights = Array[NodePath]([NodePath("../../Props/WallLamp")])
 interaction_radius = 50.0
 
 [node name="LightSwitch2" parent="Interactables" unique_id=1940736045 instance=ExtResource("17_q67n8")]
 position = Vector2(387, 571)
-scale = Vector2(0.3, 0.3)
 starting_on = false
 interaction_radius = 50.0
 

@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/coffee_table.tscn" id="3_uka7v"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/sofa.tscn" id="4_mg6mv"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/floor_lamp.tscn" id="5_31toa"]
-[ext_resource type="PackedScene" path="res://scenes/objects/blood/blood_droplets.tscn" id="5_67vp5"]
+[ext_resource type="PackedScene" uid="uid://oe1uhx1eva8l" path="res://scenes/objects/blood/blood_droplets.tscn" id="5_67vp5"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/dining_table.tscn" id="6_oha7c"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/living_room/dining_chair.tscn" id="7_rhgl2"]
 [ext_resource type="PackedScene" path="res://scenes/objects/interiors/lighting/ceiling_lamp.tscn" id="8_ld2gq"]
@@ -47,7 +47,7 @@ display_name = "Building / Ground floor"
 camera_bounds = Rect2i(0, 0, 1152, 720)
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=758485644]
-color = Color(0.039215688, 0.039215688, 0.039215688, 1)
+color = Color(0.05490196, 0.05490196, 0.05490196, 1)
 
 [node name="Buildings" type="Node2D" parent="." unique_id=199967885]
 

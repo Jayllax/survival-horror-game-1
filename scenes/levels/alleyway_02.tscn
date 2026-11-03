@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://qwm3h0igxrrq" path="res://scenes/objects/fence_cuttable_side.tscn" id="14_d1lar"]
 [ext_resource type="PackedScene" path="res://scenes/objects/notes/note_flat.tscn" id="17_in168"]
 [ext_resource type="Script" uid="uid://ct1jqn7k4e0md" path="res://scripts/narrative/note_document.gd" id="18_in5tb"]
+[ext_resource type="PackedScene" path="res://scenes/objects/fence_reinforced_side.tscn" id="23_031ia"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v0ld8"]
 size = Vector2(2334, 120)
@@ -65,9 +66,19 @@ display_name = "Service alley"
 camera_bounds = Rect2i(0, 0, 1500, 720)
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=1634872600]
-color = Color(0.039215688, 0.039215688, 0.039215688, 1)
+color = Color(0.05490196, 0.05490196, 0.05490196, 1)
 
 [node name="Buildings" type="Node2D" parent="." unique_id=1244740229]
+
+[node name="Forground" type="Node" parent="Buildings" unique_id=1183781929]
+
+[node name="ReinforcedFenceSide" parent="Buildings/Forground" unique_id=1542594982 instance=ExtResource("23_031ia")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 3
+position = Vector2(-182, 636)
+scale = Vector2(1.2, 1.2)
+collision_layer = 0
+collision_mask = 0
 
 [node name="Town_01Mouth1" type="Polygon2D" parent="Buildings" unique_id=1783951528]
 z_index = -9
@@ -262,8 +273,8 @@ position = Vector2(-645, 0)
 shape = SubResource("RectangleShape2D_v0ld8")
 
 [node name="Curb" type="Polygon2D" parent="Geometry" unique_id=441947215]
-position = Vector2(-994, -1965.8262)
-scale = Vector2(1.189091, 4.1706476)
+position = Vector2(-994, -1035.8962)
+scale = Vector2(1.189091, 2.6707604)
 color = Color(0.45, 0.44, 0.48, 1)
 polygon = PackedVector2Array(0, 620, 2200, 620.00104, 2200, 623.00726, 2200, 626, 1100.73, 626, 0, 626, 0, 623.0968)
 
@@ -287,14 +298,23 @@ color = Color(0.184572, 0.180707, 0.200034, 1)
 polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200.0002, 623.0074, 2200, 626, 1101, 626, 0, 626, 0, 623.0261)
 
 [node name="Background3" type="Polygon2D" parent="Geometry" unique_id=535386433]
-position = Vector2(-1362, -53408)
-scale = Vector2(1.855, 87.17413)
+z_index = 4
+position = Vector2(-871.99994, -53925.38)
+scale = Vector2(1.6322727, 88.00062)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 620, 423.80774, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
+
+[node name="Background4" type="Polygon2D" parent="Geometry" unique_id=1728282099]
+z_index = 4
+position = Vector2(1620, -17409.887)
+scale = Vector2(0.51090914, 28.833689)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
 
-[node name="Background4" type="Polygon2D" parent="Geometry" unique_id=1728282099]
-position = Vector2(1622, -53428.004)
-scale = Vector2(1.855, 87.17413)
+[node name="Background5" type="Polygon2D" parent="Geometry" unique_id=1168475433]
+z_index = 4
+position = Vector2(-1073, -53568)
+scale = Vector2(0.34590906, 87.17413)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
 

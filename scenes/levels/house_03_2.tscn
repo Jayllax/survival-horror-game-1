@@ -40,8 +40,9 @@
 [ext_resource type="AudioStream" uid="uid://brbp6yfpsmxno" path="res://audio/voice/player_jax/player_jax_1_10.mp3" id="23_at73x"]
 [ext_resource type="AudioStream" uid="uid://bm80na5vks6d4" path="res://audio/voice/player_jax/player_jax_1_3.mp3" id="23_rg7w5"]
 [ext_resource type="AudioStream" uid="uid://dxbltxdr4ll33" path="res://audio/voice/player_jax/player_jax_1_11.mp3" id="23_w7op2"]
+[ext_resource type="Texture2D" uid="uid://cjug2skil3n0b" path="res://art/pixel/key.png" id="24_jpepr"]
 [ext_resource type="AudioStream" uid="uid://cg6376mfyqkc7" path="res://audio/voice/player_jax/player_jax_1_4.mp3" id="24_urshd"]
-[ext_resource type="Resource" uid="uid://c6jjbgbxclxsy" path="res://data/items/compact_saw.tres" id="24_yxqjj"]
+[ext_resource type="Script" uid="uid://ysok34dxqtu8" path="res://scripts/item_definition.gd" id="25_syrdq"]
 [ext_resource type="AudioStream" uid="uid://d11u56nli6m1l" path="res://audio/voice/player_jax/player_jax_1_5.mp3" id="26_1402q"]
 [ext_resource type="AudioStream" uid="uid://bn7hh11cma3ml" path="res://audio/voice/player_jax/player_jax_1_6.mp3" id="27_6l5d1"]
 [ext_resource type="AudioStream" uid="uid://yb1it177ngh3" path="res://audio/voice/player_jax/player_jax_1_7.mp3" id="28_28k42"]
@@ -64,10 +65,10 @@ size = Vector2(40, 720)
 
 [sub_resource type="Resource" id="Resource_wny14"]
 script = ExtResource("18_4ry7p")
-title = "Note from stranger"
+title = "Confrontationally written note"
 text = "Whoever you are Rasmus, stop leaving your whack ass notes around. I'm going to keep leaving my own until you stop leaving yours. You're wrong about this town, it's amazing. Is it full of psychopaths trying to kill you? Sure, but that's what's great about it! It makes you feel alive! And then there's this one girl I saw. You must not have seen her 'cause damn dude. Crazy body. Don't know where she went though, lost her at the park. Anyway, kindly fuck off with your notes.
 
-All the best,
+Shittiest regards,
 Peter"
 body_font = ExtResource("18_j2x64")
 
@@ -75,6 +76,16 @@ body_font = ExtResource("18_j2x64")
 script = ExtResource("20_3yrhw")
 item = ExtResource("21_07xaa")
 metadata/_custom_type_script = "uid://bkj62nwqxumq7"
+
+[sub_resource type="Resource" id="Resource_4kh6a"]
+script = ExtResource("25_syrdq")
+id = "orange_house_key"
+display_name = "House key"
+category = "Key"
+description = "A key for a house."
+icon = ExtResource("24_jpepr")
+remove_after_use = true
+grid_size = Vector2i(2, 1)
 
 [sub_resource type="Resource" id="Resource_28k42"]
 script = ExtResource("17_ujyqf")
@@ -322,7 +333,7 @@ camera_bounds = Rect2i(0, 0, 1152, 720)
 music_cue = SubResource("Resource_frk62")
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=758485644]
-color = Color(0.039215688, 0.039215688, 0.039215688, 1)
+color = Color(0.05490196, 0.05490196, 0.05490196, 1)
 
 [node name="Silos_Mouths" type="Node2D" parent="." unique_id=199967885]
 
@@ -499,7 +510,6 @@ visible = false
 
 [node name="LightSwitch" parent="Interactables" unique_id=1627212891 instance=ExtResource("17_fdp1k")]
 position = Vector2(638, 571)
-scale = Vector2(0.3, 0.3)
 connected_lights = Array[NodePath]([NodePath("../../Props/CeilingLamp2")])
 interaction_radius = 50.0
 
@@ -509,7 +519,6 @@ opens_left = true
 
 [node name="LightSwitch2" parent="Interactables" unique_id=1067931549 instance=ExtResource("17_fdp1k")]
 position = Vector2(341, 569)
-scale = Vector2(0.3, 0.3)
 connected_lights = Array[NodePath]([NodePath("../../Props/CeilingLamp")])
 starting_on = false
 interaction_radius = 50.0
@@ -541,7 +550,7 @@ correct_code = "2804"
 panel_title = "LOCKED DRAWER"
 action_label = "Examine drawer"
 interaction_radius = 50.0
-reward_item = ExtResource("24_yxqjj")
+reward_item = SubResource("Resource_4kh6a")
 
 [node name="Actors" type="Node2D" parent="." unique_id=1936203783]
 
