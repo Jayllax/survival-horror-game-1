@@ -10,10 +10,13 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/lighting/alley_light.tscn" id="5_pcyv7"]
 [ext_resource type="PackedScene" path="res://scenes/objects/fence_reinforced_side.tscn" id="6_gle4b"]
 [ext_resource type="PackedScene" uid="uid://mdei23004fri" path="res://scenes/objects/ammo.tscn" id="7_q8qeu"]
+[ext_resource type="PackedScene" path="res://scenes/objects/houses/3_storey/building_house_slate_blue_left.tscn" id="8_qlhb6"]
+[ext_resource type="PackedScene" path="res://scenes/objects/houses/1_storey/building_house_cream_left.tscn" id="9_k6cxx"]
 [ext_resource type="Texture2D" uid="uid://cjug2skil3n0b" path="res://art/pixel/key.png" id="11_uwjrm"]
 [ext_resource type="PackedScene" uid="uid://mxytf2yx5cvc" path="res://scenes/objects/key.tscn" id="11_wbtbr"]
 [ext_resource type="Script" uid="uid://ysok34dxqtu8" path="res://scripts/item_definition.gd" id="12_mupwe"]
 [ext_resource type="PackedScene" path="res://scenes/objects/bench.tscn" id="13_ff76r"]
+[ext_resource type="PackedScene" path="res://scenes/objects/houses/3_storey/building_house_plum_no_chimney.tscn" id="17_mupwe"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="21"]
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="22"]
 
@@ -39,9 +42,18 @@ display_name = "Service alley"
 camera_bounds = Rect2i(0, 0, 1500, 720)
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=1634872600]
+visible = false
 color = Color(0.05490196, 0.05490196, 0.05490196, 1)
 
 [node name="Buildings" type="Node2D" parent="." unique_id=1244740229]
+
+[node name="Foreground" type="Node" parent="Buildings" unique_id=1690506845]
+
+[node name="ReinforcedFenceSide2" parent="Buildings/Foreground" unique_id=330851233 instance=ExtResource("6_gle4b")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 3
+position = Vector2(653.00006, 644)
+scale = Vector2(1.2, 1.5)
 
 [node name="AlleyMouth2" type="Polygon2D" parent="Buildings" unique_id=715405124]
 z_index = -9
@@ -69,7 +81,7 @@ scale = Vector2(1.5581672, 2.5559664)
 modulate = Color(0, 0, 0, 1)
 self_modulate = Color(0, 0, 0, 0.84313726)
 z_index = -10
-position = Vector2(654, 492)
+position = Vector2(656, 492)
 
 [node name="HouseSilo02" parent="Buildings" unique_id=565006089 instance=ExtResource("3_flp4d")]
 modulate = Color(0, 0, 0, 1)
@@ -95,23 +107,17 @@ self_modulate = Color(0, 0, 0, 0.84313726)
 z_index = -10
 position = Vector2(-50, 492)
 
-[node name="HouseSilo06" parent="Buildings" unique_id=1413310191 instance=ExtResource("3_flp4d")]
-modulate = Color(0, 0, 0, 1)
-self_modulate = Color(0, 0, 0, 0.84313726)
-z_index = -10
-position = Vector2(830, 492)
-
 [node name="HouseSilo07" parent="Buildings" unique_id=2061735086 instance=ExtResource("3_flp4d")]
 modulate = Color(0, 0, 0, 1)
 self_modulate = Color(0, 0, 0, 0.84313726)
 z_index = -10
-position = Vector2(1006, 492)
+position = Vector2(1010, 492)
 
 [node name="HouseSilo08" parent="Buildings" unique_id=1691124307 instance=ExtResource("4_pcyv7")]
 modulate = Color(0, 0, 0, 1)
 self_modulate = Color(0, 0, 0, 0.84313726)
 z_index = -10
-position = Vector2(1182, 492)
+position = Vector2(1186, 492)
 
 [node name="HouseSiloThicc1" parent="Buildings" unique_id=2134006598 instance=ExtResource("2_lb3ar")]
 modulate = Color(0.31061712, 0.31061712, 0.3106171, 1)
@@ -119,25 +125,33 @@ self_modulate = Color(0, 0, 0, 1)
 z_index = 3
 position = Vector2(-212, 492)
 
-[node name="HouseSiloThicc2" parent="Buildings" unique_id=1301683409 instance=ExtResource("2_lb3ar")]
-modulate = Color(0.31061712, 0.31061712, 0.3106171, 1)
-self_modulate = Color(0, 0, 0, 1)
-z_index = 3
-position = Vector2(140, 492)
-
 [node name="HouseSiloThicc3" parent="Buildings" unique_id=1008732926 instance=ExtResource("3_flp4d")]
 modulate = Color(0, 0, 0, 1)
 self_modulate = Color(0, 0, 0, 1)
 z_index = 3
 position = Vector2(-36, 492)
 
-[node name="Foreground" type="Node" parent="Buildings" unique_id=1690506845]
-
-[node name="ReinforcedFenceSide2" parent="Buildings/Foreground" unique_id=330851233 instance=ExtResource("6_gle4b")]
-modulate = Color(0, 0, 0, 0.7058824)
+[node name="HousePlum3Storey" parent="Buildings" unique_id=1441152306 instance=ExtResource("17_mupwe")]
+modulate = Color(0, 0, 0, 1)
 z_index = 3
-position = Vector2(653.00006, 644)
-scale = Vector2(1.2, 1.5)
+position = Vector2(134, 456)
+
+[node name="HousePlum3Storey2" parent="Buildings" unique_id=1464009979 instance=ExtResource("17_mupwe")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -9
+position = Vector2(1362, 456)
+
+[node name="HouseSlateBlue3Storey" parent="Buildings" unique_id=1848739731 instance=ExtResource("8_qlhb6")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(834, 456)
+
+[node name="HouseCream1Storey" parent="Buildings" unique_id=632686075 instance=ExtResource("9_k6cxx")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+position = Vector2(1538, 528)
 
 [node name="Geometry" type="Node2D" parent="." unique_id=526838699]
 

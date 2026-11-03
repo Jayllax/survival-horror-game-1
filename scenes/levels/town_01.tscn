@@ -14,11 +14,17 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_dusty_rose_left.tscn" id="8_biwbp"]
 [ext_resource type="PackedScene" uid="uid://cfoibs7ccueyy" path="res://scenes/objects/houses/building_house.tscn" id="8_n8lao"]
 [ext_resource type="PackedScene" path="res://scenes/objects/fence_reinforced_side.tscn" id="10_le0go"]
+[ext_resource type="PackedScene" path="res://scenes/objects/houses/1_storey/building_house_terracotta_no_chimney.tscn" id="13_w3lfx"]
+[ext_resource type="PackedScene" path="res://scenes/objects/houses/1_storey/building_house_teal_right.tscn" id="14_62b4b"]
 [ext_resource type="PackedScene" path="res://scenes/objects/bench.tscn" id="14_hvnho"]
 [ext_resource type="PackedScene" path="res://scenes/objects/bin.tscn" id="15_5x2mi"]
+[ext_resource type="PackedScene" path="res://scenes/objects/houses/1_storey/building_house_plum_no_chimney.tscn" id="15_6ocd3"]
 [ext_resource type="PackedScene" uid="uid://cjvei6sff82yp" path="res://scenes/actors/examine_lines.tscn" id="15_rmnuy"]
 [ext_resource type="Script" uid="uid://dokxahjw0ajyo" path="res://scripts/narrative/dialogue_line.gd" id="16_en3fj"]
+[ext_resource type="PackedScene" path="res://scenes/objects/houses/1_storey/building_house_cream_left.tscn" id="16_m5bsj"]
+[ext_resource type="PackedScene" path="res://scenes/objects/houses/3_storey/building_house_pale_olive_no_chimney.tscn" id="17_2pwly"]
 [ext_resource type="Script" uid="uid://c72jybcn230jo" path="res://scripts/narrative/dialogue_choice.gd" id="17_hvnho"]
+[ext_resource type="PackedScene" path="res://scenes/objects/houses/3_storey/building_house_cream_left.tscn" id="17_twc7g"]
 [ext_resource type="Resource" uid="uid://tejmjkno6iqb" path="res://data/narrative/speakers/you.tres" id="18_5x2mi"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/building_house_cream.tscn" id="18_vn4xj"]
 [ext_resource type="Script" uid="uid://n78cmm0wplag" path="res://scripts/narrative/dialogue_sequence.gd" id="19_w3lfx"]
@@ -28,6 +34,7 @@
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="22"]
 [ext_resource type="PackedScene" uid="uid://da5r8bq0hou0w" path="res://scenes/actors/enemy.tscn" id="22_w4u1r"]
 [ext_resource type="PackedScene" uid="uid://mdei23004fri" path="res://scenes/objects/ammo.tscn" id="23_uk0bi"]
+[ext_resource type="PackedScene" path="res://scenes/objects/houses/3_storey/building_house_plum_no_chimney.tscn" id="37_otdf1"]
 [ext_resource type="Resource" path="res://data/audio/music/ambient_track_1.tres" id="location_music"]
 [ext_resource type="PackedScene" uid="uid://db83ujlaupd0k" path="res://scenes/objects/save_bicycle.tscn" id="save_bicycle"]
 
@@ -52,16 +59,82 @@ camera_bounds = Rect2i(0, 0, 2200, 720)
 music_cue = ExtResource("location_music")
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=857491603]
-visible = false
 color = Color(0.056291588, 0.056291603, 0.056291573, 1)
 
 [node name="Buildings" type="Node2D" parent="." unique_id=1653355476]
 
-[node name="1-story" type="Node2D" parent="Buildings" unique_id=1903219308]
-
 [node name="Normal" type="Node2D" parent="Buildings" unique_id=461348971]
 
+[node name="House" parent="Buildings/Normal" unique_id=176933239 instance=ExtResource("8_n8lao")]
+z_index = -7
+position = Vector2(200, 496)
+
+[node name="HousePlum" parent="Buildings/Normal" unique_id=1755587701 instance=ExtResource("5_ihmxm")]
+z_index = -7
+position = Vector2(24, 492)
+
+[node name="HouseCream" parent="Buildings/Normal" unique_id=1913707553 instance=ExtResource("2_35lbs")]
+position = Vector2(549, 492)
+
+[node name="HouseTerracotta" parent="Buildings/Normal" unique_id=621109973 instance=ExtResource("5_5ycnk")]
+position = Vector2(-152, 492)
+
+[node name="HouseSlateBlue" parent="Buildings/Normal" unique_id=1011688616 instance=ExtResource("7_wvt63")]
+position = Vector2(997, 492)
+
+[node name="House2" parent="Buildings/Normal" unique_id=1936693580 instance=ExtResource("8_n8lao")]
+position = Vector2(1377, 492)
+
+[node name="HouseDustyRose" parent="Buildings/Normal" unique_id=494179358 instance=ExtResource("8_biwbp")]
+position = Vector2(1678, 492)
+
+[node name="HouseDustyRose2" parent="Buildings/Normal" unique_id=448522256 instance=ExtResource("8_biwbp")]
+position = Vector2(2206, 492)
+
+[node name="CreamHouse" parent="Buildings/Normal" unique_id=1981102500 instance=ExtResource("18_vn4xj")]
+position = Vector2(1854, 492)
+
+[node name="HouseSage2" parent="Buildings/Normal" unique_id=687319272 instance=ExtResource("6_otbwl")]
+position = Vector2(2478, 492)
+
+[node name="HousePaleOlive" parent="Buildings/Normal" unique_id=1971141480 instance=ExtResource("20_akiom")]
+position = Vector2(3102, 492)
+
+[node name="HouseCream2" parent="Buildings/Normal" unique_id=1163749733 instance=ExtResource("2_35lbs")]
+position = Vector2(2654, 492)
+
+[node name="HouseDustyRose3" parent="Buildings/Normal" unique_id=623198391 instance=ExtResource("8_biwbp")]
+position = Vector2(3278, 492)
+
+[node name="HouseTeal" parent="Buildings/Normal" unique_id=1758763994 instance=ExtResource("21_mwytw")]
+position = Vector2(3630, 492)
+flip_h = true
+
+[node name="HouseSlateBlue2" parent="Buildings/Normal" unique_id=671681953 instance=ExtResource("7_wvt63")]
+position = Vector2(-508, 492)
+
+[node name="1-story" type="Node2D" parent="Buildings" unique_id=1903219308]
+
+[node name="HouseTerracotta1Storey" parent="Buildings/1-story" unique_id=591323541 instance=ExtResource("13_w3lfx")]
+position = Vector2(1186.0001, 528)
+scale = Vector2(2.1, 2)
+
+[node name="HouseTeal1Storey" parent="Buildings/1-story" unique_id=362828791 instance=ExtResource("14_62b4b")]
+z_index = -9
+position = Vector2(-330, 528)
+scale = Vector2(2.05, 2)
+
+[node name="HousePlum1Storey" parent="Buildings/1-story" unique_id=1463895871 instance=ExtResource("15_6ocd3")]
+position = Vector2(2032, 528)
+
+[node name="HouseCream1Storey" parent="Buildings/1-story" unique_id=545894054 instance=ExtResource("16_m5bsj")]
+z_index = -9
+position = Vector2(3455, 528)
+
 [node name="3-story" type="Node2D" parent="Buildings" unique_id=1564869678]
+
+[node name="HousePaleOlive3Storey" parent="Buildings/3-story" unique_id=1696408371 instance=ExtResource("17_2pwly")]
+position = Vector2(725, 456)
 
 [node name="Alleyway_01Mouth" type="Polygon2D" parent="Buildings" unique_id=1408196773]
 z_index = -2
@@ -98,74 +171,6 @@ scale = Vector2(0.6581668, 0.5870964)
 color = Color(0, 0, 0, 0.13333334)
 polygon = PackedVector2Array(1150, 310, 1244.9999, 310.0001, 1340.0001, 310.0001, 1340, 463.84204, 1340, 620, 1150, 620, 1149.9999, 464.1112)
 
-[node name="CreamHouse2" parent="Buildings" unique_id=788053470 instance=ExtResource("18_vn4xj")]
-z_index = -7
-position = Vector2(-330, 498)
-
-[node name="House" parent="Buildings" unique_id=176933239 instance=ExtResource("8_n8lao")]
-z_index = -7
-position = Vector2(200, 496)
-
-[node name="HousePlum" parent="Buildings" unique_id=1755587701 instance=ExtResource("5_ihmxm")]
-z_index = -7
-position = Vector2(24, 492)
-
-[node name="HouseCream" parent="Buildings" unique_id=1913707553 instance=ExtResource("2_35lbs")]
-position = Vector2(549, 492)
-
-[node name="HouseTerracotta" parent="Buildings" unique_id=621109973 instance=ExtResource("5_5ycnk")]
-position = Vector2(-152, 492)
-
-[node name="HouseSage" parent="Buildings" unique_id=912907548 instance=ExtResource("6_otbwl")]
-position = Vector2(725, 492)
-
-[node name="HouseSlateBlue" parent="Buildings" unique_id=1011688616 instance=ExtResource("7_wvt63")]
-position = Vector2(997, 492)
-
-[node name="House2" parent="Buildings" unique_id=1936693580 instance=ExtResource("8_n8lao")]
-position = Vector2(1377, 492)
-
-[node name="HouseDustyRose" parent="Buildings" unique_id=494179358 instance=ExtResource("8_biwbp")]
-position = Vector2(1678, 492)
-
-[node name="HousePlum2" parent="Buildings" unique_id=1830213861 instance=ExtResource("5_ihmxm")]
-position = Vector2(2030, 492)
-
-[node name="HouseDustyRose2" parent="Buildings" unique_id=448522256 instance=ExtResource("8_biwbp")]
-position = Vector2(2206, 492)
-
-[node name="HouseTerracotta2" parent="Buildings" unique_id=1661619094 instance=ExtResource("5_5ycnk")]
-position = Vector2(1189, 492)
-
-[node name="CreamHouse" parent="Buildings" unique_id=1981102500 instance=ExtResource("18_vn4xj")]
-position = Vector2(1854, 492)
-
-[node name="HouseSage2" parent="Buildings" unique_id=687319272 instance=ExtResource("6_otbwl")]
-position = Vector2(2478, 492)
-
-[node name="HouseTerracotta3" parent="Buildings" unique_id=746764692 instance=ExtResource("5_5ycnk")]
-position = Vector2(2830, 492)
-
-[node name="HousePaleOlive" parent="Buildings" unique_id=1971141480 instance=ExtResource("20_akiom")]
-position = Vector2(3102, 492)
-
-[node name="HouseCream2" parent="Buildings" unique_id=1163749733 instance=ExtResource("2_35lbs")]
-position = Vector2(2654, 492)
-
-[node name="House3" parent="Buildings" unique_id=2112961102 instance=ExtResource("8_n8lao")]
-position = Vector2(3454, 494)
-flip_h = true
-
-[node name="HouseDustyRose3" parent="Buildings" unique_id=623198391 instance=ExtResource("8_biwbp")]
-position = Vector2(3278, 492)
-
-[node name="HouseTeal" parent="Buildings" unique_id=1758763994 instance=ExtResource("21_mwytw")]
-position = Vector2(3630, 492)
-flip_h = true
-
-[node name="HouseSlateBlue2" parent="Buildings" unique_id=671681953 instance=ExtResource("7_wvt63")]
-position = Vector2(-508, 492)
-
 [node name="Silos" type="Node2D" parent="Buildings" unique_id=1986475710]
 
 [node name="HouseSilo" parent="Buildings/Silos" unique_id=746068843 instance=ExtResource("8_n8lao")]
@@ -173,12 +178,6 @@ modulate = Color(0, 0, 0, 1)
 self_modulate = Color(0, 0, 0, 0.84313726)
 z_index = -10
 position = Vector2(-240, 492)
-
-[node name="HouseSilo02" parent="Buildings/Silos" unique_id=2053725209 instance=ExtResource("2_35lbs")]
-modulate = Color(0, 0, 0, 1)
-self_modulate = Color(0, 0, 0, 0.84313726)
-z_index = -10
-position = Vector2(112, 492)
 
 [node name="HouseSilo03" parent="Buildings/Silos" unique_id=594016276 instance=ExtResource("5_5ycnk")]
 modulate = Color(0, 0, 0, 1)
@@ -204,17 +203,11 @@ self_modulate = Color(0, 0, 0, 0.84313726)
 z_index = -10
 position = Vector2(859, 492)
 
-[node name="HouseSilo07" parent="Buildings/Silos" unique_id=1701703278 instance=ExtResource("5_5ycnk")]
-modulate = Color(0, 0, 0, 1)
-self_modulate = Color(0, 0, 0, 0.84313726)
-z_index = -10
-position = Vector2(1093, 492)
-
 [node name="HouseSilo2" parent="Buildings/Silos" unique_id=1145206618 instance=ExtResource("8_n8lao")]
 modulate = Color(0, 0, 0, 1)
 self_modulate = Color(0, 0, 0, 0.84313726)
 z_index = -10
-position = Vector2(1283, 492)
+position = Vector2(1281, 492)
 
 [node name="HouseSilo3" parent="Buildings/Silos" unique_id=1989924863 instance=ExtResource("8_n8lao")]
 modulate = Color(0, 0, 0, 1)
@@ -287,6 +280,30 @@ modulate = Color(0, 0, 0, 1)
 self_modulate = Color(0, 0, 0, 0.84313726)
 z_index = -10
 position = Vector2(-420, 492)
+
+[node name="HouseCream3Storey" parent="Buildings/Silos" unique_id=1261165104 instance=ExtResource("17_twc7g")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(112, 456)
+
+[node name="HouseCream3Storey2" parent="Buildings/Silos" unique_id=707905040 instance=ExtResource("17_twc7g")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(1094, 456)
+
+[node name="HouseCream3Storey3" parent="Buildings/Silos" unique_id=684026270 instance=ExtResource("17_twc7g")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(2118, 456)
+
+[node name="HouseCream3Storey4" parent="Buildings/Silos" unique_id=1471800203 instance=ExtResource("17_twc7g")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -10
+position = Vector2(2967, 456)
 
 [node name="Foreground" type="Node" parent="Buildings" unique_id=1832623489]
 
@@ -452,7 +469,7 @@ dialogue = SubResource("Resource_6ocd3")
 action_label = "Open door"
 
 [node name="examine_lines8" parent="Interactables/Examines" unique_id=1377968052 instance=ExtResource("15_rmnuy")]
-position = Vector2(2030, 573)
+position = Vector2(2032, 573)
 dialogue = SubResource("Resource_6ocd3")
 action_label = "Open door"
 
@@ -478,6 +495,11 @@ action_label = "Open door"
 
 [node name="examine_lines13" parent="Interactables/Examines" unique_id=597553144 instance=ExtResource("15_rmnuy")]
 position = Vector2(3278, 573)
+dialogue = SubResource("Resource_6ocd3")
+action_label = "Open door"
+
+[node name="examine_lines14" parent="Interactables/Examines" unique_id=291742117 instance=ExtResource("15_rmnuy")]
+position = Vector2(1810, 573)
 dialogue = SubResource("Resource_6ocd3")
 action_label = "Open door"
 
@@ -525,7 +547,7 @@ destination_spawn = "from_street"
 visible = false
 
 [node name="House_02Entrance2" parent="Interactables" unique_id=798795210 instance=ExtResource("4")]
-position = Vector2(1189, 573)
+position = Vector2(1187, 573)
 action_label = "Open door"
 description = "Requires house_02_key."
 required_key = "orange_house_key"
@@ -585,10 +607,7 @@ position = Vector2(-197, 588)
 position = Vector2(998, 588)
 
 [node name="from_house_02" type="Marker2D" parent="Spawns" unique_id=589164884]
-position = Vector2(1189, 588)
-
-[node name="from_house_03" type="Marker2D" parent="Spawns" unique_id=2075200795]
-position = Vector2(1810, 588)
+position = Vector2(1187, 588)
 
 [node name="from_house_04" type="Marker2D" parent="Spawns" unique_id=123817631]
 position = Vector2(2654, 588)
@@ -615,6 +634,9 @@ stream = ExtResource("21")
 volume_db = -16.0
 autoplay = true
 script = ExtResource("22")
+
+[node name="HousePlum3Storey" parent="." unique_id=1887840808 instance=ExtResource("37_otdf1")]
+position = Vector2(2830, 456)
 
 [editable path="Props/Streetlamp5"]
 [editable path="Interactables/Alleyway_01Entrance"]

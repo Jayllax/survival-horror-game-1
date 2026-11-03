@@ -23,6 +23,8 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/notes/note_flat.tscn" id="17_in168"]
 [ext_resource type="Script" uid="uid://ct1jqn7k4e0md" path="res://scripts/narrative/note_document.gd" id="18_in5tb"]
 [ext_resource type="PackedScene" path="res://scenes/objects/fence_reinforced_side.tscn" id="23_031ia"]
+[ext_resource type="PackedScene" path="res://scenes/objects/houses/3_storey/building_house_sage_right.tscn" id="24_mcqgs"]
+[ext_resource type="PackedScene" path="res://scenes/objects/houses/1_storey/building_house_sage_right.tscn" id="25_2rurx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v0ld8"]
 size = Vector2(2334, 120)
@@ -113,12 +115,6 @@ polygon = PackedVector2Array(1150, 310, 1244.4807, 309.99997, 1340, 309.99997, 1
 position = Vector2(1244.898, 545.5647)
 scale = Vector2(0.8411479, 1.3901832)
 
-[node name="HouseSilo" parent="Buildings" unique_id=1936693580 instance=ExtResource("3_bfqbi")]
-modulate = Color(0, 0, 0, 1)
-self_modulate = Color(0, 0, 0, 0.84313726)
-z_index = -10
-position = Vector2(654, 492)
-
 [node name="HouseSilo02" parent="Buildings" unique_id=565006089 instance=ExtResource("4_xd35a")]
 modulate = Color(0, 0, 0, 1)
 self_modulate = Color(0, 0, 0, 0.84313726)
@@ -155,12 +151,6 @@ self_modulate = Color(0, 0, 0, 0.84313726)
 z_index = -10
 position = Vector2(1006, 492)
 
-[node name="HouseSilo08" parent="Buildings" unique_id=1691124307 instance=ExtResource("5_fs2yv")]
-modulate = Color(0, 0, 0, 1)
-self_modulate = Color(0, 0, 0, 0.84313726)
-z_index = -10
-position = Vector2(1182, 492)
-
 [node name="HouseSilo09" parent="Buildings" unique_id=2145651642 instance=ExtResource("4_xd35a")]
 modulate = Color(0, 0, 0, 1)
 self_modulate = Color(0, 0, 0, 0.84313726)
@@ -190,12 +180,6 @@ modulate = Color(0, 0, 0, 1)
 self_modulate = Color(0, 0, 0, 0.84313726)
 z_index = -10
 position = Vector2(1534, 492)
-
-[node name="HouseSilo14" parent="Buildings" unique_id=604976632 instance=ExtResource("5_fs2yv")]
-modulate = Color(0, 0, 0, 1)
-self_modulate = Color(0, 0, 0, 0.84313726)
-z_index = -10
-position = Vector2(-226, 492)
 
 [node name="HouseSilo2" parent="Buildings" unique_id=1083906086 instance=ExtResource("3_bfqbi")]
 modulate = Color(0, 0, 0, 1)
@@ -262,6 +246,16 @@ modulate = Color(0, 0, 0, 1)
 self_modulate = Color(0, 0, 0, 1)
 z_index = 3
 position = Vector2(-578, 492)
+
+[node name="HouseSage3Storey" parent="Buildings" unique_id=2122977679 instance=ExtResource("24_mcqgs")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+position = Vector2(654, 456)
+
+[node name="HouseSage3Storey2" parent="Buildings" unique_id=887085198 instance=ExtResource("24_mcqgs")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+position = Vector2(1182, 456)
 
 [node name="Geometry" type="Node2D" parent="." unique_id=526838699]
 
@@ -427,6 +421,12 @@ stream = ExtResource("13_bw6gv")
 volume_db = -16.0
 autoplay = true
 script = ExtResource("14_c5ioa")
+
+[node name="HouseSage1Storey" parent="." unique_id=1496747059 instance=ExtResource("25_2rurx")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 0.84313726)
+z_index = -9
+position = Vector2(-226, 528)
 
 [editable path="Interactables/Alleyway_02Exit1"]
 [editable path="Interactables/Alleyway_02Exit2"]
