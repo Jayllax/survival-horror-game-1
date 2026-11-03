@@ -17,6 +17,30 @@ Eight separate, ready-to-place house assets based on your current house. The roo
 
 ## Place them in your level
 
+### One- and three-storey objects
+
+The eight colours also have ready-to-place scenes in these folders:
+
+- `scenes/objects/houses/1_storey/` — 192 x 184 world pixels.
+- `scenes/objects/houses/3_storey/` — 192 x 328 world pixels.
+
+Use the same scene filenames listed in the table above, within the folder for
+the height you want. For example, drag
+`scenes/objects/houses/1_storey/building_house_teal_right.tscn` into your level
+for the one-storey teal house. The corresponding three-storey object is
+`scenes/objects/houses/3_storey/building_house_teal_right.tscn`.
+
+These objects already have the same 2x scale, nearest-neighbour filtering and
+Z Index (-8) as the existing two-storey house objects. Their textures are the
+approved original-pixel variations, with unchanged colours and shading. There
+is no need to resize the small native PNGs manually.
+
+Like the existing objects, the root is centred on the image. For ground at
+Y = 620, place the one-storey root at Y = 528 or the three-storey root at
+Y = 456. Entrances are placed separately using the existing entrance scene.
+
+### Original two-storey objects
+
 Drag any of these `.tscn` files from FileSystem into your level's **Buildings** node, then move it in the 2D editor. They are ordinary Sprite2D scenes, visible and editable in the editor, with the same background Z Index (`-8`) as the original house. There is no runtime generation or placement script.
 
 Each PNG is **96 × 128 native pixels**, matching your current source house. Each scene uses **Scale = (2, 2)** with nearest-neighbor filtering, giving the same **192 × 256 world-pixel canvas** as your existing house. For ground at Y = 620, place the centered house root at **Y = 492**. Its foundation reaches the same ground line.

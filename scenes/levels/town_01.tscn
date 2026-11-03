@@ -52,9 +52,16 @@ camera_bounds = Rect2i(0, 0, 2200, 720)
 music_cue = ExtResource("location_music")
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=857491603]
+visible = false
 color = Color(0.056291588, 0.056291603, 0.056291573, 1)
 
 [node name="Buildings" type="Node2D" parent="." unique_id=1653355476]
+
+[node name="1-story" type="Node2D" parent="Buildings" unique_id=1903219308]
+
+[node name="Normal" type="Node2D" parent="Buildings" unique_id=461348971]
+
+[node name="3-story" type="Node2D" parent="Buildings" unique_id=1564869678]
 
 [node name="Alleyway_01Mouth" type="Polygon2D" parent="Buildings" unique_id=1408196773]
 z_index = -2

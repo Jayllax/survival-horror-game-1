@@ -18,12 +18,18 @@ windows, colour values, shading and pixel scale come directly from each source.
 The corner bricks are copied beside each window row at the original offset.
 The original two-storey files remain byte-for-byte identical to the upload.
 
-Use the PNGs directly as Sprite2D textures, with nearest-neighbour filtering and
-the same 2x scale as the existing native house variations. To place a centred
-Sprite2D with its bottom at its node origin, set its offset to `(0, -46)` for
-one storey or `(0, -82)` for three storeys. The height changes by 72 world pixels
-per floor at 2x scale; the width stays fixed. Level placements and collision
-shapes are authored separately.
+Ready-to-place Godot objects are in `scenes/objects/houses/1_storey/` and
+`scenes/objects/houses/3_storey/`. Drag a `.tscn` from either folder into your
+level, just like the existing two-storey house objects. The scene filenames
+match the corresponding originals in the parent house-objects folder.
+
+Each object is a centred Sprite2D with the existing 2x scale, nearest-neighbour
+filtering and Z Index of -8. The PNGs stay at native resolution; the object
+supplies their correct in-game size. For a ground line at Y = 620, put a
+one-storey object's root at Y = 528 or a three-storey object's root at Y = 456.
+The height changes by 72 world pixels per floor at 2x scale; the width stays
+fixed. Level placements, entrances and collision shapes are authored separately,
+as with the existing house objects.
 
 To rebuild the new sprites after deliberately editing the original PNGs, run
 `bash tools/build_house_heights.sh` from the project. It requires ImageMagick 7
