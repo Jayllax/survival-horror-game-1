@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://c4cjkplrees4c"]
 
 [ext_resource type="Script" uid="uid://7vs0b7ni5urj" path="res://scripts/interactable.gd" id="1"]
-[ext_resource type="Texture2D" uid="uid://d00m7h3e2gckn" path="res://art/pixel/door.png" id="2"]
 
 [sub_resource type="RectangleShape2D" id="shape"]
 size = Vector2(48, 88)
@@ -17,7 +16,6 @@ requires_power = false
 
 [node name="Facade" type="Sprite2D" parent="." unique_id=1815167978]
 position = Vector2(0, 20)
-texture = ExtResource("2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=535636158]
 position = Vector2(0, 20)

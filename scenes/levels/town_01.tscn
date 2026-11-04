@@ -34,9 +34,10 @@
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="22"]
 [ext_resource type="PackedScene" uid="uid://da5r8bq0hou0w" path="res://scenes/actors/enemy.tscn" id="22_w4u1r"]
 [ext_resource type="PackedScene" uid="uid://mdei23004fri" path="res://scenes/objects/ammo.tscn" id="23_uk0bi"]
+[ext_resource type="PackedScene" uid="uid://bxca42ds4fy8q" path="res://scenes/objects/forest/trees/broadleaf_large.tscn" id="24_1f388"]
+[ext_resource type="PackedScene" path="res://scenes/objects/forest/plants/bush_large.tscn" id="25_nc0rv"]
 [ext_resource type="PackedScene" path="res://scenes/objects/story/world_flag_condition.tscn" id="33_qvr12"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/3_storey/building_house_plum_no_chimney.tscn" id="37_otdf1"]
-[ext_resource type="PackedScene" path="res://scenes/objects/equipment/handgun.tscn" id="39_1f388"]
 [ext_resource type="Resource" path="res://data/audio/music/ambient_track_1.tres" id="location_music"]
 [ext_resource type="PackedScene" uid="uid://db83ujlaupd0k" path="res://scenes/objects/save_bicycle.tscn" id="save_bicycle"]
 
@@ -137,6 +138,9 @@ position = Vector2(3455, 528)
 
 [node name="HousePaleOlive3Storey" parent="Buildings/3-story" unique_id=1696408371 instance=ExtResource("17_2pwly")]
 position = Vector2(725, 456)
+
+[node name="HousePlum3Storey" parent="Buildings/3-story" unique_id=1887840808 instance=ExtResource("37_otdf1")]
+position = Vector2(2830, 456)
 
 [node name="Alleyway_01Mouth" type="Polygon2D" parent="Buildings" unique_id=1408196773]
 z_index = -2
@@ -361,8 +365,40 @@ z_index = 3
 position = Vector2(3366.0002, 640)
 scale = Vector2(1.2, 1.2)
 
-[node name="HousePlum3Storey" parent="Buildings" unique_id=1887840808 instance=ExtResource("37_otdf1")]
-position = Vector2(2830, 456)
+[node name="BroadleafLarge" parent="Buildings/Foreground" unique_id=1626854851 instance=ExtResource("24_1f388")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 4
+position = Vector2(1466, 640)
+
+[node name="BroadleafLarge2" parent="Buildings/Foreground" unique_id=150477309 instance=ExtResource("24_1f388")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 4
+position = Vector2(430, 640)
+
+[node name="BushLarge" parent="Buildings/Foreground" unique_id=1815816057 instance=ExtResource("25_nc0rv")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 4
+position = Vector2(1548, 640)
+
+[node name="BushLarge2" parent="Buildings/Foreground" unique_id=107514063 instance=ExtResource("25_nc0rv")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 4
+position = Vector2(2495, 640)
+
+[node name="BushLarge3" parent="Buildings/Foreground" unique_id=903567518 instance=ExtResource("25_nc0rv")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 4
+position = Vector2(2566, 640)
+
+[node name="BushLarge4" parent="Buildings/Foreground" unique_id=1709084560 instance=ExtResource("25_nc0rv")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 4
+position = Vector2(2637, 640)
+
+[node name="BroadleafLarge3" parent="Buildings/Foreground" unique_id=1921453784 instance=ExtResource("24_1f388")]
+modulate = Color(0, 0, 0, 0.7058824)
+z_index = 4
+position = Vector2(3203, 640)
 
 [node name="Geometry" type="Node2D" parent="." unique_id=491046715]
 
@@ -577,6 +613,7 @@ visible = false
 z_index = -1
 position = Vector2(1527.9999, 620)
 scale = Vector2(1.3, 1.3)
+required_tool = "bolt"
 
 [node name="CollisionShape2D" parent="Interactables/Town_02Entrance/Barrier" parent_id_path=PackedInt32Array(1073430740, 1311734470) index="0" unique_id=495058167]
 disabled = true
@@ -588,6 +625,7 @@ interaction_radius = 50.0
 
 [node name="Forest_Entrance" parent="Interactables" unique_id=505011352 instance=ExtResource("4")]
 position = Vector2(-208, 556)
+action_label = "Go back to forest"
 destination_scene = "uid://dyo3etebfk0vw"
 destination_spawn = "from_town_01"
 
@@ -611,6 +649,11 @@ leave_corpse = true
 
 [node name="Player" parent="Actors" unique_id=1065848384 instance=ExtResource("2")]
 position = Vector2(-198, 588)
+
+[node name="Enemy2" parent="Actors" unique_id=1751376480 instance=ExtResource("22_w4u1r")]
+position = Vector2(1086, 588)
+speed = 110.0
+damage = 10
 
 [node name="Spawns" type="Node2D" parent="." unique_id=1790161343]
 
@@ -651,12 +694,9 @@ script = ExtResource("22")
 
 [node name="WorldFlagCondition" parent="." unique_id=675204109 instance=ExtResource("33_qvr12")]
 flag_id = "story:spoke_to_jax_1"
-visible_when_met = Array[NodePath]([NodePath("../Interactables/Alleyway_01Entrance3")])
-activate_when_met = Array[NodePath]([NodePath("../Interactables/Alleyway_01Entrance3")])
-enable_interaction_when_met = Array[NodePath]([NodePath("../Interactables/Alleyway_01Entrance3")])
-
-[node name="Handgun" parent="." unique_id=276655402 instance=ExtResource("39_1f388")]
-position = Vector2(-100, 575)
+visible_when_met = Array[NodePath]([NodePath("../Interactables/Alleyway_01Entrance3"), NodePath("../Actors/Enemy2")])
+activate_when_met = Array[NodePath]([NodePath("../Interactables/Alleyway_01Entrance3"), NodePath("../Actors/Enemy2")])
+enable_interaction_when_met = Array[NodePath]([NodePath("../Interactables/Alleyway_01Entrance3"), NodePath("../Actors/Enemy2")])
 
 [editable path="Props/Streetlamp5"]
 [editable path="Interactables/Alleyway_01Entrance"]

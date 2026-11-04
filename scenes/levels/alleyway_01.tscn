@@ -265,10 +265,8 @@ item_definition = SubResource("Resource_qlhb6")
 
 [node name="EnterTown_02" parent="Interactables" unique_id=166180848 instance=ExtResource("4")]
 position = Vector2(1535, 556)
+action_label = "Go deeper into town"
 destination_spawn = "from_alleyway_01"
-
-[node name="Facade" parent="Interactables/EnterTown_02" index="0" unique_id=1815167978]
-visible = false
 
 [node name="Enter_Town_01_2" parent="Interactables" unique_id=381636798 instance=ExtResource("4")]
 position = Vector2(968, 556)
@@ -309,5 +307,4 @@ pursuit_distance = 800.0
 stagger_cooldown_seconds = 0.4
 
 [editable path="Interactables/Enter_Town_01_1"]
-[editable path="Interactables/EnterTown_02"]
 [editable path="Interactables/Enter_Town_01_2"]
