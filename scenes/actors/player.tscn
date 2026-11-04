@@ -25,6 +25,7 @@ move_speed = 90.0
 jump_velocity = -250.0
 use_crouch_placeholder_pose = false
 use_dodge_placeholder_pose = false
+aiming_move_multiplier = 0.4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1385853004]
 shape = SubResource("body")

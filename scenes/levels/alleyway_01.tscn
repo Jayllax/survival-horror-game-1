@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://ysok34dxqtu8" path="res://scripts/item_definition.gd" id="12_mupwe"]
 [ext_resource type="PackedScene" path="res://scenes/objects/bench.tscn" id="13_ff76r"]
 [ext_resource type="PackedScene" path="res://scenes/objects/houses/3_storey/building_house_plum_no_chimney.tscn" id="17_mupwe"]
+[ext_resource type="PackedScene" uid="uid://da5r8bq0hou0w" path="res://scenes/actors/enemy.tscn" id="20_ieagv"]
 [ext_resource type="AudioStream" uid="uid://dsbf5vwqt424w" path="res://audio/town_drone.wav" id="21"]
 [ext_resource type="Script" uid="uid://g7f8qun0puti" path="res://scripts/ambient.gd" id="22"]
 
@@ -42,7 +43,6 @@ display_name = "Service alley"
 camera_bounds = Rect2i(0, 0, 1500, 720)
 
 [node name="AmbientTint" type="CanvasModulate" parent="." unique_id=1634872600]
-visible = false
 color = Color(0.05490196, 0.05490196, 0.05490196, 1)
 
 [node name="Buildings" type="Node2D" parent="." unique_id=1244740229]
@@ -148,10 +148,26 @@ self_modulate = Color(0, 0, 0, 0.84313726)
 z_index = -10
 position = Vector2(834, 456)
 
-[node name="HouseCream1Storey" parent="Buildings" unique_id=632686075 instance=ExtResource("9_k6cxx")]
+[node name="HouseCream1Storey2" parent="Buildings" unique_id=1199827801 instance=ExtResource("9_k6cxx")]
 modulate = Color(0, 0, 0, 1)
 self_modulate = Color(0, 0, 0, 0.84313726)
-position = Vector2(1538, 528)
+position = Vector2(1714, 528)
+
+[node name="HousePlum3Storey3" parent="Buildings" unique_id=431446265 instance=ExtResource("17_mupwe")]
+modulate = Color(0, 0, 0, 1)
+z_index = 3
+position = Vector2(1890, 456)
+
+[node name="HouseSiloThicc4" parent="Buildings" unique_id=1243187731 instance=ExtResource("3_flp4d")]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 1)
+z_index = 3
+position = Vector2(2066, 492)
+
+[node name="HousePlum3Storey4" parent="Buildings" unique_id=2049545515 instance=ExtResource("17_mupwe")]
+modulate = Color(0, 0, 0, 1)
+z_index = 3
+position = Vector2(2242, 456)
 
 [node name="Geometry" type="Node2D" parent="." unique_id=526838699]
 
@@ -175,7 +191,7 @@ position = Vector2(221, 360)
 shape = SubResource("RectangleShape2D_d47s1")
 
 [node name="EastBoundary" type="StaticBody2D" parent="Geometry" unique_id=1564435628]
-position = Vector2(2045, 360)
+position = Vector2(1808, 360)
 
 [node name="Shape" type="CollisionShape2D" parent="Geometry/EastBoundary" unique_id=1186305126]
 shape = SubResource("RectangleShape2D_d47s1")
@@ -200,14 +216,20 @@ color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
 
 [node name="Background5" type="Polygon2D" parent="Geometry" unique_id=1963164627]
-position = Vector2(2055, -75789.53)
-scale = Vector2(0.36545458, 122.16536)
+position = Vector2(2207, -75789.53)
+scale = Vector2(0.29636368, 122.16536)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
 
 [node name="Background6" type="Polygon2D" parent="Geometry" unique_id=358157816]
 position = Vector2(-607, -32629)
 scale = Vector2(1.3981819, 52.249355)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
+
+[node name="Background7" type="Polygon2D" parent="Geometry" unique_id=248251008]
+position = Vector2(1802, -57785)
+scale = Vector2(0.32272726, 93.999985)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(0, 620, 1102, 620, 2200, 620, 2200, 623.019, 2200, 626, 1101, 626, 0, 626, 0, 623.014)
 
@@ -223,12 +245,12 @@ position = Vector2(742, 592)
 
 [node name="Interactables" type="Node2D" parent="." unique_id=1114832439]
 
-[node name="StreetExit" parent="Interactables" unique_id=1682660375 instance=ExtResource("4")]
+[node name="Enter_Town_01_1" parent="Interactables" unique_id=1682660375 instance=ExtResource("4")]
 position = Vector2(389, 556)
 destination_scene = "res://scenes/levels/town_01.tscn"
 destination_spawn = "from_alleyway_01_1"
 
-[node name="Facade" parent="Interactables/StreetExit" index="0" unique_id=1815167978]
+[node name="Facade" parent="Interactables/Enter_Town_01_1" index="0" unique_id=1815167978]
 visible = false
 
 [node name="Ammo" parent="Interactables" unique_id=1595936546 instance=ExtResource("7_q8qeu")]
@@ -240,6 +262,21 @@ position = Vector2(755.00006, 596.00006)
 rotation = -0.65449846
 scale = Vector2(0.3, 0.3)
 item_definition = SubResource("Resource_qlhb6")
+
+[node name="EnterTown_02" parent="Interactables" unique_id=166180848 instance=ExtResource("4")]
+position = Vector2(1535, 556)
+destination_spawn = "from_alleyway_01"
+
+[node name="Facade" parent="Interactables/EnterTown_02" index="0" unique_id=1815167978]
+visible = false
+
+[node name="Enter_Town_01_2" parent="Interactables" unique_id=381636798 instance=ExtResource("4")]
+position = Vector2(968, 556)
+destination_scene = "res://scenes/levels/town_01.tscn"
+destination_spawn = "from_alleyway_01_2"
+
+[node name="Facade" parent="Interactables/Enter_Town_01_2" index="0" unique_id=1815167978]
+visible = false
 
 [node name="Actors" type="Node2D" parent="." unique_id=358542406]
 
@@ -262,4 +299,15 @@ volume_db = -16.0
 autoplay = true
 script = ExtResource("22")
 
-[editable path="Interactables/StreetExit"]
+[node name="Enemy" parent="." unique_id=1751376480 instance=ExtResource("20_ieagv")]
+position = Vector2(1361, 588)
+max_health = 85
+speed = 100.0
+damage = 20
+facing_direction = 1
+pursuit_distance = 800.0
+stagger_cooldown_seconds = 0.4
+
+[editable path="Interactables/Enter_Town_01_1"]
+[editable path="Interactables/EnterTown_02"]
+[editable path="Interactables/Enter_Town_01_2"]
